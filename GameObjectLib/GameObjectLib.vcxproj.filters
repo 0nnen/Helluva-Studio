@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\Managers\HUDManager.cpp" />
+    <ClCompile Include="src\Managers\EventManager.cpp" />
+    <ClCompile Include="src\Managers\CameraManager.cpp" />
+    <ClCompile Include="src\Commands\CommandsGame.cpp" />
+    <ClCompile Include="src\Components\Entity.cpp" />
+    <ClCompile Include="src\Components\HealthPointBar.cpp" />
+    <ClCompile Include="src\Managers\AudioManager.cpp" />
+    <ClCompile Include="src\Managers\AssetManager.cpp" />
+    <ClCompile Include="src\Command.cpp" />
+    <ClCompile Include="src\Components\SpriteRenderer.cpp" />
+    <ClCompile Include="src\Components\SquareCollider.cpp" />
+    <ClCompile Include="src\GameObject.cpp" />
+    <ClCompile Include="src\Scene.cpp" />
+    <ClCompile Include="src\Maths\Vector2.cpp" />
+    <ClCompile Include="src\Managers\SceneManager.cpp" />
+    <ClCompile Include="src\Scenes\SceneMainMenu.cpp" />
+    <ClCompile Include="src\Scenes\SceneGameAbstract.cpp" />
+    <ClCompile Include="src\Scenes\SceneSuccessMenu.cpp" />
+    <ClCompile Include="src\Scenes\SceneRankMenu.cpp" />
+    <ClCompile Include="src\Scenes\SceneCreditsMenu.cpp" />
+    <ClCompile Include="src\Managers\WindowManager.cpp" />
+    <ClCompile Include="src\Maths\Vector2.cpp" />
+    <ClCompile Include="src\Scenes\SceneLoginSignup.cpp" />
+    <ClCompile Include="src\Managers\FontManager.cpp" />
+    <ClCompile Include="src\Component.cpp" />
+    <ClCompile Include="src\Components\Shapes\Carre.cpp" />
+    <ClCompile Include="src\Components\UIElements\Button.cpp" />
+    <ClCompile Include="src\Components\UIElements\Input.cpp" />
+    <ClCompile Include="src\Components\UIElements\Slider.cpp" />
+    <ClCompile Include="src\BuilderGameObject.cpp" />
+    <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\Managers\TimeManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Managers\HUDManager.h" />
+    <ClInclude Include="include\Managers\EventManager.h" />
+    <ClInclude Include="include\Managers\CameraManager.h" />
+    <ClInclude Include="include\Commands\CommandsGame.h" />
+    <ClInclude Include="include\Components\Entity.h" />
+    <ClInclude Include="include\Components\HealthPointBar.h" />
+    <ClInclude Include="include\Managers\AudioManager.h" />
+    <ClInclude Include="include\Managers\AssetManager.h" />
+    <ClInclude Include="include\Command.h" />
+    <ClInclude Include="include\Components\SpriteRenderer.h" />
+    <ClInclude Include="include\Components\SquareCollider.h" />
+    <ClInclude Include="include\GameObject.h" />
+    <ClInclude Include="include\Scene.h" />
+    <ClInclude Include="include\Maths\Vector2.h" />
+    <ClInclude Include="include\Managers\SceneManager.h" />
+    <ClInclude Include="include\Scenes\SceneMainMenu.h" />
+    <ClInclude Include="include\Scenes\SceneGameAbstract.h" />
+    <ClInclude Include="include\Scenes\SceneSuccessMenu.h" />
+    <ClInclude Include="include\Scenes\SceneRankMenu.h" />
+    <ClInclude Include="include\Scenes\SceneCreditsMenu.h" />
+    <ClInclude Include="include\Components\Ressource.h" />
+    <ClInclude Include="include\Managers\WindowManager.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="include\Scenes\SceneLoginSignup.h" />
+    <ClInclude Include="include\Managers\FontManager.h" />
+    <ClInclude Include="include\Component.h" />
+    <ClInclude Include="include\Components\Shapes\Carre.h" />
+    <ClInclude Include="include\Components\UIElements\Button.h" />
+    <ClInclude Include="include\Components\UIElements\Input.h" />
+    <ClInclude Include="include\Components\UIElements\Slider.h" />
+    <ClInclude Include="include\BuilderGameObject.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Managers\TimeManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="include\Maths\Vector2.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GameObjectLib.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="src\Components\Entities\Enemies\Enemy.txt" />
+  </ItemGroup>
+</Project>
