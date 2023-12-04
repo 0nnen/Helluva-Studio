@@ -2,13 +2,19 @@
 #include "Managers/WindowManager.h"
 #include "Managers/WindowManager.h"
 
-Scene::Scene(const std::string& _name) 
+Scene::Scene(const std::string& _name)
 {
 	name = _name;
+	blackRectangle.setSize(sf::Vector2f(WindowManager::GetFloatWindowWidth(), WindowManager::GetFloatWindowHeight()));
 }
 
+//Initialize the scene
+void Scene::Preload() {}
+
+//Create Object from the scene
 void Scene::Create() {}
 
+//Create GameObject
 GameObject* Scene::CreateGameObject(const std::string& _name)
 {
 	GameObject* const gameObject = new GameObject();
@@ -20,8 +26,7 @@ GameObject* Scene::CreateGameObject(const std::string& _name)
 	return gameObject;
 }
 
-
-
+//Get GameObject
 GameObject* Scene::GetGameObject(const std::string& _objectName)
 {
 	for (GameObject* const& gameObject : gameObjects)
@@ -34,6 +39,7 @@ GameObject* Scene::GetGameObject(const std::string& _objectName)
 	return nullptr;
 }
 
+//Remove GameObject
 void Scene::RemoveGameObject(GameObject* _objectToRemove)
 {
 	gameObjects.erase(std::remove_if(gameObjects.begin(), gameObjects.end(),
@@ -43,7 +49,8 @@ void Scene::RemoveGameObject(GameObject* _objectToRemove)
 		}), gameObjects.end());
 }
 
-void Scene::Delete() 
+//Delete Scene
+void Scene::Delete()
 {
 	for (GameObject* const& gameObject : this->gameObjects)
 	{
@@ -52,7 +59,7 @@ void Scene::Delete()
 	gameObjects.clear();
 }
 
-void Scene::Awake() 
+void Scene::Awake()
 {
 	for (GameObject* const& gameObject : gameObjects)
 	{
@@ -69,6 +76,14 @@ void Scene::Update(const float& _delta)
 			gameObjects[i]->Update(_delta);
 		}
 	}
+	if (isFadeIn)
+	{
+		FadeIn(_delta);
+	}
+	if (isFadeOut)
+	{
+		FadeOut(_delta);
+	}
 }
 
 void Scene::Render(sf::RenderWindow* _window)
@@ -78,12 +93,62 @@ void Scene::Render(sf::RenderWindow* _window)
 	{
 		gameObject->Render(_window);
 	}
+	if (isFadeIn || isFadeOut)
+	{
+		ShowFade(_window);
+	}
 }
 
 void Scene::ApplyDepth()
 {
 	std::sort(gameObjects.begin(), gameObjects.end(), [](const GameObject* obj1, const GameObject* obj2)
 		{
-		return obj1->GetDepth() < obj2->GetDepth();
+			return obj1->GetDepth() < obj2->GetDepth();
 		});
+}
+
+
+void Scene::FadeIn(const float& _delta)
+{
+	blackRectangle.setFillColor(sf::Color::Black);
+
+	// Calculer le taux de variation d'alpha par seconde
+	float alphaChangeRate = 255.0f / fadeInTime;
+
+	// Mettre à jour l'alpha du rectangle noir
+	sf::Uint8 currentAlpha = blackRectangle.getFillColor().a;
+	if (currentAlpha > 0) {
+		currentAlpha = static_cast<sf::Uint8>(std::max(0, static_cast<int>(currentAlpha - alphaChangeRate * _delta)));
+		blackRectangle.setFillColor(sf::Color(0, 0, 0, currentAlpha));
+	}
+	else
+	{
+		blackRectangle.setFillColor(sf::Color::Transparent);
+		isFadeIn = false;
+	}
+
+}
+
+void Scene::FadeOut(const float& _delta)
+{
+	blackRectangle.setFillColor(sf::Color::Transparent);
+	// Calculer le taux de variation d'alpha par seconde
+	float alphaChangeRate = 255.0f / fadeOutTime;
+
+	// Mettre à jour l'alpha du rectangle noir
+	sf::Uint8 currentAlpha = blackRectangle.getFillColor().a;
+	if (currentAlpha > 0) {
+		currentAlpha = static_cast<sf::Uint8>(std::max(0, static_cast<int>(currentAlpha + alphaChangeRate * _delta)));
+		blackRectangle.setFillColor(sf::Color(0, 0, 0, currentAlpha));
+	}
+	else
+	{
+		blackRectangle.setFillColor(sf::Color::Black);
+		isFadeOut = false;
+	}
+}
+
+void Scene::ShowFade(sf::RenderWindow* _window)
+{
+	_window->draw(blackRectangle);
 }

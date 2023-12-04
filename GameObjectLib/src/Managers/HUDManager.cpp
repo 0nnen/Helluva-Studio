@@ -11,6 +11,11 @@
  std::map<std::string, sf::Vector2f> HUDManager::centerRectangle;
  bool HUDManager::isShown = false;
 
+
+ void HUDManager::Init(sf::RenderWindow* _window)
+ {
+	 HUDManager::hudView = _window->getDefaultView();
+ }
  void HUDManager::Preload()
  {
 	 int width = WindowManager::GetWindowWidth();

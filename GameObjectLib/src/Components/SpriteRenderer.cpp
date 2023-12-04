@@ -37,6 +37,11 @@ void Sprite::SetScale(const float& _scalex, const float& _scaley)
 	sprite.setScale(scalex, scaley);
 }
 
+void Sprite::SetOrigin()
+{
+	sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
+}
+
 
 void Sprite::Update(const float& _delta) {}
 

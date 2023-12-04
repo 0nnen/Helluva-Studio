@@ -14,6 +14,7 @@ public:
 	void SetTexture(const sf::Texture& _texture);
 	void SetRecTexture(const sf::IntRect& _rectTexture);
 	void SetScale(const float& _scalex, const float& _scaley);
+	void SetOrigin();
 	inline sf::Vector2f GetSize() const { return sf::Vector2f(sprite.getLocalBounds().width * scalex, sprite.getLocalBounds().height * scaley); }
 	sf::Vector2f GetBounds() const;
 

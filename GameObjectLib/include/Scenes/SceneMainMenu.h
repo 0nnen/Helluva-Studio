@@ -8,6 +8,7 @@ public:
 
 	void CreateSceneButtonsMenu();
 
+	void Preload() override;
 	void Create() override;
 	void Delete() override;
 	void Render(sf::RenderWindow* _window) override;
@@ -18,6 +19,7 @@ public:
 
 private:
 	GameObject* playButton = nullptr;
+	GameObject* fadeButton = nullptr;
 	GameObject* optionsButton = nullptr;
 	GameObject* quitButton = nullptr;
 	GameObject* backButton = nullptr;

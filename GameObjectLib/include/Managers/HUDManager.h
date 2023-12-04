@@ -7,6 +7,8 @@ class HUDManager
 {
 public:
 	HUDManager();
+
+	static void Init(sf::RenderWindow* _window);
 	inline static sf::View GetHud() { return hudView; }
 	inline static void AddGameObjectHud(GameObject* const& _gameObject) { hudGameObjects.push_back(_gameObject); }
 	inline static GameObject* GetHudGameObject(const int& _index) { return hudGameObjects[_index]; }

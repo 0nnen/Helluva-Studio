@@ -19,10 +19,15 @@ GameObject* BuilderGameObject::CreateButtonGameObject(const std::string& _name, 
 {
 	GameObject* gameObject = SceneManager::GetActiveScene()->CreateGameObject(_name);
 	gameObject->SetPosition(Maths::Vector2f(_x, _y));
+	gameObject->SetActive(true);
+	gameObject->SetVisible(true);
+	gameObject->SetLayer(LayerType::HUD);
+	gameObject->SetDepth(1.f);
 
 	Button* button = gameObject->CreateComponent<Button>();
 	button->SetPosition(_x, _y);
 	button->SetFontSize(_fontSize);
+	button->SetText(_name, sf::Color::Black);
 	button->SetOrigin();
 
 	return gameObject;
@@ -32,6 +37,7 @@ GameObject* BuilderGameObject::CreateBackgroundGameObject(const std::string& _na
 {
 	GameObject* gameObject = SceneManager::GetActiveScene()->CreateGameObject(_name);
 	gameObject->SetPosition(Maths::Vector2f(_x, _y));
+	gameObject->SetDepth(0.f);
 
 	Sprite* sprite = gameObject->CreateComponent<Sprite>();
 	sprite->SetTexture(_texture);
@@ -39,6 +45,7 @@ GameObject* BuilderGameObject::CreateBackgroundGameObject(const std::string& _na
 	float scalerX = (float)WindowManager::GetWindowWidth() / _texture.getSize().x;
 	float scalerY = (float)WindowManager::GetWindowHeight() / _texture.getSize().y;
 	sprite->SetScale(scalerX, scalerY);
+	sprite->SetOrigin();
 	sprite->SetSprite();
 
 	return gameObject;

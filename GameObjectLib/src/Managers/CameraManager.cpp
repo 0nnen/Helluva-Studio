@@ -12,7 +12,7 @@ int CameraManager::initialX = 0;
 int CameraManager::initialY = 0;
 
 
-void CameraManager::SetWindow(sf::RenderWindow* _window) 
+void CameraManager::Init(sf::RenderWindow* _window) 
 {
 	CameraManager::window = _window;
 	CameraManager::view = CameraManager::window->getDefaultView();

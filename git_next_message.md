@@ -1,4 +1,4 @@
-NEW : Start
+NEW : Main Menu
 
-- Start Project 7 Helluva Revenge
+- Création du Main Menu
 

@@ -6,7 +6,7 @@ class CameraManager
 {
 public:
 
-    static void SetWindow(sf::RenderWindow* _window);
+    static void Init(sf::RenderWindow* _window);
     inline static sf::View GetView() { return view; }
 
     static void Update(const float& _delta);

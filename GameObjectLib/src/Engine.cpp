@@ -5,6 +5,8 @@
 #include "Managers/EventManager.h"
 #include "Managers/WindowManager.h"
 #include "Managers/HUDManager.h"
+#include "Managers/FontManager.h"
+#include "Managers/CameraManager.h"
 #include <SFML/Graphics/RenderWindow.hpp>
 
 Engine* Engine::instance = nullptr;
@@ -21,6 +23,9 @@ void Engine::Init() const
 {
 	WindowManager::Init();
 	TimeManager::Init();
+	FontManager::AddFont("Roboto", "../Fonts/Roboto-Medium.ttf");
+	CameraManager::Init(WindowManager::GetWindow());
+	HUDManager::Init(WindowManager::GetWindow());
 	SceneManager::AddScene("SceneMainMenu", new SceneMainMenu(std::string("MainMenu")));
 }
 

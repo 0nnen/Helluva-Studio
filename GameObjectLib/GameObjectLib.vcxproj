@@ -52,8 +52,10 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="include\Scenes\SceneLoginSignup.h" />
     <ClInclude Include="include\Managers\TimeManager.h" />
+    <ClInclude Include="include\Scenes\SceneOpening.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Scenes\SceneOpening.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\BuilderGameObject.cpp" />
     <ClCompile Include="src\Managers\FontManager.cpp" />

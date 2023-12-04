@@ -2,24 +2,33 @@
 #include "Managers/WindowManager.h"
 #include "Managers/HUDManager.h"
 #include "Managers/CameraManager.h"
+#include "Managers/FontManager.h"
 #include <iostream>
 
 Button::Button() 
 {
-	this->height = 0.f;
-	this->width = 0.f;
+	this->height = 50.f;
+	this->width = 100.f;
 	this->fontSize = 16;
 	this->rectangle.setFillColor(sf::Color::White);
 	this->rectangle.setOutlineColor(sf::Color::Black);
+	text.setFillColor(sf::Color::Black);
 	this->SetFontSize(16);
+	
+	this->SetFont(*FontManager::GetFont("Roboto"));
+	this->SetSize();
 	this->SetOrigin();
-	//this->SetFont();
 }
 
 void Button::SetOrigin()
 {
 	rectangle.setOrigin(sf::Vector2f(width / 2, height / 2));
 	text.setOrigin(sf::Vector2f(text.getLocalBounds().width / 2, text.getLocalBounds().height / 2));
+}
+
+void Button::SetSize()
+{
+	rectangle.setSize(sf::Vector2f(width, height));
 }
 
 void Button::SetSize(const float& _width, const float& _height)
@@ -66,18 +75,20 @@ void Button::SetText(const std::string& _text, const sf::Color& _color)
 
 void Button::Render(sf::RenderWindow* _window)
 {
+	Component::Render(_window);
 	const auto position = GetOwner()->GetPosition();
 	SetPosition(position.x, position.y);
-	Component::Render(_window);
+	
 	_window->draw(rectangle);
 	_window->draw(text);
 }
 
 void Button::RenderGUI(sf::RenderWindow* _window)
 {
+	Component::RenderGUI(_window);
 	const auto position = GetOwner()->GetPosition();
 	SetPosition(position.x, position.y);
-	Component::RenderGUI(_window);
+	
 	_window->draw(rectangle);
 	_window->draw(text);
 }

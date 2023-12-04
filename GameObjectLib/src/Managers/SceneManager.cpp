@@ -23,6 +23,7 @@ void SceneManager::RunScene(std::string _key)
 			StopScene();
 		}
 		activeScene = scenes.at(_key);
+		activeScene->Preload();
 		activeScene->Create();
 	}
 }

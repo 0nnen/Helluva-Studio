@@ -9,5 +9,5 @@ sf::RenderWindow* WindowManager::window = nullptr;
 
 void WindowManager::Init()
 {
-	window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "NOM DU JEU", sf::Style::Fullscreen);
+	window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "HELLUVA REVENGE", sf::Style::Fullscreen);
 }
