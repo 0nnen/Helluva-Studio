@@ -45,69 +45,73 @@ void SceneMainMenu::CreateSceneButtonsMenu()
 	float heightScreen = WindowManager::GetFloatWindowHeight();
 	playButton = BuilderGameObject::CreateButtonGameObject("Play", widthScreen / 2, heightScreen / 3, 50);
 	optionsButton = BuilderGameObject::CreateButtonGameObject("Options", widthScreen / 2, heightScreen / 2, 20);
-	quitButton = BuilderGameObject::CreateButtonGameObject("Quit", widthScreen / 2, heightScreen / 1.5, 50);/*
+	quitButton = BuilderGameObject::CreateButtonGameObject("Quit", widthScreen / 2, heightScreen / 1.5, 50);
 	successButton = BuilderGameObject::CreateButtonGameObject("Success", widthScreen / 1.2, heightScreen / 10, 25);
 	rankButton = BuilderGameObject::CreateButtonGameObject("Rank", widthScreen / 1.3, heightScreen / 10, 25);
-	creditsButton = BuilderGameObject::CreateButtonGameObject("Credits", widthScreen / 1.1, heightScreen / 10, 25);*/
-	/*backButton = BuilderGameObject::CreateButtonGameObject("Back", widthScreen / 10, heightScreen / 10, 20);
+	creditsButton = BuilderGameObject::CreateButtonGameObject("Credits", widthScreen / 1.1, heightScreen / 10, 25);
+	backButton = BuilderGameObject::CreateButtonGameObject("Back", widthScreen / 10, heightScreen / 10, 20);
 	sliderFPS = BuilderGameObject::CreateSliderGameObject("SliderFPS", widthScreen / 2, heightScreen / 2, 1200, 40, 50, 50, 20, WindowManager::GetFps(), WindowManager::GetMinFps(), WindowManager::GetMaxFps());
-	sliderVolume = BuilderGameObject::CreateSliderGameObject("SliderVolume", widthScreen / 2, heightScreen / 1.5, 1200, 40, 50, 50, 20, AudioManager::GetVolume(), AudioManager::GetMaxVolume());*/
-	//signupLoginButton = CreateButtonGameObject("Signup Login", widthScreen / 1.2, heightScreen / 1.2, 30);
+	sliderVolume = BuilderGameObject::CreateSliderGameObject("SliderVolume", widthScreen / 2, heightScreen / 1.5, 1200, 40, 50, 50, 20, AudioManager::GetVolume(), AudioManager::GetMaxVolume());
+	//signupLoginButton = CreateButtonGameObject("Signup Login", widthScreen / 1.2, heightScreen / 1.2, 30)
 }
 
 void SceneMainMenu::Update(const float& _delta) 
 {
 	Scene::Update(_delta);
-	if (playButton->GetComponent<Button>()->IsClicked()) 
+	if (playButton->GetComponent<Button>()->IsClicked() || isFadeOut)
 	{
-		std::cout << "Play";
-		SceneManager::RunScene("SceneGameLVSR");
+		isFadeOut = true;
+		if (FadeOut(_delta))
+		{
+			std::cout << "Switch Scene" << std::endl;
+			SceneManager::RunScene("SceneGameUnderground");
+		}
+
 	}
-	else if (optionsButton->GetComponent<Button>()->IsClicked() && optionsButton->GetActive()) 
+	else if (optionsButton->GetComponent<Button>()->IsClicked()) 
 	{
 		std::cout << "Option";
 		this->activeMenu(false);
 		this->activeOption(true);
 	}
-	else if (quitButton->GetComponent<Button>()->IsClicked() && quitButton->GetActive()) 
+	else if (quitButton->GetComponent<Button>()->IsClicked()) 
 	{
 		std::cout << "Close";
 		WindowManager::GetWindow()->close();
+		
 	}
-	//else if (backButton->GetComponent<Button>()->IsClicked() && backButton->GetActive()) 
-	//{
-	//	std::cout << "Back";
-	//	this->activeOption(false);
-	//	this->activeMenu(true);
-	//}
-	//else if (successButton->GetComponent<Button>()->IsClicked() && successButton->GetActive()) 
-	//{
-	//	std::cout << "Succes";
-	//	SceneManager::RunScene("SceneSuccessMenu");
-	//}
-	//else if (rankButton->GetComponent<Button>()->IsClicked() && rankButton->GetActive()) 
-	//{
-	//	std::cout << "Rank";
-	//	SceneManager::RunScene("SceneRankMenu");
-	//}
-	//else if (creditsButton->GetComponent<Button>()->IsClicked() && creditsButton->GetActive()) 
-	//{
-	//	std::cout << "Credits";
-	//	SceneManager::RunScene("SceneCreditsMenu");
-	//}
-	//if (option) 
-	//{
-	//	if (sliderFPS && sliderFPS->GetActive())
-	//	{
-	//		std::cout << "slider";
-	//		WindowManager::SetFps(sliderFPS->GetComponent<Slider>()->GetDataInt());
-	//	}
-	//	if (sliderVolume && sliderVolume->GetActive())
-	//	{
-	//		std::cout << "slider2";
-	//		AudioManager::SetVolume(sliderVolume->GetComponent<Slider>()->GetDataInt());
-	//	}
-	//}
+	else if (backButton->GetComponent<Button>()->IsClicked()) 
+	{
+		std::cout << "Back";
+		this->activeOption(false);
+		this->activeMenu(true);
+	}
+	else if (successButton->GetComponent<Button>()->IsClicked()) 
+	{
+		std::cout << "Succes";
+		SceneManager::RunScene("SceneSuccessMenu");
+	}
+	else if (rankButton->GetComponent<Button>()->IsClicked())
+	{
+		std::cout << "Rank";
+		SceneManager::RunScene("SceneRankMenu");
+	}
+	else if (creditsButton->GetComponent<Button>()->IsClicked()) 
+	{
+		std::cout << "Credits";
+		SceneManager::RunScene("SceneCreditsMenu");
+	}
+	if (option) 
+	{
+		if (sliderFPS)
+		{
+			WindowManager::SetFps(sliderFPS->GetComponent<Slider>()->GetDataInt());
+		}
+		if (sliderVolume)
+		{
+			AudioManager::SetVolume(sliderVolume->GetComponent<Slider>()->GetDataInt());
+		}
+	}
 
 	/*else if (signupLoginButton->GetComponent<Button>()->IsClicked() && signupLoginButton->GetActive()) 
 	{
@@ -120,17 +124,26 @@ void SceneMainMenu::activeMenu(const bool& _state)
 	this->playButton->SetActive(_state);
 	this->optionsButton->SetActive(_state);
 	this->quitButton->SetActive(_state);
-	//this->creditsButton->SetActive(_state);
-	//this->rankButton->SetActive(_state);
-	//this->successButton->SetActive(_state);
+	this->creditsButton->SetActive(_state);
+	this->rankButton->SetActive(_state);
+	this->successButton->SetActive(_state);
+	this->playButton->SetVisible(_state);
+	this->optionsButton->SetVisible(_state);
+	this->quitButton->SetVisible(_state);
+	this->creditsButton->SetVisible(_state);
+	this->rankButton->SetVisible(_state);
+	this->successButton->SetVisible(_state);
 	//this->signupLoginButton->SetActive(_state);
 }
 
 void SceneMainMenu::activeOption(const bool& _state)
 {
-	//this->backButton->SetActive(_state);
-	//this->sliderFPS->SetActive(_state);
-	//this->sliderVolume->SetActive(_state);
+	this->backButton->SetActive(_state);
+	this->sliderFPS->SetActive(_state);
+	this->sliderVolume->SetActive(_state);
+	this->backButton->SetVisible(_state);
+	this->sliderFPS->SetVisible(_state);
+	this->sliderVolume->SetVisible(_state);
 	option = _state;
 }
 

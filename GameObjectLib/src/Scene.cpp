@@ -1,18 +1,23 @@
 #include "Scene.h"
 #include "Managers/WindowManager.h"
 #include "Managers/WindowManager.h"
-
+#include <iostream>
 Scene::Scene(const std::string& _name)
 {
 	name = _name;
-	blackRectangle.setSize(sf::Vector2f(WindowManager::GetFloatWindowWidth(), WindowManager::GetFloatWindowHeight()));
 }
 
 //Initialize the scene
 void Scene::Preload() {}
 
 //Create Object from the scene
-void Scene::Create() {}
+void Scene::Create() 
+{
+	fadeOutRectangle.setSize(sf::Vector2f(WindowManager::GetFloatWindowWidth(), WindowManager::GetFloatWindowHeight()));
+	fadeInRectangle.setSize(sf::Vector2f(WindowManager::GetFloatWindowWidth(), WindowManager::GetFloatWindowHeight()));
+	fadeOutRectangle.setFillColor(sf::Color::Transparent);
+	fadeInRectangle.setFillColor(sf::Color::Black);
+}
 
 //Create GameObject
 GameObject* Scene::CreateGameObject(const std::string& _name)
@@ -76,14 +81,6 @@ void Scene::Update(const float& _delta)
 			gameObjects[i]->Update(_delta);
 		}
 	}
-	if (isFadeIn)
-	{
-		FadeIn(_delta);
-	}
-	if (isFadeOut)
-	{
-		FadeOut(_delta);
-	}
 }
 
 void Scene::Render(sf::RenderWindow* _window)
@@ -93,9 +90,13 @@ void Scene::Render(sf::RenderWindow* _window)
 	{
 		gameObject->Render(_window);
 	}
-	if (isFadeIn || isFadeOut)
+	if (isFadeIn)
 	{
-		ShowFade(_window);
+		ShowFadeIn(_window);
+	}
+	if (isFadeOut)
+	{
+		ShowFadeOut(_window);
 	}
 }
 
@@ -108,47 +109,53 @@ void Scene::ApplyDepth()
 }
 
 
-void Scene::FadeIn(const float& _delta)
+bool Scene::FadeIn(const float& _delta)
 {
-	blackRectangle.setFillColor(sf::Color::Black);
+	float alphaChangeRate = 255.0f / fadeInTimeDefault;
 
-	// Calculer le taux de variation d'alpha par seconde
-	float alphaChangeRate = 255.0f / fadeInTime;
-
-	// Mettre à jour l'alpha du rectangle noir
-	sf::Uint8 currentAlpha = blackRectangle.getFillColor().a;
-	if (currentAlpha > 0) {
+	sf::Uint8 currentAlpha = fadeInRectangle.getFillColor().a;
+	isFadeIn = false;
+	if (fadeInTimeDefault > fadeInTimeActual) {
 		currentAlpha = static_cast<sf::Uint8>(std::max(0, static_cast<int>(currentAlpha - alphaChangeRate * _delta)));
-		blackRectangle.setFillColor(sf::Color(0, 0, 0, currentAlpha));
+		fadeInRectangle.setFillColor(sf::Color(0, 0, 0, currentAlpha));
+		fadeInTimeActual += _delta;
+		return false;
 	}
 	else
 	{
-		blackRectangle.setFillColor(sf::Color::Transparent);
+		fadeInRectangle.setFillColor(sf::Color::Transparent);
 		isFadeIn = false;
+		fadeInTimeActual = 0.0f;
+		return true;
 	}
 
 }
 
-void Scene::FadeOut(const float& _delta)
+bool Scene::FadeOut(const float& _delta)
 {
-	blackRectangle.setFillColor(sf::Color::Transparent);
-	// Calculer le taux de variation d'alpha par seconde
-	float alphaChangeRate = 255.0f / fadeOutTime;
 
-	// Mettre à jour l'alpha du rectangle noir
-	sf::Uint8 currentAlpha = blackRectangle.getFillColor().a;
-	if (currentAlpha > 0) {
-		currentAlpha = static_cast<sf::Uint8>(std::max(0, static_cast<int>(currentAlpha + alphaChangeRate * _delta)));
-		blackRectangle.setFillColor(sf::Color(0, 0, 0, currentAlpha));
+	sf::Uint8 currentAlpha = fadeOutRectangle.getFillColor().a;
+	if (fadeOutTimeDefault > fadeOutTimeActual) {
+		currentAlpha = static_cast<sf::Uint8>(std::min(255, static_cast<int>(255.0f * (fadeOutTimeActual / fadeOutTimeDefault))));
+		fadeOutRectangle.setFillColor(sf::Color(0, 0, 0, currentAlpha));
+		fadeOutTimeActual += _delta;
+		return false;
 	}
 	else
 	{
-		blackRectangle.setFillColor(sf::Color::Black);
+		fadeOutRectangle.setFillColor(sf::Color::Black);
 		isFadeOut = false;
+		fadeOutTimeActual = 0.f;
+		return true;
 	}
 }
 
-void Scene::ShowFade(sf::RenderWindow* _window)
+void Scene::ShowFadeIn(sf::RenderWindow* _window)
 {
-	_window->draw(blackRectangle);
+	_window->draw(fadeInRectangle);
+}
+
+void Scene::ShowFadeOut(sf::RenderWindow* _window)
+{
+	_window->draw(fadeOutRectangle);
 }

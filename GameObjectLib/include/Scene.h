@@ -34,15 +34,18 @@ public:
 	void SetIsActive(const bool& _state) { isActive = _state; }
 	inline std::string GetName() const { return name; }
 
-	float GetFadeInTime() const { return fadeInTime; }
-	void SetFadeInTime(const float& _fadeInTime) { fadeInTime = _fadeInTime; }
-	void FadeIn(const float& _delta);
+	float GetFadeInTime() const { return fadeInTimeDefault; }
+	float GetFadeInTimeActual() const { return fadeInTimeActual; }
+	void SetFadeInTime(const float& _fadeInTime) { fadeInTimeDefault = _fadeInTime; }
+	bool FadeIn(const float& _delta);
 
-	float GetFadeOutTime() const { return fadeOutTime; }
-	void SetFadeOutTime(const float& _fadeOutTime) { fadeOutTime = _fadeOutTime; }
-	void FadeOut(const float& _delta);
+	float GetFadeOutTime() const { return fadeOutTimeDefault; }
+	float GetFadeOutTimeActual() const { return fadeOutTimeActual; }
+	void SetFadeOutTime(const float& _fadeOutTime) { fadeOutTimeDefault = _fadeOutTime; }
+	bool FadeOut(const float& _delta);
 
-	void ShowFade(sf::RenderWindow* _window);
+	void ShowFadeIn(sf::RenderWindow* _window);
+	void ShowFadeOut(sf::RenderWindow* _window);
 
 	void ApplyDepth();
 
@@ -52,9 +55,12 @@ protected:
 	bool isActive = true;
 
 
-	float fadeInTime = 3.f;
-	float fadeOutTime = 3.f;
+	float fadeInTimeDefault = 3.f;
+	float fadeOutTimeDefault = 3.f;
+	float fadeInTimeActual= 0.f;
+	float fadeOutTimeActual = 0.f;
 	bool isFadeIn = false;
 	bool isFadeOut = false;
-	sf::RectangleShape blackRectangle;
+	sf::RectangleShape fadeInRectangle;
+	sf::RectangleShape fadeOutRectangle;
 };

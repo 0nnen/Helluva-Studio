@@ -8,7 +8,7 @@ Slider::Slider()
 {
 	minData = 0.f;
 	incertitude = 20.f;
-	bar.setFillColor(sf::Color::Green);
+	bar.setFillColor(sf::Color::Magenta);
 	cursorText.setFillColor(sf::Color::White);
 	titleText.setFillColor(sf::Color::White);
 	cursor.setFillColor(sf::Color(0, 100, 0));
@@ -120,7 +120,6 @@ void Slider::Update(const float& _delta)
 			percent = this->GetPercent(bar.getPosition().x, cursor.getPosition().x, bar.getSize().x);
 			this->SetData(((maxData - minData) * percent / 100) + minData);
 			this->SetCursorText(fontSize);
-
 		}
 
 		cursor.setPosition(cursorX , cursor.getPosition().y);
@@ -130,5 +129,5 @@ void Slider::Update(const float& _delta)
 
 bool Slider::isClicked(const sf::Vector2i& _mousePosition) 
 {
-	return cursor.getGlobalBounds().contains(sf::Vector2f(_mousePosition.x, _mousePosition.y)) && sf::Mouse::isButtonPressed(sf::Mouse::Left);
+	return cursor.getGlobalBounds().contains(sf::Vector2f(_mousePosition.x, _mousePosition.y)) && sf::Mouse::isButtonPressed(sf::Mouse::Left) && GetOwner()->GetActive();
 }

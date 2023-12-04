@@ -100,7 +100,7 @@ bool Button::IsClicked()
 	if (GetOwner()->GetLayer() == LayerType::HUD)
 	{
 		sf::Vector2i mousePosition = sf::Mouse::getPosition(*WindowManager::GetWindow());
-		return rectangle.getGlobalBounds().contains(sf::Vector2f(mousePosition.x, mousePosition.y)) && sf::Mouse::isButtonPressed(sf::Mouse::Left);
+		return rectangle.getGlobalBounds().contains(sf::Vector2f(mousePosition.x, mousePosition.y)) && sf::Mouse::isButtonPressed(sf::Mouse::Left) && GetOwner()->GetActive();
 	}
 	else
 	{

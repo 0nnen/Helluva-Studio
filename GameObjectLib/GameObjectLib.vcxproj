@@ -53,8 +53,10 @@
     <ClInclude Include="include\Scenes\SceneLoginSignup.h" />
     <ClInclude Include="include\Managers\TimeManager.h" />
     <ClInclude Include="include\Scenes\SceneOpening.h" />
+    <ClInclude Include="include\Scenes\SceneGameUnderground.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Scenes\SceneGameUnderground.cpp" />
     <ClCompile Include="src\Scenes\SceneOpening.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\BuilderGameObject.cpp" />
