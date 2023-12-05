@@ -9,7 +9,7 @@ public:
 	Command();
 	Command(GameObject* _entity);
 	
-	virtual void Execute(const sf::Time& delta) = 0;
+	virtual void Execute(const float& delta) = 0;
 
 	~Command();
 protected:

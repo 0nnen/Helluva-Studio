@@ -5,8 +5,8 @@
 #include "Managers/AudioManager.h"
 
 
-Entity::Entity() : healthPoint(100), maxHealthPoint(100), damage(10), lane(0), attackSpeed(1.0f), range(1), speed(20.f) {}
-Entity::Entity(const int& _hp, const int& _damage, const int& _lane, const float& _speed, const float& _attackSpeed, const float& _range) : healthPoint(_hp), maxHealthPoint(_hp), damage(_damage), lane(_lane), speed(_speed), attackSpeed(_attackSpeed), range(_range) {}
+Entity::Entity() : healthPoint(100), maxHealthPoint(100), damage(10), attackSpeed(1.0f), range(1), speed(20.f) {}
+Entity::Entity(const int& _hp, const int& _damage, const float& _speed, const float& _attackSpeed, const float& _range) : healthPoint(_hp), maxHealthPoint(_hp), damage(_damage), speed(_speed), attackSpeed(_attackSpeed), range(_range) {}
 
 void Entity::TakeDamage(const int& _damage)
 {

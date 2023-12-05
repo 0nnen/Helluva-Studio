@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Components\Entity\Character.h" />
     <ClInclude Include="include\Engine.h" />
     <ClInclude Include="include\BuilderGameObject.h" />
     <ClInclude Include="include\Managers\FontManager.h" />
@@ -49,6 +50,7 @@
     <ClInclude Include="include\Scenes\SceneCreditsMenu.h" />
     <ClInclude Include="include\Components\Ressource.h" />
     <ClInclude Include="include\Managers\WindowManager.h" />
+    <ClInclude Include="include\Components\Inputs\InputCharacter.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="include\Scenes\SceneLoginSignup.h" />
     <ClInclude Include="include\Managers\TimeManager.h" />
@@ -56,6 +58,8 @@
     <ClInclude Include="include\Scenes\SceneGameUnderground.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\Inputs\InputCharacter.cpp" />
+    <ClCompile Include="src\Components\Entity\Character.cpp" />
     <ClCompile Include="src\Scenes\SceneGameUnderground.cpp" />
     <ClCompile Include="src\Scenes\SceneOpening.cpp" />
     <ClCompile Include="src\Engine.cpp" />
