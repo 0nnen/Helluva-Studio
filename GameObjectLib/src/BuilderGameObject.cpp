@@ -11,6 +11,7 @@
 #include "Components/UIElements/Slider.h"
 #include "Components/Shapes/Carre.h"
 #include "Components/Entity/Character.h"
+#include "Components/Inputs/InputCharacter.h"
 
 
 

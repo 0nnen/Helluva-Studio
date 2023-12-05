@@ -17,6 +17,7 @@ SceneGameAbstract::SceneGameAbstract(const std::string& _newName) : Scene(_newNa
 {
 	this->Awake();
 	srand(time(nullptr));
+	texture = new sf::Texture();
 }
 
 
@@ -28,6 +29,7 @@ SceneGameAbstract::~SceneGameAbstract()
 void SceneGameAbstract::Create() 
 {
 	Scene::Create();
+	this->CreateChartacter();
 }
 
 void SceneGameAbstract::Delete() 
@@ -43,6 +45,15 @@ void SceneGameAbstract::CreatePauseMenuButtons()
 	//pauseOptionsButton = BuilderGameObject::CreateButtonGameObject("Options", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 1.8, 50);
 	pauseQuitButton = BuilderGameObject::CreateButtonGameObject("Quit", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 1.8, 50);
 	this->ManageSceneGameButtonsPause(false);
+}
+
+
+void SceneGameAbstract::CreateChartacter()
+{
+	if (!texture->loadFromFile("../Assets/Character/perso1")) {
+		std::cout << "pas d'image" << std::endl;
+	}
+	player = BuilderGameObject::CreateCharacterGameObject("Player", WindowManager::GetWindowWidth() / 2, 50.f, *texture, 2.5f, 2.5f);
 }
 
 void SceneGameAbstract::Awake() 

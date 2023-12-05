@@ -28,14 +28,14 @@ LeftCommand::LeftCommand() {}
 
 void LeftCommand::Execute(const float& _delta)
 {
-	CameraManager::Move(-500.f * _delta.asSeconds(), 0);
+	CameraManager::Move(-500.f * _delta, 0);
 }
 
 RightCommand::RightCommand() {}
 
 void RightCommand::Execute(const float& _delta)
 {
-	CameraManager::Move(500.f * _delta.asSeconds(), 0);
+	CameraManager::Move(500.f * _delta, 0);
 }
 
 
@@ -43,12 +43,12 @@ UpCommand::UpCommand() {}
 
 void UpCommand::Execute(const float& _delta)
 {
-	CameraManager::Move(0.f,-500.f * _delta.asSeconds());
+	CameraManager::Move(0.f,-500.f * _delta);
 }
 
 DownCommand::DownCommand() {}
 
 void DownCommand::Execute(const float& _delta)
 {
-	CameraManager::Move(0.f, +500.f * _delta.asSeconds());
+	CameraManager::Move(0.f, +500.f * _delta);
 }

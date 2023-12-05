@@ -13,6 +13,7 @@ public:
 	void ManagePause();
 	void ManageSceneGameButtonsPause(bool _states);
 	void CreatePauseMenuButtons();
+	void CreateChartacter();
 
 	void CreateBackground();
 	void Create() override;
@@ -42,7 +43,7 @@ protected:
 	GameObject* victory = nullptr;
 	GameObject* defeat = nullptr;
 	float endTime = 5.f;
-	sf::Texture* texture;
+	sf::Texture* texture = nullptr;
 	sf::Text text;
 };
 
