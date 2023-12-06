@@ -1,6 +1,7 @@
 #include "Scene.h"
 #include "Managers/WindowManager.h"
 #include "Managers/WindowManager.h"
+
 #include <iostream>
 Scene::Scene(const std::string& _name)
 {
@@ -29,6 +30,13 @@ GameObject* Scene::CreateGameObject(const std::string& _name)
 	gameObjects.push_back(gameObject);
 	this->ApplyDepth();
 	return gameObject;
+}
+
+void Scene::AddGameObject( GameObject* _gameObject)
+{
+	gameObjects.push_back(_gameObject);
+	this->ApplyDepth();
+	
 }
 
 //Get GameObject
@@ -81,6 +89,14 @@ void Scene::Update(const float& _delta)
 			gameObjects[i]->Update(_delta);
 		}
 	}
+}
+
+void Scene::Physics(const float& _delta)
+{
+	/*for (GameObject* const& gameObject : gameObjects)
+	{
+		gameObject->Render(_window);
+	}*/
 }
 
 void Scene::Render(sf::RenderWindow* _window)

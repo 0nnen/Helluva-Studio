@@ -4,6 +4,8 @@
 #include <vector>
 
 #include "Maths/Vector2.h"
+
+#include "Components/Transform.h"
 #include "Component.h"
 
 enum class LayerType {
@@ -12,25 +14,26 @@ enum class LayerType {
 	Background
 };
 
+
 class Component;
 
 class GameObject
 {
 public:
 	GameObject();
-	virtual ~GameObject() = default;
+	~GameObject();
 
 	inline std::string GetName() const { return name; }
 	inline void SetName(const std::string& _newName) { name = _newName; }
 
-	inline Maths::Vector2f GetPosition() const { return position; }
-	inline void SetPosition(Maths::Vector2f _newPosition) { position = _newPosition; }
+	inline Maths::Vector2f GetPosition() const { return transform->GetPosition(); }
+	inline void SetPosition(Maths::Vector2f _newPosition) { transform->SetPosition(_newPosition); }
 
-	inline Maths::Vector2<float> GetScale() const { return scale; }
-	inline void SetScale(Maths::Vector2f _newScale) { scale = _newScale; }
+	inline Maths::Vector2<float> GetScale() const { return transform->GetScale(); }
+	inline void SetScale(Maths::Vector2f _newScale) { transform->SetScale(_newScale); }
 
-	inline float GetRotation() const { return rotation; }
-	inline void SetRotation(float _newRotation) { rotation = _newRotation; }
+	inline float GetRotation() const { return transform->GetRotation(); }
+	inline void SetRotation(float _newRotation) { transform->SetRotation(_newRotation); }
 
 	inline void SetActive(const bool& _state) { isActive = _state; }
 	inline bool GetActive() const { return isActive; }
@@ -76,14 +79,12 @@ public:
 
 protected:
 	std::string name = "GameObject";
-	Maths::Vector2f position = Maths::Vector2f::Zero;
-	Maths::Vector2f scale = Maths::Vector2f::One;
-	float rotation = 0.f;
 	std::vector<Component*> components;
 
+	Transform* transform = nullptr;
 	//Quel est le layer du gameObject
 	LayerType layerType = LayerType::Normal;
-		
+
 	//Plus c'est proche de 1, plus le GameObject sera proche de l'écran
 	float depth = 0.f;
 

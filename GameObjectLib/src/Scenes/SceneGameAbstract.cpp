@@ -6,7 +6,6 @@
 
 #include "Components/UIElements/Button.h"
 #include "Components/Shapes/Carre.h"
-#include "Components/SquareCollider.h"
 #include "Components/SpriteRenderer.h"
 #include "Components/HealthPointBar.h"
 

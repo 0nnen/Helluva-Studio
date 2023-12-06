@@ -5,7 +5,6 @@
 #include "Components/Entity.h"
 #include "Components/HealthPointBar.h"
 #include "Components/SpriteRenderer.h"
-#include "Components/SquareCollider.h"
 #include "Components/UIElements/Button.h"
 #include "Components/UIElements/Input.h"
 #include "Components/UIElements/Slider.h"
