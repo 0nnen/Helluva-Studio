@@ -60,8 +60,10 @@
     <ClInclude Include="include\Scenes\SceneGameUnderground.h" />
     <ClInclude Include="include\Components\RigidBody2D.h" />
     <ClInclude Include="include\Components\Transform.h" />
+    <ClInclude Include="include\Scenes\SceneGameWorld.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Scenes\SceneGameWorld.cpp" />
     <ClCompile Include="src\Commands\CommandCharacter.cpp" />
     <ClCompile Include="src\Components\Inputs\InputCharacter.cpp" />
     <ClCompile Include="src\Components\Entity\Character.cpp" />

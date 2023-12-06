@@ -55,6 +55,18 @@ void SceneGameAbstract::CreateChartacter()
 	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", WindowManager::GetWindowWidth() / 2, 50.f, *AssetManager::GetAsset("Perso"), 0.25f, 0.25f);
 }
 
+void SceneGameAbstract::PauseTest()
+{ 
+	isPause = !isPause;
+	std::cout << isPause;
+	pausePlayButton->SetActive(isPause);
+	pausePlayButton->SetVisible(isPause);
+	pauseMenuPrincipalButton->SetActive(isPause);
+	pauseMenuPrincipalButton->SetVisible(isPause);
+	pauseQuitButton->SetActive(isPause);
+	pauseQuitButton->SetVisible(isPause);
+}
+
 void SceneGameAbstract::Awake() 
 {
 	Scene::Awake();

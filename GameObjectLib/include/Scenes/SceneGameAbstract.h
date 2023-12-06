@@ -15,6 +15,9 @@ public:
 	void CreatePauseMenuButtons();
 	void CreateChartacter();
 
+	//void Pause() { isPause = !isPause; }
+	void PauseTest();
+
 	void CreateBackground();
 	void Create() override;
 	void Delete() override;
@@ -41,5 +44,7 @@ protected:
 	float endTime = 5.f;
 	sf::Texture* texture = nullptr;
 	sf::Text text;
+
+	bool isPause = true;
 };
 

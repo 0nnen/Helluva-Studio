@@ -19,6 +19,7 @@ public:
 
 private:
 	GameObject* playButton = nullptr;
+	GameObject* worldButton = nullptr;
 	GameObject* fadeButton = nullptr;
 	GameObject* optionsButton = nullptr;
 	GameObject* quitButton = nullptr;
