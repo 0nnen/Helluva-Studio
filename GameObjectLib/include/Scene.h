@@ -17,12 +17,14 @@ public:
 	virtual void Preload();
 	virtual void Create();
 	virtual void Delete();
+	virtual void Physics(const float& _delta);
 	virtual void Update(const float& _delta);
 	virtual void Render(sf::RenderWindow* _window);
 
 	virtual void Awake();
 
 	GameObject* CreateGameObject(const std::string& _name);
+	void AddGameObject(GameObject* _gameObject);
 
 	void RemoveGameObject(GameObject* _objectToRemove);
 

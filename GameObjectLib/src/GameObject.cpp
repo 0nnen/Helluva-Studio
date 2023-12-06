@@ -4,6 +4,18 @@
 GameObject::GameObject() 
 {
 	this->isActive = true;
+	this->transform = new Transform;
+}
+
+GameObject::~GameObject()
+{
+	
+	for (const Component* component : components)
+	{
+		if(component) delete component;
+	}
+	if(transform) delete transform;
+	components.clear();
 }
 
 void GameObject::AddComponent(Component* _component)

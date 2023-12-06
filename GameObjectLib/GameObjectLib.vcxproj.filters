@@ -11,7 +11,6 @@
     <ClCompile Include="src\Managers\AssetManager.cpp" />
     <ClCompile Include="src\Command.cpp" />
     <ClCompile Include="src\Components\SpriteRenderer.cpp" />
-    <ClCompile Include="src\Components\SquareCollider.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\Scene.cpp" />
     <ClCompile Include="src\Maths\Vector2.cpp" />
@@ -35,6 +34,10 @@
     <ClCompile Include="src\Managers\TimeManager.cpp" />
     <ClCompile Include="src\Scenes\SceneOpening.cpp" />
     <ClCompile Include="src\Scenes\SceneGameUnderground.cpp" />
+    <ClCompile Include="src\Components\RigidBody2D.cpp" />
+    <ClCompile Include="Arme.cpp" />
+    <ClCompile Include="src\BuildesGameObject\BuilderEntityGameObject.cpp" />
+    <ClCompile Include="src\Components\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Managers\HUDManager.h" />
@@ -47,7 +50,6 @@
     <ClInclude Include="include\Managers\AssetManager.h" />
     <ClInclude Include="include\Command.h" />
     <ClInclude Include="include\Components\SpriteRenderer.h" />
-    <ClInclude Include="include\Components\SquareCollider.h" />
     <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\Scene.h" />
     <ClInclude Include="include\Maths\Vector2.h" />
@@ -72,6 +74,10 @@
     <ClInclude Include="include\Managers\TimeManager.h" />
     <ClInclude Include="include\Scenes\SceneOpening.h" />
     <ClInclude Include="include\Scenes\SceneGameUnderground.h" />
+    <ClInclude Include="include\Components\RigidBody2D.h" />
+    <ClInclude Include="Arme.h" />
+    <ClInclude Include="include\BuildersGameObject\BuilderEntityGameObject.h" />
+    <ClInclude Include="include\Components\Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="include\Maths\Vector2.inl" />
