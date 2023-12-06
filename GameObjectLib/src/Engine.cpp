@@ -10,6 +10,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Scenes/SceneGameUnderground.h"
+#include "Scenes/SceneGameAbstract.h"
 Engine* Engine::instance = nullptr;
 
 Engine* Engine::GetInstance()
@@ -28,7 +29,8 @@ void Engine::Init() const
 	CameraManager::Init(WindowManager::GetWindow());
 	HUDManager::Init(WindowManager::GetWindow());
 	SceneManager::AddScene("SceneMainMenu", new SceneMainMenu(std::string("MainMenu")));
-	SceneManager::AddScene("SceneGameUnderground", new SceneGameUnderground(std::string("SceneGameUnderground")));
+	//SceneManager::AddScene("SceneGameUnderground", new SceneGameUnderground(std::string("SceneGameUnderground")));
+	SceneManager::AddScene("SceneGameAbstract", new SceneGameAbstract(std::string("SceneGameAbstract")));
 }
 
 void Engine::Run() const

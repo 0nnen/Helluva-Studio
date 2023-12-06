@@ -4,7 +4,7 @@ class Entity : public Component
 {
 public:
     Entity();
-    explicit Entity(const int& _hp, const int& _damage, const int& _lane, const float& _speed , const float& _attackSpeed, const float& _range);
+    explicit Entity(const int& _hp, const int& _damage, const float& _speed , const float& _attackSpeed, const float& _range);
 
     inline int GetHealthPoint() const { return healthPoint; }
     inline int GetMaxHealthPoint() const { return maxHealthPoint; }

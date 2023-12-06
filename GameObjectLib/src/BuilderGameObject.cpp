@@ -9,6 +9,8 @@
 #include "Components/UIElements/Input.h"
 #include "Components/UIElements/Slider.h"
 #include "Components/Shapes/Carre.h"
+#include "Components/Entity/Character.h"
+#include "Components/Inputs/InputCharacter.h"
 
 
 
@@ -96,6 +98,42 @@ GameObject* BuilderGameObject::CreateInputGameObject(const std::string& _name, c
 	input->SetPosition(_x, _y);
 	input->SetOrigin();
 	input->SetSize(WindowManager::GetFloatWindowWidth() / 1.5, WindowManager::GetFloatWindowHeight() / 8);
+
+	return gameObject;
+}
+
+
+GameObject* BuilderGameObject::CreateCharacterGameObject(const std::string& _name, float _x, float _y, const sf::Texture texture, float scalex, float scaley)
+{
+	GameObject* gameObject = SceneManager::GetActiveScene()->CreateGameObject(_name);
+	gameObject->SetPosition(Maths::Vector2f(_x, _y));
+
+
+	Character* character = gameObject->CreateComponent<Character>();
+
+	/*Armes* arme = gameObject->CreateComponent<Armes>();
+	arme->SetDamage(player->GetDamage());*/
+
+	Sprite* sprite = gameObject->CreateComponent<Sprite>();
+	sprite->SetTexture(texture);
+	sprite->SetScale(scalex, scaley);
+	sprite->SetSprite();
+
+	SquareCollider* squareCollider = gameObject->CreateComponent<SquareCollider>();
+	squareCollider->SetSize(sprite->GetBounds().x, sprite->GetBounds().y);
+	squareCollider->SetScale(scalex, scaley);
+
+	//Gravity* gravity = gameObject->CreateComponent<Gravity>();
+
+	InputCharacter* inputCharacter = gameObject->CreateComponent<InputCharacter>();
+
+	/*HealthPointBar* healthPointBar = gameObject->CreateComponent<HealthPointBar>();
+	healthPointBar->SetHealthPoint(player->GetHealthPoint());
+	healthPointBar->SetMaxHealthPoint(player->GetMaxHealthPoint());
+	healthPointBar->SetAboveSprite(sprite->GetBounds().y / 2 + 50.f);
+	healthPointBar->SetSize(sprite->GetBounds().x, 5);
+	healthPointBar->SetScale(scalex, scaley);
+	healthPointBar->SetHealthPointBar();*/
 
 	return gameObject;
 }

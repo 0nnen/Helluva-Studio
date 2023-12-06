@@ -27,6 +27,8 @@ SceneGameAbstract::~SceneGameAbstract()
 void SceneGameAbstract::Create() 
 {
 	Scene::Create();
+	this->CreateChartacter();
+	this->CreatePauseMenuButtons();
 }
 
 void SceneGameAbstract::Delete() 
@@ -42,6 +44,14 @@ void SceneGameAbstract::CreatePauseMenuButtons()
 	//pauseOptionsButton = BuilderGameObject::CreateButtonGameObject("Options", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 1.8, 50);
 	pauseQuitButton = BuilderGameObject::CreateButtonGameObject("Quit", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 1.8, 50);
 	this->ManageSceneGameButtonsPause(false);
+}
+
+
+void SceneGameAbstract::CreateChartacter()
+{
+	AssetManager::AddAsset("Perso", "../Assets/Character/perso1.png");
+
+	player = BuilderGameObject::CreateCharacterGameObject("Player", WindowManager::GetWindowWidth() / 2, 50.f, *AssetManager::GetAsset("Perso"), 0.25f, 0.25f);
 }
 
 void SceneGameAbstract::Awake() 
@@ -63,10 +73,6 @@ void SceneGameAbstract::ManagePause()
 	for (GameObject* enemy : this->enemies)
 	{
 		enemy->SetActive(isActive);
-	}
-	for (GameObject* tower : this->towers)
-	{
-		tower->SetActive(isActive);
 	}
 }
 

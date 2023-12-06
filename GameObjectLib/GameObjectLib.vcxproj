@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Commands\CommandCharacter.h" />
+    <ClInclude Include="include\Components\Entity\Character.h" />
     <ClInclude Include="Arme.h" />
     <ClInclude Include="include\BuildersGameObject\BuilderEntityGameObject.h" />
     <ClInclude Include="include\Engine.h" />
@@ -50,6 +52,7 @@
     <ClInclude Include="include\Scenes\SceneCreditsMenu.h" />
     <ClInclude Include="include\Components\Ressource.h" />
     <ClInclude Include="include\Managers\WindowManager.h" />
+    <ClInclude Include="include\Components\Inputs\InputCharacter.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="include\Scenes\SceneLoginSignup.h" />
     <ClInclude Include="include\Managers\TimeManager.h" />
@@ -59,6 +62,9 @@
     <ClInclude Include="include\Components\Transform.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Commands\CommandCharacter.cpp" />
+    <ClCompile Include="src\Components\Inputs\InputCharacter.cpp" />
+    <ClCompile Include="src\Components\Entity\Character.cpp" />
     <ClCompile Include="Arme.cpp" />
     <ClCompile Include="src\BuildesGameObject\BuilderEntityGameObject.cpp" />
     <ClCompile Include="src\Components\RigidBody2D.cpp" />

@@ -34,6 +34,9 @@
     <ClCompile Include="src\Managers\TimeManager.cpp" />
     <ClCompile Include="src\Scenes\SceneOpening.cpp" />
     <ClCompile Include="src\Scenes\SceneGameUnderground.cpp" />
+    <ClCompile Include="src\Components\Entity\Character.cpp" />
+    <ClCompile Include="src\Components\Inputs\InputCharacter.cpp" />
+    <ClCompile Include="src\Commands\CommandCharacter.cpp" />
     <ClCompile Include="src\Components\RigidBody2D.cpp" />
     <ClCompile Include="Arme.cpp" />
     <ClCompile Include="src\BuildesGameObject\BuilderEntityGameObject.cpp" />
@@ -74,6 +77,9 @@
     <ClInclude Include="include\Managers\TimeManager.h" />
     <ClInclude Include="include\Scenes\SceneOpening.h" />
     <ClInclude Include="include\Scenes\SceneGameUnderground.h" />
+    <ClInclude Include="include\Components\Entity\Character.h" />
+    <ClInclude Include="include\Components\Inputs\InputCharacter.h" />
+    <ClInclude Include="include\Commands\CommandCharacter.h" />
     <ClInclude Include="include\Components\RigidBody2D.h" />
     <ClInclude Include="Arme.h" />
     <ClInclude Include="include\BuildersGameObject\BuilderEntityGameObject.h" />
