@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Commands\CommandCharacter.h" />
     <ClInclude Include="include\Components\Entity\Character.h" />
     <ClInclude Include="include\Engine.h" />
     <ClInclude Include="include\BuilderGameObject.h" />
@@ -58,6 +59,7 @@
     <ClInclude Include="include\Scenes\SceneGameUnderground.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Commands\CommandCharacter.cpp" />
     <ClCompile Include="src\Components\Inputs\InputCharacter.cpp" />
     <ClCompile Include="src\Components\Entity\Character.cpp" />
     <ClCompile Include="src\Scenes\SceneGameUnderground.cpp" />

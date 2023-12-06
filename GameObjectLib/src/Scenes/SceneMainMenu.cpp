@@ -64,7 +64,8 @@ void SceneMainMenu::Update(const float& _delta)
 		if (FadeOut(_delta))
 		{
 			std::cout << "Switch Scene" << std::endl;
-			SceneManager::RunScene("SceneGameUnderground");
+			//SceneManager::RunScene("SceneGameUnderground");
+			SceneManager::RunScene("SceneGameAbstract");
 		}
 
 	}

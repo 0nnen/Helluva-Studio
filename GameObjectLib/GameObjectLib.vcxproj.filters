@@ -37,6 +37,7 @@
     <ClCompile Include="src\Scenes\SceneGameUnderground.cpp" />
     <ClCompile Include="src\Components\Entity\Character.cpp" />
     <ClCompile Include="src\Components\Inputs\InputCharacter.cpp" />
+    <ClCompile Include="src\Commands\CommandCharacter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Managers\HUDManager.h" />
@@ -76,6 +77,7 @@
     <ClInclude Include="include\Scenes\SceneGameUnderground.h" />
     <ClInclude Include="include\Components\Entity\Character.h" />
     <ClInclude Include="include\Components\Inputs\InputCharacter.h" />
+    <ClInclude Include="include\Commands\CommandCharacter.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="include\Maths\Vector2.inl" />

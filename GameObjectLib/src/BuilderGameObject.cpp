@@ -127,7 +127,6 @@ GameObject* BuilderGameObject::CreateCharacterGameObject(const std::string& _nam
 	//Gravity* gravity = gameObject->CreateComponent<Gravity>();
 
 	InputCharacter* inputCharacter = gameObject->CreateComponent<InputCharacter>();
-	inputHandlerPlayer = inputCharacter;
 
 	/*HealthPointBar* healthPointBar = gameObject->CreateComponent<HealthPointBar>();
 	healthPointBar->SetHealthPoint(player->GetHealthPoint());

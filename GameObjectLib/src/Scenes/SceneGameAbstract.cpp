@@ -17,7 +17,6 @@ SceneGameAbstract::SceneGameAbstract(const std::string& _newName) : Scene(_newNa
 {
 	this->Awake();
 	srand(time(nullptr));
-	texture = new sf::Texture();
 }
 
 
@@ -30,6 +29,7 @@ void SceneGameAbstract::Create()
 {
 	Scene::Create();
 	this->CreateChartacter();
+	this->CreatePauseMenuButtons();
 }
 
 void SceneGameAbstract::Delete() 
@@ -50,10 +50,9 @@ void SceneGameAbstract::CreatePauseMenuButtons()
 
 void SceneGameAbstract::CreateChartacter()
 {
-	if (!texture->loadFromFile("../Assets/Character/perso1")) {
-		std::cout << "pas d'image" << std::endl;
-	}
-	player = BuilderGameObject::CreateCharacterGameObject("Player", WindowManager::GetWindowWidth() / 2, 50.f, *texture, 2.5f, 2.5f);
+	AssetManager::AddAsset("Perso", "../Assets/Character/perso1.png");
+
+	player = BuilderGameObject::CreateCharacterGameObject("Player", WindowManager::GetWindowWidth() / 2, 50.f, *AssetManager::GetAsset("Perso"), 0.25f, 0.25f);
 }
 
 void SceneGameAbstract::Awake() 
@@ -75,10 +74,6 @@ void SceneGameAbstract::ManagePause()
 	for (GameObject* enemy : this->enemies)
 	{
 		enemy->SetActive(isActive);
-	}
-	for (GameObject* tower : this->towers)
-	{
-		tower->SetActive(isActive);
 	}
 }
 

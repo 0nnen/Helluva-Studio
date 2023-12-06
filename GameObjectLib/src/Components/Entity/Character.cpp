@@ -2,7 +2,7 @@
 #include "Components/Entity.h"
 #include "Managers/WindowManager.h"
 
-Character::Character() : Entity(200, 30, 20.f, 50.f, 5.f)
+Character::Character() : Entity(200, 30, 15.f, 50.f, 5.f)
 {
     directionCharacter = false;
     direction = Direction::Right;
