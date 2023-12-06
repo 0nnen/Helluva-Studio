@@ -4,7 +4,7 @@
 RigidBody2D::RigidBody2D()
 {
 
-	gravity = Maths::Vector2f(0.f, -9.8f);
+	gravity = Maths::Vector2f(0.f, 9.8f);
 	velocity = Maths::Vector2f::Zero;
 	isAffectedByGravity = true;
 }

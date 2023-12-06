@@ -4,7 +4,7 @@
 GameObject::GameObject() 
 {
 	this->isActive = true;
-	this->transform = new Transform;
+	this->transform = new Transform();
 }
 
 GameObject::~GameObject()

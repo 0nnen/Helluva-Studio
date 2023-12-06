@@ -10,6 +10,7 @@
 #include "Components/HealthPointBar.h"
 
 #include "BuilderGameObject.h"
+#include "BuildersGameObject/BuilderEntityGameObject.h"
 
 
 SceneGameAbstract::SceneGameAbstract(const std::string& _newName) : Scene(_newName)
@@ -51,7 +52,7 @@ void SceneGameAbstract::CreateChartacter()
 {
 	AssetManager::AddAsset("Perso", "../Assets/Character/perso1.png");
 
-	player = BuilderGameObject::CreateCharacterGameObject("Player", WindowManager::GetWindowWidth() / 2, 50.f, *AssetManager::GetAsset("Perso"), 0.25f, 0.25f);
+	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", WindowManager::GetWindowWidth() / 2, 50.f, *AssetManager::GetAsset("Perso"), 0.25f, 0.25f);
 }
 
 void SceneGameAbstract::Awake() 
