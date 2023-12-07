@@ -1,4 +1,4 @@
-#include "Arme.h"
+#include "Components/Arme.h"
 #include "BuilderGameObject.h"
 #include "BuildersGameObject/BuilderEntityGameObject.h"
 
@@ -30,7 +30,7 @@ void Arme::Shoot() {
 	if (mag > 0 && fireCooldown <= 0 && activeReload <= 0) {
 		mag -= 1;
 		fireCooldown = fireRate;
-		bullets.push_back(BuilderEntityGameObject::CreateBulletGameObject("Bullet", *texture, 2.5f, 2.5f, GetOwner()));
+		bullets.push_back(BuilderEntityGameObject::CreateBulletGameObject("Bullet", texture, 2.5f, 2.5f, GetOwner()));
 		if (mag == 0) {
 			activeReload = reload;
 			fireCooldown = 0.f;

@@ -1,6 +1,7 @@
 #include "Scenes/SceneLoginSignup.h"
 #include "Managers/WindowManager.h"
 #include "Managers/SceneManager.h"
+#include "Managers/AssetManager.h"
 #include "Components/UIElements/Button.h"
 #include "BuilderGameObject.h"
 
@@ -9,16 +10,17 @@ SceneLoginSignup::SceneLoginSignup(const std::string& _newName) : Scene(_newName
 	this->Create();
 }
 
+void SceneLoginSignup::Preload()
+{
+	Scene:Preload();
+	AssetManager::AddAsset("BackgroundLogin", "../assets/bgMenu.png");
+}
+
 void SceneLoginSignup::Create() 
 {
 	Scene::Create();
-	sf::Texture backgroundTexture2;
 
-	if (!backgroundTexture2.loadFromFile("../assets/Sprite_LOL/background/background2_lol.png"))
-	{
-		std::cout << "pas d'image" << std::endl;
-	}
-	GameObject* background2 = BuilderGameObject::CreateBackgroundGameObject("Background2", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, backgroundTexture2);
+	GameObject* background = BuilderGameObject::CreateBackgroundGameObject("Background", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundLogin"));
 	loginName = BuilderGameObject::CreateInputGameObject("loginName", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 8);
 	loginPassWord = BuilderGameObject::CreateInputGameObject("loginPassWord", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 7);
 	buttonLogin = BuilderGameObject::CreateButtonGameObject("buttonLogin", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 6, 30);

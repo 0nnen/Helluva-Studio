@@ -19,9 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Components\Animation.h" />
     <ClInclude Include="include\Commands\CommandCharacter.h" />
     <ClInclude Include="include\Components\Entity\Character.h" />
-    <ClInclude Include="Arme.h" />
+    <ClInclude Include="include\Components\Arme.h" />
     <ClInclude Include="include\BuildersGameObject\BuilderEntityGameObject.h" />
     <ClInclude Include="include\Engine.h" />
     <ClInclude Include="include\BuilderGameObject.h" />
@@ -62,10 +63,11 @@
     <ClInclude Include="include\Components\Transform.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\Animation.cpp" />
     <ClCompile Include="src\Commands\CommandCharacter.cpp" />
     <ClCompile Include="src\Components\Inputs\InputCharacter.cpp" />
     <ClCompile Include="src\Components\Entity\Character.cpp" />
-    <ClCompile Include="Arme.cpp" />
+    <ClCompile Include="src\Components\Arme.cpp" />
     <ClCompile Include="src\BuildesGameObject\BuilderEntityGameObject.cpp" />
     <ClCompile Include="src\Components\RigidBody2D.cpp" />
     <ClCompile Include="src\Scenes\SceneGameUnderground.cpp" />

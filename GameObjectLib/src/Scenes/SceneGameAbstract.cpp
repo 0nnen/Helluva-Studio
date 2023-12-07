@@ -32,11 +32,24 @@ void SceneGameAbstract::Create()
 	this->CreatePauseMenuButtons();
 }
 
+void SceneGameAbstract::Preload()
+{
+	Scene::Preload();
+
+	AssetManager::AddAsset("Perso", "../Assets/Character/perso1.png");
+	AssetManager::AddAsset("BackgroundAbstract", "../Assets/bgMenu.png");
+}
+
+
 void SceneGameAbstract::Delete() 
 {
 	Scene::Delete();
 }
 
+void SceneGameAbstract::CreateBackground()
+{
+	GameObject* background1 = BuilderGameObject::CreateBackgroundGameObject("Background1", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundAbstract"));
+};
 
 void SceneGameAbstract::CreatePauseMenuButtons() 
 {
@@ -50,9 +63,7 @@ void SceneGameAbstract::CreatePauseMenuButtons()
 
 void SceneGameAbstract::CreateChartacter()
 {
-	AssetManager::AddAsset("Perso", "../Assets/Character/perso1.png");
-
-	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", WindowManager::GetWindowWidth() / 2, 50.f, *AssetManager::GetAsset("Perso"), 0.25f, 0.25f);
+	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", WindowManager::GetWindowWidth() / 2, 50.f, AssetManager::GetAsset("Perso"), 0.25f, 0.25f);
 }
 
 void SceneGameAbstract::Awake() 
@@ -111,13 +122,3 @@ void SceneGameAbstract::Render(sf::RenderWindow* _window)
 {
 	Scene::Render(_window);
 }
-void SceneGameAbstract::CreateBackground()
-{
-	sf::Texture backgroundTexture1;
-
-	if (!backgroundTexture1.loadFromFile("../assets/Sprite/background/background_color.png"))
-	{
-		std::cout << "pas d'image" << std::endl;
-	}
-	GameObject* background1 = BuilderGameObject::CreateBackgroundGameObject("Background1", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, backgroundTexture1);
-};
