@@ -1,6 +1,8 @@
 #pragma once
 #include "Scene.h"
 
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics.hpp>
 
 class SceneGameAbstract : public Scene
 {
@@ -10,13 +12,17 @@ public:
 
 	void Awake() override;
 
-	void ManagePause();
-	void ManageSceneGameButtonsPause(bool _states);
+	//void ManagePause();
+	void ManageDefaultButtonsPause(bool _states);
 	void CreatePauseMenuButtons();
 	void CreateChartacter();
 
+	void Pause();
+	void CreateSceneBackgroundOption();
+
 	void CreateBackground();
 	void Create() override;
+	void Preload() override;
 	void Delete() override;
 	void Update(const float& _delta) override;
 	void Render(sf::RenderWindow* _window) override;
@@ -43,5 +49,15 @@ protected:
 	float endTime = 5.f;
 	sf::Texture* texture = nullptr;
 	sf::Text text;
+
+	struct AlphaBackkground
+	{
+		sf::RectangleShape backgroundAlpha;
+	};
+
+	AlphaBackkground backgroundAlpha1;
+	AlphaBackkground backgroundAlpha2;
+
+	bool isPause = true;
 };
 

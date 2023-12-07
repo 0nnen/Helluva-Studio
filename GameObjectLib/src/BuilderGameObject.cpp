@@ -32,7 +32,7 @@ GameObject* BuilderGameObject::CreateButtonGameObject(const std::string& _name, 
 	return gameObject;
 }
 
-GameObject* BuilderGameObject::CreateBackgroundGameObject(const std::string& _name, const float& _x, const float& _y, const sf::Texture& _texture)
+GameObject* BuilderGameObject::CreateBackgroundGameObject(const std::string& _name, const float& _x, const float& _y, sf::Texture* _texture)
 {
 	GameObject* gameObject = SceneManager::GetActiveScene()->CreateGameObject(_name);
 	gameObject->SetPosition(Maths::Vector2f(_x, _y));
@@ -40,9 +40,10 @@ GameObject* BuilderGameObject::CreateBackgroundGameObject(const std::string& _na
 
 	Sprite* sprite = gameObject->CreateComponent<Sprite>();
 	sprite->SetTexture(_texture);
+	sprite->SetScale();
 
-	float scalerX = (float)WindowManager::GetWindowWidth() / _texture.getSize().x;
-	float scalerY = (float)WindowManager::GetWindowHeight() / _texture.getSize().y;
+	float scalerX = (float)WindowManager::GetWindowWidth() / _texture->getSize().x;
+	float scalerY = (float)WindowManager::GetWindowHeight() / _texture->getSize().y;
 	sprite->SetScale(scalerX, scalerY);
 	sprite->SetOrigin();
 	sprite->SetSprite();

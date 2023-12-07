@@ -10,6 +10,9 @@ public:
 	void Gravity();
 	inline void AddForces(const Maths::Vector2f& _force) { velocity += _force; }
 
+	inline float GetMass() const { return mass; }
+	inline void SetMass(const float& _mass) { mass = _mass; }
+
 	inline float GetGravityScale() const { return gravityScale; }
 	inline void SetGravityScale(const float& _newGravityScale) { gravityScale = _newGravityScale; }
 
@@ -46,6 +49,7 @@ public:
 	static bool IsBelow(const RigidBody2D& _rigidBody2DA, const RigidBody2D& _rigidBody2DB);
 
 private:
+	float mass = 1.0f;
 	float gravityScale = 1.f;
 	Maths::Vector2f velocity;
 	Maths::Vector2f gravity;

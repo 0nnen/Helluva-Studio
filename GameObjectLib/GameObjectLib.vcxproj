@@ -20,10 +20,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\BuildersGameObject\BuilderShapeGameObject.h" />
+    <ClInclude Include="include\Components\Animation.h" />
     <ClInclude Include="include\Commands\CommandCharacter.h" />
     <ClInclude Include="include\Components\Entity\Character.h" />
-    <ClInclude Include="Arme.h" />
+    <ClInclude Include="include\Components\Arme.h" />
     <ClInclude Include="include\BuildersGameObject\BuilderEntityGameObject.h" />
+    <ClInclude Include="include\Components\Weapons\Bullet.h" />
     <ClInclude Include="include\Engine.h" />
     <ClInclude Include="include\BuilderGameObject.h" />
     <ClInclude Include="include\Managers\FontManager.h" />
@@ -46,6 +48,7 @@
     <ClInclude Include="include\Scene.h" />
     <ClInclude Include="include\Maths\Vector2.h" />
     <ClInclude Include="include\Managers\SceneManager.h" />
+    <ClInclude Include="include\Scenes\SceneGameWorld.h" />
     <ClInclude Include="include\Scenes\SceneMainMenu.h" />
     <ClInclude Include="include\Scenes\SceneGameAbstract.h" />
     <ClInclude Include="include\Scenes\SceneSuccessMenu.h" />
@@ -66,13 +69,16 @@
   <ItemGroup>
     <ClCompile Include="src\Scenes\ScenesGame\ScenesTest.cpp" />
     <ClCompile Include="src\BuildesGameObject\BuilderShapeGameObject.cpp" />
+    <ClCompile Include="src\Components\Animation.cpp" />
     <ClCompile Include="src\Commands\CommandCharacter.cpp" />
     <ClCompile Include="src\Components\Inputs\InputCharacter.cpp" />
     <ClCompile Include="src\Components\Entity\Character.cpp" />
-    <ClCompile Include="Arme.cpp" />
+    <ClCompile Include="src\Components\Arme.cpp" />
     <ClCompile Include="src\BuildesGameObject\BuilderEntityGameObject.cpp" />
     <ClCompile Include="src\Components\RigidBody2D.cpp" />
+    <ClCompile Include="src\Components\Weapons\Bullet.cpp" />
     <ClCompile Include="src\Scenes\SceneGameUnderground.cpp" />
+    <ClCompile Include="src\Scenes\SceneGameWorld.cpp" />
     <ClCompile Include="src\Scenes\SceneOpening.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\BuilderGameObject.cpp" />

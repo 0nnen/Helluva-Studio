@@ -1,4 +1,4 @@
-FIX : Master
+NEW : Animation
 
-- Fix de la master
+- Création d'un component pour les animations
 

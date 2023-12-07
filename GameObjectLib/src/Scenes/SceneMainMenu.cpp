@@ -21,7 +21,7 @@ void SceneMainMenu::Preload()
 void SceneMainMenu::Create() 
 {
 	Scene::Create();
-	GameObject* background1 = BuilderGameObject::CreateBackgroundGameObject("BackgroundMenu", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, *AssetManager::GetAsset("BackgroundMainMenu"));
+	GameObject* background1 = BuilderGameObject::CreateBackgroundGameObject("BackgroundMenu", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundMainMenu"));
 	this->CreateSceneButtonsMenu();
 	this->activeOption(false);
 	this->activeMenu(true);
@@ -44,6 +44,7 @@ void SceneMainMenu::CreateSceneButtonsMenu()
 	float widthScreen = WindowManager::GetFloatWindowWidth();
 	float heightScreen = WindowManager::GetFloatWindowHeight();
 	playButton = BuilderGameObject::CreateButtonGameObject("Play", widthScreen / 2, heightScreen / 3, 50);
+	worldButton = BuilderGameObject::CreateButtonGameObject("Play World", widthScreen / 2, heightScreen / 4, 30);
 	optionsButton = BuilderGameObject::CreateButtonGameObject("Options", widthScreen / 2, heightScreen / 2, 20);
 	quitButton = BuilderGameObject::CreateButtonGameObject("Quit", widthScreen / 2, heightScreen / 1.5, 50);
 	successButton = BuilderGameObject::CreateButtonGameObject("Success", widthScreen / 1.2, heightScreen / 10, 25);
@@ -68,6 +69,11 @@ void SceneMainMenu::Update(const float& _delta)
 			SceneManager::RunScene("ScenesTest");
 		}
 
+	}
+	else if (worldButton->GetComponent<Button>()->IsClicked())
+	{
+		std::cout << "World Scene" << std::endl;
+		SceneManager::RunScene("SceneGameWorld");
 	}
 	else if (optionsButton->GetComponent<Button>()->IsClicked()) 
 	{

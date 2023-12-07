@@ -18,16 +18,19 @@ SceneSuccessMenu::~SceneSuccessMenu()
 	this->Delete();
 }
 
+
+
+void SceneSuccessMenu::Preload()
+{
+	Scene::Preload();
+	AssetManager::AddAsset("BackgroundSuccess", "../Assets/bgMenu.png");
+}
+
 void SceneSuccessMenu::Create() 
 {
 	Scene::Create();
-	sf::Texture backgroundTexture2;
 
-	if (!backgroundTexture2.loadFromFile("../assets/Sprite_LOL/background/background2_lol.png"))
-	{
-		std::cout << "pas d'image" << std::endl;
-	}
-	GameObject* background2 = BuilderGameObject::CreateBackgroundGameObject("Background2", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, backgroundTexture2);
+	GameObject* background2 = BuilderGameObject::CreateBackgroundGameObject("Background2", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundSuccess"));
 	this->CreateSceneButtonsMenu();
 }
 
