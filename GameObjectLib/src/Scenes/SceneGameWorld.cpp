@@ -6,13 +6,15 @@ SceneGameWorld::SceneGameWorld(const std::string& _newName) : SceneGameAbstract(
 void SceneGameWorld::Preload()
 {
 	Scene::Preload();
-	AssetManager::AddAsset("BackgroundMapWorld", "../Assets/worldMap.png");
+	AssetManager::AddAsset("BackgroundMapBackgroundWorld", "../Assets/worldMapBackground.png");
+	AssetManager::AddAsset("BackgroundMapWorld", "../Assets/worldMap1.png");
 }
 
 void SceneGameWorld::Create()
 {
 	Scene::Create();
-	GameObject* backgroundWorldMap = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld1", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundMapWorld"));
+	GameObject* backgroundWorldMap = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld1", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundMapBackgroundWorld"));
+	GameObject* backgroundWorldMap2 = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld2", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundMapWorld"));
 	//this->CreateSceneButtonsMenu();
 	this->CreateSceneBackgroundOption();
 	this->CreatePauseMenuButtons();
