@@ -6,6 +6,7 @@
 #include "Components/SpriteRenderer.h"
 #include "Managers/SceneManager.h"
 #include "Components/Entity/Character.h"
+#include "Scenes/ScenesGame/ScenesTest.h"
 
 InputCharacter::InputCharacter() {
 	//this->player = nullptr;
@@ -24,13 +25,13 @@ void InputCharacter::Update(const float& _delta) {
 	{
 		commandMoves->Execute(_delta);
 	}
-	/*Command* commandJump = this->JumpInput();
+	Command* commandJump = this->JumpInput();
 
 	if (commandJump)
 	{
 		commandJump->Execute(_delta);
 	}
-	Command* fireBullet = this->FireInput();
+	/*Command* fireBullet = this->FireInput();
 
 	if (fireBullet)
 	{
@@ -48,10 +49,8 @@ Command* InputCharacter::HandleInput() {
 }
 
 Command* InputCharacter::JumpInput() {
-	if (SceneManager::GetActiveGameScene()->GetPlayer()->GetComponent<RigidBody2D>()->GetIsGravity())
-	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) return KeyZ_;
-	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) return KeyZ_;
 	
 	return nullptr;
 }

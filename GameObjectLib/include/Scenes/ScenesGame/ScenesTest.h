@@ -19,13 +19,13 @@ public:
 	void Awake() override;
 
 	void CreatePlatform();
-	void CreateCharacter();
 	void Collinding();
 
 	void Create() override;
 	void Delete() override;
 	void Update(const float& _delta);
 	void Render(sf::RenderWindow* _window) override;
+	GameObject* GetPlayer() { return player; }
 
 private:
 

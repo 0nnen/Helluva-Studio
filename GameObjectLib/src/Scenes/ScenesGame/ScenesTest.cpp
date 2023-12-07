@@ -15,36 +15,31 @@ void ScenesTest::Delete()
 	SceneGameAbstract::Delete();
 }
 
-void ScenesTest::CreateCharacter()
-{
-	AssetManager::AddAsset("Perso", "../Assets/Character/perso1.png");
-
-	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", 10.f, 50.f, *AssetManager::GetAsset("Perso"), 0.25f, 0.25f);
-}
-
 void ScenesTest::CreatePlatform()
 {
 	platform = BuilderShapeGameObject::CreateCarreGameObject("platform", 10.f, 500.f);
 }
+
 void ScenesTest::Create()
 {
-	this->CreateCharacter();
 	this->CreatePlatform();
 	SceneGameAbstract::Create();
 }
 
 void ScenesTest::Collinding()
 {
-
-	if (RigidBody2D::IsAbove(*(SceneManager::GetActiveGameScene()->GetPlayer()->GetComponent<RigidBody2D>()), *(SceneManager::GetActiveGameScene()->GetPlatform()->GetComponent<RigidBody2D>())))
+	player = SceneManager::GetActiveGameScene()->GetPlayer();
+	if (RigidBody2D::IsAbove(*(player->GetComponent<RigidBody2D>()), *(platform->GetComponent<RigidBody2D>())))
 	{
-		SceneManager::GetActiveGameScene()->GetPlayer()->GetComponent<RigidBody2D>()->SetIsGravity(false);
+		std::cout << "ok";
+		player->GetComponent<RigidBody2D>()->SetIsGravity(false);
 	}
 }
 
 
 void ScenesTest::Update(const float& _delta)
 {
+	this->Collinding();
 	SceneGameAbstract::Update(_delta);
 }
 

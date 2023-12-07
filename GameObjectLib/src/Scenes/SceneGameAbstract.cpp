@@ -27,6 +27,8 @@ SceneGameAbstract::~SceneGameAbstract()
 
 void SceneGameAbstract::Create() 
 {
+	this->CreateChartacter();
+	this->CreatePauseMenuButtons();
 	Scene::Create();
 }
 
@@ -50,7 +52,7 @@ void SceneGameAbstract::CreateChartacter()
 {
 	AssetManager::AddAsset("Perso", "../Assets/Character/perso1.png");
 
-	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", WindowManager::GetWindowWidth() / 2, 50.f, *AssetManager::GetAsset("Perso"), 0.25f, 0.25f);
+	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", 10.f, 300.f, *AssetManager::GetAsset("Perso"), 0.25f, 0.25f);
 }
 
 void SceneGameAbstract::Awake() 
