@@ -41,6 +41,7 @@
     <ClCompile Include="src\Components\Arme.cpp" />
     <ClCompile Include="src\BuildesGameObject\BuilderEntityGameObject.cpp" />
     <ClCompile Include="src\Components\Transform.cpp" />
+    <ClCompile Include="src\Scenes\SceneGameWorld.cpp" />
     <ClCompile Include="src\Components\Animation.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -85,6 +86,7 @@
     <ClInclude Include="include\Components\Arme.h" />
     <ClInclude Include="include\BuildersGameObject\BuilderEntityGameObject.h" />
     <ClInclude Include="include\Components\Transform.h" />
+    <ClInclude Include="include\Scenes\SceneGameWorld.h" />
     <ClInclude Include="include\Components\Animation.h" />
   </ItemGroup>
   <ItemGroup>
