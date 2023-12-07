@@ -66,7 +66,7 @@ void SceneMainMenu::Update(const float& _delta)
 		{
 			std::cout << "Switch Scene" << std::endl;
 			//SceneManager::RunScene("SceneGameUnderground");
-			SceneManager::RunScene("SceneGameAbstract");
+			SceneManager::RunScene("ScenesTest");
 		}
 
 	}

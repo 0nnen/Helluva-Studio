@@ -2,6 +2,8 @@
 
 #include "Command.h"
 #include "Component.h"
+#include "Managers/SceneManager.h"
+#include "Components/RigidBody2D.h"
 
 
 class InputCharacter : public Component
@@ -11,7 +13,7 @@ public:
 
 	void Update(const float& _delta) override;
 	Command* HandleInput();
-	//Command* JumpInput();
+	Command* JumpInput();
 	//Command* FireInput();
 	//Command* PauseInput();
 	//void MoveRight(sf::Time _delta);

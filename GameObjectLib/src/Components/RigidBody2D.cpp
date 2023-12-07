@@ -27,7 +27,7 @@ bool RigidBody2D::IsColliding(const RigidBody2D& _rigidBody2DA, const RigidBody2
 {
 	const Maths::Vector2f positionA = _rigidBody2DA.GetOwner()->GetPosition();
 	const Maths::Vector2f positionB = _rigidBody2DB.GetOwner()->GetPosition();
-	return (positionA.x - _rigidBody2DA.GetWidthCollider() / 2 < positionB.x + _rigidBody2DB.GetWidthCollider() / 2 && positionA.x + _rigidBody2DA.GetWidthCollider() / 2 > positionB.x - _rigidBody2DB.GetWidthCollider() / 2 && positionA.y - _rigidBody2DA.GetHeightCollider() / 2 < positionB.y + _rigidBody2DB.GetHeightCollider() / 2 && positionA.y + _rigidBody2DA.GetHeightCollider() / 2 > positionB.y - _rigidBody2DB.GetHeightCollider() / 2);
+	return (positionA.x - _rigidBody2DA.GetWidthCollider() / 2 < positionB.x + 20.f + _rigidBody2DB.GetWidthCollider() / 2 && positionA.x + 20.f + _rigidBody2DA.GetWidthCollider() / 2 > positionB.x - _rigidBody2DB.GetWidthCollider() / 2 && positionA.y - _rigidBody2DA.GetHeightCollider() / 2 < positionB.y + 20.f + _rigidBody2DB.GetHeightCollider() / 2 && positionA.y + 20.f + _rigidBody2DA.GetHeightCollider() / 2 > positionB.y - _rigidBody2DB.GetHeightCollider() / 2);
 }
 
 bool RigidBody2D::IsAbove(const RigidBody2D& _rigidBody2DA, const RigidBody2D& _rigidBody2DB)
