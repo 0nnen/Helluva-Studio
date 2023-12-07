@@ -28,8 +28,6 @@ SceneGameAbstract::~SceneGameAbstract()
 void SceneGameAbstract::Create() 
 {
 	Scene::Create();
-	this->CreateChartacter();
-	this->CreatePauseMenuButtons();
 }
 
 void SceneGameAbstract::Delete() 

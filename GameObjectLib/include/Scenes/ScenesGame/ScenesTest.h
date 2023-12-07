@@ -12,7 +12,8 @@
 
 class ScenesTest : public SceneGameAbstract 
 {
-	ScenesTest(sf::RenderWindow* window);
+public:
+	ScenesTest(const std::string& _newName);
 	~ScenesTest();
 
 	void Awake() override;

@@ -1,6 +1,6 @@
 #include "Scenes/ScenesGame/ScenesTest.h"
 
-ScenesTest::ScenesTest(sf::RenderWindow* _window) : SceneGameAbstract(_window) {
+ScenesTest::ScenesTest(const std::string& _newName) : SceneGameAbstract(_newName) {
 }
 
 ScenesTest::~ScenesTest() {}
@@ -19,12 +19,12 @@ void ScenesTest::CreateCharacter()
 {
 	AssetManager::AddAsset("Perso", "../Assets/Character/perso1.png");
 
-	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", WindowManager::GetWindowWidth() / 2, 50.f, *AssetManager::GetAsset("Perso"), 0.25f, 0.25f);
+	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", 10.f, 50.f, *AssetManager::GetAsset("Perso"), 0.25f, 0.25f);
 }
 
 void ScenesTest::CreatePlatform()
 {
-	platform = BuilderShapeGameObject::CreateCarreGameObject("platform", WindowManager::GetWindowWidth() / 2, 50.f);
+	platform = BuilderShapeGameObject::CreateCarreGameObject("platform", 10.f, 500.f);
 }
 void ScenesTest::Create()
 {
@@ -36,7 +36,7 @@ void ScenesTest::Create()
 void ScenesTest::Collinding()
 {
 
-	if (SceneManager::GetActiveGameScene()->GetPlayer()->GetComponent<RigidBody2D>(), SceneManager::GetActiveGameScene()->GetPlatform()->GetComponent<RigidBody2D>())
+	if (RigidBody2D::IsAbove(*(SceneManager::GetActiveGameScene()->GetPlayer()->GetComponent<RigidBody2D>()), *(SceneManager::GetActiveGameScene()->GetPlatform()->GetComponent<RigidBody2D>())))
 	{
 		SceneManager::GetActiveGameScene()->GetPlayer()->GetComponent<RigidBody2D>()->SetIsGravity(false);
 	}
