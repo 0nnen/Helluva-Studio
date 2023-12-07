@@ -1,4 +1,4 @@
-ENH : Rectangle et plateforme
+FIX : master
 
-- Création d'un component rectangle et d'une plateforme
+- Réparation Master
 

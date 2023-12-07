@@ -66,8 +66,9 @@
     <ClInclude Include="include\Components\RigidBody2D.h" />
     <ClInclude Include="include\Components\Transform.h" />
     <ClInclude Include="include\Scenes\ScenesGame\ScenesTest.h" />
+    <ClInclude Include="include\Scenes\ScenesGame\Rectangle.h" />
   </ItemGroup>
-  <ItemGroup>z
+  <ItemGroup>
     <ClCompile Include="src\Components\Shapes\Rectangle.cpp" />
     <ClCompile Include="src\Scenes\ScenesGame\ScenesTest.cpp" />
     <ClCompile Include="src\BuildesGameObject\BuilderShapeGameObject.cpp" />
