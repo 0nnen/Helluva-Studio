@@ -15,7 +15,7 @@ GameObject* BuilderShapeGameObject::CreateCarreGameObject(const std::string& _na
 	rigidBody->SetIsGravity(false);
 
 	Carre* carre = gameObject->CreateComponent<Carre>();
-	carre->SetSize(100);
+	carre->SetSize(10);
 	carre->SetOrigin();
 
 	return gameObject;

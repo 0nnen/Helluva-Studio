@@ -52,7 +52,7 @@ void SceneGameAbstract::CreateChartacter()
 {
 	AssetManager::AddAsset("Perso", "../Assets/Character/perso1.png");
 
-	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", 10.f, 300.f, *AssetManager::GetAsset("Perso"), 0.25f, 0.25f);
+	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", 1000.f, 100.f, *AssetManager::GetAsset("Perso"), 0.25f, 0.25f);
 }
 
 void SceneGameAbstract::Awake() 

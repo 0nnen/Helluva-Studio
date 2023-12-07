@@ -148,6 +148,7 @@ void CameraManager::SetCenter(const float& x, const float& y) {
 	CameraManager::initialX = x;
 	CameraManager::initialY = y;
 	CameraManager::view.setCenter(x, y);
+	window->setView(CameraManager::GetView());
 }
 
 void CameraManager::Zoom(const float& factor) 

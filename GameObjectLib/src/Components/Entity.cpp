@@ -39,13 +39,4 @@ void Entity::Update(const float& _delta)
 	{
 		count++;
 	}
-
-	if (GetOwner()->GetPosition().GetX() > WindowManager::GetWindowWidth()
-		|| GetOwner()->GetPosition().GetY() > WindowManager::GetWindowHeight()
-		|| GetOwner()->GetPosition().GetY() < 0
-		|| GetOwner()->GetPosition().GetX() < 0
-		)
-	{
-		this->Die();
-	}
 }

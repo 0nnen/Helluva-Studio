@@ -1,6 +1,5 @@
 #include "BuildersGameObject/BuilderEntityGameObject.h"
 #include "Managers/SceneManager.h"
-#include "Managers/CameraManager.h"
 #include "Components/SpriteRenderer.h"
 #include "Components/RigidBody2D.h"
 #include "Components/Entity/Character.h"
@@ -45,9 +44,6 @@ GameObject* BuilderEntityGameObject::CreateCharacterGameObject(const std::string
 	rigidBody2D->SetScale(scalex, scaley);
 
 	InputCharacter* inputCharacter = gameObject->CreateComponent<InputCharacter>();
-
-	CameraManager* camera = gameObject->CreateComponent<CameraManager>();
-	camera->SetCenter(_x, _y);
 
 	/*HealthPointBar* healthPointBar = gameObject->CreateComponent<HealthPointBar>();
 	healthPointBar->SetHealthPoint(player->GetHealthPoint());

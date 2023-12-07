@@ -17,7 +17,7 @@ void ScenesTest::Delete()
 
 void ScenesTest::CreatePlatform()
 {
-	platform = BuilderShapeGameObject::CreateCarreGameObject("platform", 10.f, 500.f);
+	platform = BuilderShapeGameObject::CreateCarreGameObject("platform", 1000.f, 1000.f);
 }
 
 void ScenesTest::Create()
@@ -29,10 +29,13 @@ void ScenesTest::Create()
 void ScenesTest::Collinding()
 {
 	player = SceneManager::GetActiveGameScene()->GetPlayer();
-	if (RigidBody2D::IsAbove(*(player->GetComponent<RigidBody2D>()), *(platform->GetComponent<RigidBody2D>())))
+	if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(platform->GetComponent<RigidBody2D>())))
 	{
-		std::cout << "ok";
 		player->GetComponent<RigidBody2D>()->SetIsGravity(false);
+	}
+	else 
+	{
+		player->GetComponent<RigidBody2D>()->SetIsGravity(true);
 	}
 }
 
