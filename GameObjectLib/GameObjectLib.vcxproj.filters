@@ -41,8 +41,9 @@
     <ClCompile Include="src\Components\Arme.cpp" />
     <ClCompile Include="src\BuildesGameObject\BuilderEntityGameObject.cpp" />
     <ClCompile Include="src\Components\Transform.cpp" />
-    <ClCompile Include="src\Scenes\SceneGameWorld.cpp" />
     <ClCompile Include="src\Components\Animation.cpp" />
+    <ClCompile Include="src\Scenes\SceneGameWorld.cpp" />
+    <ClCompile Include="src\Components\Weapons\Bullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Managers\HUDManager.h" />
@@ -86,8 +87,9 @@
     <ClInclude Include="include\Components\Arme.h" />
     <ClInclude Include="include\BuildersGameObject\BuilderEntityGameObject.h" />
     <ClInclude Include="include\Components\Transform.h" />
-    <ClInclude Include="include\Scenes\SceneGameWorld.h" />
     <ClInclude Include="include\Components\Animation.h" />
+    <ClInclude Include="include\Scenes\SceneGameWorld.h" />
+    <ClInclude Include="include\Components\Weapons\Bullet.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="include\Maths\Vector2.inl" />

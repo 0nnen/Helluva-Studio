@@ -12,7 +12,7 @@ void SceneGameWorld::Preload()
 void SceneGameWorld::Create()
 {
 	Scene::Create();
-	GameObject* backgroundWorldMap = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld1", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, *AssetManager::GetAsset("BackgroundMapWorld"));
+	GameObject* backgroundWorldMap = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld1", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundMapWorld"));
 	//this->CreateSceneButtonsMenu();
 	this->CreateSceneBackgroundOption();
 	this->CreatePauseMenuButtons();
