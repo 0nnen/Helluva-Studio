@@ -18,9 +18,6 @@ public:
 	void Delete() override;
 
 	void CreateSceneButtonsMenu();
-	void CreateSceneBackgroundOption();
-
-	void ShowFadeWorldOption(sf::RenderWindow* _window);
 
 	void Render(sf::RenderWindow* _window) override;
 	void Update(const float& _delta) override;
@@ -28,5 +25,4 @@ public:
 private:
 	GameObject* backButton = nullptr;
 	GameObject* creditsButton = nullptr;
-	sf::RectangleShape backgroundAlpha;
 };
