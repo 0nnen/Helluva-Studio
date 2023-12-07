@@ -58,6 +58,7 @@ public:
 		return component;
 	}
 
+	inline std::vector<Component*> GetComponents() { return components; }
 
 	template<typename T>
 	inline T* GetComponent() {

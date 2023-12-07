@@ -24,6 +24,10 @@ void EventManager::Update(const float& _delta)
 				}
 			}
 		}
+		if (SceneManager::GetActiveGameScene() == SceneManager::GetSceneByKey("SceneMainMenu"))
+		{
+			if (event.key.code == sf::Keyboard::Escape) window->close();
+		}
 		if (SceneManager::GetActiveGameScene() == SceneManager::GetSceneByKey("SceneGameLVSR"))
 		{
 			CameraManager::Event(event);

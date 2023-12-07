@@ -10,13 +10,14 @@ public:
 	void CreateSceneButtonsMenu();
 	void LoadCreditsTexture();
 
-	GameObject* CreateCreditsGameObject(const std::string& name, const float& positionx, const float& positiony, const sf::Texture& texture, const float& scalex, const float& scaley);
+	GameObject* CreateCreditsGameObject(const std::string& name, const float& positionx, const float& positiony, sf::Texture* texture, const float& scalex, const float& scaley);
 
 	void AnimCredits(const float& _deltaSeconds, const float& _iteration, const int& _totalLoop);
 
 	void SetOrigin();
 
 	void Create() override;
+	void Preload() override;
 	void Render(sf::RenderWindow* _window) override;
 	void Update(const float& _delta) override;
 

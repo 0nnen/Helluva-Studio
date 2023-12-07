@@ -7,7 +7,6 @@
 
 Sprite::Sprite()
 {
-	texture.create(100, 100);
 	scalex = 1.0f;
 	scaley = 1.0f;
 }
@@ -16,25 +15,15 @@ sf::Vector2f Sprite::GetBounds() const
 {
 	return sf::Vector2f(sprite.getLocalBounds().width, sprite.getLocalBounds().height);
 }
-void Sprite::SetTexture(const sf::Texture& _texture)
+
+void Sprite::SetScale()
 {
-	texture = _texture;
-	sprite.setTexture(texture);
-	sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
+	sprite.setScale(GetOwner()->GetScale().GetX(), GetOwner()->GetScale().GetY());
 }
 
-void Sprite::SetRecTexture(const sf::IntRect& _rectTexture)
+void Sprite::SetScale(const float& _scaleX, const float& _scaleY)
 {
-	rectTexture = _rectTexture;
-	sprite.setTextureRect(rectTexture);
-}
-
-
-void Sprite::SetScale(const float& _scalex, const float& _scaley)
-{
-	scalex = _scalex;
-	scaley = _scaley;
-	sprite.setScale(scalex, scaley);
+	sprite.setScale(_scaleX, _scaleY);
 }
 
 void Sprite::SetOrigin()
@@ -47,8 +36,22 @@ void Sprite::Update(const float& _delta) {}
 
 void Sprite::SetSprite()
 {
-	const auto position = GetOwner()->GetPosition();
+	const Maths::Vector2f position = GetOwner()->GetPosition();
 	sprite.setPosition(position.x, position.y);
+}
+
+void Sprite::SetTexture(sf::Texture* _texture)
+{
+	texture = _texture;
+	sprite.setTexture(*texture);
+	sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
+}
+
+void Sprite::SetRecTexture(const unsigned int& _frame, const unsigned int& _totalFrame)
+{ 
+	int textureWidth = sprite.getLocalBounds().width / _totalFrame;
+	int textureHeight = sprite.getLocalBounds().height;
+	sprite.setTextureRect(sf::IntRect(textureWidth * _frame, 0, textureWidth, textureHeight));
 }
 
 void Sprite::Render(sf::RenderWindow* _window)

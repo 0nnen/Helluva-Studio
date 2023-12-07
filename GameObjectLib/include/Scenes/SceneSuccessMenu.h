@@ -12,6 +12,7 @@ public:
 	void SetOrigin();
 
 	void Create() override;
+	void Preload() override;
 	void Delete() override;
 	void Render(sf::RenderWindow* _window) override;
 	void Update(const float& _delta) override;

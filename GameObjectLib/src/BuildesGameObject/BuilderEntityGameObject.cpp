@@ -5,14 +5,13 @@
 #include "Components/Entity/Character.h"
 #include "Components/Inputs/InputCharacter.h"
 
-GameObject* BuilderEntityGameObject::CreateBulletGameObject(const std::string& _name, const sf::Texture& _textureBullet, const float& _scalex, const float& _scaley, GameObject* _player)
+GameObject* BuilderEntityGameObject::CreateBulletGameObject(const std::string& _name,sf::Texture* _textureBullet, const float& _scalex, const float& _scaley, GameObject* _player)
 {
 	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
 	gameObject->SetPosition(Maths::Vector2f(_player->GetPosition().GetX(), _player->GetPosition().GetY()));
 
 	Sprite* sprite = gameObject->CreateComponent<Sprite>();
 	sprite->SetTexture(_textureBullet);
-	sprite->SetScale(_scalex, _scaley);
 	sprite->SetSprite();
 
 	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
@@ -23,7 +22,7 @@ GameObject* BuilderEntityGameObject::CreateBulletGameObject(const std::string& _
 
 }
 
-GameObject* BuilderEntityGameObject::CreateCharacterGameObject(const std::string& _name, float _x, float _y, const sf::Texture texture, float scalex, float scaley)
+GameObject* BuilderEntityGameObject::CreateCharacterGameObject(const std::string& _name, const float& _x, const float& _y, sf::Texture* texture, const float& scalex, const float& scaley)
 {
 	GameObject* gameObject = SceneManager::GetActiveScene()->CreateGameObject(_name);
 	gameObject->SetPosition(Maths::Vector2f(_x, _y));
@@ -36,7 +35,7 @@ GameObject* BuilderEntityGameObject::CreateCharacterGameObject(const std::string
 
 	Sprite* sprite = gameObject->CreateComponent<Sprite>();
 	sprite->SetTexture(texture);
-	sprite->SetScale(scalex, scaley);
+	sprite->SetScale();
 	sprite->SetSprite();
 
 	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
