@@ -5,16 +5,20 @@
 
 class Character: public Entity
 {
-public:
-	enum Direction { Left, Right };
-	Character();
-	Character(int _hp, int _damage,const float& _speed, const float& _attackSpeed, const float& _range);
-	void Update(const float& _delta);
-	void setDirection(Direction direction);
-	Direction getDirection() { return direction; }
+	public:
+		enum Direction { Left, Right };
+		Character();
+		Character(int _hp, int _damage,const float& _speed, const float& _attackSpeed, const float& _range);
+		void Update(const float& _delta);
+		void setDirection(Direction direction);
+		Direction getDirection() { return direction; }
 
-public:
-	Direction direction;
-	bool directionCharacter;
+	private:
+		Direction direction;
+		bool directionCharacter;
+		sf::CircleShape shape;
+		std::vector<sf::CircleShape> bullets;
+		std::vector<float> angles;
+		
 };
 
