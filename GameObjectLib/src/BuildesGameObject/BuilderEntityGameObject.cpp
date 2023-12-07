@@ -4,6 +4,7 @@
 #include "Components/RigidBody2D.h"
 #include "Components/Entity/Character.h"
 #include "Components/Inputs/InputCharacter.h"
+#include "Components/Shapes/Rectangle.h"
 
 GameObject* BuilderEntityGameObject::CreateBulletGameObject(const std::string& _name,sf::Texture* _textureBullet, const float& _scalex, const float& _scaley, GameObject* _player)
 {
@@ -53,4 +54,22 @@ GameObject* BuilderEntityGameObject::CreateCharacterGameObject(const std::string
 	healthPointBar->SetHealthPointBar();*/
 
 	return gameObject;
+}
+
+GameObject* BuilderEntityGameObject::CreatePlateformGameObject(const std::string& _name, const float& _positionX, const float& _positionY, const float& _scalex, const float& _scaley)
+{
+	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
+	gameObject->SetPosition(Maths::Vector2f(_positionX, _positionY));
+	gameObject->SetScale(Maths::Vector2f(_scalex, _scaley));
+
+
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(false);
+
+	Rectangle* rectangle = gameObject->CreateComponent<Rectangle>();
+	rectangle->SetSize(200.f, 50.f);
+	rectangle->SetScale(_scalex, _scaley);
+
+	return gameObject;
+
 }
