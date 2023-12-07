@@ -15,12 +15,12 @@ void RigidBody2D::Update(const float& _delta)
 		Gravity();
 		GetOwner()->SetPosition(GetOwner()->GetPosition() + velocity * _delta);
 	}
-
 }
 
 void RigidBody2D::Gravity()
 {
-	velocity += gravity;
+	// Calculer la force gravitationnelle (F = m * g)
+	velocity += gravity * -mass;
 }
 
 bool RigidBody2D::IsColliding(const RigidBody2D& _rigidBody2DA, const RigidBody2D& _rigidBody2DB)

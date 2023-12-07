@@ -19,15 +19,17 @@ void SceneCreditsMenu::Create()
 	Scene::Create();
 	sf::Texture backgroundTexture2;
 
-	if (!backgroundTexture2.loadFromFile("../assets/Sprite_LOL/background/fontaineLOL.jpg"))
-	{
-		std::cout << "pas d'image" << std::endl;
-	}
-	GameObject* background2 = BuilderGameObject::CreateBackgroundGameObject("Background2", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, backgroundTexture2);
+	GameObject* background2 = BuilderGameObject::CreateBackgroundGameObject("Background2", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundCredits"));
 	this->CreateSceneButtonsMenu();
 	this->LoadCreditsTexture();
 	imagesCredits.clear();
 	texteCredits.clear();
+}
+
+void SceneCreditsMenu::Preload()
+{
+	AssetManager::AddAsset("BackgroundCredits", "../Assets/bgMenu.png");
+
 }
 
 void SceneCreditsMenu::Render(sf::RenderWindow* _window)
@@ -116,7 +118,7 @@ void SceneCreditsMenu::Update(const float& _delta)
 	}
 }
 
-GameObject* SceneCreditsMenu::CreateCreditsGameObject(const std::string& name, const float& _x, const float& _y, const sf::Texture& texture, const float& scalex, const float& scaley)
+GameObject* SceneCreditsMenu::CreateCreditsGameObject(const std::string& name, const float& _x, const float& _y, sf::Texture* texture, const float& scalex, const float& scaley)
 {
 	GameObject* gameObject = CreateGameObject(name);
 	gameObject->SetPosition(Maths::Vector2f(_x, _y));

@@ -5,6 +5,7 @@ class SceneLoginSignup : public Scene
 public:
 	SceneLoginSignup(const std::string& _newName);
 	void Create() override;
+	void Preload() override;
 	void Update(const float& _delta) override;
 	void Render(sf::RenderWindow* _window) override;
 
