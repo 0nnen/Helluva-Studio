@@ -41,6 +41,8 @@
     <ClCompile Include="src\Components\Arme.cpp" />
     <ClCompile Include="src\BuildesGameObject\BuilderEntityGameObject.cpp" />
     <ClCompile Include="src\Components\Transform.cpp" />
+    <ClCompile Include="src\BuildesGameObject\BuilderShapeGameObject.cpp" />
+    <ClCompile Include="src\Scenes\ScenesGame\ScenesTest.cpp" />
     <ClCompile Include="src\Components\Animation.cpp" />
     <ClCompile Include="src\Scenes\SceneGameWorld.cpp" />
     <ClCompile Include="src\Components\Weapons\Bullet.cpp" />
@@ -88,6 +90,8 @@
     <ClInclude Include="include\Components\Arme.h" />
     <ClInclude Include="include\BuildersGameObject\BuilderEntityGameObject.h" />
     <ClInclude Include="include\Components\Transform.h" />
+    <ClInclude Include="include\BuildersGameObject\BuilderShapeGameObject.h" />
+    <ClInclude Include="include\Scenes\ScenesGame\ScenesTest.h" />
     <ClInclude Include="include\Components\Animation.h" />
     <ClInclude Include="include\Scenes\SceneGameWorld.h" />
     <ClInclude Include="include\Components\Weapons\Bullet.h" />

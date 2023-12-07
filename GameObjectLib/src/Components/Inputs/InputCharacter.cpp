@@ -6,14 +6,15 @@
 #include "Components/SpriteRenderer.h"
 #include "Managers/SceneManager.h"
 #include "Components/Entity/Character.h"
+#include "Scenes/ScenesGame/ScenesTest.h"
 
 InputCharacter::InputCharacter() {
 	//this->player = nullptr;
 	this->KeyD_ = new MouveCharacterRight();
 	this->KeyQ_ = new MouveCharacterLeft();
 	//this->KeySpace_ = new RightBulletCommand(this);
-	/*this->KeyEscape_ = new PauseCommand();
-	this->KeyZ_ = new UpCommand();*/
+	//this->KeyEscape_ = new PauseCommand();
+	this->KeyZ_ = new JumpCharacter();
 }
 
 void InputCharacter::Update(const float& _delta) {
@@ -24,13 +25,13 @@ void InputCharacter::Update(const float& _delta) {
 	{
 		commandMoves->Execute(_delta);
 	}
-	/*Command* commandJump = this->JumpInput();
+	Command* commandJump = this->JumpInput();
 
 	if (commandJump)
 	{
 		commandJump->Execute(_delta);
 	}
-	Command* fireBullet = this->FireInput();
+	/*Command* fireBullet = this->FireInput();
 
 	if (fireBullet)
 	{
@@ -47,10 +48,12 @@ Command* InputCharacter::HandleInput() {
 
 }
 
-//Command* InputCharacter::JumpInput() {
-//	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) return KeyZ_;
-//	return nullptr;
-//}
+Command* InputCharacter::JumpInput() {
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) return KeyZ_;
+	
+	return nullptr;
+}
 
 //Command* InputCharacter::FireInput() {
 //	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) return KeySpace_;

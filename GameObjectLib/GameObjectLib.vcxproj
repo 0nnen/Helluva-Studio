@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\BuildersGameObject\BuilderShapeGameObject.h" />
     <ClInclude Include="include\Components\Animation.h" />
     <ClInclude Include="include\Commands\CommandCharacter.h" />
     <ClInclude Include="include\Components\Entity\Character.h" />
@@ -64,9 +65,12 @@
     <ClInclude Include="include\Scenes\SceneGameUnderground.h" />
     <ClInclude Include="include\Components\RigidBody2D.h" />
     <ClInclude Include="include\Components\Transform.h" />
+    <ClInclude Include="include\Scenes\ScenesGame\ScenesTest.h" />
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup>z
     <ClCompile Include="src\Components\Shapes\Rectangle.cpp" />
+    <ClCompile Include="src\Scenes\ScenesGame\ScenesTest.cpp" />
+    <ClCompile Include="src\BuildesGameObject\BuilderShapeGameObject.cpp" />
     <ClCompile Include="src\Components\Animation.cpp" />
     <ClCompile Include="src\Commands\CommandCharacter.cpp" />
     <ClCompile Include="src\Components\Inputs\InputCharacter.cpp" />

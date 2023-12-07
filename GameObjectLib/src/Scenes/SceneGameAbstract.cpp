@@ -29,9 +29,9 @@ SceneGameAbstract::~SceneGameAbstract()
 
 void SceneGameAbstract::Create() 
 {
-	Scene::Create();
 	this->CreateChartacter();
 	this->CreatePauseMenuButtons();
+	Scene::Create();
 }
 
 void SceneGameAbstract::Preload()
@@ -74,6 +74,7 @@ void SceneGameAbstract::CreateSceneBackgroundOption() {
 	backgroundAlpha1.backgroundAlpha.setFillColor(sf::Color(0, 0, 0, 112));
 	backgroundAlpha1.backgroundAlpha.setPosition(WindowManager::GetFloatWindowWidth() / 2, WindowManager::GetFloatWindowHeight() / 2);
 
+	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", 1000.f, 100.f, *AssetManager::GetAsset("Perso"), 0.25f, 0.25f);
 	backgroundAlpha2.backgroundAlpha.setSize(sf::Vector2f(WindowManager::GetFloatWindowWidth(), WindowManager::GetFloatWindowHeight()));
 	backgroundAlpha2.backgroundAlpha.setOrigin(sf::Vector2f(WindowManager::GetFloatWindowWidth() / 2, WindowManager::GetFloatWindowHeight() / 2));
 	backgroundAlpha2.backgroundAlpha.setFillColor(sf::Color::Transparent);

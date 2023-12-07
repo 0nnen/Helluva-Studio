@@ -20,4 +20,11 @@ public:
 	void Execute(const float& _delta);
 };
 
+class JumpCharacter : public Command
+{
+public:
+	JumpCharacter();
+	void Execute(const float& _delta);
+};
+
 
