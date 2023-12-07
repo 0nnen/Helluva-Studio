@@ -11,7 +11,7 @@ void MouveCharacterRight::Execute(const float& _delta)
 	player->SetPosition(player->GetPosition() + Maths::Vector2f::Right + Maths::Vector2f(25, 0) * _delta * character->GetSpeed());
 	character->setDirection(Character::Direction::Right);
 }
-MouveCharacterRight::MouveCharacterRight(){}
+MouveCharacterRight::MouveCharacterRight() {}
 
 void MouveCharacterLeft::Execute(const float& _delta)
 {
@@ -23,3 +23,11 @@ void MouveCharacterLeft::Execute(const float& _delta)
 }
 MouveCharacterLeft::MouveCharacterLeft() {}
 
+JumpCharacter::JumpCharacter(){}
+
+void JumpCharacter::Execute(const float& _delta)
+{
+	GameObject* player = SceneManager::GetActiveGameScene()->GetPlayer();
+	Character* character = player->GetComponent<Character>();
+	player->SetPosition(player->GetPosition() + Maths::Vector2f::Down + Maths::Vector2f(0, -130) * _delta * character->GetSpeed());
+}

@@ -41,6 +41,8 @@
     <ClCompile Include="Arme.cpp" />
     <ClCompile Include="src\BuildesGameObject\BuilderEntityGameObject.cpp" />
     <ClCompile Include="src\Components\Transform.cpp" />
+    <ClCompile Include="src\BuildesGameObject\BuilderShapeGameObject.cpp" />
+    <ClCompile Include="src\Scenes\ScenesGame\ScenesTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Managers\HUDManager.h" />
@@ -84,6 +86,8 @@
     <ClInclude Include="Arme.h" />
     <ClInclude Include="include\BuildersGameObject\BuilderEntityGameObject.h" />
     <ClInclude Include="include\Components\Transform.h" />
+    <ClInclude Include="include\BuildersGameObject\BuilderShapeGameObject.h" />
+    <ClInclude Include="include\Scenes\ScenesGame\ScenesTest.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="include\Maths\Vector2.inl" />

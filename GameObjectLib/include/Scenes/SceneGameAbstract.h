@@ -22,6 +22,7 @@ public:
 	void Render(sf::RenderWindow* _window) override;
 
 	GameObject* GetPlayer() { return player; }
+	GameObject* GetPlatform() { return platform; }
 	std::vector<GameObject*> GetEnemies() { return enemies; }
 	GameObject* GetEnemie(int _index) { return enemies[_index]; }
 
@@ -30,6 +31,7 @@ protected:
 	GameObject* player = nullptr;
 	GameObject* nexus = nullptr;
 	GameObject* ressource = nullptr;
+	GameObject* platform = nullptr;
 	GameObject* ressourceText = nullptr;
 	GameObject* pausePlayButton = nullptr;
 	GameObject* pauseOptionsButton = nullptr;

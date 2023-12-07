@@ -12,8 +12,8 @@ InputCharacter::InputCharacter() {
 	this->KeyD_ = new MouveCharacterRight();
 	this->KeyQ_ = new MouveCharacterLeft();
 	//this->KeySpace_ = new RightBulletCommand(this);
-	/*this->KeyEscape_ = new PauseCommand();
-	this->KeyZ_ = new UpCommand();*/
+	//this->KeyEscape_ = new PauseCommand();
+	this->KeyZ_ = new JumpCharacter();
 }
 
 void InputCharacter::Update(const float& _delta) {
@@ -47,10 +47,14 @@ Command* InputCharacter::HandleInput() {
 
 }
 
-//Command* InputCharacter::JumpInput() {
-//	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) return KeyZ_;
-//	return nullptr;
-//}
+Command* InputCharacter::JumpInput() {
+	if (SceneManager::GetActiveGameScene()->GetPlayer()->GetComponent<RigidBody2D>()->GetIsGravity())
+	{
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) return KeyZ_;
+	}
+	
+	return nullptr;
+}
 
 //Command* InputCharacter::FireInput() {
 //	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) return KeySpace_;
