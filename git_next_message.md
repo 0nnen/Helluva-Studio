@@ -1,4 +1,4 @@
-NEW : Animation
+ENH : Rectangle et plateforme
 
-- Création d'un component pour les animations
+- Création d'un component rectangle et d'une plateforme
 

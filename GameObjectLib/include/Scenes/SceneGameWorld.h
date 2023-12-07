@@ -8,6 +8,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics.hpp>
 
+
 class SceneGameWorld : public SceneGameAbstract
 {
 public:
@@ -25,4 +26,5 @@ public:
 private:
 	GameObject* backButton = nullptr;
 	GameObject* creditsButton = nullptr;
+	GameObject* plateform = nullptr;
 };

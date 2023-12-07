@@ -1,5 +1,6 @@
 #include "Scenes/SceneGameWorld.h"
 #include "BuilderGameObject.h"
+#include "BuildersGameObject/BuilderEntityGameObject.h"
 
 SceneGameWorld::SceneGameWorld(const std::string& _newName) : SceneGameAbstract(_newName) {}
 
@@ -16,6 +17,7 @@ void SceneGameWorld::Create()
 	GameObject* backgroundWorldMap = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld1", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundMapBackgroundWorld"));
 	GameObject* backgroundWorldMap2 = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld2", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundMapWorld"));
 	//this->CreateSceneButtonsMenu();
+	plateform = BuilderEntityGameObject::CreatePlateformGameObject("plateform", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 1.2, 5,2);
 	this->CreateSceneBackgroundOption();
 	this->CreatePauseMenuButtons();
 }

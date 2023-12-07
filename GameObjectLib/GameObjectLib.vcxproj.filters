@@ -46,6 +46,7 @@
     <ClCompile Include="src\Components\Animation.cpp" />
     <ClCompile Include="src\Scenes\SceneGameWorld.cpp" />
     <ClCompile Include="src\Components\Weapons\Bullet.cpp" />
+    <ClCompile Include="src\Components\Shapes\Rectangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Managers\HUDManager.h" />
@@ -94,6 +95,7 @@
     <ClInclude Include="include\Components\Animation.h" />
     <ClInclude Include="include\Scenes\SceneGameWorld.h" />
     <ClInclude Include="include\Components\Weapons\Bullet.h" />
+    <ClInclude Include="include\Components\Shapes\Rectangle.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="include\Maths\Vector2.inl" />

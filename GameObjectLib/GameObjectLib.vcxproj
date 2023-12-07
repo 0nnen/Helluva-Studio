@@ -57,6 +57,7 @@
     <ClInclude Include="include\Components\Ressource.h" />
     <ClInclude Include="include\Managers\WindowManager.h" />
     <ClInclude Include="include\Components\Inputs\InputCharacter.h" />
+    <ClInclude Include="include\Components\Shapes\Rectangle.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="include\Scenes\SceneLoginSignup.h" />
     <ClInclude Include="include\Managers\TimeManager.h" />
@@ -66,7 +67,8 @@
     <ClInclude Include="include\Components\Transform.h" />
     <ClInclude Include="include\Scenes\ScenesGame\ScenesTest.h" />
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup>z
+    <ClCompile Include="src\Components\Shapes\Rectangle.cpp" />
     <ClCompile Include="src\Scenes\ScenesGame\ScenesTest.cpp" />
     <ClCompile Include="src\BuildesGameObject\BuilderShapeGameObject.cpp" />
     <ClCompile Include="src\Components\Animation.cpp" />
