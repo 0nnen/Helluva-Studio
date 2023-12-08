@@ -37,9 +37,9 @@ void SceneGameAbstract::Preload()
 {
 	Scene::Preload();
 
-	AssetManager::AddAsset("perso", "../Assets/Character/perso1.png");
 	AssetManager::AddAsset("BackgroundAbstract", "../Assets/bgMenu.png");
 	AssetManager::AddAsset("idleCharacter", "../Assets/Character/Idle/Character_Idle_48x48.png");
+	AssetManager::AddAsset("Character", "../Assets/Character/Idle/images/Idle_01.png");
 	AssetManager::AddAsset("jumpCharacter", "../Assets/Character/Jump/Character_Jump_48x48.png");
 	AssetManager::AddAsset("runCharacter", "../Assets/Character/Run/Character_Run_48x48.png");
 }
@@ -67,7 +67,7 @@ void SceneGameAbstract::CreatePauseMenuButtons()
 
 void SceneGameAbstract::CreateChartacter()
 {
-	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", WindowManager::GetWindowWidth() / 2, 50.f, AssetManager::GetAsset("perso"), 7.f, 7.f);
+	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", WindowManager::GetWindowWidth() / 2, 50.f, AssetManager::GetAsset("Character"), 7.f, 7.f);
 }
 
 void SceneGameAbstract::CreateSceneBackgroundOption() {

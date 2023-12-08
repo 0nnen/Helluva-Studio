@@ -37,7 +37,7 @@ void InputCharacter::Update(const float& _delta) {
 	}
 	Command* commandJump = this->JumpInput();
 
-	if (commandJump)
+	if (commandJump && !GetOwner()->GetComponent<RigidBody2D>()->GetIsGravity())
 	{
 		std::string name = "jump";
 		for (Component* component : GetOwner()->GetComponents())

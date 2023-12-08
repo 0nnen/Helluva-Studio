@@ -32,6 +32,9 @@ public:
 	std::vector<GameObject*> GetEnemies() { return enemies; }
 	GameObject* GetEnemie(int _index) { return enemies[_index]; }
 
+	void SetFirstCollide(const bool& _state) { firstCollide = _state; }
+	bool GetFirstCollide() const { return firstCollide; }
+
 protected:
 	std::vector<GameObject*> enemies;
 	GameObject* player = nullptr;
@@ -52,6 +55,8 @@ protected:
 
 	AlphaBackkground backgroundAlpha1;
 	AlphaBackkground backgroundAlpha2;
+
+	bool firstCollide = true;
 
 	bool isPause = true;
 };

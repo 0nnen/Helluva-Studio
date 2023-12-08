@@ -1,4 +1,4 @@
-ENH : Activer les animations
+ENH : Amélioration du saut
 
-- Lorsque le personnage cours il s'anime et il a une animation idle
+- Saut amélioré
 

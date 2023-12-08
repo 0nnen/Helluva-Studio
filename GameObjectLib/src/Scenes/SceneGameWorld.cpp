@@ -18,7 +18,7 @@ void SceneGameWorld::Create()
 	//GameObject* backgroundWorldMap2 = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld2", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundMapWorld"));
 	//this->CreateSceneButtonsMenu();
 	this->CreateChartacter();
-	plateform = BuilderEntityGameObject::CreatePlateformGameObject("plateform", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 1.2, 5,2);
+	plateform = BuilderEntityGameObject::CreatePlateformGameObject("plateform", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 1.2, 5, 2);
 	this->CreateSceneBackgroundOption();
 }
 
@@ -42,12 +42,17 @@ void SceneGameWorld::Render(sf::RenderWindow* _window)
 void SceneGameWorld::Update(const float& _delta)
 {
 	SceneGameAbstract::Update(_delta);
-	if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(plateform->GetComponent<RigidBody2D>())))
+	if (player && plateform)
 	{
-		player->GetComponent<RigidBody2D>()->SetIsGravity(false);
+		if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(plateform->GetComponent<RigidBody2D>())) && firstCollide)
+		{
+			player->GetComponent<RigidBody2D>()->SetIsGravity(false);
+			firstCollide = false;
+		}
+		else if (!RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(plateform->GetComponent<RigidBody2D>())))
+		{
+			firstCollide = true;
+		}
 	}
-	else
-	{
-		player->GetComponent<RigidBody2D>()->SetIsGravity(true);
-	}
+
 }

@@ -23,7 +23,10 @@ public:
 	inline void SetGravity(const Maths::Vector2f& _newGravity) { gravity = _newGravity; }
 
 	inline bool GetIsGravity() const { return isAffectedByGravity; }
-	inline void SetIsGravity(const bool& _state) { isAffectedByGravity = _state; }
+	inline void SetIsGravity(const bool& _state) {
+		isAffectedByGravity = _state;
+		if (!isAffectedByGravity) velocity.SetY(0.f);
+	}
 
 	inline float GetWidthCollider() const { return widthSquareCollider; }
 	inline float GetHeightCollider() const { return heightSquareCollider; }

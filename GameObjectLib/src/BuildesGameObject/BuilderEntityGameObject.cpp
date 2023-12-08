@@ -43,9 +43,10 @@ GameObject* BuilderEntityGameObject::CreateCharacterGameObject(const std::string
 	sprite->SetSprite();
 
 	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(true);
 	rigidBody2D->SetSize(sprite->GetBounds().x, sprite->GetBounds().y);
 	rigidBody2D->SetScale(scalex, scaley);
-
+	
 	Animation* idle = gameObject->CreateComponent<Animation>();
 	Animation* jump = gameObject->CreateComponent<Animation>();
 	Animation* run = gameObject->CreateComponent<Animation>();

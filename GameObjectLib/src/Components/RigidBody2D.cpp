@@ -3,7 +3,6 @@
 
 RigidBody2D::RigidBody2D()
 {
-
 	gravity = Maths::Vector2f(0.f, 9.8f);
 	velocity = Maths::Vector2f::Zero;
 	isAffectedByGravity = true;
@@ -13,8 +12,9 @@ void RigidBody2D::Update(const float& _delta)
 	if (isAffectedByGravity)
 	{
 		Gravity();
-		GetOwner()->SetPosition(GetOwner()->GetPosition() + velocity * _delta);
 	}
+	GetOwner()->SetPosition(GetOwner()->GetPosition() + velocity * _delta);
+	if (velocity.y != 0) std::cout << "velo y :" << velocity.y << std::endl;
 }
 
 
