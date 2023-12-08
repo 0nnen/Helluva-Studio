@@ -6,20 +6,20 @@ SceneGameWorld::SceneGameWorld(const std::string& _newName) : SceneGameAbstract(
 
 void SceneGameWorld::Preload()
 {
-	Scene::Preload();
+	SceneGameAbstract::Preload();
 	AssetManager::AddAsset("BackgroundMapBackgroundWorld", "../Assets/worldMapBackground.png");
 	AssetManager::AddAsset("BackgroundMapWorld", "../Assets/worldMap1.png");
 }
 
 void SceneGameWorld::Create()
 {
-	Scene::Create();
-	GameObject* backgroundWorldMap = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld1", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundMapBackgroundWorld"));
-	GameObject* backgroundWorldMap2 = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld2", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundMapWorld"));
+	SceneGameAbstract::Create();
+	//GameObject* backgroundWorldMap = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld1", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundMapBackgroundWorld"));
+	//GameObject* backgroundWorldMap2 = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld2", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundMapWorld"));
 	//this->CreateSceneButtonsMenu();
+	this->CreateChartacter();
 	plateform = BuilderEntityGameObject::CreatePlateformGameObject("plateform", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 1.2, 5,2);
 	this->CreateSceneBackgroundOption();
-	this->CreatePauseMenuButtons();
 }
 
 void SceneGameWorld::CreateSceneButtonsMenu()
@@ -36,11 +36,18 @@ void SceneGameWorld::Delete()
 void SceneGameWorld::Render(sf::RenderWindow* _window)
 {
 	Scene::Render(_window);
-	_window->draw(SceneGameAbstract::isPause ? backgroundAlpha2.backgroundAlpha : backgroundAlpha1.backgroundAlpha);
+	_window->draw(isPause ? backgroundAlpha2.backgroundAlpha : backgroundAlpha1.backgroundAlpha);
 }
 
 void SceneGameWorld::Update(const float& _delta)
 {
-	Scene::Update(_delta);
 	SceneGameAbstract::Update(_delta);
+	if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(plateform->GetComponent<RigidBody2D>())))
+	{
+		player->GetComponent<RigidBody2D>()->SetIsGravity(false);
+	}
+	else
+	{
+		player->GetComponent<RigidBody2D>()->SetIsGravity(true);
+	}
 }

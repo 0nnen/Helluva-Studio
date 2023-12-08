@@ -1,19 +1,17 @@
 #include "Components/Animation.h""
 
-Animation::Animation()
-{
-	sprite = GetOwner()->GetComponent<Sprite>();
-}
-
 void Animation::Play()
 {
 	for (Component* component : GetOwner()->GetComponents())
 	{
-		if (Animation* animation = static_cast<Animation*>(component))
+		Animation* animation = static_cast<Animation*>(component);
+		if (animation && animation != this)
 		{
 			animation->Stop();
 		}
 	}
+	Sprite* sprite = GetOwner()->GetComponent<Sprite>();
+	sprite->SetTexture(spriteSheet, totalFrame);
 	isPlaying = true;
 }
 void Animation::Update(const float& _delta)
@@ -23,13 +21,15 @@ void Animation::Update(const float& _delta)
 	{
 		if (actualLoop != totalLoop)
 		{
+			Sprite* sprite = GetOwner()->GetComponent<Sprite>();
 			if (totalFrame > actualFrame + 1)
 			{
-				if (actualTime > animationTime / (totalFrame + 1))
+				if (actualTime > animationTime / totalFrame)
 				{
+			
 					actualTime = 0.f;
 					actualFrame++;
-					sprite->SetRecTexture(actualFrame, totalFrame);
+					sprite->SetRecTexture(actualFrame, totalFrame, width / totalFrame, height);
 				}
 				actualTime += _delta;
 			}
@@ -38,7 +38,7 @@ void Animation::Update(const float& _delta)
 				actualLoop++;
 				actualFrame = 0;
 				actualTime = 0.f;
-				sprite->SetRecTexture(actualFrame, totalFrame);
+				sprite->SetRecTexture(actualFrame, totalFrame, width / totalFrame, height);
 			}
 		}
 		else
@@ -54,7 +54,8 @@ void Animation::Update(const float& _delta)
 void Animation::SetSpriteSheet(sf::Texture* _spriteSheet)
 {
 	spriteSheet = _spriteSheet;
-	sprite->SetTexture(spriteSheet);
+	width = spriteSheet->getSize().x;
+	height = spriteSheet->getSize().y;
 }
 
 void Animation::SetLoop(const int& _loop)

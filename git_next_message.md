@@ -1,4 +1,4 @@
-FIX : master
+ENH : Activer les animations
 
-- Réparation Master
+- Lorsque le personnage cours il s'anime et il a une animation idle
 

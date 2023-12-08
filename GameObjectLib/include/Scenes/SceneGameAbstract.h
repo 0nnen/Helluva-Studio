@@ -35,17 +35,12 @@ public:
 protected:
 	std::vector<GameObject*> enemies;
 	GameObject* player = nullptr;
-	GameObject* nexus = nullptr;
-	GameObject* ressource = nullptr;
 	GameObject* platform = nullptr;
-	GameObject* ressourceText = nullptr;
 	GameObject* pausePlayButton = nullptr;
 	GameObject* pauseOptionsButton = nullptr;
 	GameObject* pauseMenuPrincipalButton = nullptr;
 	GameObject* pauseQuitButton = nullptr;
 	GameObject* pauseBongoButton = nullptr;
-	GameObject* victory = nullptr;
-	GameObject* defeat = nullptr;
 	float endTime = 5.f;
 	sf::Texture* texture = nullptr;
 	sf::Text text;

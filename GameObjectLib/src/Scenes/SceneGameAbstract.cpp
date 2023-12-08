@@ -29,17 +29,19 @@ SceneGameAbstract::~SceneGameAbstract()
 
 void SceneGameAbstract::Create() 
 {
-	this->CreateChartacter();
-	this->CreatePauseMenuButtons();
 	Scene::Create();
+	this->CreatePauseMenuButtons();
 }
 
 void SceneGameAbstract::Preload()
 {
 	Scene::Preload();
 
-	AssetManager::AddAsset("Perso", "../Assets/Character/perso1.png");
+	AssetManager::AddAsset("perso", "../Assets/Character/perso1.png");
 	AssetManager::AddAsset("BackgroundAbstract", "../Assets/bgMenu.png");
+	AssetManager::AddAsset("idleCharacter", "../Assets/Character/Idle/Character_Idle_48x48.png");
+	AssetManager::AddAsset("jumpCharacter", "../Assets/Character/Jump/Character_Jump_48x48.png");
+	AssetManager::AddAsset("runCharacter", "../Assets/Character/Run/Character_Run_48x48.png");
 }
 
 
@@ -65,20 +67,19 @@ void SceneGameAbstract::CreatePauseMenuButtons()
 
 void SceneGameAbstract::CreateChartacter()
 {
-	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", WindowManager::GetWindowWidth() / 2, 50.f, AssetManager::GetAsset("Perso"), 0.25f, 0.25f);
+	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", WindowManager::GetWindowWidth() / 2, 50.f, AssetManager::GetAsset("perso"), 7.f, 7.f);
 }
 
 void SceneGameAbstract::CreateSceneBackgroundOption() {
 	backgroundAlpha1.backgroundAlpha.setSize(sf::Vector2f(WindowManager::GetFloatWindowWidth(), WindowManager::GetFloatWindowHeight()));
 	backgroundAlpha1.backgroundAlpha.setOrigin(sf::Vector2f(WindowManager::GetFloatWindowWidth() / 2, WindowManager::GetFloatWindowHeight() / 2));
-	backgroundAlpha1.backgroundAlpha.setFillColor(sf::Color(0, 0, 0, 112));
+	backgroundAlpha1.backgroundAlpha.setFillColor(sf::Color(0, 0, 0, 112));	
 	backgroundAlpha1.backgroundAlpha.setPosition(WindowManager::GetFloatWindowWidth() / 2, WindowManager::GetFloatWindowHeight() / 2);
-
-	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", 1000.f, 100.f, *AssetManager::GetAsset("Perso"), 0.25f, 0.25f);
 	backgroundAlpha2.backgroundAlpha.setSize(sf::Vector2f(WindowManager::GetFloatWindowWidth(), WindowManager::GetFloatWindowHeight()));
 	backgroundAlpha2.backgroundAlpha.setOrigin(sf::Vector2f(WindowManager::GetFloatWindowWidth() / 2, WindowManager::GetFloatWindowHeight() / 2));
 	backgroundAlpha2.backgroundAlpha.setFillColor(sf::Color::Transparent);
 	backgroundAlpha2.backgroundAlpha.setPosition(WindowManager::GetFloatWindowWidth() / 2, WindowManager::GetFloatWindowHeight() / 2);
+
 }
 
 void SceneGameAbstract::Pause()
@@ -146,6 +147,7 @@ void SceneGameAbstract::Update(const float& _delta)
 		{
 			WindowManager::GetWindow()->close();
 		}
+
 	}
 }
 

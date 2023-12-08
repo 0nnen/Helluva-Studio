@@ -6,6 +6,7 @@
 #include "Components/SpriteRenderer.h"
 #include "Managers/SceneManager.h"
 #include "Components/Entity/Character.h"
+#include "Components/Animation.h"
 #include "Scenes/ScenesGame/ScenesTest.h"
 
 InputCharacter::InputCharacter() {
@@ -23,13 +24,44 @@ void InputCharacter::Update(const float& _delta) {
 	Command* commandMoves = this->HandleInput();
 	if (commandMoves)
 	{
+		std::string name = "run";
+		for (Component* component : GetOwner()->GetComponents())
+		{
+			Animation* animation = static_cast<Animation*>(component);
+			if (animation && animation->GetName() == name && !animation->GetIsPlaying())
+			{
+				animation->Play();
+			}
+		}
 		commandMoves->Execute(_delta);
 	}
 	Command* commandJump = this->JumpInput();
 
 	if (commandJump)
 	{
+		std::string name = "jump";
+		for (Component* component : GetOwner()->GetComponents())
+		{
+			Animation* animation = static_cast<Animation*>(component);
+			if (animation && animation->GetName() == name && !animation->GetIsPlaying())
+			{
+				animation->Play();
+			}
+		}
 		commandJump->Execute(_delta);
+	}
+
+	if (!commandJump && !commandMoves)
+	{
+		std::string name = "idle";
+		for (Component* component : GetOwner()->GetComponents())
+		{
+			Animation* animation = static_cast<Animation*>(component);
+			if (animation && animation->GetName() == name && !animation->GetIsPlaying())
+			{
+				animation->Play();
+			}
+		}
 	}
 	/*Command* fireBullet = this->FireInput();
 

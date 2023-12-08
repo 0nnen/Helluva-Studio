@@ -72,7 +72,7 @@ void SceneMainMenu::Update(const float& _delta)
 	}
 	else if (worldButton->GetComponent<Button>()->IsClicked())
 	{
-		std::cout << "World Scene" << std::endl;
+		std::cout << "World Scene" << GetName() << std::endl;
 		SceneManager::RunScene("SceneGameWorld");
 	}
 	else if (optionsButton->GetComponent<Button>()->IsClicked()) 
