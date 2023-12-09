@@ -13,8 +13,12 @@ public:
 	void SetDirection(Direction _newDirection);
 	Direction getDirection() { return direction; }
 
-public:
-	Direction direction;
-	bool directionCharacter;
+	private:
+		Direction direction;
+		bool directionCharacter;
+		sf::CircleShape shape;
+		std::vector<sf::CircleShape> bullets;
+		std::vector<float> angles;
+		
 };
 
