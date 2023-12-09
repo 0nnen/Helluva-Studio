@@ -1,4 +1,4 @@
-NEW : Animation
+ENH : Amélioration du saut
 
-- Création d'un component pour les animations
+- Saut amélioré
 

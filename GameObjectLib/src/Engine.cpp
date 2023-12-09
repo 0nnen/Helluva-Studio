@@ -10,7 +10,9 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Scenes/SceneGameUnderground.h"
+#include "Scenes/SceneGameWorld.h"
 #include "Scenes/SceneGameAbstract.h"
+#include "Scenes/ScenesGame/ScenesTest.h"
 Engine* Engine::instance = nullptr;
 
 Engine* Engine::GetInstance()
@@ -31,6 +33,8 @@ void Engine::Init() const
 	SceneManager::AddScene("SceneMainMenu", new SceneMainMenu(std::string("MainMenu")));
 	//SceneManager::AddScene("SceneGameUnderground", new SceneGameUnderground(std::string("SceneGameUnderground")));
 	SceneManager::AddScene("SceneGameAbstract", new SceneGameAbstract(std::string("SceneGameAbstract")));
+	SceneManager::AddScene("ScenesTest", new ScenesTest(std::string("ScenesTest")));
+	SceneManager::AddScene("SceneGameWorld", new SceneGameWorld(std::string("SceneGameWorld")));
 }
 
 void Engine::Run() const
