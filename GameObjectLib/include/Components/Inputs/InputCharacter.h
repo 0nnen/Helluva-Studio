@@ -14,7 +14,7 @@ public:
 	void Update(const float& _delta) override;
 	Command* HandleInput();
 	Command* JumpInput();
-	//Command* FireInput();
+	Command* ShootInput();
 	//Command* PauseInput();
 	//void MoveRight(sf::Time _delta);
 	//void MoveRightBullet();
@@ -37,4 +37,5 @@ private:
 	//Command* KeySpace_;
 	//GameObject* player;
 	//Command* KeyEscape_;
+	Command* LeftMouse_;
 };

@@ -4,9 +4,13 @@
 #include "Components/SpriteRenderer.h"
 #include "Components/Animation.h"
 #include "Components/RigidBody2D.h"
+#include "Components/ComponentsGame/WeaponsContainer.h"
+#include "Components/ComponentsGame/Sword.h"
+#include "Components/ComponentsGame/Gun.h"
 #include "Components/Entity/Character.h"
 #include "Components/Inputs/InputCharacter.h"
 #include "Components/Shapes/Rectangle.h"
+
 
 GameObject* BuilderEntityGameObject::CreateBulletGameObject(const std::string& _name, sf::Texture* _textureBullet, const float& _scalex, const float& _scaley, GameObject* _player)
 {
@@ -34,8 +38,7 @@ GameObject* BuilderEntityGameObject::CreateCharacterGameObject(const std::string
 
 	Character* character = gameObject->CreateComponent<Character>();
 
-	//Armes* arme = gameObject->CreateComponent<Armes>();
-	//arme->SetDamage(player->GetDamage());
+	WeaponsContainer* weaponsContainer = gameObject->CreateComponent<WeaponsContainer>();
 
 	Sprite* sprite = gameObject->CreateComponent<Sprite>();
 	sprite->SetTexture(texture);
@@ -46,7 +49,7 @@ GameObject* BuilderEntityGameObject::CreateCharacterGameObject(const std::string
 	rigidBody2D->SetIsGravity(true);
 	rigidBody2D->SetSize(sprite->GetBounds().x, sprite->GetBounds().y);
 	rigidBody2D->SetScale(scalex, scaley);
-	
+
 	Animation* idle = gameObject->CreateComponent<Animation>();
 	Animation* jump = gameObject->CreateComponent<Animation>();
 	Animation* run = gameObject->CreateComponent<Animation>();
@@ -80,6 +83,31 @@ GameObject* BuilderEntityGameObject::CreateCharacterGameObject(const std::string
 	return gameObject;
 }
 
+GameObject* BuilderEntityGameObject::CreateWeaponGameObject(const std::string& _name, GameObject* _player, const Weapon::TypeWeapon& _typeWeapon, const float& _damage, const float& _range, const float& _attackSpeed)
+{
+	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
+	gameObject->SetPosition(Maths::Vector2f(_player->GetPosition().GetX(), _player->GetPosition().GetY()));
+
+	//RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	//rigidBody2D->SetSize(sprite->GetBounds().x, sprite->GetBounds().y);
+	//rigidBody2D->SetScale(0.5, 0.5);
+
+	WeaponsContainer* weaponsContainer = _player->GetComponent<WeaponsContainer>();
+	weaponsContainer->AddNewWeapon(gameObject);
+
+	Weapon* weapon;
+	if (_typeWeapon == Weapon::TypeWeapon::Gun) weapon = gameObject->CreateComponent<Gun>();
+	else if (_typeWeapon == Weapon::TypeWeapon::Sword) weapon = gameObject->CreateComponent<Sword>();
+	else weapon = gameObject->CreateComponent<Weapon>();
+	weapon->SetName(_name);
+	weapon->SetAttackSpeed(_attackSpeed);
+	weapon->SetDamage(_damage);
+	weapon->SetRange(_range);
+	weapon->SetIndexWeapon(weaponsContainer->GetIndexActualWeapon());
+	
+	return gameObject;
+}
+
 GameObject* BuilderEntityGameObject::CreatePlateformGameObject(const std::string& _name, const float& _positionX, const float& _positionY, const float& _scalex, const float& _scaley)
 {
 	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
@@ -99,3 +127,4 @@ GameObject* BuilderEntityGameObject::CreatePlateformGameObject(const std::string
 	return gameObject;
 
 }
+

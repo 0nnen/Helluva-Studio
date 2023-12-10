@@ -11,11 +11,12 @@
 
 InputCharacter::InputCharacter() {
 	//this->player = nullptr;
-	this->KeyD_ = new MouveCharacterRight();
-	this->KeyQ_ = new MouveCharacterLeft();
+	this->KeyD_ = new MoveCharacterRight();
+	this->KeyQ_ = new MoveCharacterLeft();
 	//this->KeySpace_ = new RightBulletCommand(this);
 	//this->KeyEscape_ = new PauseCommand();
 	this->KeyZ_ = new JumpCharacter();
+	this->LeftMouse_ = new ShootCharacter();
 }
 
 void InputCharacter::Update(const float& _delta) {
@@ -87,10 +88,10 @@ Command* InputCharacter::JumpInput() {
 	return nullptr;
 }
 
-//Command* InputCharacter::FireInput() {
-//	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) return KeySpace_;
-//	return nullptr;
-//}
+Command* InputCharacter::ShootInput() {
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) return LeftMouse_;
+	return nullptr;
+}
 
 //Command* InputCharacter::PauseInput() {
 //	static bool isPressedEscape = false;
