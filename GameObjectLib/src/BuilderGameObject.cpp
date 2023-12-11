@@ -52,7 +52,6 @@ GameObject* BuilderGameObject::CreateBackgroundGameObject(const std::string& _na
 	return gameObject;
 }
 
-
 GameObject* BuilderGameObject::CreateSliderGameObject(const std::string& _name, const float& _x, const float& _y, const float& _widthBar, const float& _heightBar, const float& _widthCursor, const float& _heightCursor, const unsigned int& _fontSize, const float& _data, const float& _maxData)
 {
 	GameObject* gameObject = SceneManager::GetActiveScene()->CreateGameObject(_name);
