@@ -13,6 +13,7 @@
 #include "Scenes/SceneGameWorld.h"
 #include "Scenes/SceneGameAbstract.h"
 #include "Scenes/ScenesGame/ScenesTest.h"
+#include "Scenes/SceneOpening.h"
 Engine* Engine::instance = nullptr;
 
 Engine* Engine::GetInstance()
@@ -35,11 +36,15 @@ void Engine::Init() const
 	SceneManager::AddScene("SceneGameAbstract", new SceneGameAbstract(std::string("SceneGameAbstract")));
 	SceneManager::AddScene("ScenesTest", new ScenesTest(std::string("ScenesTest")));
 	SceneManager::AddScene("SceneGameWorld", new SceneGameWorld(std::string("SceneGameWorld")));
+	//SceneManager::AddScene("SceneOpening",)
 }
 
 void Engine::Run() const
 {
+	SceneOpening::showOpening(WindowManager::GetWindow());
 	SceneManager::RunScene("SceneMainMenu");
+
+
 	while (!shouldQuit)
 	{
 		TimeManager::Update();
