@@ -50,7 +50,7 @@ void SceneGameAbstract::Delete()
 
 void SceneGameAbstract::CreateBackground()
 {
-	GameObject* background1 = BuilderGameObject::CreateBackgroundGameObject("Background1", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundAbstract"));
+	GameObject* background1 = BuilderGameObject::CreateBackgroundGameObject("Background1", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, 1.0f, 1.0f, AssetManager::GetAsset("BackgroundAbstract"));
 };
 
 void SceneGameAbstract::CreatePauseMenuButtons() 

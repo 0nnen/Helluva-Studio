@@ -19,7 +19,7 @@ void SceneCreditsMenu::Create()
 	Scene::Create();
 	sf::Texture backgroundTexture2;
 
-	GameObject* background2 = BuilderGameObject::CreateBackgroundGameObject("Background2", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundCredits"));
+	GameObject* background2 = BuilderGameObject::CreateBackgroundGameObject("Background2", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, 1.0f, 1.0f, AssetManager::GetAsset("BackgroundCredits"));
 	this->CreateSceneButtonsMenu();
 	this->LoadCreditsTexture();
 	imagesCredits.clear();
