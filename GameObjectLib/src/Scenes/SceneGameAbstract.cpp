@@ -42,6 +42,9 @@ void SceneGameAbstract::Preload()
 	AssetManager::AddAsset("Character", "../Assets/Character/Idle/images/Idle_01.png");
 	AssetManager::AddAsset("jumpCharacter", "../Assets/Character/Jump/Character_Jump_48x48.png");
 	AssetManager::AddAsset("runCharacter", "../Assets/Character/Run/Character_Run_48x48.png");
+	AssetManager::AddAsset("shootArm", "../Assets/Character/Shoot/Arm/Character_Shoot_Idle_Arm_48x48.png");
+	AssetManager::AddAsset("shootBody", "../Assets/Character/Shoot/Body/Character_Shoot_Idle_Body_48x48.png");
+	AssetManager::AddAsset("bullet", "../Assets/bullet.png");
 }
 
 

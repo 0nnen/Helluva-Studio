@@ -11,7 +11,7 @@ public:
 	Character(int _hp, int _damage,const float& _speed, const float& _attackSpeed, const float& _range);
 	void Update(const float& _delta);
 	void SetDirection(Direction _newDirection);
-	Direction getDirection() { return direction; }
+	Direction GetDirection() { return direction; }
 
 	private:
 		Direction direction;

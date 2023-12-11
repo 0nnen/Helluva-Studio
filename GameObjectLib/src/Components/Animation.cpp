@@ -14,6 +14,22 @@ void Animation::Play()
 	sprite->SetTexture(spriteSheet, totalFrame);
 	isPlaying = true;
 }
+
+void Animation::PlayWithException(const std::string& _name)
+{
+	for (Component* component : GetOwner()->GetComponents())
+	{
+		Animation* animation = static_cast<Animation*>(component);
+		if (animation && animation != this && animation->GetName() != _name)
+		{
+			animation->Stop();
+		}
+	}
+	Sprite* sprite = GetOwner()->GetComponent<Sprite>();
+	sprite->SetTexture(spriteSheet, totalFrame);
+	isPlaying = true;
+}
+
 void Animation::Update(const float& _delta)
 {
 	Component::Update(_delta);

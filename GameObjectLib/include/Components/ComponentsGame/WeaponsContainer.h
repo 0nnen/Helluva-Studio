@@ -6,6 +6,8 @@ class WeaponsContainer : public Component
 {
 public:
 
+	WeaponsContainer();
+
 	void AddNewWeapon(GameObject* _weapon);
 	GameObject* GetWeaponByIndex(const unsigned int& _index) const;
 	GameObject* GetWeaponByName(const std::string& _name) const;

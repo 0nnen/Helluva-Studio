@@ -14,7 +14,6 @@ void RigidBody2D::Update(const float& _delta)
 		Gravity();
 	}
 	GetOwner()->SetPosition(GetOwner()->GetPosition() + velocity * _delta);
-	if (velocity.y != 0) std::cout << "velo y :" << velocity.y << std::endl;
 }
 
 

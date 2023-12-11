@@ -26,7 +26,7 @@
     <ClInclude Include="include\Components\Entity\Character.h" />
     <ClInclude Include="include\Components\ComponentsGame\Gun.h" />
     <ClInclude Include="include\BuildersGameObject\BuilderEntityGameObject.h" />
-    <ClInclude Include="include\Components\Weapons\Bullet.h" />
+    <ClInclude Include="include\Components\ComponentsGame\Bullet.h" />
     <ClInclude Include="include\Engine.h" />
     <ClInclude Include="include\BuilderGameObject.h" />
     <ClInclude Include="include\Managers\FontManager.h" />
@@ -83,7 +83,7 @@
     <ClCompile Include="src\Components\ComponentsGame\Gun.cpp" />
     <ClCompile Include="src\BuildesGameObject\BuilderEntityGameObject.cpp" />
     <ClCompile Include="src\Components\RigidBody2D.cpp" />
-    <ClCompile Include="src\Components\Weapons\Bullet.cpp" />
+    <ClCompile Include="src\Components\ComponentsGame\Bullet.cpp" />
     <ClCompile Include="src\Scenes\SceneGameUnderground.cpp" />
     <ClCompile Include="src\Scenes\SceneGameWorld.cpp" />
     <ClCompile Include="src\Scenes\SceneOpening.cpp" />

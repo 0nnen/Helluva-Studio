@@ -1,11 +1,17 @@
 #include "Components/ComponentsGame/WeaponsContainer.h"
+#include "Components/ComponentsGame/Weapon.h"
+#include "BuildersGameObject/BuilderEntityGameObject.h"
+
+WeaponsContainer::WeaponsContainer()
+{
+}
 
 void WeaponsContainer::AddNewWeapon(GameObject* _weapon)
 {
 	if (std::find(weapons.begin(), weapons.end(), _weapon) == weapons.end())
 	{
 		weapons.push_back(_weapon);
-		weapon = weapon;
+		weapon = _weapon;
 		actualWeaponIndex = weapons.size() - 1;
 	}
 }

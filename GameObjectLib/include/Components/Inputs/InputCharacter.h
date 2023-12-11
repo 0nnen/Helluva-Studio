@@ -26,10 +26,13 @@ public:
 	~InputCharacter();
 
 private:
-	float speed = 15.f;
-	float JumpVelocity = 0.f;
+	std::string nameIdle = "idle";
+	std::string nameJump = "jump";
+	std::string nameRun = "run";
+	std::string nameArmShoot = "armShoot";
+	std::string nameBodyShoot = "bodyShoot";
 
-
+	std::string actualNameAnimation = "idle";
 	Command* KeyZ_;
 
 	Command* KeyD_;

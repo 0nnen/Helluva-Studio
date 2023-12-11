@@ -21,64 +21,63 @@ InputCharacter::InputCharacter() {
 
 void InputCharacter::Update(const float& _delta) {
 	Component::Update(_delta);
-
+	
 	Command* commandMoves = this->HandleInput();
 	if (commandMoves)
 	{
-		std::string name = "run";
-		for (Component* component : GetOwner()->GetComponents())
-		{
-			Animation* animation = static_cast<Animation*>(component);
-			if (animation && animation->GetName() == name && !animation->GetIsPlaying())
-			{
-				animation->Play();
-			}
-		}
+		actualNameAnimation = nameRun;
 		commandMoves->Execute(_delta);
 	}
 	Command* commandJump = this->JumpInput();
 
 	if (commandJump && !GetOwner()->GetComponent<RigidBody2D>()->GetIsGravity())
 	{
-		std::string name = "jump";
-		for (Component* component : GetOwner()->GetComponents())
-		{
-			Animation* animation = static_cast<Animation*>(component);
-			if (animation && animation->GetName() == name && !animation->GetIsPlaying())
-			{
-				animation->Play();
-			}
-		}
+		actualNameAnimation = nameJump;
 		commandJump->Execute(_delta);
 	}
 
-	if (!commandJump && !commandMoves)
+	Command* shootBullet = this->ShootInput();
+
+	if (shootBullet)
 	{
-		std::string name = "idle";
+		actualNameAnimation = nameBodyShoot;
+		shootBullet->Execute(_delta);
+	}
+
+	if (!commandJump && !commandMoves && !shootBullet)
+	{
+		actualNameAnimation = nameIdle;
+	}
+
+	//Animation 
+	for (Component* component : GetOwner()->GetComponents())
+	{
+		Animation* animation = static_cast<Animation*>(component);
+		if (animation && animation->GetName() == actualNameAnimation && !animation->GetIsPlaying())
+		{
+			animation->Play();
+		}
+	}
+
+	//Animation Arm and Body in order to shoot
+	if (actualNameAnimation == nameBodyShoot)
+	{
+		actualNameAnimation = nameArmShoot;
 		for (Component* component : GetOwner()->GetComponents())
 		{
 			Animation* animation = static_cast<Animation*>(component);
-			if (animation && animation->GetName() == name && !animation->GetIsPlaying())
+			if (animation && animation->GetName() == actualNameAnimation && !animation->GetIsPlaying())
 			{
-				animation->Play();
+				animation->PlayWithException(nameBodyShoot);
 			}
 		}
 	}
-	/*Command* fireBullet = this->FireInput();
-
-	if (fireBullet)
-	{
-		fireBullet->Execute(_delta);
-	}*/
-
 }
 
 Command* InputCharacter::HandleInput() {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) return KeyQ_;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) return KeyD_;
-
 	return nullptr;
-
 }
 
 Command* InputCharacter::JumpInput() {

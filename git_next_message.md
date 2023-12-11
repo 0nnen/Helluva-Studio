@@ -1,8 +1,5 @@
-ENH : Ajout de components, input
+ENH : Ajout tir
 
-- WeaponsContainer : inventaire pour contenir toutes les armes
-- Weapon : Arme de base
-- Gun : pistolet
-- Sword : Epee
-- Input : Shoot avec clique gauche souris
+- Le joueur peut tirer
+- TO FIX : Coordonnées ou Scales de la balle ou du joueur qui fausse le vecteur direction
 

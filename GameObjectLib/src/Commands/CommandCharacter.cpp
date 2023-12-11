@@ -4,6 +4,7 @@
 #include "Components/Animation.h"
 #include "Components/ComponentsGame/WeaponsContainer.h"
 #include "Components/ComponentsGame/Weapon.h"
+#include "Components/ComponentsGame/Gun.h"
 #include "Managers/SceneManager.h"
 #include "Managers/CameraManager.h"
 

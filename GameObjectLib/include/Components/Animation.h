@@ -9,6 +9,7 @@ public:
 	void Update(const float& _delta) override;
 
 	void Play();
+	void PlayWithException(const std::string& _name);
 	inline void Stop() { isPlaying = false; }
 
 	inline void SetFrame(const unsigned int _frame) { totalFrame = _frame; }
