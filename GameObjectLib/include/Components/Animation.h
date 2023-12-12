@@ -2,6 +2,7 @@
 #include "Component.h"
 #include <SFML/Graphics.hpp>
 #include "Components/SpriteRenderer.h"
+
 class Animation : public Component
 {
 public:
@@ -9,11 +10,17 @@ public:
 	void Update(const float& _delta) override;
 
 	void Play();
-	void PlayWithException(const std::string& _name);
-	inline void Stop() { isPlaying = false; }
+	void Play(const std::string& _nameSprite);
+	inline void Stop() {
+		isPlaying = false; 
+		if(sprite) sprite->SetActiveAndVisible(false);
+	}
 
 	inline void SetFrame(const unsigned int _frame) { totalFrame = _frame; }
 	inline unsigned int GetFrame() const { return totalFrame; }
+
+	inline void SetSprite(Sprite* _sprite) { sprite = _sprite; }
+	inline Sprite* GetSprite() const { return sprite; }
 
 	inline bool GetIsPlaying() const { return isPlaying; }
 	inline int GetActualLoop() const { return actualLoop; }
@@ -25,6 +32,8 @@ public:
 
 	
 private:
+	Sprite* sprite = nullptr;
+	std::string spriteName = "spriteName";
 	sf::Texture* spriteSheet = nullptr;
 	int width, height;
 

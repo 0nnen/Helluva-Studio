@@ -14,7 +14,7 @@ public:
 	inline void SetSpeed(const float& _speed) { speed = _speed; }
 	inline float GetSpeed() const { return speed; }
 
-	inline void SetPosition(const Maths::Vector2f& _initialPosition) { initialPosition = _initialPosition; }
+	inline void SetInitialPosition(const Maths::Vector2f& _initialPosition) { initialPosition = _initialPosition; }
 
 	float GetDamageReduced() const;
 	float GetDamageReduced(Maths::Vector2f& _currentPosition) const;

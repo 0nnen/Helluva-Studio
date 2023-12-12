@@ -1,6 +1,7 @@
 #include "Scenes/SceneGameWorld.h"
 #include "BuilderGameObject.h"
 #include "BuildersGameObject/BuilderEntityGameObject.h"
+#include "Components/Entity/Character.h"
 
 SceneGameWorld::SceneGameWorld(const std::string& _newName) : SceneGameAbstract(_newName) {}
 
@@ -47,11 +48,14 @@ void SceneGameWorld::Update(const float& _delta)
 		if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(plateform->GetComponent<RigidBody2D>())) && firstCollide)
 		{
 			player->GetComponent<RigidBody2D>()->SetIsGravity(false);
+			player->GetComponent<Character>()->SetOnFloor(true);
 			firstCollide = false;
 		}
 		else if (!RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(plateform->GetComponent<RigidBody2D>())))
 		{
 			firstCollide = true;
+			player->GetComponent<RigidBody2D>()->SetIsGravity(true);
+			player->GetComponent<Character>()->SetOnFloor(false);
 		}
 	}
 

@@ -5,7 +5,6 @@
 
 #include "Maths/Vector2.h"
 
-#include "Components/Transform.h"
 #include "Component.h"
 
 enum class LayerType {
@@ -17,6 +16,8 @@ enum class LayerType {
 
 class Component;
 
+class Transform;
+
 class GameObject
 {
 public:
@@ -26,14 +27,16 @@ public:
 	inline std::string GetName() const { return name; }
 	inline void SetName(const std::string& _newName) { name = _newName; }
 
-	inline Maths::Vector2f GetPosition() const { return transform->GetPosition(); }
-	inline void SetPosition(Maths::Vector2f _newPosition) { transform->SetPosition(_newPosition); }
+	Transform* GetTransform() const;
 
-	inline Maths::Vector2<float> GetScale() const { return transform->GetScale(); }
-	inline void SetScale(Maths::Vector2f _newScale) { transform->SetScale(_newScale); }
+	 Maths::Vector2f GetPosition() const;
+	 void SetPosition(Maths::Vector2f _newPosition);
 
-	inline float GetRotation() const { return transform->GetRotation(); }
-	inline void SetRotation(float _newRotation) { transform->SetRotation(_newRotation); }
+	 Maths::Vector2<float> GetScale() const;
+	 void SetScale(Maths::Vector2f _newScale);
+
+	 float GetRotation() const;
+	 void SetRotation(float _newRotation);
 
 	inline void SetActive(const bool& _state) { isActive = _state; }
 	inline bool GetActive() const { return isActive; }
@@ -50,7 +53,7 @@ public:
 	void AddComponent(Component* _component);
 
 	template<typename T>
-	inline T* CreateComponent()
+	T* CreateComponent()
 	{
 		T* component = new T();
 		component->SetOwner(this);
@@ -61,15 +64,28 @@ public:
 	inline std::vector<Component*> GetComponents() { return components; }
 
 	template<typename T>
-	inline T* GetComponent() {
+	T* GetComponent() {
 		for (size_t i = 0; i < components.size(); i++) {
-			// Vérifie si le composant est un Collider
+			// Vérifie si le composant est un Component
 			T* componentResult = dynamic_cast<T*>(components[i]);
 			if (componentResult) {
-				return componentResult; // Renvoie le Collider trouvé
+				return componentResult; // Renvoie le Component trouvé
 			}
 		}
-		return nullptr; // Renvoie nullptr si aucun Collider n'est trouvé
+		return nullptr; // Renvoie nullptr si aucun Component n'est trouvé
+	}
+
+	template<typename T>
+	std::vector<T*> GetComponentsByType() {
+		std::vector<T*> componentsByType;
+		for (size_t i = 0; i < components.size(); i++) {
+			// Vérifie si le composant est un Component
+			T* componentResult = dynamic_cast<T*>(components[i]);
+			if (componentResult) {
+				componentsByType.push_back(componentResult); // Ajout le Component trouvé
+			}
+		}
+		return componentsByType;
 	}
 
 	void RemoveComponent(Component* _component);

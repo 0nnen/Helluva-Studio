@@ -1,5 +1,9 @@
-ENH : Ajout tir
+NEW : Grosses modifications
 
-- Le joueur peut tirer
-- TO FIX : Coordonnées ou Scales de la balle ou du joueur qui fausse le vecteur direction
+- Suppression des images inutiles
+- Entity avec maxSpeed
+- Gestion des Animations presques finis (revoir jump)
+- Gestion des bullets qui par du pistolet 
+- Gestion de la rotation de l'arme
+
 

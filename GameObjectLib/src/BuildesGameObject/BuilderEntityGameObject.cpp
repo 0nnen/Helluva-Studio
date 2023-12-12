@@ -11,12 +11,14 @@
 #include "Components/Entity/Character.h"
 #include "Components/Inputs/InputCharacter.h"
 #include "Components/Shapes/Rectangle.h"
+#include "Components/Transform.h"
 
 
-GameObject* BuilderEntityGameObject::CreateBulletGameObject(const std::string& _name, sf::Texture* _textureBullet, GameObject* _player, const float& _scalex, const float& _scaley, const float& _damage, const float& _speed, const Maths::Vector2f& _direction)
+GameObject* BuilderEntityGameObject::CreateBulletGameObject(const std::string& _name, sf::Texture* _textureBullet, GameObject* _player, const float& _scalex, const float& _scaley, const float& _damage, const float& _speed, const Maths::Vector2f& _direction, const float& _rotate, const Maths::Vector2f& _position)
 {
 	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
-	gameObject->SetPosition(Maths::Vector2f(_player->GetPosition().GetX(), _player->GetPosition().GetY()));
+	gameObject->SetPosition(_position);
+	gameObject->SetRotation(_rotate);
 
 	Sprite* sprite = gameObject->CreateComponent<Sprite>();
 	sprite->SetTexture(_textureBullet);
@@ -25,12 +27,14 @@ GameObject* BuilderEntityGameObject::CreateBulletGameObject(const std::string& _
 	Bullet* bullet = gameObject->CreateComponent<Bullet>();
 	bullet->SetSpeed(_speed);
 	bullet->SetDamage(_damage);
+	bullet->SetInitialPosition(gameObject->GetPosition());
 
 	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
 	rigidBody2D->SetSize(sprite->GetBounds().x, sprite->GetBounds().y);
 	rigidBody2D->SetIsGravity(false);
 	rigidBody2D->AddForces(_direction * bullet->GetSpeed());
 
+	gameObject->SetPosition(Maths::Vector2f(_player->GetPosition().GetX(), _player->GetPosition().GetY()) + gameObject->GetTransform()->TransformPoint());
 	return gameObject;
 }
 
@@ -43,14 +47,23 @@ GameObject* BuilderEntityGameObject::CreateCharacterGameObject(const std::string
 
 	Character* character = gameObject->CreateComponent<Character>();
 
-	Sprite* sprite = gameObject->CreateComponent<Sprite>();
-	sprite->SetTexture(texture);
-	sprite->SetScale(scalex, scaley);
-	sprite->SetSprite();
+	Sprite* spriteBody = gameObject->CreateComponent<Sprite>();
+	spriteBody->SetName("body");
+	spriteBody->SetTexture(texture);
+	spriteBody->SetScale(scalex, scaley);
+	spriteBody->SetSprite();
+
+	Sprite* spriteArm = gameObject->CreateComponent<Sprite>();
+	spriteArm->SetName("arm");
+	spriteArm->SetTexture(texture);
+	spriteArm->SetScale(scalex, scaley);
+	spriteArm->SetSprite();
+	spriteArm->SetActiveAndVisible(false);
 
 	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
 	rigidBody2D->SetIsGravity(true);
-	rigidBody2D->SetSize(sprite->GetBounds().x, sprite->GetBounds().y);
+	rigidBody2D->SetSize(spriteBody->GetBounds().x, spriteBody->GetBounds().y);
+	rigidBody2D->SetKillImperfection(Maths::Vector2f(8.f, 8.f));
 	rigidBody2D->SetScale(scalex, scaley);
 
 	Animation* idle = gameObject->CreateComponent<Animation>();
@@ -74,21 +87,27 @@ GameObject* BuilderEntityGameObject::CreateCharacterGameObject(const std::string
 	run->SetAnimationTime(1);
 	run->SetSpriteSheet(AssetManager::GetAsset("runCharacter"));
 
-	Animation* shootArm = gameObject->CreateComponent<Animation>();
-	shootArm->SetLoop(-1);
-	shootArm->SetName("shootArm");
-	shootArm->SetFrame(10);
-	shootArm->SetAnimationTime(1);
-	shootArm->SetSpriteSheet(AssetManager::GetAsset("shootArm"));
-	
 	Animation* shootBody = gameObject->CreateComponent<Animation>();
-	shootBody->SetLoop(-1);
+	shootBody->SetLoop(1);
 	shootBody->SetName("shootBody");
 	shootBody->SetFrame(10);
-	shootBody->SetAnimationTime(1);
+	shootBody->SetAnimationTime(0.2f);
 	shootBody->SetSpriteSheet(AssetManager::GetAsset("shootBody"));
 
+	Animation* shootArm = gameObject->CreateComponent<Animation>();
+	shootArm->SetLoop(1);
+	shootArm->SetName("shootArm");
+	shootArm->SetFrame(10);
+	shootArm->SetAnimationTime(0.2f);
+	shootArm->SetSpriteSheet(AssetManager::GetAsset("shootArm"));
+
 	idle->Play();
+
+	character->AddAnimation("idle", idle);
+	character->AddAnimation("jump", jump);
+	character->AddAnimation("run", run);
+	character->AddAnimation("shootBody", shootBody);
+	character->AddAnimation("shootArm", shootArm);
 
 	InputCharacter* inputCharacter = gameObject->CreateComponent<InputCharacter>();
 

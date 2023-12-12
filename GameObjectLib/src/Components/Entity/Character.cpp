@@ -5,7 +5,7 @@
 #include "Managers/CameraManager.h"
 
 
-Character::Character() : Entity(200, 30, 15.f, 50.f, 5.f)
+Character::Character() : Entity()
 {
 	directionCharacter = false;
 	direction = Direction::Right;
@@ -22,35 +22,39 @@ void Character::SetDirection(Direction _newDirection) {
 		direction = _newDirection;
 		if (direction == Direction::Left)
 		{
-			GetOwner()->GetComponent<Sprite>()->SetScale(-1 * GetOwner()->GetScale().GetX(), GetOwner()->GetScale().GetY());
+            for (Sprite* sprite : GetOwner()->GetComponentsByType<Sprite>()) {
+                if(sprite) sprite->SetScale(-1 * GetOwner()->GetScale().GetX(), GetOwner()->GetScale().GetY());
+            }
 		}
 		else if (direction == Direction::Right)
 		{
-			GetOwner()->GetComponent<Sprite>()->SetScale(GetOwner()->GetScale().GetX(), GetOwner()->GetScale().GetY());
+            for (Sprite* sprite : GetOwner()->GetComponentsByType<Sprite>()) {
+                if (sprite) sprite->SetScale(GetOwner()->GetScale().GetX(), GetOwner()->GetScale().GetY());
+            }
 		}
 }
 
 void Character::Update(const float& _delta)
 {
     Entity::Update( _delta);
-    if (direction == Direction::Left)
+    sf::RenderWindow* window = WindowManager::GetWindow();
+
+    const sf::Vector2i mousePosition = sf::Mouse::getPosition(*window);
+    const sf::Vector2f worldMousePosition = window->mapPixelToCoords(mousePosition);
+    Maths::Vector2f mousePositionVector = Maths::Vector2f(worldMousePosition.x, worldMousePosition.y);
+    const Maths::Vector2f directionMouse = mousePositionVector - GetOwner()->GetPosition();
+    
+
+    if (directionMouse.x <= 0)
     {
+        SetDirection(Left);
         directionCharacter = true;
     }
-    else if (direction == Direction::Right)
+    else if (directionMouse.x > 0)
     {
+        SetDirection(Right);
         directionCharacter = false;
     }
 
-    // BULLET SHOOT
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-    {
-        bullets.push_back(sf::CircleShape());
-        bullets.back().setRadius(5);
-        bullets.back().setOrigin(5, 5);
-        bullets.back().setPosition(shape.getPosition());
-        angles.push_back(atan2(sf::Mouse::getPosition(*WindowManager::GetWindow()).y - shape.getPosition().y,
-            sf::Mouse::getPosition(*WindowManager::GetWindow()).x - shape.getPosition().x));
-    }
 	CameraManager::SetCenter(GetOwner()->GetPosition().GetX(), GetOwner()->GetPosition().GetY());
 }

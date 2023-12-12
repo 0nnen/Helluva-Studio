@@ -10,7 +10,7 @@
 #include "Scenes/ScenesGame/ScenesTest.h"
 
 InputCharacter::InputCharacter() {
-	//this->player = nullptr;
+	//this->player = nullptr;Th
 	this->KeyD_ = new MoveCharacterRight();
 	this->KeyQ_ = new MoveCharacterLeft();
 	//this->KeySpace_ = new RightBulletCommand(this);
@@ -21,18 +21,36 @@ InputCharacter::InputCharacter() {
 
 void InputCharacter::Update(const float& _delta) {
 	Component::Update(_delta);
-	
+
+	Character* character = GetOwner()->GetComponent<Character>();
+
 	Command* commandMoves = this->HandleInput();
 	if (commandMoves)
 	{
-		actualNameAnimation = nameRun;
+		if (!character->GetAnimation("run")->GetIsPlaying()) {
+			if (character->GetActualAnimation()) character->GetActualAnimation()->Stop();
+			if (character->GetAndSetAnimation("idle")) character->GetAndSetAnimation("idle")->Stop();
+			character->GetAndSetAnimation("run")->Play();
+		}
 		commandMoves->Execute(_delta);
 	}
+	else
+	{
+		if (character->GetAnimation("run")->GetIsPlaying()) {
+			character->GetAnimation("run")->Stop();
+		}
+	}
+
 	Command* commandJump = this->JumpInput();
 
 	if (commandJump && !GetOwner()->GetComponent<RigidBody2D>()->GetIsGravity())
 	{
-		actualNameAnimation = nameJump;
+		if (!character->GetAnimation("jump")->GetIsPlaying()) {
+			if (character->GetActualAnimation()) character->GetActualAnimation()->Stop();
+			if (character->GetAndSetAnimation("idle")) character->GetAndSetAnimation("idle")->Stop();
+			if(!character->GetAnimation("shootArm")->GetIsPlaying() && !character->GetAnimation("shootBody")->GetIsPlaying())
+			character->GetAndSetAnimation("jump")->Play();
+		}
 		commandJump->Execute(_delta);
 	}
 
@@ -40,35 +58,38 @@ void InputCharacter::Update(const float& _delta) {
 
 	if (shootBullet)
 	{
-		actualNameAnimation = nameBodyShoot;
 		shootBullet->Execute(_delta);
 	}
 
 	if (!commandJump && !commandMoves && !shootBullet)
 	{
-		actualNameAnimation = nameIdle;
+		if (!character->GetAnimation("jump")->GetIsPlaying())
+			if (!character->GetAnimation("shootArm")->GetIsPlaying() && !character->GetAnimation("shootBody")->GetIsPlaying())
+				if (!character->GetAnimation("run")->GetIsPlaying())
+					if (!character->GetAnimation("idle")->GetIsPlaying()) {
+						if (character->GetOnFloor())
+						{
+							character->GetAnimation("jump")->Stop();
+						}
+						character->GetAndSetAnimation("idle")->Play();
+					}
 	}
 
-	//Animation 
-	for (Component* component : GetOwner()->GetComponents())
-	{
-		Animation* animation = static_cast<Animation*>(component);
-		if (animation && animation->GetName() == actualNameAnimation && !animation->GetIsPlaying())
-		{
-			animation->Play();
-		}
-	}
+	if (!commandMoves) {
+		RigidBody2D* rigidBody = GetOwner()->GetComponent<RigidBody2D>();
+		Maths::Vector2f velocity = rigidBody->GetVelocity();
 
-	//Animation Arm and Body in order to shoot
-	if (actualNameAnimation == nameBodyShoot)
-	{
-		actualNameAnimation = nameArmShoot;
-		for (Component* component : GetOwner()->GetComponents())
-		{
-			Animation* animation = static_cast<Animation*>(component);
-			if (animation && animation->GetName() == actualNameAnimation && !animation->GetIsPlaying())
-			{
-				animation->PlayWithException(nameBodyShoot);
+		//Slide Effect
+		if (velocity.GetX() != 0.f) {
+			if (velocity.GetX() - 10.f > 0.f) {
+				rigidBody->AddForces(Maths::Vector2f(-10.f, 0.f));
+			}
+			else if (velocity.GetX() + 10.f < 0.f) {
+				rigidBody->AddForces(Maths::Vector2f(10.f, 0.f));
+			}
+			else {
+				velocity.SetX(0.f);
+				rigidBody->SetVelocity(velocity);
 			}
 		}
 	}
@@ -82,8 +103,8 @@ Command* InputCharacter::HandleInput() {
 
 Command* InputCharacter::JumpInput() {
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) return KeyZ_;
-	
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) return KeyZ_;
+
 	return nullptr;
 }
 

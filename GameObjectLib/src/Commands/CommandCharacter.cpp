@@ -13,8 +13,8 @@ void MoveCharacterRight::Execute(const float& _delta)
 {
 	GameObject* player = SceneManager::GetActiveGameScene()->GetPlayer();
 	Character* character = player->GetComponent<Character>();
-	player->SetPosition(player->GetPosition() + Maths::Vector2f::Right + Maths::Vector2f(30, 0) * _delta * character->GetSpeed());
-	character->SetDirection(Character::Direction::Right);
+	RigidBody2D* rigidBody2D = player->GetComponent<RigidBody2D>();
+	if (rigidBody2D->GetVelocity().GetX() < character->GetMaxSpeed()) rigidBody2D->AddForces(Maths::Vector2f::Right * _delta * character->GetSpeed());
 }
 MoveCharacterRight::MoveCharacterRight() {}
 
@@ -22,8 +22,8 @@ void MoveCharacterLeft::Execute(const float& _delta)
 {
 	GameObject* player = SceneManager::GetActiveGameScene()->GetPlayer();
 	Character* character = player->GetComponent<Character>();
-	player->SetPosition(player->GetPosition() + Maths::Vector2f::Left + Maths::Vector2f(30, 0) * _delta * character->GetSpeed());
-	character->SetDirection(Character::Direction::Left);
+	RigidBody2D* rigidBody2D = player->GetComponent<RigidBody2D>();
+	if(rigidBody2D->GetVelocity().GetX() > -character->GetMaxSpeed()) rigidBody2D->AddForces(Maths::Vector2f::Left * _delta * character->GetSpeed());
 }
 MoveCharacterLeft::MoveCharacterLeft() {}
 
