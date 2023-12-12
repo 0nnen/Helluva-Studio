@@ -8,6 +8,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics.hpp>
 
+
 class SceneGameWorld : public SceneGameAbstract
 {
 public:
@@ -28,6 +29,9 @@ private:
 	sf::VertexArray triangle;
 	GameObject* backButton = nullptr;
 	GameObject* creditsButton = nullptr;
+
 	std::vector<GameObject*> platformCarreCollision;
 	std::vector<GameObject*> platformTriangleCollision;
+	GameObject* plateform = nullptr;
+
 };

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Component.h"
+#include <iostream>
 class RigidBody2D final : public Component
 {
 public:
@@ -23,15 +24,21 @@ public:
 	inline void SetGravity(const Maths::Vector2f& _newGravity) { gravity = _newGravity; }
 
 	inline bool GetIsGravity() const { return isAffectedByGravity; }
-	inline void SetIsGravity(const bool& _state) { isAffectedByGravity = _state; }
+	inline void SetIsGravity(const bool& _state) {
+		isAffectedByGravity = _state;
+		if (!isAffectedByGravity) velocity.SetY(0.f);
+	}
+
+	inline Maths::Vector2f GetKillImperfection() const { return killImperfection; }
+	inline void SetKillImperfection(const Maths::Vector2f& _killImperfection) { killImperfection = _killImperfection; }
 
 	inline float GetWidthCollider() const { return widthSquareCollider; }
 	inline float GetHeightCollider() const { return heightSquareCollider; }
 
 	inline void SetSize(const float& _width, const float& _height)
 	{
-		widthSquareCollider = _width;
-		heightSquareCollider = _height;
+		widthSquareCollider = _width - killImperfection.GetX();
+		heightSquareCollider = _height - killImperfection.GetY();
 	}
 	inline void SetScale(const float& _scaleX, const float& _scaleY)
 	{
@@ -55,6 +62,7 @@ private:
 	Maths::Vector2f gravity;
 	bool isAffectedByGravity;
 
+	Maths::Vector2f killImperfection = Maths::Vector2f::Zero;
 	float widthSquareCollider = 1.0f;
 	float heightSquareCollider = 1.0f;
 	float scaleSquareColliderX = 1.0f;

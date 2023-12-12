@@ -6,56 +6,112 @@
 #include "Components/SpriteRenderer.h"
 #include "Managers/SceneManager.h"
 #include "Components/Entity/Character.h"
+#include "Components/Animation.h"
+#include "Scenes/ScenesGame/ScenesTest.h"
 
 InputCharacter::InputCharacter() {
-	//this->player = nullptr;
-	this->KeyD_ = new MouveCharacterRight();
-	this->KeyQ_ = new MouveCharacterLeft();
+	//this->player = nullptr;Th
+	this->KeyD_ = new MoveCharacterRight();
+	this->KeyQ_ = new MoveCharacterLeft();
 	//this->KeySpace_ = new RightBulletCommand(this);
-	/*this->KeyEscape_ = new PauseCommand();
-	this->KeyZ_ = new UpCommand();*/
+	//this->KeyEscape_ = new PauseCommand();
+	this->KeyZ_ = new JumpCharacter();
+	this->LeftMouse_ = new ShootCharacter();
 }
 
 void InputCharacter::Update(const float& _delta) {
 	Component::Update(_delta);
 
+	Character* character = GetOwner()->GetComponent<Character>();
+
 	Command* commandMoves = this->HandleInput();
 	if (commandMoves)
 	{
+		if (!character->GetAnimation("run")->GetIsPlaying()) {
+			if (character->GetActualAnimation()) character->GetActualAnimation()->Stop();
+			if (character->GetAndSetAnimation("idle")) character->GetAndSetAnimation("idle")->Stop();
+			character->GetAndSetAnimation("run")->Play();
+		}
 		commandMoves->Execute(_delta);
 	}
-	/*Command* commandJump = this->JumpInput();
-
-	if (commandJump)
+	else
 	{
+		if (character->GetAnimation("run")->GetIsPlaying()) {
+			character->GetAnimation("run")->Stop();
+		}
+	}
+
+	Command* commandJump = this->JumpInput();
+
+	if (commandJump && !GetOwner()->GetComponent<RigidBody2D>()->GetIsGravity())
+	{
+		if (!character->GetAnimation("jump")->GetIsPlaying()) {
+			if (character->GetActualAnimation()) character->GetActualAnimation()->Stop();
+			if (character->GetAndSetAnimation("idle")) character->GetAndSetAnimation("idle")->Stop();
+			if(!character->GetAnimation("shootArm")->GetIsPlaying() && !character->GetAnimation("shootBody")->GetIsPlaying())
+			character->GetAndSetAnimation("jump")->Play();
+		}
 		commandJump->Execute(_delta);
 	}
-	Command* fireBullet = this->FireInput();
 
-	if (fireBullet)
+	Command* shootBullet = this->ShootInput();
+
+	if (shootBullet)
 	{
-		fireBullet->Execute(_delta);
-	}*/
+		shootBullet->Execute(_delta);
+	}
 
+	if (!commandJump && !commandMoves && !shootBullet)
+	{
+		if (!character->GetAnimation("jump")->GetIsPlaying())
+			if (!character->GetAnimation("shootArm")->GetIsPlaying() && !character->GetAnimation("shootBody")->GetIsPlaying())
+				if (!character->GetAnimation("run")->GetIsPlaying())
+					if (!character->GetAnimation("idle")->GetIsPlaying()) {
+						if (character->GetOnFloor())
+						{
+							character->GetAnimation("jump")->Stop();
+						}
+						character->GetAndSetAnimation("idle")->Play();
+					}
+	}
+
+	if (!commandMoves) {
+		RigidBody2D* rigidBody = GetOwner()->GetComponent<RigidBody2D>();
+		Maths::Vector2f velocity = rigidBody->GetVelocity();
+
+		//Slide Effect
+		if (velocity.GetX() != 0.f) {
+			if (velocity.GetX() - 10.f > 0.f) {
+				rigidBody->AddForces(Maths::Vector2f(-10.f, 0.f));
+			}
+			else if (velocity.GetX() + 10.f < 0.f) {
+				rigidBody->AddForces(Maths::Vector2f(10.f, 0.f));
+			}
+			else {
+				velocity.SetX(0.f);
+				rigidBody->SetVelocity(velocity);
+			}
+		}
+	}
 }
 
 Command* InputCharacter::HandleInput() {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) return KeyQ_;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) return KeyD_;
-
 	return nullptr;
-
 }
 
-//Command* InputCharacter::JumpInput() {
-//	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) return KeyZ_;
-//	return nullptr;
-//}
+Command* InputCharacter::JumpInput() {
 
-//Command* InputCharacter::FireInput() {
-//	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) return KeySpace_;
-//	return nullptr;
-//}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) return KeyZ_;
+
+	return nullptr;
+}
+
+Command* InputCharacter::ShootInput() {
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) return LeftMouse_;
+	return nullptr;
+}
 
 //Command* InputCharacter::PauseInput() {
 //	static bool isPressedEscape = false;

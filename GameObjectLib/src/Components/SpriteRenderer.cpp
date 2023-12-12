@@ -4,7 +4,7 @@
 #include "Managers/AssetManager.h"
 #include "Managers/HUDManager.h"
 #include "Managers/CameraManager.h"
-
+#include "Components/RigidBody2D.h"
 Sprite::Sprite()
 {
 	scalex = 1.0f;
@@ -18,11 +18,15 @@ sf::Vector2f Sprite::GetBounds() const
 
 void Sprite::SetScale()
 {
-	sprite.setScale(GetOwner()->GetScale().GetX(), GetOwner()->GetScale().GetY());
+	scalex = GetOwner()->GetScale().GetX();
+	scaley = GetOwner()->GetScale().GetY();
+	sprite.setScale(scalex, scaley);
 }
 
 void Sprite::SetScale(const float& _scaleX, const float& _scaleY)
 {
+	scalex = _scaleX;
+	scaley = _scaleY;
 	sprite.setScale(_scaleX, _scaleY);
 }
 
@@ -30,9 +34,6 @@ void Sprite::SetOrigin()
 {
 	sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
 }
-
-
-void Sprite::Update(const float& _delta) {}
 
 void Sprite::SetSprite()
 {
@@ -45,26 +46,51 @@ void Sprite::SetTexture(sf::Texture* _texture)
 	texture = _texture;
 	sprite.setTexture(*texture);
 	sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
+	SetScale();
 }
 
-void Sprite::SetRecTexture(const unsigned int& _frame, const unsigned int& _totalFrame)
+
+void Sprite::SetTexture(sf::Texture* _texture, unsigned int& _frame)
+{
+	texture = _texture;
+	sprite.setTexture(*texture);
+}
+
+void Sprite::SetRecTexture(const unsigned int& _frame, const unsigned int& _totalFrame, const int& width, const int& height)
 { 
-	int textureWidth = sprite.getLocalBounds().width / _totalFrame;
-	int textureHeight = sprite.getLocalBounds().height;
-	sprite.setTextureRect(sf::IntRect(textureWidth * _frame, 0, textureWidth, textureHeight));
+	sprite.setTextureRect(sf::IntRect(width * _frame, 0, width, height));
+	sprite.setOrigin(width / 2, height / 2);
+	RigidBody2D* rigidBody2D = GetOwner()->GetComponent<RigidBody2D>();
+	rigidBody2D->SetSize(width, height);
+	rigidBody2D->SetScale(scalex, scaley);
+}
+
+void Sprite::Rotate(const float& angle)
+{
+	rotate = angle;
+	sprite.setRotation(angle);
+}
+
+void Sprite::Update(const float& _delta)
+{
+	if(isActive) this->SetSprite();
 }
 
 void Sprite::Render(sf::RenderWindow* _window)
 {
-
-	this->SetSprite();
-	Component::Render(_window);
-	_window->draw(sprite);
+	if (isVisible)
+	{
+		Component::Render(_window);
+		_window->draw(sprite);
+	}
+	
 }
 
 void Sprite::RenderGUI(sf::RenderWindow* _window)
 {
-	this->SetSprite();
-	Component::RenderGUI(_window);
-	_window->draw(sprite);
+	if (isVisible)
+	{
+		Component::RenderGUI(_window);
+		_window->draw(sprite);
+	}
 }

@@ -1,7 +1,7 @@
 #include "GameObject.h"
 #include <iostream>
-
-GameObject::GameObject() 
+#include "Components/Transform.h"
+GameObject::GameObject()
 {
 	this->isActive = true;
 	this->transform = new Transform();
@@ -9,14 +9,25 @@ GameObject::GameObject()
 
 GameObject::~GameObject()
 {
-	
+
 	for (const Component* component : components)
 	{
-		if(component) delete component;
+		if (component) delete component;
 	}
-	if(transform) delete transform;
+	if (transform) delete transform;
 	components.clear();
 }
+
+Transform* GameObject::GetTransform() const { return transform; }
+
+Maths::Vector2f GameObject::GetPosition() const { return transform->GetPosition(); }
+void GameObject::SetPosition(Maths::Vector2f _newPosition) { transform->SetPosition(_newPosition); }
+
+Maths::Vector2<float> GameObject::GetScale() const { return transform->GetScale(); }
+void GameObject::SetScale(Maths::Vector2f _newScale) { transform->SetScale(_newScale); }
+
+float GameObject::GetRotation() const { return transform->GetRotation(); }
+void GameObject::SetRotation(float _newRotation) { transform->SetRotation(_newRotation); }
 
 void GameObject::AddComponent(Component* _component)
 {
@@ -26,13 +37,15 @@ void GameObject::AddComponent(Component* _component)
 
 void GameObject::RemoveComponent(Component* _component)
 {
+
 	components.erase(std::remove(components.begin(), components.end(), _component), components.end());
 	delete _component;
+
 }
 
 void GameObject::SetDepth(const float& _depth)
 {
-	if (depth >= 0.f) 
+	if (depth >= 0.f)
 	{
 		depth = _depth;
 		while (depth > 1.f)
@@ -60,7 +73,9 @@ void GameObject::Update(const float& _delta) const
 	{
 		for (size_t i = 0; i < components.size(); i++)
 		{
-			components[i]->Update(_delta);
+			if (components[i]->GetActive()) {
+				components[i]->Update(_delta);
+			}
 		}
 	}
 }
@@ -68,19 +83,22 @@ void GameObject::Update(const float& _delta) const
 void GameObject::Render(sf::RenderWindow* _window) const
 {
 	if (this->isVisible) {
-		for (Component* const& component : components)
+		for (size_t i = 0; i < components.size(); i++)
 		{
-			if (layerType == LayerType::Normal)
+			if (components[i]->GetVisible())
 			{
-				component->Render(_window);
-			}
-			else if (layerType == LayerType::HUD)
-			{
-				component->RenderGUI(_window);
-			}
-			else if (layerType == LayerType::Background)
-			{
-				component->RenderBackground(_window);
+				if (layerType == LayerType::Normal)
+				{
+					components[i]->Render(_window);
+				}
+				else if (layerType == LayerType::HUD)
+				{
+					components[i]->RenderGUI(_window);
+				}
+				else if (layerType == LayerType::Background)
+				{
+					components[i]->RenderBackground(_window);
+				}
 			}
 		}
 	}

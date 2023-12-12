@@ -30,7 +30,6 @@ SceneGameAbstract::~SceneGameAbstract()
 void SceneGameAbstract::Create() 
 {
 	Scene::Create();
-	this->CreateChartacter();
 	this->CreatePauseMenuButtons();
 }
 
@@ -38,8 +37,14 @@ void SceneGameAbstract::Preload()
 {
 	Scene::Preload();
 
-	AssetManager::AddAsset("Perso", "../Assets/Character/perso1.png");
 	AssetManager::AddAsset("BackgroundAbstract", "../Assets/bgMenu.png");
+	AssetManager::AddAsset("idleCharacter", "../Assets/Character/Idle/Character_Idle_48x48.png");
+	AssetManager::AddAsset("Character", "../Assets/Character/Idle/images/Idle_01.png");
+	AssetManager::AddAsset("jumpCharacter", "../Assets/Character/Jump/Character_Jump_48x48.png");
+	AssetManager::AddAsset("runCharacter", "../Assets/Character/Run/Character_Run_48x48.png");
+	AssetManager::AddAsset("shootArm", "../Assets/Character/Shoot/Arm/Character_Shoot_Idle_Arm_48x48.png");
+	AssetManager::AddAsset("shootBody", "../Assets/Character/Shoot/Body/Character_Shoot_Idle_Body_48x48.png");
+	AssetManager::AddAsset("bullet", "../Assets/bullet.png");
 }
 
 
@@ -65,19 +70,19 @@ void SceneGameAbstract::CreatePauseMenuButtons()
 
 void SceneGameAbstract::CreateChartacter()
 {
-	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", WindowManager::GetWindowWidth() / 2, 50.f, AssetManager::GetAsset("Perso"), 0.25f, 0.25f);
+	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", WindowManager::GetWindowWidth() / 2, 50.f, AssetManager::GetAsset("Character"), 7.f, 7.f);
 }
 
 void SceneGameAbstract::CreateSceneBackgroundOption() {
 	backgroundAlpha1.backgroundAlpha.setSize(sf::Vector2f(WindowManager::GetFloatWindowWidth(), WindowManager::GetFloatWindowHeight()));
 	backgroundAlpha1.backgroundAlpha.setOrigin(sf::Vector2f(WindowManager::GetFloatWindowWidth() / 2, WindowManager::GetFloatWindowHeight() / 2));
-	backgroundAlpha1.backgroundAlpha.setFillColor(sf::Color(0, 0, 0, 112));
+	backgroundAlpha1.backgroundAlpha.setFillColor(sf::Color(0, 0, 0, 112));	
 	backgroundAlpha1.backgroundAlpha.setPosition(WindowManager::GetFloatWindowWidth() / 2, WindowManager::GetFloatWindowHeight() / 2);
-
 	backgroundAlpha2.backgroundAlpha.setSize(sf::Vector2f(WindowManager::GetFloatWindowWidth(), WindowManager::GetFloatWindowHeight()));
 	backgroundAlpha2.backgroundAlpha.setOrigin(sf::Vector2f(WindowManager::GetFloatWindowWidth() / 2, WindowManager::GetFloatWindowHeight() / 2));
 	backgroundAlpha2.backgroundAlpha.setFillColor(sf::Color::Transparent);
 	backgroundAlpha2.backgroundAlpha.setPosition(WindowManager::GetFloatWindowWidth() / 2, WindowManager::GetFloatWindowHeight() / 2);
+
 }
 
 void SceneGameAbstract::Pause()
@@ -145,6 +150,7 @@ void SceneGameAbstract::Update(const float& _delta)
 		{
 			WindowManager::GetWindow()->close();
 		}
+
 	}
 }
 

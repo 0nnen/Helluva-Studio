@@ -1,8 +1,12 @@
 #pragma once
 
 #include <iostream>
+#include <cmath>
 #include "Maths/Vector2.h"
-class Transform final
+
+#include "Component.h"
+
+class Transform final: public Component
 {
 public: 
 	// Méthode pour récupérer et définir la position
@@ -19,6 +23,26 @@ public:
 	inline void SetScale(const float& _scaleX, const float& _scaleY) { scale = Maths::Vector2f(_scaleX, _scaleY); }
 	inline void SetScale(const Maths::Vector2f& _scale) { scale = _scale; }
 
+	Maths::Vector2f TransformPoint() const
+	{
+		float cosTheta = std::cos(rotation);
+		float sinTheta = std::sin(rotation);
+
+		// Matrice de transformation
+		float m00 = cosTheta;
+		float m01 = -sinTheta;
+		float m10 = sinTheta;
+		float m11 = cosTheta;
+		float m20 = 0.0f;
+		float m21 = 0.0f;
+		float m22 = 1.0f;
+
+		// Calcul de la transformation
+		float x = position.x * m00 + position.y * m01 ;
+		float y = position.x * m10 + position.y * m11 ;
+
+		return Maths::Vector2f(x, y);
+	}
 	// Méthode pour afficher les propriétés du Transform
 	void Display();
 

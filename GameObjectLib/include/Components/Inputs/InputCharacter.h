@@ -2,7 +2,8 @@
 
 #include "Command.h"
 #include "Component.h"
-
+#include "Managers/SceneManager.h"
+#include "Components/RigidBody2D.h"
 
 class InputCharacter : public Component
 {
@@ -11,8 +12,9 @@ public:
 
 	void Update(const float& _delta) override;
 	Command* HandleInput();
-	//Command* JumpInput();
-	//Command* FireInput();
+	Command* JumpInput();
+	Command* ShootInput();
+
 	//Command* PauseInput();
 	//void MoveRight(sf::Time _delta);
 	//void MoveRightBullet();
@@ -24,10 +26,6 @@ public:
 	~InputCharacter();
 
 private:
-	float speed = 15.f;
-	float JumpVelocity = 0.f;
-
-
 	Command* KeyZ_;
 
 	Command* KeyD_;
@@ -35,4 +33,5 @@ private:
 	//Command* KeySpace_;
 	//GameObject* player;
 	//Command* KeyEscape_;
+	Command* LeftMouse_;
 };

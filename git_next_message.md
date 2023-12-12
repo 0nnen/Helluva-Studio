@@ -1,4 +1,9 @@
-NEW : Animation
+NEW : Grosses modifications
 
-- Création d'un component pour les animations
+- Suppression des images inutiles
+- Entity avec maxSpeed
+- Gestion des Animations presques finis (revoir jump)
+- Gestion des bullets qui par du pistolet 
+- Gestion de la rotation de l'arme
+
 

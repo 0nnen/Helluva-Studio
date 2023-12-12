@@ -1,26 +1,26 @@
 #include "Components/RigidBody2D.h"
-
+#include <SFML/Graphics.hpp>
 
 RigidBody2D::RigidBody2D()
 {
-
 	gravity = Maths::Vector2f(0.f, 9.8f);
 	velocity = Maths::Vector2f::Zero;
 	isAffectedByGravity = true;
 }
 void RigidBody2D::Update(const float& _delta)
 {
-	if (isAffectedByGravity) 
+	if (isAffectedByGravity)
 	{
 		Gravity();
-		GetOwner()->SetPosition(GetOwner()->GetPosition() + velocity * _delta);
 	}
+	GetOwner()->SetPosition(GetOwner()->GetPosition() + velocity * _delta);
 }
+
 
 void RigidBody2D::Gravity()
 {
 	// Calculer la force gravitationnelle (F = m * g)
-	velocity += gravity * -mass;
+	velocity += gravity * mass;
 }
 
 bool RigidBody2D::IsColliding(const RigidBody2D& _rigidBody2DA, const RigidBody2D& _rigidBody2DB)

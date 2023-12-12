@@ -28,22 +28,22 @@ public:
 	void Render(sf::RenderWindow* _window) override;
 
 	GameObject* GetPlayer() { return player; }
+	GameObject* GetPlatform() { return platform; }
 	std::vector<GameObject*> GetEnemies() { return enemies; }
 	GameObject* GetEnemie(int _index) { return enemies[_index]; }
+
+	void SetFirstCollide(const bool& _state) { firstCollide = _state; }
+	bool GetFirstCollide() const { return firstCollide; }
 
 protected:
 	std::vector<GameObject*> enemies;
 	GameObject* player = nullptr;
-	GameObject* nexus = nullptr;
-	GameObject* ressource = nullptr;
-	GameObject* ressourceText = nullptr;
+	GameObject* platform = nullptr;
 	GameObject* pausePlayButton = nullptr;
 	GameObject* pauseOptionsButton = nullptr;
 	GameObject* pauseMenuPrincipalButton = nullptr;
 	GameObject* pauseQuitButton = nullptr;
 	GameObject* pauseBongoButton = nullptr;
-	GameObject* victory = nullptr;
-	GameObject* defeat = nullptr;
 	float endTime = 5.f;
 	sf::Texture* texture = nullptr;
 	sf::Text text;
@@ -55,6 +55,8 @@ protected:
 
 	AlphaBackkground backgroundAlpha1;
 	AlphaBackkground backgroundAlpha2;
+
+	bool firstCollide = true;
 
 	bool isPause = true;
 };

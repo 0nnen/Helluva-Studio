@@ -6,18 +6,33 @@
 
 class InputPlayer;
 
-class MouveCharacterRight : public Command
+class MoveCharacterRight : public Command
 {
 public:
-	MouveCharacterRight();
+	MoveCharacterRight();
 	void Execute(const float& _delta);
 };
 
-class MouveCharacterLeft : public Command
+class MoveCharacterLeft : public Command
 {
 public:
-	MouveCharacterLeft();
+	MoveCharacterLeft();
 	void Execute(const float& _delta);
 };
+
+class JumpCharacter : public Command
+{
+public:
+	JumpCharacter();
+	void Execute(const float& _delta);
+};
+
+class ShootCharacter : public Command
+{
+public:
+	ShootCharacter();
+	void Execute(const float& _delta);
+};
+
 
 

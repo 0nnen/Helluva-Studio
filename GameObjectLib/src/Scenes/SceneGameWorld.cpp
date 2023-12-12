@@ -1,22 +1,27 @@
 #include "Scenes/SceneGameWorld.h"
 #include "BuilderGameObject.h"
-#include <BuildersGameObject/BuilderEntityGameObject.h>
+
+#include "BuildersGameObject/BuilderEntityGameObject.h"
+#include "Components/Entity/Character.h"
+
 
 SceneGameWorld::SceneGameWorld(const std::string& _newName) : SceneGameAbstract(_newName) {}
 
 void SceneGameWorld::Preload()
 {
-	Scene::Preload();
+	SceneGameAbstract::Preload();
 	AssetManager::AddAsset("BackgroundMapBackgroundWorld", "../Assets/worldMapBackground.png");
 	AssetManager::AddAsset("BackgroundMapWorld", "../Assets/worldMap1.png");
 }
 
 void SceneGameWorld::Create()
 {
-	Scene::Create();
-	GameObject* backgroundWorldMap = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld1", 3200, WindowManager::GetWindowHeight() / 2, 0.8f, 0.8f, AssetManager::GetAsset("BackgroundMapBackgroundWorld"));
-	GameObject* backgroundWorldMap2 = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld2", 3200, WindowManager::GetWindowHeight() / 2, 0.8f, 0.8f, AssetManager::GetAsset("BackgroundMapWorld"));
+	SceneGameAbstract::Create();
+	GameObject* backgroundWorldMap = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld1", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundMapBackgroundWorld"));
+	//GameObject* backgroundWorldMap2 = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld2", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundMapWorld"));
 	//this->CreateSceneButtonsMenu();
+	this->CreateChartacter();
+	plateform = BuilderEntityGameObject::CreatePlateformGameObject("plateform", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 1.2, 5, 2);
 	this->CreateSceneBackgroundOption();
 	this->CreatePauseMenuButtons();
 	this->CreatePlatformCollision();
@@ -65,7 +70,7 @@ void SceneGameWorld::CreatePlatformCollision()
 
 void SceneGameWorld::CreateSceneButtonsMenu()
 {
-	creditsButton = BuilderGameObject::CreateButtonGameObject("Crédits", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 13, 20);
+	creditsButton = BuilderGameObject::CreateButtonGameObject("CrÃ©dits", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 13, 20);
 	backButton = BuilderGameObject::CreateButtonGameObject("Retourrrrrrrrrrrr", WindowManager::GetWindowWidth() / 2.1, WindowManager::GetWindowHeight() / 13, 25);
 }
 
@@ -77,11 +82,26 @@ void SceneGameWorld::Delete()
 void SceneGameWorld::Render(sf::RenderWindow* _window)
 {
 	Scene::Render(_window);
-	_window->draw(SceneGameAbstract::isPause ? backgroundAlpha2.backgroundAlpha : backgroundAlpha1.backgroundAlpha);
+	_window->draw(isPause ? backgroundAlpha2.backgroundAlpha : backgroundAlpha1.backgroundAlpha);
 }
 
 void SceneGameWorld::Update(const float& _delta)
 {
-	Scene::Update(_delta);
 	SceneGameAbstract::Update(_delta);
+	if (player && plateform)
+	{
+		if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(plateform->GetComponent<RigidBody2D>())) && firstCollide)
+		{
+			player->GetComponent<RigidBody2D>()->SetIsGravity(false);
+			player->GetComponent<Character>()->SetOnFloor(true);
+			firstCollide = false;
+		}
+		else if (!RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(plateform->GetComponent<RigidBody2D>())))
+		{
+			firstCollide = true;
+			player->GetComponent<RigidBody2D>()->SetIsGravity(true);
+			player->GetComponent<Character>()->SetOnFloor(false);
+		}
+	}
+
 }

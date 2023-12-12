@@ -1,21 +1,33 @@
-#include "Components/Animation.h""
-
-Animation::Animation()
-{
-	sprite = GetOwner()->GetComponent<Sprite>();
-}
+#include "Components/Animation.h"
+#include <iostream>
 
 void Animation::Play()
 {
-	for (Component* component : GetOwner()->GetComponents())
-	{
-		if (Animation* animation = static_cast<Animation*>(component))
+	if (!isPlaying) {
+		sprite = GetOwner()->GetComponentsByType<Sprite>()[0];
+		sprite->SetActiveAndVisible(true);
+		sprite->SetTexture(spriteSheet, totalFrame);
+		isPlaying = true;
+	}
+	
+}
+
+void Animation::Play(const std::string& _nameSprite)
+{
+	if (!isPlaying) {
+		for (Sprite* _sprite : GetOwner()->GetComponentsByType<Sprite>())
 		{
-			animation->Stop();
+			if (_sprite->GetName() == _nameSprite)
+			{
+				sprite = _sprite;
+				sprite->SetActiveAndVisible(true);
+				sprite->SetTexture(spriteSheet, totalFrame);
+				isPlaying = true;
+			}
 		}
 	}
-	isPlaying = true;
 }
+
 void Animation::Update(const float& _delta)
 {
 	Component::Update(_delta);
@@ -23,22 +35,25 @@ void Animation::Update(const float& _delta)
 	{
 		if (actualLoop != totalLoop)
 		{
-			if (totalFrame > actualFrame + 1)
-			{
-				if (actualTime > animationTime / (totalFrame + 1))
+			if (sprite) {
+				if (totalFrame > actualFrame + 1)
 				{
-					actualTime = 0.f;
-					actualFrame++;
-					sprite->SetRecTexture(actualFrame, totalFrame);
+					if (actualTime > animationTime / totalFrame)
+					{
+
+						actualTime = 0.f;
+						actualFrame++;
+						sprite->SetRecTexture(actualFrame, totalFrame, width / totalFrame, height);
+					}
+					actualTime += _delta;
 				}
-				actualTime += _delta;
-			}
-			else
-			{
-				actualLoop++;
-				actualFrame = 0;
-				actualTime = 0.f;
-				sprite->SetRecTexture(actualFrame, totalFrame);
+				else
+				{
+					actualLoop++;
+					actualFrame = 0;
+					actualTime = 0.f;
+					sprite->SetRecTexture(actualFrame, totalFrame, width / totalFrame, height);
+				}
 			}
 		}
 		else
@@ -54,7 +69,8 @@ void Animation::Update(const float& _delta)
 void Animation::SetSpriteSheet(sf::Texture* _spriteSheet)
 {
 	spriteSheet = _spriteSheet;
-	sprite->SetTexture(spriteSheet);
+	width = spriteSheet->getSize().x;
+	height = spriteSheet->getSize().y;
 }
 
 void Animation::SetLoop(const int& _loop)

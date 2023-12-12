@@ -25,8 +25,10 @@ public:
 
 	void SetSprite();
 	void SetTexture(sf::Texture* _texture);
-	void SetRecTexture(const unsigned int& _frame, const unsigned int& _totalFrame);
+	void SetTexture(sf::Texture* _texture, unsigned int& _frame);
+	void SetRecTexture(const unsigned int& _frame, const unsigned int& _totalFrame, const int& width, const int& height);
 
+	void Rotate(const float& angle);
 	void Render(sf::RenderWindow* _window) override;
 	void RenderGUI(sf::RenderWindow* _window) override;
 
@@ -36,4 +38,5 @@ private:
 	sf::Texture* texture = nullptr;
 	float scalex, scaley;
 	sf::Sprite sprite;
+	float rotate = 0.f;
 };
