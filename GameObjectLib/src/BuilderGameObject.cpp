@@ -32,25 +32,25 @@ GameObject* BuilderGameObject::CreateButtonGameObject(const std::string& _name, 
 	return gameObject;
 }
 
-GameObject* BuilderGameObject::CreateBackgroundGameObject(const std::string& _name, const float& _x, const float& _y, sf::Texture* _texture)
+GameObject* BuilderGameObject::CreateBackgroundGameObject(const std::string& _name, const float& _x, const float& _y, const float& _scalex, const float& _scaley, sf::Texture* _texture)
 {
 	GameObject* gameObject = SceneManager::GetActiveScene()->CreateGameObject(_name);
 	gameObject->SetPosition(Maths::Vector2f(_x, _y));
 	gameObject->SetDepth(0.f);
+	gameObject->SetScale(Maths::Vector2f(_scalex, _scaley));
 
 	Sprite* sprite = gameObject->CreateComponent<Sprite>();
 	sprite->SetTexture(_texture);
-	sprite->SetScale();
+	sprite->SetScale(_scalex, _scaley);
 
-	float scalerX = (float)WindowManager::GetWindowWidth() / _texture->getSize().x;
-	float scalerY = (float)WindowManager::GetWindowHeight() / _texture->getSize().y;
-	sprite->SetScale(scalerX, scalerY);
+	//float scalerX = (float)WindowManager::GetWindowWidth() / _texture->getSize().x;
+	//float scalerY = (float)WindowManager::GetWindowHeight() / _texture->getSize().y;
+	//sprite->SetScale(scalerX, scalerY);
 	sprite->SetOrigin();
 	sprite->SetSprite();
 
 	return gameObject;
 }
-
 
 GameObject* BuilderGameObject::CreateSliderGameObject(const std::string& _name, const float& _x, const float& _y, const float& _widthBar, const float& _heightBar, const float& _widthCursor, const float& _heightCursor, const unsigned int& _fontSize, const float& _data, const float& _maxData)
 {

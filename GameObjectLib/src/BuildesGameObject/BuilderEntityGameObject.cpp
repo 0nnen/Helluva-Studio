@@ -10,8 +10,11 @@
 #include "Components/ComponentsGame/Gun.h"
 #include "Components/Entity/Character.h"
 #include "Components/Inputs/InputCharacter.h"
-#include "Components/Shapes/Rectangle.h"
+
+#include <Components/Shapes/Rectangle.h>
+#include <Components/Shapes/Triangle.h>
 #include "Components/Transform.h"
+
 
 
 GameObject* BuilderEntityGameObject::CreateBulletGameObject(const std::string& _name, sf::Texture* _textureBullet, GameObject* _player, const float& _scalex, const float& _scaley, const float& _damage, const float& _speed, const Maths::Vector2f& _direction, const float& _rotate, const Maths::Vector2f& _position)
@@ -124,6 +127,24 @@ GameObject* BuilderEntityGameObject::CreateCharacterGameObject(const std::string
 	return gameObject;
 }
 
+
+GameObject* BuilderEntityGameObject::CreatePlatformCollisionGameObject(const std::string& _name, const float& _positionX, const float& _positionY, const float& _scalex, const float& _scaley)
+{
+	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
+	gameObject->SetPosition(Maths::Vector2f(_positionX, _positionY));
+	gameObject->SetScale(Maths::Vector2f(_scalex, _scaley));
+
+
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(false);
+
+	Rectangle* rectangle = gameObject->CreateComponent<Rectangle>();
+	rectangle->SetSize(200.f, 50.f);
+	rectangle->SetScale(_scalex, _scaley);
+
+	return gameObject;
+
+}
 GameObject* BuilderEntityGameObject::CreateWeaponGameObject(const std::string& _name, GameObject* _player, const Weapon::TypeWeapon& _typeWeapon, const float& _positionX, const float& _positionY, const float& _damage, const float& _range, const float& _attackSpeed)
 {
 	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
@@ -149,16 +170,29 @@ GameObject* BuilderEntityGameObject::CreateWeaponGameObject(const std::string& _
 	return gameObject;
 }
 
+
+GameObject* BuilderEntityGameObject::CreatePlatformTriangleCollisionGameObject(const std::string& _name, const float& _base, const float& _height, const float& _widthPos, const float& _heightPos, const float& _rotation)
+{
+	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
+  
+  Triangle* triangle = gameObject->CreateComponent<Triangle>();
+	triangle->SetBase(_base);
+	triangle->SetHeight(_height);
+	triangle->SetPositionTriangle(_widthPos, _heightPos, _rotation);
+
+	return gameObject;
+
+}
+
 GameObject* BuilderEntityGameObject::CreatePlateformGameObject(const std::string& _name, const float& _positionX, const float& _positionY, const float& _scalex, const float& _scaley)
 {
 	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
 	gameObject->SetPosition(Maths::Vector2f(_positionX, _positionY));
 	gameObject->SetScale(Maths::Vector2f(_scalex, _scaley));
-
-
-	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+  
+  RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
 	rigidBody2D->SetIsGravity(false);
-	rigidBody2D->SetSize(200.f, 50.f);
+  rigidBody2D->SetSize(200.f, 50.f);
 	rigidBody2D->SetScale(_scalex, _scaley);
 
 	Rectangle* rectangle = gameObject->CreateComponent<Rectangle>();
@@ -166,6 +200,4 @@ GameObject* BuilderEntityGameObject::CreatePlateformGameObject(const std::string
 	rectangle->SetScale(_scalex, _scaley);
 
 	return gameObject;
-
 }
-

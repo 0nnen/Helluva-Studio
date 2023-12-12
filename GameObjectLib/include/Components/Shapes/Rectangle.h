@@ -19,4 +19,5 @@ private:
 	float scaleX = 0.f;
 	float scaleY = 0.f;
 	sf::RectangleShape rectangle;
+
 };

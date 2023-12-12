@@ -45,6 +45,7 @@
     <ClCompile Include="src\Scenes\ScenesGame\ScenesTest.cpp" />
     <ClCompile Include="src\Components\Animation.cpp" />
     <ClCompile Include="src\Scenes\SceneGameWorld.cpp" />
+    <ClCompile Include="src\Components\Shapes\Triangle.cpp" />
     <ClCompile Include="src\Components\ComponentsGame\Bullet.cpp" />
     <ClCompile Include="src\Components\Shapes\Rectangle.cpp" />
     <ClCompile Include="src\Components\ComponentsGame\WeaponsContainer.cpp" />
@@ -97,6 +98,7 @@
     <ClInclude Include="include\Scenes\ScenesGame\ScenesTest.h" />
     <ClInclude Include="include\Components\Animation.h" />
     <ClInclude Include="include\Scenes\SceneGameWorld.h" />
+    <ClInclude Include="include\Components\Shapes\Triangle.h" />
     <ClInclude Include="include\Components\ComponentsGame\Bullet.h" />
     <ClInclude Include="include\Components\Shapes\Rectangle.h" />
     <ClInclude Include="include\Scenes\ScenesGame\Rectangle.h" />
