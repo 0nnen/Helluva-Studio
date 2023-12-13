@@ -20,7 +20,7 @@ void SceneLoginSignup::Create()
 {
 	Scene::Create();
 
-	GameObject* background = BuilderGameObject::CreateBackgroundGameObject("Background", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundLogin"));
+	GameObject* background = BuilderGameObject::CreateBackgroundGameObject("Background", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, 1.0f, 1.0f, AssetManager::GetAsset("BackgroundLogin"));
 	loginName = BuilderGameObject::CreateInputGameObject("loginName", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 8);
 	loginPassWord = BuilderGameObject::CreateInputGameObject("loginPassWord", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 7);
 	buttonLogin = BuilderGameObject::CreateButtonGameObject("buttonLogin", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 6, 30);

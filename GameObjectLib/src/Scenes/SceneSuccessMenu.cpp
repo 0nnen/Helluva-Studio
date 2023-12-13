@@ -30,7 +30,7 @@ void SceneSuccessMenu::Create()
 {
 	Scene::Create();
 
-	GameObject* background2 = BuilderGameObject::CreateBackgroundGameObject("Background2", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundSuccess"));
+	GameObject* background2 = BuilderGameObject::CreateBackgroundGameObject("Background2", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, 1.0f, 1.0f, AssetManager::GetAsset("BackgroundSuccess"));
 	this->CreateSceneButtonsMenu();
 }
 

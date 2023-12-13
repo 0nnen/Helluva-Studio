@@ -16,6 +16,7 @@ public:
 	void SetOrigin();
 	inline sf::Vector2f GetSize() const { return sf::Vector2f(sprite.getLocalBounds().width * scalex, sprite.getLocalBounds().height * scaley); }
 	sf::Vector2f GetBounds() const;
+	sf::Vector2f GetPosition() const { return sprite.getPosition(); }
 
 
 	inline float GetTop() const { return sprite.getLocalBounds().top * scaley; }
@@ -23,11 +24,14 @@ public:
 	inline float GetLeft() const { return sprite.getLocalBounds().left * scalex; }
 	inline float GetRight() const { return (sprite.getLocalBounds().left + sprite.getLocalBounds().width) * scalex; }
 
+	sf::Sprite GetSprite() const { return sprite; }
 	void SetSprite();
 	void SetTexture(sf::Texture* _texture);
 	void SetTexture(sf::Texture* _texture, unsigned int& _frame);
-	void SetRecTexture(const unsigned int& _frame, const unsigned int& _totalFrame, const int& width, const int& height);
+	void SetRecTexture(const unsigned int& _frame, const int& width, const int& height);
+	void SetRecTexture(const unsigned int& _frameWidth, const unsigned int& _frameHeight, const int& width, const int& height);
 
+	void Rotate(const float& angle);
 	void Render(sf::RenderWindow* _window) override;
 	void RenderGUI(sf::RenderWindow* _window) override;
 
@@ -37,5 +41,5 @@ private:
 	sf::Texture* texture = nullptr;
 	float scalex, scaley;
 	sf::Sprite sprite;
-
+	float rotate = 0.f;
 };

@@ -5,7 +5,7 @@
 #include "Managers/FontManager.h"
 #include <iostream>
 
-Button::Button() 
+Button::Button()
 {
 	this->height = 50.f;
 	this->width = 100.f;
@@ -14,7 +14,7 @@ Button::Button()
 	this->rectangle.setOutlineColor(sf::Color::Black);
 	text.setFillColor(sf::Color::Black);
 	this->SetFontSize(16);
-	
+
 	this->SetFont(*FontManager::GetFont("Roboto"));
 	this->SetSize();
 	this->SetOrigin();
@@ -78,8 +78,9 @@ void Button::Render(sf::RenderWindow* _window)
 	Component::Render(_window);
 	const auto position = GetOwner()->GetPosition();
 	SetPosition(position.x, position.y);
-	
-	_window->draw(rectangle);
+	if (needBackground) {
+		_window->draw(rectangle);
+	}
 	_window->draw(text);
 }
 
@@ -87,28 +88,76 @@ void Button::RenderGUI(sf::RenderWindow* _window)
 {
 	Component::RenderGUI(_window);
 	const auto position = GetOwner()->GetPosition();
-	SetPosition(position.x, position.y);
-	
-	_window->draw(rectangle);
+	SetPosition(position.x, position.y - 10);
+
+	if (needBackground) _window->draw(rectangle);
 	_window->draw(text);
 }
 
-void Button::Update(const float& _delta) {}
-
-bool Button::IsClicked()
+void Button::Update(const float& _delta)
 {
-	if (GetOwner()->GetLayer() == LayerType::HUD)
+	Sprite* sprite = GetOwner()->GetComponent<Sprite>();
+	if (sprite) 
 	{
-		sf::Vector2i mousePosition = sf::Mouse::getPosition(*WindowManager::GetWindow());
-		return rectangle.getGlobalBounds().contains(sf::Vector2f(mousePosition.x, mousePosition.y)) && sf::Mouse::isButtonPressed(sf::Mouse::Left) && GetOwner()->GetActive();
-	}
-	else
-	{
-		sf::Vector2i mousePos = sf::Mouse::getPosition(*WindowManager::GetWindow());
-		sf::Vector2f worldPos = WindowManager::GetWindow()->mapPixelToCoords(mousePos, CameraManager::GetView());
-		return rectangle.getGlobalBounds().contains(worldPos) && sf::Mouse::isButtonPressed(sf::Mouse::Left);
+		if (IsClicked(sprite) && state != Button::StateButton::Clicked)
+		{
+			state = Button::Clicked;
+			sprite->SetRecTexture(0, 2, sprite->GetBounds().x, sprite->GetBounds().y);
+		}
+		else if (IsOver(sprite) && state != Button::StateButton::Hover && state != Button::StateButton::Clicked)
+		{
+			state = Button::Hover;
+			sprite->SetRecTexture(0, 1, sprite->GetBounds().x, sprite->GetBounds().y);
+		}
+		else if (!IsOver(sprite) && state != Button::StateButton::Normal && state != Button::StateButton::Clicked)
+		{
+			state = Button::Normal;
+			sprite->SetRecTexture(0, 0, sprite->GetBounds().x, sprite->GetBounds().y);
+		}
 	}
 }
 
+bool Button::IsOver(const Sprite* sprite)
+{
+	sf::Vector2i mousePosition = sf::Mouse::getPosition(*WindowManager::GetWindow());
+	if (GetOwner()->GetLayer() == LayerType::HUD)return sprite->GetSprite().getGlobalBounds().contains(sf::Vector2f(mousePosition.x, mousePosition.y)) && GetOwner()->GetActive();
+	else
+	{
+		sf::Vector2f worldPos = WindowManager::GetWindow()->mapPixelToCoords(mousePosition, CameraManager::GetView());
+		return sprite->GetSprite().getGlobalBounds().contains(worldPos) && GetOwner()->GetActive();
+	}
+}
+
+bool Button::IsClicked()
+{
+	Sprite* sprite = GetOwner()->GetComponent<Sprite>();
+	
+		sf::Vector2i mousePosition = sf::Mouse::getPosition(*WindowManager::GetWindow());
+		if (GetOwner()->GetLayer() == LayerType::HUD)
+		{
+			if(sprite) return sprite->GetSprite().getGlobalBounds().contains(sf::Vector2f(mousePosition.x, mousePosition.y)) && sf::Mouse::isButtonPressed(sf::Mouse::Left) && GetOwner()->GetActive();
+			return rectangle.getGlobalBounds().contains(sf::Vector2f(mousePosition.x, mousePosition.y)) && sf::Mouse::isButtonPressed(sf::Mouse::Left) && GetOwner()->GetActive();
+		}
+		else
+		{
+			sf::Vector2f worldPos = WindowManager::GetWindow()->mapPixelToCoords(mousePosition, CameraManager::GetView());
+			if (sprite) return sprite->GetSprite().getGlobalBounds().contains(worldPos) && sf::Mouse::isButtonPressed(sf::Mouse::Left) && GetOwner()->GetActive();
+			return rectangle.getGlobalBounds().contains(worldPos) && sf::Mouse::isButtonPressed(sf::Mouse::Left) && GetOwner()->GetActive();
+		}
+
+}
+bool Button::IsClicked(const Sprite* _sprite)
+{
+	sf::Vector2i mousePosition = sf::Mouse::getPosition(*WindowManager::GetWindow());
+	if (GetOwner()->GetLayer() == LayerType::HUD)
+	{
+		 return _sprite->GetSprite().getGlobalBounds().contains(sf::Vector2f(mousePosition.x, mousePosition.y)) && sf::Mouse::isButtonPressed(sf::Mouse::Left) && GetOwner()->GetActive();
+	}
+	else
+	{
+		sf::Vector2f worldPos = WindowManager::GetWindow()->mapPixelToCoords(mousePosition, CameraManager::GetView());
+		return _sprite->GetSprite().getGlobalBounds().contains(worldPos) && sf::Mouse::isButtonPressed(sf::Mouse::Left) && GetOwner()->GetActive();
+	}
+}
 
 Button::~Button() {}

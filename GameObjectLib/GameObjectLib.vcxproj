@@ -66,6 +66,7 @@
     <ClInclude Include="include\Scenes\SceneGameUnderground.h" />
     <ClInclude Include="include\Components\RigidBody2D.h" />
     <ClInclude Include="include\Components\Transform.h" />
+    <ClInclude Include="include\Components\Shapes\Triangle.h" />
     <ClInclude Include="include\Scenes\ScenesGame\ScenesTest.h" />
     <ClInclude Include="include\Scenes\ScenesGame\Rectangle.h" />
     <ClInclude Include="include\Components\ComponentsGame\Weapon.h" />
@@ -84,8 +85,8 @@
     <ClCompile Include="src\BuildesGameObject\BuilderEntityGameObject.cpp" />
     <ClCompile Include="src\Components\RigidBody2D.cpp" />
     <ClCompile Include="src\Components\ComponentsGame\Bullet.cpp" />
-    <ClCompile Include="src\Scenes\SceneGameUnderground.cpp" />
-    <ClCompile Include="src\Scenes\SceneGameWorld.cpp" />
+    <ClCompile Include="src\Scenes\ScenesGame\SceneGameUnderground.cpp" />
+    <ClCompile Include="src\Scenes\ScenesGame\SceneGameWorld.cpp" />
     <ClCompile Include="src\Scenes\SceneOpening.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\BuilderGameObject.cpp" />
@@ -118,6 +119,7 @@
     <ClCompile Include="src\Managers\WindowManager.cpp" />
     <ClCompile Include="src\Managers\TimeManager.cpp" />
     <ClCompile Include="src\Components\Transform.cpp" />
+    <ClCompile Include="src\Components\Shapes\Triangle.cpp" />
     <ClCompile Include="src\Components\ComponentsGame\Weapon.cpp" />
     <ClCompile Include="src\Components\ComponentsGame\Sword.cpp" />
   </ItemGroup>

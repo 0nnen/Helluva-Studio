@@ -5,7 +5,6 @@
 #include "Managers/SceneManager.h"
 #include "Components/RigidBody2D.h"
 
-
 class InputCharacter : public Component
 {
 public:
@@ -15,6 +14,8 @@ public:
 	Command* HandleInput();
 	Command* JumpInput();
 	Command* ShootInput();
+	Command* ChangeWeaponInput();
+
 	//Command* PauseInput();
 	//void MoveRight(sf::Time _delta);
 	//void MoveRightBullet();
@@ -26,13 +27,6 @@ public:
 	~InputCharacter();
 
 private:
-	std::string nameIdle = "idle";
-	std::string nameJump = "jump";
-	std::string nameRun = "run";
-	std::string nameArmShoot = "armShoot";
-	std::string nameBodyShoot = "bodyShoot";
-
-	std::string actualNameAnimation = "idle";
 	Command* KeyZ_;
 
 	Command* KeyD_;
@@ -41,4 +35,7 @@ private:
 	//GameObject* player;
 	//Command* KeyEscape_;
 	Command* LeftMouse_;
+	Command* Num1_;
+	Command* Num2_;
+	Command* WheelMouse_;
 };

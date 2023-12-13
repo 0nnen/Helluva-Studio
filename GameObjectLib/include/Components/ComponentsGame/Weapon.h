@@ -18,6 +18,9 @@ public:
 	inline float GetAttackSpeed() const { return attackSpeed; }
 	inline void SetAttackSpeed(const float& _attackSpeed) { attackSpeed = _attackSpeed; }
 
+	inline bool GetIsUnderCooldown() const { return underCooldown; }
+	inline void SetIsUnderCooldown(const bool& _underCooldown) { underCooldown = _underCooldown; }
+
 	inline size_t GetIndexWeapon() const { return indexInventory; }
 	inline void SetIndexWeapon(const size_t& _indexInventory) { indexInventory = _indexInventory; }
 	
@@ -31,6 +34,7 @@ protected:
 	float range = 0.f;
 	float cooldown = 0.f;
 	float attackSpeed = 0.f;
+	bool underCooldown = false;
 	size_t indexInventory = 0;
 	TypeWeapon typeWeapon = DefaultWeapon;
 };

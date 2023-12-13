@@ -1,33 +1,31 @@
-#include "Components/Animation.h""
+#include "Components/Animation.h"
+#include <iostream>
 
 void Animation::Play()
 {
-	for (Component* component : GetOwner()->GetComponents())
-	{
-		Animation* animation = static_cast<Animation*>(component);
-		if (animation && animation != this)
-		{
-			animation->Stop();
-		}
+	if (!isPlaying) {
+		sprite = GetOwner()->GetComponentsByType<Sprite>()[0];
+		sprite->SetActiveAndVisible(true);
+		sprite->SetTexture(spriteSheet, totalFrame);
+		isPlaying = true;
 	}
-	Sprite* sprite = GetOwner()->GetComponent<Sprite>();
-	sprite->SetTexture(spriteSheet, totalFrame);
-	isPlaying = true;
+	
 }
 
-void Animation::PlayWithException(const std::string& _name)
+void Animation::Play(const std::string& _nameSprite)
 {
-	for (Component* component : GetOwner()->GetComponents())
-	{
-		Animation* animation = static_cast<Animation*>(component);
-		if (animation && animation != this && animation->GetName() != _name)
+	if (!isPlaying) {
+		for (Sprite* _sprite : GetOwner()->GetComponentsByType<Sprite>())
 		{
-			animation->Stop();
+			if (_sprite->GetName() == _nameSprite)
+			{
+				sprite = _sprite;
+				sprite->SetActiveAndVisible(true);
+				sprite->SetTexture(spriteSheet, totalFrame);
+				isPlaying = true;
+			}
 		}
 	}
-	Sprite* sprite = GetOwner()->GetComponent<Sprite>();
-	sprite->SetTexture(spriteSheet, totalFrame);
-	isPlaying = true;
 }
 
 void Animation::Update(const float& _delta)
@@ -37,24 +35,25 @@ void Animation::Update(const float& _delta)
 	{
 		if (actualLoop != totalLoop)
 		{
-			Sprite* sprite = GetOwner()->GetComponent<Sprite>();
-			if (totalFrame > actualFrame + 1)
-			{
-				if (actualTime > animationTime / totalFrame)
+			if (sprite) {
+				if (totalFrame > actualFrame + 1)
 				{
-			
-					actualTime = 0.f;
-					actualFrame++;
-					sprite->SetRecTexture(actualFrame, totalFrame, width / totalFrame, height);
+					if (actualTime > animationTime / totalFrame)
+					{
+
+						actualTime = 0.f;
+						actualFrame++;
+						sprite->SetRecTexture(actualFrame, width / totalFrame, height);
+					}
+					actualTime += _delta;
 				}
-				actualTime += _delta;
-			}
-			else
-			{
-				actualLoop++;
-				actualFrame = 0;
-				actualTime = 0.f;
-				sprite->SetRecTexture(actualFrame, totalFrame, width / totalFrame, height);
+				else
+				{
+					actualLoop++;
+					actualFrame = 0;
+					actualTime = 0.f;
+					sprite->SetRecTexture(actualFrame, width / totalFrame, height);
+				}
 			}
 		}
 		else

@@ -35,9 +35,6 @@ void Sprite::SetOrigin()
 	sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
 }
 
-
-void Sprite::Update(const float& _delta) {}
-
 void Sprite::SetSprite()
 {
 	const Maths::Vector2f position = GetOwner()->GetPosition();
@@ -59,7 +56,7 @@ void Sprite::SetTexture(sf::Texture* _texture, unsigned int& _frame)
 	sprite.setTexture(*texture);
 }
 
-void Sprite::SetRecTexture(const unsigned int& _frame, const unsigned int& _totalFrame, const int& width, const int& height)
+void Sprite::SetRecTexture(const unsigned int& _frame, const int& width, const int& height)
 { 
 	sprite.setTextureRect(sf::IntRect(width * _frame, 0, width, height));
 	sprite.setOrigin(width / 2, height / 2);
@@ -68,17 +65,41 @@ void Sprite::SetRecTexture(const unsigned int& _frame, const unsigned int& _tota
 	rigidBody2D->SetScale(scalex, scaley);
 }
 
+void Sprite::SetRecTexture(const unsigned int& _frameWidth, const unsigned int& _frameHeight, const int& width, const int& height)
+{
+	sprite.setTextureRect(sf::IntRect(width * _frameWidth, height * _frameHeight, width, height));
+	sprite.setOrigin(width / 2, height / 2);
+	RigidBody2D* rigidBody2D = GetOwner()->GetComponent<RigidBody2D>();
+	rigidBody2D->SetSize(width, height);
+	rigidBody2D->SetScale(scalex, scaley);
+}
+
+void Sprite::Rotate(const float& angle)
+{
+	rotate = angle;
+	sprite.setRotation(angle);
+}
+
+void Sprite::Update(const float& _delta)
+{
+	if(isActive) this->SetSprite();
+}
+
 void Sprite::Render(sf::RenderWindow* _window)
 {
-
-	this->SetSprite();
-	Component::Render(_window);
-	_window->draw(sprite);
+	if (isVisible)
+	{
+		Component::Render(_window);
+		_window->draw(sprite);
+	}
+	
 }
 
 void Sprite::RenderGUI(sf::RenderWindow* _window)
 {
-	this->SetSprite();
-	Component::RenderGUI(_window);
-	_window->draw(sprite);
+	if (isVisible)
+	{
+		Component::RenderGUI(_window);
+		_window->draw(sprite);
+	}
 }
