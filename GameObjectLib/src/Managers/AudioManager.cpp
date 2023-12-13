@@ -9,18 +9,32 @@ std::map<std::string, sf::Music*> AudioManager::musics;
 std::map<std::string, sf::Sound*> AudioManager::sounds;
 std::map<std::string, sf::SoundBuffer*> AudioManager::soundBuffers;
 
-void AudioManager::SetVolume(float _volume) 
+void AudioManager::SetVolume(float _volume)
 {
 	AudioManager::volume = _volume;
+
 	if (AudioManager::music)
 	{
 		AudioManager::music->setVolume(_volume);
 	}
-	if (AudioManager::sound)
+
+	for (auto& sound : AudioManager::sounds)
 	{
-		AudioManager::sound->setVolume(_volume);
+		if (sound.second)
+		{
+			sound.second->setVolume(_volume);
+		}
+	}
+
+	for (auto& music : AudioManager::musics)
+	{
+		if (music.second)
+		{
+			music.second->setVolume(_volume);
+		}
 	}
 }
+
 
 void AudioManager::PlayMusic(const std::string& _key) 
 {
