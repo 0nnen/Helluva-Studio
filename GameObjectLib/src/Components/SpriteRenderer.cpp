@@ -56,9 +56,18 @@ void Sprite::SetTexture(sf::Texture* _texture, unsigned int& _frame)
 	sprite.setTexture(*texture);
 }
 
-void Sprite::SetRecTexture(const unsigned int& _frame, const unsigned int& _totalFrame, const int& width, const int& height)
+void Sprite::SetRecTexture(const unsigned int& _frame, const int& width, const int& height)
 { 
 	sprite.setTextureRect(sf::IntRect(width * _frame, 0, width, height));
+	sprite.setOrigin(width / 2, height / 2);
+	RigidBody2D* rigidBody2D = GetOwner()->GetComponent<RigidBody2D>();
+	rigidBody2D->SetSize(width, height);
+	rigidBody2D->SetScale(scalex, scaley);
+}
+
+void Sprite::SetRecTexture(const unsigned int& _frameWidth, const unsigned int& _frameHeight, const int& width, const int& height)
+{
+	sprite.setTextureRect(sf::IntRect(width * _frameWidth, height * _frameHeight, width, height));
 	sprite.setOrigin(width / 2, height / 2);
 	RigidBody2D* rigidBody2D = GetOwner()->GetComponent<RigidBody2D>();
 	rigidBody2D->SetSize(width, height);

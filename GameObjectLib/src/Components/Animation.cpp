@@ -43,7 +43,7 @@ void Animation::Update(const float& _delta)
 
 						actualTime = 0.f;
 						actualFrame++;
-						sprite->SetRecTexture(actualFrame, totalFrame, width / totalFrame, height);
+						sprite->SetRecTexture(actualFrame, width / totalFrame, height);
 					}
 					actualTime += _delta;
 				}
@@ -52,7 +52,7 @@ void Animation::Update(const float& _delta)
 					actualLoop++;
 					actualFrame = 0;
 					actualTime = 0.f;
-					sprite->SetRecTexture(actualFrame, totalFrame, width / totalFrame, height);
+					sprite->SetRecTexture(actualFrame, width / totalFrame, height);
 				}
 			}
 		}

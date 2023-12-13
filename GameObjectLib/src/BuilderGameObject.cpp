@@ -14,6 +14,37 @@
 
 //GAME ELEMENT
 
+GameObject* BuilderGameObject::CreateButtonGameObject(const std::string& _name, const float& _x, const float& _y, const float& _scaleX, const float& _scaleY, const float& _frameWidth, const float& _frameHeight, const float& _totalFrameWidth, const float& _totalFrameHeight, sf::Texture* _texture)
+{
+	GameObject* gameObject = SceneManager::GetActiveScene()->CreateGameObject(_name);
+	gameObject->SetPosition(Maths::Vector2f(_x, _y));
+	gameObject->SetActive(true);
+	gameObject->SetVisible(true);
+	gameObject->SetLayer(LayerType::HUD);
+	gameObject->SetDepth(1.f);
+	gameObject->SetScale(Maths::Vector2f(_scaleX, _scaleY));
+
+	Sprite* sprite = gameObject->CreateComponent<Sprite>();
+	sprite->SetTexture(_texture);
+	sprite->SetScale(_scaleX, _scaleY);
+
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetSize(sprite->GetBounds().x, sprite->GetBounds().y);
+	rigidBody2D->SetIsGravity(false);
+
+	sprite->SetRecTexture(_frameWidth, _frameHeight, sprite->GetBounds().x / _totalFrameWidth, sprite->GetBounds().y / _totalFrameHeight);
+
+	Button* button = gameObject->CreateComponent<Button>();
+	button->SetIsBackgroundNeeded(false);
+	button->SetFontSize(40);
+	button->SetPosition(sprite->GetPosition().x, sprite->GetPosition().y);
+	button->SetText(_name, sf::Color::White);
+	button->SetOrigin();
+
+	return gameObject;
+}
+
+
 GameObject* BuilderGameObject::CreateButtonGameObject(const std::string& _name, const float& _x, const float& _y, const unsigned int& _fontSize)
 {
 	GameObject* gameObject = SceneManager::GetActiveScene()->CreateGameObject(_name);

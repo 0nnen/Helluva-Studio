@@ -1,5 +1,6 @@
-FIX: Fix Master
+NEW: Bouton Main Menu
 
-- Fix de la Master
+- Ajout des Assets pour les boutons du menu principal
+- Animation des boutons en hover et clicks
 
 

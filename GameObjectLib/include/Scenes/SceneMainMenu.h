@@ -32,6 +32,7 @@ private:
 	GameObject* bullet = nullptr;
 	GameObject* sliderVolume = nullptr;
 	GameObject* sliderFPS = nullptr;
+	GameObject* buttonPlay = nullptr;
 	sf::Texture* texture;
 	sf::Texture* textureBullet;
 	bool option = false;

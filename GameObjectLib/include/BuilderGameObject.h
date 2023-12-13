@@ -6,6 +6,7 @@ class BuilderGameObject
 {
 public:
 	static GameObject* CreateButtonGameObject(const std::string& _name, const float& _x, const float& _y, const unsigned int& _fontSize);
+	static GameObject* CreateButtonGameObject(const std::string& _name, const float& _x, const float& _y, const float& _scaleX, const float& _scaleY, const float& _frameWidth, const float& _frameHeight, const float& _totalFrameWidth, const float& _totalFrameHeight, sf::Texture* _texture);
 
 	static GameObject* CreateBackgroundGameObject(const std::string& _name, const float& _x, const float& _y, const float& _scalex, const float& _scaley, sf::Texture* _texture);
 	static GameObject* CreateInputGameObject(const std::string& _name, const float& _x, const float& _y);
