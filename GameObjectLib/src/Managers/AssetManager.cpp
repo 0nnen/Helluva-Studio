@@ -23,3 +23,14 @@ std::map<std::string, sf::Texture*> AssetManager::assets;
 	 }
 	 return nullptr;
  }
+
+
+void AssetManager::DeleteAsset(std::string _key)
+ {
+	 if (AssetManager::assets.find(_key) != AssetManager::assets.end())
+	 {
+		 delete AssetManager::assets.at(_key);
+		 AssetManager::assets.erase(_key);
+	 }
+
+ }

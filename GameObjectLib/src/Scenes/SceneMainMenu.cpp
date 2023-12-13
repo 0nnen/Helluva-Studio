@@ -5,6 +5,7 @@
 #include "Managers/WindowManager.h"
 #include "Managers/AssetManager.h"
 #include "Components/SpriteRenderer.h"
+#include "Engine.h"
 
 #include "BuilderGameObject.h"
 
@@ -31,6 +32,8 @@ void SceneMainMenu::Create()
 	this->CreateSceneButtonsMenu();
 	this->ActiveOption(false);
 	this->ActiveMenu(true);
+	isFadeIn = true;
+	fadeInTimeDefault = 5.f;
 
 }
 void SceneMainMenu::Delete()
@@ -66,80 +69,87 @@ void SceneMainMenu::CreateSceneButtonsMenu()
 void SceneMainMenu::Update(const float& _delta)
 {
 	Scene::Update(_delta);
-
-	if (playButton->GetComponent<Button>()->IsClicked() || isFadeOut)
+	if (isFadeIn)
 	{
-		isFadeOut = true;
-		if (FadeOut(_delta))
+		if(FadeIn(_delta)) isFadeIn = false;
+	} 
+	else
+	{
+		if (playButton->GetComponent<Button>()->IsClicked() || isFadeOut)
+		{
+			isFadeOut = true;
+			if (FadeOut(_delta))
+			{
+				AudioManager::PlaySound("ConfirmSelection");
+				SceneManager::RunScene("SceneGameWorld");
+			}
+
+		}
+		else if (worldButton->GetComponent<Button>()->IsClicked())
 		{
 			AudioManager::PlaySound("ConfirmSelection");
-			SceneManager::RunScene("SceneGameWorld");
+			SceneManager::RunScene("SceneGameBossRoom");
 		}
+		else if (optionsButton->GetComponent<Button>()->IsClicked())
+		{
+			AudioManager::PlaySound("ConfirmSelection");
+			this->ActiveMenu(false);
+			this->ActiveOption(true);
+		}
+		else if (quitButton->GetComponent<Button>()->IsClicked())
+		{
+			Engine::GetInstance()->Quit();
+		}
+		else if (backButton->GetComponent<Button>()->IsClicked())
+		{
+			AudioManager::PlaySound("CancelSelection");
+			optionsButton->GetComponent<Button>()->SetState(Button::StateButton::Normal);
+			this->ActiveOption(false);
+			this->ActiveMenu(true);
+		}
+		else if (successButton->GetComponent<Button>()->IsClicked())
+		{
+			AudioManager::PlaySound("ErrorSelection");
+			SceneManager::RunScene("SceneSuccessMenu");
+		}
+		else if (rankButton->GetComponent<Button>()->IsClicked())
+		{
+			AudioManager::PlaySound("ErrorSelection");
+			SceneManager::RunScene("SceneRankMenu");
+		}
+		else if (creditsButton->GetComponent<Button>()->IsClicked())
+		{
+			AudioManager::PlaySound("ErrorSelection");
+			SceneManager::RunScene("SceneCreditsMenu");
+		}
+		if (option) {
+			if (sliderFPS) {
+				Slider* fpsSlider = sliderFPS->GetComponent<Slider>();
+				float currentFPS = fpsSlider->GetDataInt();
+				float previousFPS = fpsSlider->GetPreviousData();
 
-	}
-	else if (worldButton->GetComponent<Button>()->IsClicked())
-	{
-		AudioManager::PlaySound("ConfirmSelection");
-		SceneManager::RunScene("SceneGameBossRoom");
-	}
-	else if (optionsButton->GetComponent<Button>()->IsClicked())
-	{
-		AudioManager::PlaySound("ConfirmSelection");
-		this->ActiveMenu(false);
-		this->ActiveOption(true);
-	}
-	else if (quitButton->GetComponent<Button>()->IsClicked())
-	{
-		WindowManager::GetWindow()->close();
-	}
-	else if (backButton->GetComponent<Button>()->IsClicked())
-	{
-		AudioManager::PlaySound("CancelSelection");
-		optionsButton->GetComponent<Button>()->SetState(Button::StateButton::Normal);
-		this->ActiveOption(false);
-		this->ActiveMenu(true);
-	}
-	else if (successButton->GetComponent<Button>()->IsClicked())
-	{
-		AudioManager::PlaySound("ErrorSelection");
-		SceneManager::RunScene("SceneSuccessMenu");
-	}
-	else if (rankButton->GetComponent<Button>()->IsClicked())
-	{
-		AudioManager::PlaySound("ErrorSelection");
-		SceneManager::RunScene("SceneRankMenu");
-	}
-	else if (creditsButton->GetComponent<Button>()->IsClicked())
-	{
-		AudioManager::PlaySound("ErrorSelection");
-		SceneManager::RunScene("SceneCreditsMenu");
-	}
-	if (option) {
-		if (sliderFPS) {
-			Slider* fpsSlider = sliderFPS->GetComponent<Slider>();
-			float currentFPS = fpsSlider->GetDataInt();
-			float previousFPS = fpsSlider->GetPreviousData();
+				if (previousFPS != currentFPS) {
+					WindowManager::SetFps(currentFPS);
+				}
+			}
 
-			if (previousFPS != currentFPS) {
-				WindowManager::SetFps(currentFPS);
+			if (sliderVolume) {
+				Slider* volumeSlider = sliderVolume->GetComponent<Slider>();
+				float currentVolume = volumeSlider->GetDataInt();
+				float previousVolume = volumeSlider->GetPreviousData();
+
+				if (previousVolume != currentVolume) {
+					AudioManager::SetVolume(currentVolume);
+				}
 			}
 		}
 
-		if (sliderVolume) {
-			Slider* volumeSlider = sliderVolume->GetComponent<Slider>();
-			float currentVolume = volumeSlider->GetDataInt();
-			float previousVolume = volumeSlider->GetPreviousData();
-
-			if (previousVolume != currentVolume) {
-				AudioManager::SetVolume(currentVolume);
-			}
-		}
+		/*else if (signupLoginButton->GetComponent<Button>()->IsClicked() && signupLoginButton->GetActive())
+		{
+			SceneManager::RunScene("SceneLoginSignup");
+		}*/
 	}
-
-	/*else if (signupLoginButton->GetComponent<Button>()->IsClicked() && signupLoginButton->GetActive())
-	{
-		SceneManager::RunScene("SceneLoginSignup");
-	}*/
+	
 }
 
 void SceneMainMenu::ActiveMenu(const bool& _state)

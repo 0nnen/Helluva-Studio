@@ -1,6 +1,4 @@
 #pragma once
-
-
 #include "Scene.h"
 
 class SceneOpening : public Scene
@@ -11,11 +9,11 @@ public:
 	virtual ~SceneOpening() = default;
 
 
-	 void Create();
-	 void Delete();
-	 void Update(const float& _delta);
-	 void Render(sf::RenderWindow* _window);
-	 static int showOpening(sf::RenderWindow* w);
+	 void Create() override;
+	 void Preload() override;
+	 void Delete() override;
+	 void Update(const float& _delta) override;
+	 void Render(sf::RenderWindow* _window) override;
 
 	void Awake();
 
@@ -23,5 +21,11 @@ public:
 private:
 	float timeLogoStudio = 3.0;
 	float timeLogoGame = 3.0;
+	std::vector<sf::Sprite*> sprites;
+
+	float actualTime = 0.f;
+	float pauseTime = 1.f;
+	bool isPauseTime = false;
+	int actualSprite = 0;
 };
 

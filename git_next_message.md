@@ -1,5 +1,5 @@
-NEW: SceneBoss
+ENH: Adaptation Scene Opening
 
-- Création d'une sène pour la salle de départ et du boss
+- Adaptation de la scène opening au moteur
 
 

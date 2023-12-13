@@ -10,6 +10,9 @@ public:
 
 	//Get an asset by its key
 	static sf::Texture* GetAsset(std::string _key);
+	//Get an asset by its key
+	static void DeleteAsset(std::string _key);
+
 
 private:
 	static std::map<std::string, sf::Texture*> assets;

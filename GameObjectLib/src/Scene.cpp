@@ -127,12 +127,9 @@ void Scene::ApplyDepth()
 
 bool Scene::FadeIn(const float& _delta)
 {
-	float alphaChangeRate = 255.0f / fadeInTimeDefault;
-
 	sf::Uint8 currentAlpha = fadeInRectangle.getFillColor().a;
-	isFadeIn = false;
 	if (fadeInTimeDefault > fadeInTimeActual) {
-		currentAlpha = static_cast<sf::Uint8>(std::max(0, static_cast<int>(currentAlpha - alphaChangeRate * _delta)));
+		currentAlpha = static_cast<sf::Uint8>(std::min(255, static_cast<int>(255.0f - 255.0f * (fadeInTimeActual / fadeInTimeDefault))));
 		fadeInRectangle.setFillColor(sf::Color(0, 0, 0, currentAlpha));
 		fadeInTimeActual += _delta;
 		return false;
@@ -140,6 +137,7 @@ bool Scene::FadeIn(const float& _delta)
 	else
 	{
 		fadeInRectangle.setFillColor(sf::Color::Transparent);
+		fadeOutRectangle.setFillColor(sf::Color::Transparent);
 		isFadeIn = false;
 		fadeInTimeActual = 0.0f;
 		return true;
@@ -160,6 +158,7 @@ bool Scene::FadeOut(const float& _delta)
 	else
 	{
 		fadeOutRectangle.setFillColor(sf::Color::Black);
+		fadeInRectangle.setFillColor(sf::Color::Black);
 		isFadeOut = false;
 		fadeOutTimeActual = 0.f;
 		return true;

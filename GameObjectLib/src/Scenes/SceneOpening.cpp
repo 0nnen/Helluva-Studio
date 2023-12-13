@@ -1,206 +1,63 @@
 #include<iostream>
 #include "Scenes/SceneOpening.h"
 #include "Managers/WindowManager.h"
-#include "Managers/WindowManager.h"
+#include "Managers/AssetManager.h"
+#include "Managers/SceneManager.h"
 
 SceneOpening::SceneOpening() : Scene(std::string("SceneOpening")) {}
 SceneOpening::SceneOpening(const std::string& _name) : Scene(_name){}
 
-void SceneOpening::Create() {}
+void SceneOpening::Preload()
+{
+    Scene::Preload();
+    AssetManager::AddAsset("HelluvaStudioLogo", "../Assets/Helluva_Logo3.png");
+    AssetManager::AddAsset("Pegi", "../Assets/PEGI_16.png");
+    AssetManager::AddAsset("Warning", "../Assets/warning.jpg");
+}
+void SceneOpening::Create() 
+{
+    Scene::Create();
+    const float widthWindow = WindowManager::GetFloatWindowWidth();
+    const float heightWindow = WindowManager::GetFloatWindowHeight();
+    sf::Sprite* spriteLogo = new sf::Sprite();
+    spriteLogo->setTexture(*AssetManager::GetAsset("HelluvaStudioLogo"));
+    spriteLogo->setPosition(widthWindow / 2, heightWindow / 2);
+    spriteLogo->setOrigin(spriteLogo->getLocalBounds().width / 2, spriteLogo->getLocalBounds().height / 2);
+    spriteLogo->setScale(1.2, 1.2);
+    
+   
+    sf::Sprite* spritePegi_16 = new sf::Sprite();
+    spritePegi_16->setTexture(*AssetManager::GetAsset("Pegi"));
+    spritePegi_16->setPosition(widthWindow / 2, heightWindow / 2);
+    spritePegi_16->setOrigin(spritePegi_16->getLocalBounds().width / 2, spritePegi_16->getLocalBounds().height / 2);
+    spritePegi_16->setScale(0.3, 0.3);
 
-int SceneOpening::showOpening(sf::RenderWindow* w) {
+    sf::Sprite* spriteWarning = new sf::Sprite();
+    spriteWarning->setTexture(*AssetManager::GetAsset("Warning"));
+    spriteWarning->setPosition(widthWindow / 2, heightWindow / 2);
+    spriteWarning->setOrigin(spriteWarning->getLocalBounds().width / 2, spriteWarning->getLocalBounds().height / 2);
+    spriteWarning->setScale(1.3, 1.3);
 
-        sf::Texture* textureLogo = new sf::Texture(),
-            * texturePegi_16 = new sf::Texture(),
-            * textureWarning = new sf::Texture(),
-            * textureMenu = new sf::Texture();
-
-        sf::Sprite* spriteLogo = new sf::Sprite(),
-            * spritePegi_16 = new sf::Sprite(),
-            * spriteWarning = new sf::Sprite(),
-            * spriteMenu = new sf::Sprite();
-
-        sf::Color colorSprite;
-
-        int alphaLogo = 0, alphaPegi_16 = 0, alphaMenu = 0, alphaWarning = 0,
-            opacityLogo = 255, opacityPegi_16 = 255, opacityWarning = 255, opacityMenu = 255;
-
-        int quit = 0;
-        /*int decompte = 10, timeDuration;
-        sf::Clock time;*/
-
-
-        if (!textureLogo->loadFromFile("../Assets/Helluva_Logo3.png")) {
-         //   delete f;
-            delete textureLogo;
-            delete textureWarning;
-            delete textureMenu;
-            delete texturePegi_16;
-            delete spriteLogo;
-            delete spritePegi_16;
-            delete spriteWarning;
-            delete spriteMenu;
-            return -1;
-        }
-
-        if (!texturePegi_16->loadFromFile("../Assets/PEGI_16.png")) {
-           // delete f;
-            delete textureWarning;
-            delete textureMenu;
-            delete texturePegi_16;
-            delete spriteLogo;
-            delete spritePegi_16;
-            delete spriteWarning;
-            delete spriteMenu;
-            return -1;
-        }
-
-        if (!textureWarning->loadFromFile("../Assets/warning2.jpg")) {
-            //delete f;
-            delete textureWarning;
-            delete textureMenu;
-            delete spriteLogo;
-            delete spritePegi_16;
-            delete spriteWarning;
-            delete spriteMenu;
-            return -1;
-        }
-
-        if (!textureMenu->loadFromFile("../Assets/BgMenu.png")) {
-            //delete f;
-            delete textureMenu;
-            delete spriteLogo;
-            delete spritePegi_16;
-            delete spriteWarning;
-            delete spriteMenu;
-            return -1;
-        }
-
-
-        spriteLogo->setTexture(*textureLogo);
-        spriteLogo->setPosition(700., 300.);
-        spriteLogo->setScale(1.2, 1.2);
-
-        spritePegi_16->setTexture(*texturePegi_16);
-        spritePegi_16->setPosition(750.,300.);
-        spritePegi_16->setScale(0.3, 0.3);
-
-        spriteWarning->setTexture(*textureWarning);
-        spriteWarning->setPosition(500, 270.);
-        spriteWarning->setScale(1.3, 1.3);
-
-        spriteMenu->setTexture(*textureMenu);
-        spriteMenu->setPosition(0., 0.);
-        spriteMenu->setScale(1.4, 1.4);
-        std::cout << "taile w :" << w->getSize().x << " "<<w->getSize().y << std::endl;
-        while (w->isOpen()) {
-            sf::Event event;
-            while (w->pollEvent(event)) {
-                if (event.type == sf::Event::Closed) {
-                    w->close();
-                }
-
-            }
-            /*affiche le logo avec une transparence qui diminue*/
-            if (alphaLogo <= 255) {
-                colorSprite = spriteLogo->getColor();
-                spriteLogo->setColor(sf::Color(colorSprite.r, colorSprite.g, colorSprite.b, alphaLogo));
-                alphaLogo = alphaLogo + 15;
-                //std::cout << "alphaLogo:" << static_cast<int>(spriteLogo->getColor().a) << " alphaLogo =" << alphaLogo << std::endl;
-
-            }
-            if (alphaLogo == 255) {
-                sf::sleep(sf::milliseconds(700));
-                std::cout << "sleep logo" << std::endl;
-            }
-            /*affiche le logo avec une transparence qui augmente*/
-            if (alphaLogo >= 255) {
-                colorSprite = spriteLogo->getColor();
-                spriteLogo->setColor(sf::Color(colorSprite.r, colorSprite.g, colorSprite.b, opacityLogo));
-                opacityLogo = opacityLogo - 15;
-            }
-            /*affiche le Pegi 16 avec une transparence qui diminue*/
-            if (opacityLogo <= 0) {
-                colorSprite = spritePegi_16->getColor();
-                spritePegi_16->setColor(sf::Color(colorSprite.r, colorSprite.g, colorSprite.b, alphaPegi_16));
-                alphaPegi_16 = alphaPegi_16 + 15;
-            }
-            if (alphaPegi_16 == 255) {
-                sf::sleep(sf::milliseconds(700));
-                std::cout << "sleep pegi" << std::endl;
-            }
-            /*affiche le Pegi 16 avec une transparence qui augmente*/
-            if (alphaPegi_16 >= 255) {
-                colorSprite = spritePegi_16->getColor();
-                spritePegi_16->setColor(sf::Color(colorSprite.r, colorSprite.g, colorSprite.b, opacityPegi_16));
-                opacityPegi_16 = opacityPegi_16 - 15;
-            }
-            /*affiche le message de warning avec une transparence qui diminue*/
-            if (opacityPegi_16 <= 0) {
-                colorSprite = spriteWarning->getColor();
-                spriteWarning->setColor(sf::Color(colorSprite.r, colorSprite.g, colorSprite.b, alphaWarning));
-                alphaWarning = alphaWarning + 15;
-            }
-            if (alphaWarning == 255) {
-                sf::sleep(sf::milliseconds(700));
-                std::cout << "sleep warning" << std::endl;
-            }
-            /*affiche le message de warning avec une transparence qui augmente*/
-            if (alphaWarning >= 255) {
-                colorSprite = spriteWarning->getColor();
-                spriteWarning->setColor(sf::Color(colorSprite.r, colorSprite.g, colorSprite.b, opacityWarning));
-                opacityWarning = opacityWarning - 15;
-            }
-            /*affiche le menu avec une transparence qui diminue*/
-            if (opacityWarning <= 0) {
-                colorSprite = spriteMenu->getColor();
-                spriteMenu->setColor(sf::Color(colorSprite.r, colorSprite.g, colorSprite.b, alphaMenu));
-                alphaMenu = alphaMenu + 15;
-            }
-            if (alphaMenu >= 255) {
-                alphaMenu = 255;
-            }
-
-            sf::sleep(sf::milliseconds(90));
-            w->clear(sf::Color::Black);
-            if (opacityLogo >= 0) {
-                w->draw(*spriteLogo);
-            }
-            if ((opacityPegi_16 >= 0) && (opacityLogo <= 0)) {
-                w->draw(*spritePegi_16);
-            }
-            if ((opacityWarning >= 0) && (opacityPegi_16 <= 0) && (opacityLogo <= 0)) {
-                w->draw(*spriteWarning);
-            }
-            
-            if (alphaMenu >= 255) {
-               
-                break;
-            }
-
-            w->display();
-       
-        }
-
-
-        delete spriteLogo;
-        delete spritePegi_16;
-        delete spriteWarning;
-        delete spriteMenu;
-        delete textureLogo;
-        delete textureWarning;
-        delete textureMenu;
-        delete texturePegi_16;
-        //delete f;
-        std::cout << "liberation opening";
-
-
-	return 0;
+    sprites.push_back(spriteLogo);
+    sprites.push_back(spritePegi_16);
+    sprites.push_back(spriteWarning);
+    fadeInTimeDefault = 1.f;
+    fadeOutTimeDefault = 1.f;
+    isFadeIn = true;
+    isFadeOut = false;
 }
 
 void SceneOpening::Delete()
 {
 	Scene::Delete();
+    for (sf::Sprite* sprite : sprites)
+    {
+        if (sprite) delete sprite;
+    }
+    sprites.clear();
+    AssetManager::DeleteAsset("HelluvaStudioLogo");
+    AssetManager::DeleteAsset("Pegi");
+    AssetManager::DeleteAsset("Warning");
 }
 
 void SceneOpening::Awake()
@@ -211,8 +68,46 @@ void SceneOpening::Awake()
 void SceneOpening::Update(const float& _delta)
 {
 	Scene::Update(_delta);
+    if (actualSprite < 3) {
+        if (!isFadeOut && isFadeIn && !isPauseTime)
+        {
+            if (FadeIn(_delta))
+            {
+                isFadeOut = true;
+                isPauseTime = true;
+            }
+        } 
+        if (!isFadeIn && isFadeOut && !isPauseTime)
+        {
+            if (FadeOut(_delta))
+            {
+                isFadeIn = true;
+                actualSprite++;
+            }
+        }
+        if (isPauseTime)
+        {
+            actualTime += _delta;
+            if (actualTime > pauseTime)
+            {
+                actualTime = 0.f;
+                isPauseTime = false;
+            }
+        }
+    }
+    else
+    {
+        Delete();
+        SceneManager::RunScene("SceneMainMenu");
+    }
+
 }
 
 void SceneOpening::Render(sf::RenderWindow* _window)
 {
+    if (actualSprite < 3)
+    {
+        _window->draw(*sprites[actualSprite]);
+    }
+    Scene::Render(_window);
 }
