@@ -14,6 +14,7 @@
 #include "Scenes/ScenesGame/SceneGameBossRoom.h"
 #include "Scenes/SceneGameAbstract.h"
 #include "Scenes/ScenesGame/ScenesTest.h"
+#include "Scenes/SceneOpening.h"
 Engine* Engine::instance = nullptr;
 
 Engine* Engine::GetInstance()
@@ -36,12 +37,18 @@ void Engine::Init() const
 	SceneManager::AddScene("SceneGameAbstract", new SceneGameAbstract(std::string("SceneGameAbstract")));
 	SceneManager::AddScene("ScenesTest", new ScenesTest(std::string("ScenesTest")));
 	SceneManager::AddScene("SceneGameWorld", new SceneGameWorld(std::string("SceneGameWorld")));
+	//SceneManager::AddScene("SceneOpening",)
 	SceneManager::AddScene("SceneGameBossRoom", new SceneGameBossRoom(std::string("SceneGameBossRoom")));
 }
 
 void Engine::Run() const
 {
+	//SceneOpening scn_op; 
+	SceneOpening::showOpening(WindowManager::GetWindow());/*lance l'opening du jeu*/
+//	scn_op.FadeOut(2.);
 	SceneManager::RunScene("SceneMainMenu");
+
+
 	while (!shouldQuit)
 	{
 		TimeManager::Update();
