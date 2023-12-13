@@ -71,7 +71,7 @@ void SceneMainMenu::Update(const float& _delta)
 	}
 	else if (worldButton->GetComponent<Button>()->IsClicked())
 	{
-		SceneManager::RunScene("SceneGameWorld");
+		SceneManager::RunScene("SceneGameBossRoom");
 	}
 	else if (optionsButton->GetComponent<Button>()->IsClicked())
 	{

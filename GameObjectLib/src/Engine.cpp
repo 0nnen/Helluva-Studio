@@ -9,8 +9,9 @@
 #include "Managers/CameraManager.h"
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Scenes/SceneGameUnderground.h"
-#include "Scenes/SceneGameWorld.h"
+#include "Scenes/ScenesGame/SceneGameUnderground.h"
+#include "Scenes/ScenesGame/SceneGameWorld.h"
+#include "Scenes/ScenesGame/SceneGameBossRoom.h"
 #include "Scenes/SceneGameAbstract.h"
 #include "Scenes/ScenesGame/ScenesTest.h"
 #include "Scenes/SceneOpening.h"
@@ -37,6 +38,7 @@ void Engine::Init() const
 	SceneManager::AddScene("ScenesTest", new ScenesTest(std::string("ScenesTest")));
 	SceneManager::AddScene("SceneGameWorld", new SceneGameWorld(std::string("SceneGameWorld")));
 	//SceneManager::AddScene("SceneOpening",)
+	SceneManager::AddScene("SceneGameBossRoom", new SceneGameBossRoom(std::string("SceneGameBossRoom")));
 }
 
 void Engine::Run() const
