@@ -17,6 +17,9 @@ void SceneMainMenu::Preload()
 	AssetManager::AddAsset("BackgroundMainMenu", "../Assets/Graphics/Backgrounds/bgMenu.png");
 	AssetManager::AddAsset("ButtonsMenu", "../Assets/Graphics/UI/Buttons/buttonsMenu.png");
 	AssetManager::AddAsset("ButtonGrey", "../Assets/Graphics/UI/Buttons/buttonGrey.png");
+
+	AudioManager::AddSound("ButtonClick", "../Assets/Audio/SFX/confirm_selection.ogg");
+
 }
 
 void SceneMainMenu::Create()

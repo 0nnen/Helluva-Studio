@@ -3,6 +3,7 @@
 #include "Managers/HUDManager.h"
 #include "Managers/CameraManager.h"
 #include "Managers/FontManager.h"
+#include "Managers/AudioManager.h"
 #include <iostream>
 
 Button::Button()
@@ -108,6 +109,7 @@ void Button::Update(const float& _delta)
 		{
 			state = Button::Clicked;
 			sprite->SetRecTexture(0, 2, sprite->GetBounds().x, sprite->GetBounds().y);
+			AudioManager::PlaySound("ButtonClick");
 		}
 		else if (IsOver(sprite) && state != Button::StateButton::Hover && state != Button::StateButton::Clicked)
 		{

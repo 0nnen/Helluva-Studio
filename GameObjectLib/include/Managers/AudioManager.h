@@ -12,11 +12,10 @@ public:
 	
 	inline static void Loop(const bool& _state) { music->setLoop(_state); }
 
-	static void Play(const std::string& _key);
-
 	inline static void Pause() { music->pause(); }
 	inline static void Stop() { music->stop(); }
 
+	static void PlayMusic(const std::string& _key);
 	static void PlaySound(const std::string& _key);
 
 	static void AddMusic(const std::string& _key, const std::string& _fileName);
@@ -28,8 +27,9 @@ private:
 	static float volume;
 	static float maxVolume;
 	static sf::Music* music;
-	static sf::Music* sound;
+	static sf::Sound* sound;
 	static std::map<std::string, sf::Music*> musics;
-	static std::map<std::string, sf::Music*> sounds;
+	static std::map<std::string, sf::Sound*> sounds;
+	static std::map<std::string, sf::SoundBuffer*> soundBuffers;
 };
 

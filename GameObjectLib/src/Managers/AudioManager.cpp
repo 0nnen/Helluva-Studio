@@ -4,9 +4,10 @@
 float AudioManager::volume = 100.f;
 float AudioManager::maxVolume = 100.f;
 sf::Music* AudioManager::music = nullptr;
-sf::Music* AudioManager::sound = nullptr;
+sf::Sound* AudioManager::sound = nullptr;
 std::map<std::string, sf::Music*> AudioManager::musics;
-std::map<std::string, sf::Music*> AudioManager::sounds;
+std::map<std::string, sf::Sound*> AudioManager::sounds;
+std::map<std::string, sf::SoundBuffer*> AudioManager::soundBuffers;
 
 void AudioManager::SetVolume(float _volume) 
 {
@@ -21,7 +22,7 @@ void AudioManager::SetVolume(float _volume)
 	}
 }
 
-void AudioManager::Play(const std::string& _key) 
+void AudioManager::PlayMusic(const std::string& _key) 
 {
 	if (AudioManager::musics.find(_key) != AudioManager::musics.end())
 	{
@@ -32,7 +33,7 @@ void AudioManager::Play(const std::string& _key)
 	}
 	else
 	{
-		std::cout << "no music" << std::endl;
+		std::cout << "Music not found: " << _key << std::endl;
 	}
 }
 
@@ -40,39 +41,52 @@ void AudioManager::PlaySound(const std::string& _key)
 {
 	if (AudioManager::sounds.find(_key) != AudioManager::sounds.end())
 	{
-		AudioManager::sound = AudioManager::sounds.at(_key);
-		AudioManager::sound->setVolume(volume);
-		AudioManager::sound->play();
+		AudioManager::sounds.at(_key)->play();
 	}
 	else
 	{
-		std::cout << "no sound" << std::endl;
+		std::cout << "Sound not found: " << _key << std::endl;
 	}
 }
 
 void AudioManager::AddMusic(const std::string& _key, const std::string& _fileName)
 {
-	sf::Music* _music = new sf::Music();
-	if (AudioManager::musics.find(_key) != AudioManager::musics.end()) 
+	if (AudioManager::musics.find(_key) == AudioManager::musics.end())
 	{
-		if (!_music->openFromFile(_fileName))
+		sf::Music* _music = new sf::Music();
+		if (_music->openFromFile(_fileName))
 		{
-			std::cout << "Music introuvable" << std::endl;
+			AudioManager::musics[_key] = _music;
 		}
 		else
 		{
-			AudioManager::musics.insert(std::make_pair(_key, _music));
+			std::cout << "Music file not found: " << _fileName << std::endl;
+			delete _music;
 		}
 	}
-	AudioManager::musics.insert(std::make_pair(_key, _music));
 }
 
 void AudioManager::AddSound(const std::string& _key, const std::string& _fileName)
 {
-	sf::Music* _sound = new sf::Music();
-	_sound->openFromFile(_fileName);
-	AudioManager::sounds.insert(std::make_pair(_key, _sound));
+	if (AudioManager::soundBuffers.find(_key) == AudioManager::soundBuffers.end())
+	{
+		sf::SoundBuffer* buffer = new sf::SoundBuffer();
+		if (buffer->loadFromFile(_fileName))
+		{
+			sf::Sound* sound = new sf::Sound();
+			sound->setBuffer(*buffer);
+
+			AudioManager::soundBuffers[_key] = buffer;
+			AudioManager::sounds[_key] = sound;
+		}
+		else
+		{
+			std::cout << "Sound file not found: " << _fileName << std::endl;
+			delete buffer;
+		}
+	}
 }
+
 
 AudioManager::~AudioManager() 
 {
@@ -86,6 +100,12 @@ AudioManager::~AudioManager()
 	{
 		delete sound.second;
 	}
+	for (auto& buffer : AudioManager::soundBuffers)
+	{
+		delete buffer.second;
+	}
+	AudioManager::sounds.clear();
+	AudioManager::soundBuffers.clear();
 	AudioManager::musics.clear();
 	AudioManager::sounds.clear();
 }
