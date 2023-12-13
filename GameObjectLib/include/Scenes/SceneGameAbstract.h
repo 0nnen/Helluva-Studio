@@ -49,6 +49,8 @@ protected:
 	AlphaBackkground backgroundAlpha1;
 	AlphaBackkground backgroundAlpha2;
 
+	GameObject* enemy;
+
 	bool firstCollide = true;
 	bool isPause = true;
 };

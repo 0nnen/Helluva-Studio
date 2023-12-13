@@ -12,12 +12,14 @@ void SceneGameWorld::Preload()
 	SceneGameAbstract::Preload();
 	AssetManager::AddAsset("BackgroundMapBackgroundWorld", "../Assets/Graphics/Maps/worldMapBackground.png");
 	AssetManager::AddAsset("BackgroundMapWorld", "../Assets/Graphics/Maps/worldMap1.png");
+	AssetManager::AddAsset("idleEnemyA", "../Assets/Enemy/Hell-Beast-Files/PNG/with-stroke/hell-beast-idle.png");
 }
 
 void SceneGameWorld::Create()
 {
 	SceneGameAbstract::Create();
 	CreatePlayer();
+	CreateEnemy();
 	//GameObject* backgroundWorldMap = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld1", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundMapBackgroundWorld"));
 	//GameObject* backgroundWorldMap2 = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld2", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundMapWorld"));
 	plateform = BuilderEntityGameObject::CreatePlateformGameObject("plateform", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 1.2, 5, 2);
@@ -65,6 +67,11 @@ void SceneGameWorld::CreatePlatformCollision()
 	platformTriangleCollision.push_back(BuilderEntityGameObject::CreatePlatformTriangleCollisionGameObject("Triangle12", 7.7f, 7.7f, 1006, 840, 90));
 }
 
+void SceneGameWorld::CreateEnemy()
+{
+	std::cout << "okk";
+	enemy = BuilderEntityGameObject::CreateEnemyAGameObject("EnemyA", WindowManager::GetWindowWidth() / 2, 40.f, 7.f, 7.f, AssetManager::GetAsset("idleEnemyA"));
+}
 
 void SceneGameWorld::Delete()
 {
@@ -77,23 +84,28 @@ void SceneGameWorld::Render(sf::RenderWindow* _window)
 	_window->draw(isPause ? backgroundAlpha2.backgroundAlpha : backgroundAlpha1.backgroundAlpha);
 }
 
+void SceneGameWorld::Collision(GameObject* _entity)
+{
+	if (_entity && plateform)
+	{
+		if (RigidBody2D::IsColliding(*(_entity->GetComponent<RigidBody2D>()), *(plateform->GetComponent<RigidBody2D>())))
+		{
+			_entity->GetComponent<RigidBody2D>()->SetIsGravity(false);
+			_entity->GetComponent<Entity>()->SetOnFloor(true);
+			firstCollide = false;
+		}
+		else if (!RigidBody2D::IsColliding(*(_entity->GetComponent<RigidBody2D>()), *(plateform->GetComponent<RigidBody2D>())))
+		{
+			firstCollide = true;
+			_entity->GetComponent<RigidBody2D>()->SetIsGravity(true);
+			_entity->GetComponent<Entity>()->SetOnFloor(false);
+		}
+	}
+}
+
 void SceneGameWorld::Update(const float& _delta)
 {
 	SceneGameAbstract::Update(_delta);
-	if (player && plateform)
-	{
-		if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(plateform->GetComponent<RigidBody2D>())) && firstCollide)
-		{
-			player->GetComponent<RigidBody2D>()->SetIsGravity(false);
-			player->GetComponent<Character>()->SetOnFloor(true);
-			firstCollide = false;
-		}
-		else if (!RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(plateform->GetComponent<RigidBody2D>())))
-		{
-			firstCollide = true;
-			player->GetComponent<RigidBody2D>()->SetIsGravity(true);
-			player->GetComponent<Character>()->SetOnFloor(false);
-		}
-	}
-
+	Collision(player);
+	Collision(enemy);
 }

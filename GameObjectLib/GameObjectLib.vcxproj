@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Components\Entity\Enemy\EnemyA.h" />
+    <ClInclude Include="include\Components\Entity\EnemyAbstract.h" />
     <ClInclude Include="include\Components\ComponentsGame\WeaponsContainer.h" />
     <ClInclude Include="include\BuildersGameObject\BuilderShapeGameObject.h" />
     <ClInclude Include="include\Components\Animation.h" />
@@ -74,6 +76,8 @@
     <ClInclude Include="include\Scenes\ScenesGame\SceneGameBossRoom.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\Entity\Enemy\EnemyA.cpp" />
+    <ClCompile Include="src\Components\Entity\EnemyAbstract.cpp" />
     <ClCompile Include="src\Scenes\ScenesGame\SceneGameBossRoom.cpp" />
     <ClCompile Include="src\Components\ComponentsGame\WeaponsContainer.cpp" />
     <ClCompile Include="src\Components\Shapes\Rectangle.cpp" />
