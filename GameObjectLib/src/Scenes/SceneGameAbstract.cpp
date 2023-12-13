@@ -11,7 +11,7 @@
 
 #include "BuilderGameObject.h"
 #include "BuildersGameObject/BuilderEntityGameObject.h"
-#include <Scenes/SceneGameWorld.h>
+#include <Scenes/ScenesGame/SceneGameWorld.h>
 
 
 SceneGameAbstract::SceneGameAbstract(const std::string& _newName) : Scene(_newName)
@@ -47,8 +47,17 @@ void SceneGameAbstract::Create()
 	//Background
 	GameObject* background1 = BuilderGameObject::CreateBackgroundGameObject("Background1", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, 1.0f, 1.0f, AssetManager::GetAsset("BackgroundAbstract"));
 	//Player
-	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", WindowManager::GetWindowWidth() / 2, 50.f, AssetManager::GetAsset("Character"), 7.f, 7.f);
 	
+}
+
+void SceneGameAbstract::CreatePlayer()
+{
+	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", WindowManager::GetWindowWidth() / 2, 50.f, AssetManager::GetAsset("Character"), 7.f, 7.f);
+}
+
+void SceneGameAbstract::CreatePlayer(const float& _positionX, const float& _positionY)
+{
+	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", _positionX, _positionY, AssetManager::GetAsset("Character"), 7.f, 7.f);
 }
 
 void SceneGameAbstract::Preload()

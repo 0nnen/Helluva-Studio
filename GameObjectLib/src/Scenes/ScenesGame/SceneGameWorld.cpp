@@ -1,4 +1,4 @@
-#include "Scenes/SceneGameWorld.h"
+#include "Scenes/ScenesGame/SceneGameWorld.h"
 #include "BuilderGameObject.h"
 
 #include "BuildersGameObject/BuilderEntityGameObject.h"
@@ -17,6 +17,7 @@ void SceneGameWorld::Preload()
 void SceneGameWorld::Create()
 {
 	SceneGameAbstract::Create();
+	CreatePlayer();
 	//GameObject* backgroundWorldMap = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld1", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundMapBackgroundWorld"));
 	//GameObject* backgroundWorldMap2 = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld2", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundMapWorld"));
 	plateform = BuilderEntityGameObject::CreatePlateformGameObject("plateform", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 1.2, 5, 2);

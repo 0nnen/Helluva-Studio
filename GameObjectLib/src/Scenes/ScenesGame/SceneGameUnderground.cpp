@@ -1,4 +1,4 @@
-#include "Scenes/SceneGameUnderground.h"
+#include "Scenes/ScenesGame/SceneGameUnderground.h"
 
 SceneGameUnderground::SceneGameUnderground(const std::string& _newName) : SceneGameAbstract(_newName) {}
 

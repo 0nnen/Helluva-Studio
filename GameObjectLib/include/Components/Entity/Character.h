@@ -11,7 +11,9 @@ public:
 	Character(int _hp, int _damage,const float& _speed, const float& _attackSpeed, const float& _range);
 	void Update(const float& _delta);
 	void SetDirection(Direction _newDirection);
-	Direction GetDirection() { return direction; }
+	Direction GetDirection() const { return direction; }
+	bool GetIsCenter() const{ return direction; }
+	void SetCenterCamera(const bool& _state) { centerCameraOnPlayer = _state; }
 
 	private:
 		Direction direction;
@@ -19,6 +21,7 @@ public:
 		sf::CircleShape shape;
 		std::vector<sf::CircleShape> bullets;
 		std::vector<float> angles;
+		bool centerCameraOnPlayer = true;
 		
 };
 
