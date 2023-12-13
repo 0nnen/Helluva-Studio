@@ -14,8 +14,9 @@ SceneMainMenu::SceneMainMenu(const std::string& _newName) : Scene(_newName)
 
 void SceneMainMenu::Preload()
 {
-	AssetManager::AddAsset("BackgroundMainMenu", "../Assets/bgMenu.png");
-	AssetManager::AddAsset("Buttons", "../Assets/buttons.png");
+	AssetManager::AddAsset("BackgroundMainMenu", "../Assets/Graphics/Backgrounds/bgMenu.png");
+	AssetManager::AddAsset("ButtonsMenu", "../Assets/Graphics/UI/Buttons/buttonsMenu.png");
+	AssetManager::AddAsset("ButtonGrey", "../Assets/Graphics/UI/Buttons/buttonGrey.png");
 }
 
 void SceneMainMenu::Create()
@@ -32,6 +33,7 @@ void SceneMainMenu::Delete()
 	Scene::Delete();
 }
 
+
 void SceneMainMenu::Render(sf::RenderWindow* _window)
 {
 	Scene::Render(_window);
@@ -41,12 +43,12 @@ void SceneMainMenu::CreateSceneButtonsMenu()
 {
 	float widthScreen = WindowManager::GetFloatWindowWidth();
 	float heightScreen = WindowManager::GetFloatWindowHeight();
-	playButton = BuilderGameObject::CreateButtonGameObject("PLAY", widthScreen / 2, heightScreen / 2.1, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("Buttons"));
-	worldButton = BuilderGameObject::CreateButtonGameObject("PLAY WORLD", widthScreen / 2, heightScreen / 1.6, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("Buttons"));
-	optionsButton = BuilderGameObject::CreateButtonGameObject("OPTIONS", widthScreen / 2, heightScreen / 1.3, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("Buttons"));
-	quitButton = BuilderGameObject::CreateButtonGameObject("QUIT", widthScreen / 2, heightScreen / 1.1, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("Buttons"));
+	playButton = BuilderGameObject::CreateButtonGameObject("PLAY", widthScreen / 2, heightScreen / 2.1, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"),40);
+	worldButton = BuilderGameObject::CreateButtonGameObject("PLAY WORLD", widthScreen / 2, heightScreen / 1.6, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"),30);
+	optionsButton = BuilderGameObject::CreateButtonGameObject("OPTIONS", widthScreen / 2, heightScreen / 1.3, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"),40);
+	quitButton = BuilderGameObject::CreateButtonGameObject("QUIT", widthScreen / 2, heightScreen / 1.1, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"),40);
 
-	successButton = BuilderGameObject::CreateButtonGameObject("Success", widthScreen / 1.2, heightScreen / 10, 25);
+	successButton = BuilderGameObject::CreateButtonGameObject("Success", widthScreen / 1.2, heightScreen / 10, 20);
 	rankButton = BuilderGameObject::CreateButtonGameObject("Rank", widthScreen / 1.3, heightScreen / 10, 25);
 	creditsButton = BuilderGameObject::CreateButtonGameObject("Credits", widthScreen / 1.1, heightScreen / 10, 25);
 	backButton = BuilderGameObject::CreateButtonGameObject("Back", widthScreen / 10, heightScreen / 10, 20);

@@ -10,8 +10,8 @@ SceneGameWorld::SceneGameWorld(const std::string& _newName) : SceneGameAbstract(
 void SceneGameWorld::Preload()
 {
 	SceneGameAbstract::Preload();
-	AssetManager::AddAsset("BackgroundMapBackgroundWorld", "../Assets/worldMapBackground.png");
-	AssetManager::AddAsset("BackgroundMapWorld", "../Assets/worldMap1.png");
+	AssetManager::AddAsset("BackgroundMapBackgroundWorld", "../Assets/Graphics/Maps/worldMapBackground.png");
+	AssetManager::AddAsset("BackgroundMapWorld", "../Assets/Graphics/Maps/worldMap1.png");
 }
 
 void SceneGameWorld::Create()

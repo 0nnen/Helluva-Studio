@@ -27,7 +27,8 @@ void Engine::Init() const
 {
 	WindowManager::Init();
 	TimeManager::Init();
-	FontManager::AddFont("Roboto", "../Fonts/Roboto-Medium.ttf");
+	FontManager::AddFont("Roboto", "../Assets/Fonts/Roboto-Medium.ttf");
+	FontManager::AddFont("PixelNES", "../Assets/Fonts/PixelNES.otf");
 	CameraManager::Init(WindowManager::GetWindow());
 	HUDManager::Init(WindowManager::GetWindow());
 	SceneManager::AddScene("SceneMainMenu", new SceneMainMenu(std::string("MainMenu")));

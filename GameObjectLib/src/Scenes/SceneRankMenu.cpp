@@ -17,7 +17,7 @@ void SceneRankMenu::Create()
 	Scene::Create();
 	sf::Texture backgroundTexture2;
 
-	if (!backgroundTexture2.loadFromFile("../assets/Sprite_LOL/background/background2_lol.png"))
+	if (!backgroundTexture2.loadFromFile("../Assets/Graphics/Backgrounds/background2_lol.png"))
 	{
 		std::cout << "pas d'image" << std::endl;
 	}

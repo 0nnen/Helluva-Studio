@@ -29,6 +29,10 @@ public:
 	bool IsOver(const Sprite* _sprite);
 	void SetState(const StateButton& _state) { state = _state; }
 
+	sf::RectangleShape& GetRectangleShape() {
+		return rectangle;
+	}
+
 	~Button();
 
 private:

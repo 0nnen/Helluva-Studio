@@ -23,7 +23,7 @@ SceneSuccessMenu::~SceneSuccessMenu()
 void SceneSuccessMenu::Preload()
 {
 	Scene::Preload();
-	AssetManager::AddAsset("BackgroundSuccess", "../Assets/bgMenu.png");
+	AssetManager::AddAsset("BackgroundSuccess", "../Assets/Graphics/Backgrounds/bgMenu.png");
 }
 
 void SceneSuccessMenu::Create() 
