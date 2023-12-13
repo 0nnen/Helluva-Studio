@@ -19,6 +19,8 @@ public:
 	void Delete() override;
 
 	void CreatePlatformCollision();
+	void CreateEnemy();
+	void Collision(GameObject* _entity);
 
 	void Render(sf::RenderWindow* _window) override;
 	void Update(const float& _delta) override;

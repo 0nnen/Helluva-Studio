@@ -52,6 +52,8 @@
     <ClCompile Include="src\Components\ComponentsGame\Weapon.cpp" />
     <ClCompile Include="src\Components\ComponentsGame\Sword.cpp" />
     <ClCompile Include="src\Scenes\ScenesGame\SceneGameBossRoom.cpp" />
+    <ClCompile Include="src\Components\Entity\EnemyAbstract.cpp" />
+    <ClCompile Include="src\Components\Entity\Enemy\EnemyA.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Managers\HUDManager.h" />
@@ -107,6 +109,8 @@
     <ClInclude Include="include\Components\ComponentsGame\Weapon.h" />
     <ClInclude Include="include\Components\ComponentsGame\Sword.h" />
     <ClInclude Include="include\Scenes\ScenesGame\SceneGameBossRoom.h" />
+    <ClInclude Include="include\Components\Entity\EnemyAbstract.h" />
+    <ClInclude Include="include\Components\Entity\Enemy\EnemyA.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="include\Maths\Vector2.inl" />
