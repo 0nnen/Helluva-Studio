@@ -10,7 +10,6 @@ void SceneOpening::Create() {}
 
 int SceneOpening::showOpening(sf::RenderWindow* w) {
 
-       // sf::RenderWindow* f = new sf::RenderWindow(sf::VideoMode(1080, 1000), "Opening Helluva", sf::Style::Fullscreen);
         sf::Texture* textureLogo = new sf::Texture(),
             * texturePegi_16 = new sf::Texture(),
             * textureWarning = new sf::Texture(),
@@ -31,7 +30,7 @@ int SceneOpening::showOpening(sf::RenderWindow* w) {
         sf::Clock time;*/
 
 
-        if (!textureLogo->loadFromFile("../Assets/Helluva_Logo2.png")) {
+        if (!textureLogo->loadFromFile("../Assets/Helluva_Logo3.png")) {
          //   delete f;
             delete textureLogo;
             delete textureWarning;
@@ -80,7 +79,7 @@ int SceneOpening::showOpening(sf::RenderWindow* w) {
 
         spriteLogo->setTexture(*textureLogo);
         spriteLogo->setPosition(700., 300.);
-        spriteLogo->setScale(0.7, 0.7);
+        spriteLogo->setScale(1.2, 1.2);
 
         spritePegi_16->setTexture(*texturePegi_16);
         spritePegi_16->setPosition(750.,300.);
@@ -173,17 +172,9 @@ int SceneOpening::showOpening(sf::RenderWindow* w) {
             if ((opacityWarning >= 0) && (opacityPegi_16 <= 0) && (opacityLogo <= 0)) {
                 w->draw(*spriteWarning);
             }
-            if ((opacityWarning <= 0) && (opacityPegi_16 <= 0) && (opacityLogo <= 0)) {
-               // w->draw(*spriteMenu);
-                //quit = 1;
-                //w->display();
-                //sf::sleep(sf::milliseconds(1400));
-                //w->clear();
-                //break;
-               
-            }
+            
             if (alphaMenu >= 255) {
-                //sf::sleep(sf::milliseconds(200));
+               
                 break;
             }
 

@@ -41,7 +41,9 @@ void Engine::Init() const
 
 void Engine::Run() const
 {
-	SceneOpening::showOpening(WindowManager::GetWindow());
+	//SceneOpening scn_op; 
+	SceneOpening::showOpening(WindowManager::GetWindow());/*lance l'opening du jeu*/
+//	scn_op.FadeOut(2.);
 	SceneManager::RunScene("SceneMainMenu");
 
 
