@@ -3,6 +3,7 @@
 #include "Managers/HUDManager.h"
 #include "Managers/CameraManager.h"
 #include "Managers/FontManager.h"
+#include "Managers/AudioManager.h"
 #include <iostream>
 
 Button::Button()
@@ -15,7 +16,7 @@ Button::Button()
 	text.setFillColor(sf::Color::Black);
 	this->SetFontSize(16);
 
-	this->SetFont(*FontManager::GetFont("Roboto"));
+	this->SetFont(*FontManager::GetFont("PixelNES"));
 	this->SetSize();
 	this->SetOrigin();
 }
@@ -78,6 +79,11 @@ void Button::Render(sf::RenderWindow* _window)
 	Component::Render(_window);
 	const auto position = GetOwner()->GetPosition();
 	SetPosition(position.x, position.y);
+	if (needBackground && !rectangle.getTexture()) {
+		rectangle.setFillColor(sf::Color::White); 
+		rectangle.setSize(sf::Vector2f(width, height));
+	}
+
 	if (needBackground) {
 		_window->draw(rectangle);
 	}

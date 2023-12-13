@@ -28,7 +28,7 @@ void SceneCreditsMenu::Create()
 
 void SceneCreditsMenu::Preload()
 {
-	AssetManager::AddAsset("BackgroundCredits", "../Assets/bgMenu.png");
+	AssetManager::AddAsset("BackgroundCredits", "../Assets/Graphics/Backgrounds/bgMenu.png");
 
 }
 

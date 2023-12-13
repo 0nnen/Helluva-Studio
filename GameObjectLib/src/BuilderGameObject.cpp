@@ -14,7 +14,7 @@
 
 //GAME ELEMENT
 
-GameObject* BuilderGameObject::CreateButtonGameObject(const std::string& _name, const float& _x, const float& _y, const float& _scaleX, const float& _scaleY, const float& _frameWidth, const float& _frameHeight, const float& _totalFrameWidth, const float& _totalFrameHeight, sf::Texture* _texture)
+GameObject* BuilderGameObject::CreateButtonGameObject(const std::string& _name, const float& _x, const float& _y, const float& _scaleX, const float& _scaleY, const float& _frameWidth, const float& _frameHeight, const float& _totalFrameWidth, const float& _totalFrameHeight, sf::Texture* _texture, const unsigned int& _fontSize)
 {
 	GameObject* gameObject = SceneManager::GetActiveScene()->CreateGameObject(_name);
 	gameObject->SetPosition(Maths::Vector2f(_x, _y));
@@ -36,7 +36,7 @@ GameObject* BuilderGameObject::CreateButtonGameObject(const std::string& _name, 
 
 	Button* button = gameObject->CreateComponent<Button>();
 	button->SetIsBackgroundNeeded(false);
-	button->SetFontSize(40);
+	button->SetFontSize(_fontSize);
 	button->SetPosition(sprite->GetPosition().x, sprite->GetPosition().y);
 	button->SetText(_name, sf::Color::White);
 	button->SetOrigin();
@@ -62,6 +62,7 @@ GameObject* BuilderGameObject::CreateButtonGameObject(const std::string& _name, 
 
 	return gameObject;
 }
+
 
 GameObject* BuilderGameObject::CreateBackgroundGameObject(const std::string& _name, const float& _x, const float& _y, const float& _scalex, const float& _scaley, sf::Texture* _texture)
 {

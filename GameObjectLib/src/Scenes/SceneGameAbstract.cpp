@@ -33,7 +33,7 @@ void SceneGameAbstract::Create()
 	//Pause Buttons
 	pausePlayButton = BuilderGameObject::CreateButtonGameObject("Continue", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 4.0, 25);
 	pauseMenuPrincipalButton = BuilderGameObject::CreateButtonGameObject("Menu Principal", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2.5, 15);
-	pauseQuitButton = BuilderGameObject::CreateButtonGameObject("Quit", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 1.8, 40);
+	pauseQuitButton = BuilderGameObject::CreateButtonGameObject("Quit", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 1.8,  40);
 	this->ManageDefaultButtonsPause(false);
 	//Background Pause
 	backgroundAlpha1.backgroundAlpha.setSize(sf::Vector2f(WindowManager::GetFloatWindowWidth(), WindowManager::GetFloatWindowHeight()));
@@ -64,14 +64,14 @@ void SceneGameAbstract::Preload()
 {
 	Scene::Preload();
 
-	AssetManager::AddAsset("BackgroundAbstract", "../Assets/bgMenu.png");
-	AssetManager::AddAsset("idleCharacter", "../Assets/Character/Idle/Character_Idle_48x48.png");
-	AssetManager::AddAsset("Character", "../Assets/Character/Idle/images/Idle_01.png");
-	AssetManager::AddAsset("jumpCharacter", "../Assets/Character/Jump/Character_Jump_48x48.png");
-	AssetManager::AddAsset("runCharacter", "../Assets/Character/Run/Character_Run_48x48.png");
-	AssetManager::AddAsset("shootArm", "../Assets/Character/Idle_Shoot/Character_Idle_Shoot_ARM_48x48.png");
-	AssetManager::AddAsset("shootBody", "../Assets/Character/Idle_Shoot/Character_Idle_Shoot_BODY_48x48.png");
-	AssetManager::AddAsset("bullet", "../Assets/bullet.png");
+	AssetManager::AddAsset("BackgroundAbstract", "../Assets/Graphics/Backgrounds/bgMenu.png");
+	AssetManager::AddAsset("idleCharacter", "../Assets/Graphics/Characters/Zephyr/Idle/Character_Idle_48x48.png");
+	AssetManager::AddAsset("Character", "../Assets/Graphics/Characters/Zephyr/Idle/Character-Idle_01.png");
+	AssetManager::AddAsset("jumpCharacter", "../Assets/Graphics/Characters/Zephyr/Jump/Character_Jump_48x48.png");
+	AssetManager::AddAsset("runCharacter", "../Assets/Graphics/Characters/Zephyr/Run/Character_Run_48x48.png");
+	AssetManager::AddAsset("shootArm", "../Assets/Graphics/Characters/Zephyr/Idle_Shoot/Character_Idle_Shoot_ARM_48x48.png");
+	AssetManager::AddAsset("shootBody", "../Assets/Graphics/Characters/Zephyr/Idle_Shoot/Character_Idle_Shoot_BODY_48x48.png");
+	AssetManager::AddAsset("bullet", "../Assets/Graphics/Characters/Zephyr/bullet.png");
 }
 
 
