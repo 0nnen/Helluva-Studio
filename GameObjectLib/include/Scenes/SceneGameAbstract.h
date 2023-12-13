@@ -10,13 +10,15 @@ public:
 	SceneGameAbstract(const std::string& _newName);
 	~SceneGameAbstract();
 
-	void Awake() override;
-
 	//void ManagePause();
 	void ManageDefaultButtonsPause(bool _states);
 
 	void Pause();
+
+	void Awake() override;
 	void Create() override;
+	void CreatePlayer();
+	void CreatePlayer(const float& _positionX, const float& _positionY);
 	void Preload() override;
 	void Delete() override;
 	void Update(const float& _delta) override;

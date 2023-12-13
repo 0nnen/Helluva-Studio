@@ -74,9 +74,9 @@ GameObject* BuilderGameObject::CreateBackgroundGameObject(const std::string& _na
 	sprite->SetTexture(_texture);
 	sprite->SetScale(_scalex, _scaley);
 
-	//float scalerX = (float)WindowManager::GetWindowWidth() / _texture->getSize().x;
-	//float scalerY = (float)WindowManager::GetWindowHeight() / _texture->getSize().y;
-	//sprite->SetScale(scalerX, scalerY);
+	float scalerX = (float)WindowManager::GetWindowWidth() / _texture->getSize().x;
+	float scalerY = (float)WindowManager::GetWindowHeight() / _texture->getSize().y;
+	sprite->SetScale(scalerX, scalerY);
 	sprite->SetOrigin();
 	sprite->SetSprite();
 

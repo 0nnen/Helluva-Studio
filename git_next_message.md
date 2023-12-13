@@ -1,5 +1,5 @@
-FIX: Master
+NEW: SceneBoss
 
-- Fix de la master, spritesheet animation modifié
+- Création d'une sène pour la salle de départ et du boss
 
 

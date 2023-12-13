@@ -49,7 +49,7 @@
     <ClInclude Include="include\Scene.h" />
     <ClInclude Include="include\Maths\Vector2.h" />
     <ClInclude Include="include\Managers\SceneManager.h" />
-    <ClInclude Include="include\Scenes\SceneGameWorld.h" />
+    <ClInclude Include="include\Scenes\ScenesGame\SceneGameWorld.h" />
     <ClInclude Include="include\Scenes\SceneMainMenu.h" />
     <ClInclude Include="include\Scenes\SceneGameAbstract.h" />
     <ClInclude Include="include\Scenes\SceneSuccessMenu.h" />
@@ -63,7 +63,7 @@
     <ClInclude Include="include\Scenes\SceneLoginSignup.h" />
     <ClInclude Include="include\Managers\TimeManager.h" />
     <ClInclude Include="include\Scenes\SceneOpening.h" />
-    <ClInclude Include="include\Scenes\SceneGameUnderground.h" />
+    <ClInclude Include="include\Scenes\ScenesGame\SceneGameUnderground.h" />
     <ClInclude Include="include\Components\RigidBody2D.h" />
     <ClInclude Include="include\Components\Transform.h" />
     <ClInclude Include="include\Components\Shapes\Triangle.h" />
@@ -71,8 +71,10 @@
     <ClInclude Include="include\Scenes\ScenesGame\Rectangle.h" />
     <ClInclude Include="include\Components\ComponentsGame\Weapon.h" />
     <ClInclude Include="include\Components\ComponentsGame\Sword.h" />
+    <ClInclude Include="include\Scenes\ScenesGame\SceneGameBossRoom.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Scenes\ScenesGame\SceneGameBossRoom.cpp" />
     <ClCompile Include="src\Components\ComponentsGame\WeaponsContainer.cpp" />
     <ClCompile Include="src\Components\Shapes\Rectangle.cpp" />
     <ClCompile Include="src\Scenes\ScenesGame\ScenesTest.cpp" />
