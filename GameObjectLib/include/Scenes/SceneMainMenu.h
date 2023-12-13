@@ -13,8 +13,8 @@ public:
 	void Delete() override;
 	void Render(sf::RenderWindow* _window) override;
 	void Update(const float& _delta) override;
-	void activeOption(const bool& _state);
-	void activeMenu(const bool& _state);
+	void ActiveOption(const bool& _state);
+	void ActiveMenu(const bool& _state);
 	~SceneMainMenu();
 
 private:
@@ -28,13 +28,8 @@ private:
 	GameObject* rankButton = nullptr;
 	GameObject* creditsButton = nullptr;
 	GameObject* signupLoginButton = nullptr;
-	GameObject* player = nullptr;
-	GameObject* bullet = nullptr;
 	GameObject* sliderVolume = nullptr;
 	GameObject* sliderFPS = nullptr;
-	GameObject* buttonPlay = nullptr;
-	sf::Texture* texture;
-	sf::Texture* textureBullet;
 	bool option = false;
 };
 

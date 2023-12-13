@@ -19,11 +19,7 @@ void SceneGameWorld::Create()
 	SceneGameAbstract::Create();
 	//GameObject* backgroundWorldMap = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld1", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundMapBackgroundWorld"));
 	//GameObject* backgroundWorldMap2 = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld2", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundMapWorld"));
-	//this->CreateSceneButtonsMenu();
-	this->CreateChartacter();
 	plateform = BuilderEntityGameObject::CreatePlateformGameObject("plateform", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 1.2, 5, 2);
-	this->CreateSceneBackgroundOption();
-	this->CreatePauseMenuButtons();
 	this->CreatePlatformCollision();
 }
 
@@ -68,11 +64,6 @@ void SceneGameWorld::CreatePlatformCollision()
 	platformTriangleCollision.push_back(BuilderEntityGameObject::CreatePlatformTriangleCollisionGameObject("Triangle12", 7.7f, 7.7f, 1006, 840, 90));
 }
 
-void SceneGameWorld::CreateSceneButtonsMenu()
-{
-	creditsButton = BuilderGameObject::CreateButtonGameObject("Crédits", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 13, 20);
-	backButton = BuilderGameObject::CreateButtonGameObject("Retourrrrrrrrrrrr", WindowManager::GetWindowWidth() / 2.1, WindowManager::GetWindowHeight() / 13, 25);
-}
 
 void SceneGameWorld::Delete()
 {

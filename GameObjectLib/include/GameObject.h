@@ -44,6 +44,8 @@ public:
 	inline bool GetVisible() const { return isVisible; }
 	inline void SetVisible(const bool& _state) { isVisible = _state; }
 
+	inline void SetActiveAndVisible(const bool& _state) { isActive = _state; isVisible = _state; }
+
 	inline LayerType GetLayer() const { return layerType; }
 	inline void SetLayer(const LayerType& _layerType) { layerType = _layerType; }
 

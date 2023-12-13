@@ -1,6 +1,5 @@
-NEW: Bouton Main Menu
+NEW: Changement d'arme
 
-- Ajout des Assets pour les boutons du menu principal
-- Animation des boutons en hover et clicks
+- Changement des armes avec les boutons 1, 2 et clique molette
 
 

@@ -13,6 +13,7 @@ public:
 	GameObject* GetWeaponByName(const std::string& _name) const;
 
 	void ChangeWeaponByName(const std::string& _name);
+	void ChangeWeaponByIndex(const int& _index);
 	void ChangeWeaponByIndex(const size_t& _index);
 	void ChangeWeapon();
 

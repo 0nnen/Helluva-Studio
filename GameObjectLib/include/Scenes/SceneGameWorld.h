@@ -20,8 +20,6 @@ public:
 
 	void CreatePlatformCollision();
 
-	void CreateSceneButtonsMenu();
-
 	void Render(sf::RenderWindow* _window) override;
 	void Update(const float& _delta) override;
 

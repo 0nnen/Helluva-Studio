@@ -14,13 +14,8 @@ public:
 
 	//void ManagePause();
 	void ManageDefaultButtonsPause(bool _states);
-	void CreatePauseMenuButtons();
-	void CreateChartacter();
 
 	void Pause();
-	void CreateSceneBackgroundOption();
-
-	void CreateBackground();
 	void Create() override;
 	void Preload() override;
 	void Delete() override;
@@ -28,7 +23,7 @@ public:
 	void Render(sf::RenderWindow* _window) override;
 
 	GameObject* GetPlayer() { return player; }
-	GameObject* GetPlatform() { return platform; }
+	std::vector<GameObject*>GetPlatforms() { return platforms; }
 	std::vector<GameObject*> GetEnemies() { return enemies; }
 	GameObject* GetEnemie(int _index) { return enemies[_index]; }
 
@@ -38,15 +33,11 @@ public:
 protected:
 	std::vector<GameObject*> enemies;
 	GameObject* player = nullptr;
-	GameObject* platform = nullptr;
+	std::vector<GameObject*> platforms;
 	GameObject* pausePlayButton = nullptr;
-	GameObject* pauseOptionsButton = nullptr;
 	GameObject* pauseMenuPrincipalButton = nullptr;
 	GameObject* pauseQuitButton = nullptr;
-	GameObject* pauseBongoButton = nullptr;
 	float endTime = 5.f;
-	sf::Texture* texture = nullptr;
-	sf::Text text;
 
 	struct AlphaBackkground
 	{
@@ -57,7 +48,6 @@ protected:
 	AlphaBackkground backgroundAlpha2;
 
 	bool firstCollide = true;
-
 	bool isPause = true;
 };
 

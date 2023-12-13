@@ -10,8 +10,6 @@
 
 SceneMainMenu::SceneMainMenu(const std::string& _newName) : Scene(_newName)
 {
-	texture = nullptr;
-	textureBullet = nullptr;
 }
 
 void SceneMainMenu::Preload()
@@ -25,14 +23,12 @@ void SceneMainMenu::Create()
 	Scene::Create();
 	GameObject* background1 = BuilderGameObject::CreateBackgroundGameObject("BackgroundMenu", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, 1.0f, 1.0f, AssetManager::GetAsset("BackgroundMainMenu"));
 	this->CreateSceneButtonsMenu();
-	this->activeOption(false);
-	this->activeMenu(true);
+	this->ActiveOption(false);
+	this->ActiveMenu(true);
 
 }
 void SceneMainMenu::Delete()
 {
-	delete texture;
-	delete textureBullet;
 	Scene::Delete();
 }
 
@@ -69,49 +65,39 @@ void SceneMainMenu::Update(const float& _delta)
 		isFadeOut = true;
 		if (FadeOut(_delta))
 		{
-			std::cout << "Switch Scene" << std::endl;
-			//SceneManager::RunScene("SceneGameUnderground");
-			SceneManager::RunScene("ScenesTest");
+			SceneManager::RunScene("SceneGameWorld");
 		}
 
 	}
 	else if (worldButton->GetComponent<Button>()->IsClicked())
 	{
-		std::cout << "World Scene" << GetName() << std::endl;
 		SceneManager::RunScene("SceneGameWorld");
 	}
 	else if (optionsButton->GetComponent<Button>()->IsClicked())
 	{
-		std::cout << "Option";
-		this->activeMenu(false);
-		this->activeOption(true);
+		this->ActiveMenu(false);
+		this->ActiveOption(true);
 	}
 	else if (quitButton->GetComponent<Button>()->IsClicked())
 	{
-		std::cout << "Close";
 		WindowManager::GetWindow()->close();
-
 	}
 	else if (backButton->GetComponent<Button>()->IsClicked())
 	{
-		std::cout << "Back";
 		optionsButton->GetComponent<Button>()->SetState(Button::StateButton::Normal);
-		this->activeOption(false);
-		this->activeMenu(true);
+		this->ActiveOption(false);
+		this->ActiveMenu(true);
 	}
 	else if (successButton->GetComponent<Button>()->IsClicked())
 	{
-		std::cout << "Succes";
 		SceneManager::RunScene("SceneSuccessMenu");
 	}
 	else if (rankButton->GetComponent<Button>()->IsClicked())
 	{
-		std::cout << "Rank";
 		SceneManager::RunScene("SceneRankMenu");
 	}
 	else if (creditsButton->GetComponent<Button>()->IsClicked())
 	{
-		std::cout << "Credits";
 		SceneManager::RunScene("SceneCreditsMenu");
 	}
 	if (option)
@@ -132,33 +118,23 @@ void SceneMainMenu::Update(const float& _delta)
 	}*/
 }
 
-void SceneMainMenu::activeMenu(const bool& _state)
+void SceneMainMenu::ActiveMenu(const bool& _state)
 {
-	this->playButton->SetActive(_state);
-	this->worldButton->SetActive(_state);
-	this->optionsButton->SetActive(_state);
-	this->quitButton->SetActive(_state);
-	this->creditsButton->SetActive(_state);
-	this->rankButton->SetActive(_state);
-	this->successButton->SetActive(_state);
-	this->playButton->SetVisible(_state);
-	this->worldButton->SetVisible(_state);
-	this->optionsButton->SetVisible(_state);
-	this->quitButton->SetVisible(_state);
-	this->creditsButton->SetVisible(_state);
-	this->rankButton->SetVisible(_state);
-	this->successButton->SetVisible(_state);
-	//this->signupLoginButton->SetActive(_state);
+	this->playButton->SetActiveAndVisible(_state);
+	this->worldButton->SetActiveAndVisible(_state);
+	this->optionsButton->SetActiveAndVisible(_state);
+	this->quitButton->SetActiveAndVisible(_state);
+	this->creditsButton->SetActiveAndVisible(_state);
+	this->rankButton->SetActiveAndVisible(_state);
+	this->successButton->SetActiveAndVisible(_state);
+	//this->signupLoginButton->SetActiveAndVisible(_state);
 }
 
-void SceneMainMenu::activeOption(const bool& _state)
+void SceneMainMenu::ActiveOption(const bool& _state)
 {
-	this->backButton->SetActive(_state);
-	this->sliderFPS->SetActive(_state);
-	this->sliderVolume->SetActive(_state);
-	this->backButton->SetVisible(_state);
-	this->sliderFPS->SetVisible(_state);
-	this->sliderVolume->SetVisible(_state);
+	this->backButton->SetActiveAndVisible(_state);
+	this->sliderFPS->SetActiveAndVisible(_state);
+	this->sliderVolume->SetActiveAndVisible(_state);
 	option = _state;
 }
 

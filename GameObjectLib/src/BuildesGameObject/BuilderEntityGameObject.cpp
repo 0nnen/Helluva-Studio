@@ -45,7 +45,7 @@ GameObject* BuilderEntityGameObject::CreateCharacterGameObject(const std::string
 {
 	GameObject* gameObject = SceneManager::GetActiveScene()->CreateGameObject(_name);
 	gameObject->SetPosition(Maths::Vector2f(_x, _y));
-	gameObject->SetDepth(1.f);
+	gameObject->SetDepth(0.9f);
 	gameObject->SetScale(Maths::Vector2f(scalex, scaley));
 
 	Character* character = gameObject->CreateComponent<Character>();
