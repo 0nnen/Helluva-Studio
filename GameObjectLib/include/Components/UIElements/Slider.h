@@ -23,6 +23,7 @@ public:
 
 	float GetPercent(float _x, float _y, float width);
 
+	float GetPreviousData() const { return previousData; }
 	inline int GetDataInt() const { return (int)data; }
 	inline float GetDataFloat() const { return data; }
 	inline void SetData(float _data) { data = _data; }
@@ -44,5 +45,6 @@ private:
 	float maxData;
 	float minData;
 	float percent;
+	float previousData;
 };
 

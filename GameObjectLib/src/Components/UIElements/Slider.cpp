@@ -15,6 +15,7 @@ Slider::Slider()
 	cursor.setOutlineThickness(3);
 	cursor.setOutlineColor(sf::Color::White);
 	percent = 0.f;
+	previousData = data;
 }
 
 void Slider::SetSizeBar(float _width, float _height)
@@ -31,7 +32,7 @@ void Slider::SetSizeCursor(float _width, float _height)
 
 void Slider::SetCursorText(unsigned int _fontSize) {
 	fontSize = _fontSize;
-	if (!font.loadFromFile("../Assets/Fonts/Roboto-Medium.ttf")) 
+	if (!font.loadFromFile("../Assets/Fonts/PixelNES.otf")) 
 	{
 		std::cout << "no font found" << std::endl;
 	}
@@ -43,7 +44,7 @@ void Slider::SetCursorText(unsigned int _fontSize, float _data)
 {
 	data = _data;
 	fontSize = _fontSize;
-	if (!font.loadFromFile("../Assets/Fonts/Roboto-Medium.ttf")) 
+	if (!font.loadFromFile("../Assets/Fonts/PixelNES.otf")) 
 	{
 		std::cout << "no font found" << std::endl;
 	}
@@ -101,9 +102,11 @@ void Slider::Update(const float& _delta)
 	Component::Update(_delta);
 
 	sf::Vector2i mousePos = sf::Mouse::getPosition(*WindowManager::GetWindow());
+	previousData = data;
 
 	if (this->isClicked(mousePos)) 
 	{
+
 		float cursorX = static_cast<float>(mousePos.x);
 		if (cursorX <= (bar.getPosition().x - bar.getSize().x / 2) - incertitude) 
 		{
@@ -122,6 +125,9 @@ void Slider::Update(const float& _delta)
 			this->SetCursorText(fontSize);
 		}
 
+		if (data != previousData) {
+			AudioManager::PlaySound("CursorSelection");
+		}
 		cursor.setPosition(cursorX , cursor.getPosition().y);
 		cursorText.setPosition(cursorX , cursor.getPosition().y);
 	}

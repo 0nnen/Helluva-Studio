@@ -18,8 +18,10 @@ void SceneMainMenu::Preload()
 	AssetManager::AddAsset("ButtonsMenu", "../Assets/Graphics/UI/Buttons/buttonsMenu.png");
 	AssetManager::AddAsset("ButtonGrey", "../Assets/Graphics/UI/Buttons/buttonGrey.png");
 
-	AudioManager::AddSound("ButtonClick", "../Assets/Audio/SFX/confirm_selection.ogg");
-
+	AudioManager::AddSound("ConfirmSelection", "../Assets/Audio/SFX/confirm_selection.ogg");
+	AudioManager::AddSound("CancelSelection", "../Assets/Audio/SFX/cancel_selection.ogg");
+	AudioManager::AddSound("CursorSelection", "../Assets/Audio/SFX/cursor_selection.ogg");
+	AudioManager::AddSound("ErrorSelection", "../Assets/Audio/SFX/error_selection.ogg");
 }
 
 void SceneMainMenu::Create()
@@ -70,16 +72,19 @@ void SceneMainMenu::Update(const float& _delta)
 		isFadeOut = true;
 		if (FadeOut(_delta))
 		{
+			AudioManager::PlaySound("ConfirmSelection");
 			SceneManager::RunScene("SceneGameWorld");
 		}
 
 	}
 	else if (worldButton->GetComponent<Button>()->IsClicked())
 	{
+		AudioManager::PlaySound("ConfirmSelection");
 		SceneManager::RunScene("SceneGameWorld");
 	}
 	else if (optionsButton->GetComponent<Button>()->IsClicked())
 	{
+		AudioManager::PlaySound("ConfirmSelection");
 		this->ActiveMenu(false);
 		this->ActiveOption(true);
 	}
@@ -89,31 +94,45 @@ void SceneMainMenu::Update(const float& _delta)
 	}
 	else if (backButton->GetComponent<Button>()->IsClicked())
 	{
+		AudioManager::PlaySound("CancelSelection");
 		optionsButton->GetComponent<Button>()->SetState(Button::StateButton::Normal);
 		this->ActiveOption(false);
 		this->ActiveMenu(true);
 	}
 	else if (successButton->GetComponent<Button>()->IsClicked())
 	{
+		AudioManager::PlaySound("ErrorSelection");
 		SceneManager::RunScene("SceneSuccessMenu");
 	}
 	else if (rankButton->GetComponent<Button>()->IsClicked())
 	{
+		AudioManager::PlaySound("ErrorSelection");
 		SceneManager::RunScene("SceneRankMenu");
 	}
 	else if (creditsButton->GetComponent<Button>()->IsClicked())
 	{
+		AudioManager::PlaySound("ErrorSelection");
 		SceneManager::RunScene("SceneCreditsMenu");
 	}
-	if (option)
-	{
-		if (sliderFPS)
-		{
-			WindowManager::SetFps(sliderFPS->GetComponent<Slider>()->GetDataInt());
+	if (option) {
+		if (sliderFPS) {
+			Slider* fpsSlider = sliderFPS->GetComponent<Slider>();
+			float currentFPS = fpsSlider->GetDataInt();
+			float previousFPS = fpsSlider->GetPreviousData();
+
+			if (previousFPS != currentFPS) {
+				WindowManager::SetFps(currentFPS);
+			}
 		}
-		if (sliderVolume)
-		{
-			AudioManager::SetVolume(sliderVolume->GetComponent<Slider>()->GetDataInt());
+
+		if (sliderVolume) {
+			Slider* volumeSlider = sliderVolume->GetComponent<Slider>();
+			float currentVolume = volumeSlider->GetDataInt();
+			float previousVolume = volumeSlider->GetPreviousData();
+
+			if (previousVolume != currentVolume) {
+				AudioManager::SetVolume(currentVolume);
+			}
 		}
 	}
 

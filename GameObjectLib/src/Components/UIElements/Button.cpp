@@ -109,7 +109,6 @@ void Button::Update(const float& _delta)
 		{
 			state = Button::Clicked;
 			sprite->SetRecTexture(0, 2, sprite->GetBounds().x, sprite->GetBounds().y);
-			AudioManager::PlaySound("ButtonClick");
 		}
 		else if (IsOver(sprite) && state != Button::StateButton::Hover && state != Button::StateButton::Clicked)
 		{
