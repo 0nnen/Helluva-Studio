@@ -45,3 +45,15 @@ void ShootCharacter::Execute(const float& _delta)
 	WeaponsContainer* weaponsContainer = player->GetComponent<WeaponsContainer>();
 	weaponsContainer->GetArme()->GetComponent<Weapon>()->Attack(); //Attack!!
 }
+
+ChangeWeaponCharacter::ChangeWeaponCharacter(const int& _numberWeapon) : numberWeapon(_numberWeapon) {}
+
+void ChangeWeaponCharacter::Execute(const float& _delta)
+{
+	GameObject* player = SceneManager::GetActiveGameScene()->GetPlayer();
+	WeaponsContainer* weaponsContainer = player->GetComponent<WeaponsContainer>();
+	std::cout << numberWeapon << std::endl;
+	if (numberWeapon == 0) weaponsContainer->ChangeWeapon();
+	else weaponsContainer->ChangeWeaponByIndex(numberWeapon);
+}
+

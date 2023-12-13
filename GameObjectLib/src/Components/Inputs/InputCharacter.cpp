@@ -1,8 +1,5 @@
 #include "Components/Inputs/InputCharacter.h"
-
-#include "Components/Inputs/InputCharacter.h"
 #include "Commands/CommandCharacter.h"
-//#include "Components/Armes.h"
 #include "Components/SpriteRenderer.h"
 #include "Managers/SceneManager.h"
 #include "Components/Entity/Character.h"
@@ -10,13 +7,13 @@
 #include "Scenes/ScenesGame/ScenesTest.h"
 
 InputCharacter::InputCharacter() {
-	//this->player = nullptr;Th
 	this->KeyD_ = new MoveCharacterRight();
 	this->KeyQ_ = new MoveCharacterLeft();
-	//this->KeySpace_ = new RightBulletCommand(this);
-	//this->KeyEscape_ = new PauseCommand();
 	this->KeyZ_ = new JumpCharacter();
 	this->LeftMouse_ = new ShootCharacter();
+	this->Num1_ = new ChangeWeaponCharacter(1);
+	this->Num2_ = new ChangeWeaponCharacter(2);
+	this->WheelMouse_ = new ChangeWeaponCharacter(0);
 }
 
 void InputCharacter::Update(const float& _delta) {
@@ -48,8 +45,8 @@ void InputCharacter::Update(const float& _delta) {
 		if (!character->GetAnimation("jump")->GetIsPlaying()) {
 			if (character->GetActualAnimation()) character->GetActualAnimation()->Stop();
 			if (character->GetAndSetAnimation("idle")) character->GetAndSetAnimation("idle")->Stop();
-			if(!character->GetAnimation("shootArm")->GetIsPlaying() && !character->GetAnimation("shootBody")->GetIsPlaying())
-			character->GetAndSetAnimation("jump")->Play();
+			if (!character->GetAnimation("shootArm")->GetIsPlaying() && !character->GetAnimation("shootBody")->GetIsPlaying())
+				character->GetAndSetAnimation("jump")->Play();
 		}
 		commandJump->Execute(_delta);
 	}
@@ -61,16 +58,25 @@ void InputCharacter::Update(const float& _delta) {
 		shootBullet->Execute(_delta);
 	}
 
+	Command* changeWeapon = this->ChangeWeaponInput();
+
+	if (changeWeapon)
+	{
+		changeWeapon->Execute(_delta);
+	}
+
 	if (!commandJump && !commandMoves && !shootBullet)
 	{
+		if (character->GetOnFloor() && character->GetAnimation("jump")->GetIsPlaying())
+		{
+			character->GetAnimation("jump")->Stop();
+		}
 		if (!character->GetAnimation("jump")->GetIsPlaying())
 			if (!character->GetAnimation("shootArm")->GetIsPlaying() && !character->GetAnimation("shootBody")->GetIsPlaying())
 				if (!character->GetAnimation("run")->GetIsPlaying())
+
 					if (!character->GetAnimation("idle")->GetIsPlaying()) {
-						if (character->GetOnFloor())
-						{
-							character->GetAnimation("jump")->Stop();
-						}
+
 						character->GetAndSetAnimation("idle")->Play();
 					}
 	}
@@ -113,59 +119,19 @@ Command* InputCharacter::ShootInput() {
 	return nullptr;
 }
 
-//Command* InputCharacter::PauseInput() {
-//	static bool isPressedEscape = false;
-//
-//	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && !isPressedEscape) {
-//		isPressedEscape = true;
-//		return KeyEscape_;
-//	}
-//
-//	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-//		isPressedEscape = false;
-//	}
-//
-//	return nullptr;
-//}
-
-//void InputCharacter::MoveRight(sf::Time _delta)
-//{
-//	GetOwner()->SetPosition(GetOwner()->GetPosition() + Maths::Vector2f::Right + Maths::Vector2f(25, 0) * _delta.asSeconds() * speed);
-//	GetOwner()->GetComponent<Character>()->setDirection(Character::Direction::Right);
-//	GetOwner()->GetComponent<Sprite>()->PlayerPlayAnimationRun();
-//}
-
-//void InputCharacter::MoveLeft(sf::Time _delta)
-//{
-//	GetOwner()->SetPosition(GetOwner()->GetPosition() + Maths::Vector2f::Left + Maths::Vector2f(-25, 0) * _delta.asSeconds() * speed);
-//	GetOwner()->GetComponent<Character>()->setDirection(Character::Direction::Left);
-//	GetOwner()->GetComponent<Sprite>()->PlayerPlayAnimationRun();
-//}
-
-//float InputCharacter::AddSpeed(float _addSpeed) {
-//	speed = +_addSpeed;
-//	return speed;
-//}
-
-//void InputCharacter::Jump(sf::Time _delta)
-//{
-//	GetOwner()->SetPosition(GetOwner()->GetPosition() + Maths::Vector2f::Down + Maths::Vector2f(0, -130) * _delta.asSeconds() * speed);
-//}
-
-//void InputPlayer::MoveRightBullet()
-//{
-//	player = SceneManager::GetActiveScene()->GetGameObject("Player");
-//	player->GetComponent<Armes>()->Shoot();
-//}
-
-//void InputCharacter::GamePauseMenu()
-//{
-//}
+Command* InputCharacter::ChangeWeaponInput() {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) return Num1_;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) return Num2_;
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Middle)) return WheelMouse_;
+	return nullptr;
+}
 
 InputCharacter::~InputCharacter() {
-	delete 	this->KeyD_;
-	delete 	this->KeyQ_;
-	//delete 	this->KeySpace_;
-	/*delete 	this->KeyEscape_;
-	delete 	this->KeyZ_;*/
+	delete this->KeyD_;
+	delete this->KeyQ_;
+	delete this->KeyZ_;
+	delete this->LeftMouse_;
+	delete this->Num1_;
+	delete this->Num2_;
+	delete this->WheelMouse_;
 }

@@ -14,6 +14,7 @@ public:
 	Command* HandleInput();
 	Command* JumpInput();
 	Command* ShootInput();
+	Command* ChangeWeaponInput();
 
 	//Command* PauseInput();
 	//void MoveRight(sf::Time _delta);
@@ -34,4 +35,7 @@ private:
 	//GameObject* player;
 	//Command* KeyEscape_;
 	Command* LeftMouse_;
+	Command* Num1_;
+	Command* Num2_;
+	Command* WheelMouse_;
 };

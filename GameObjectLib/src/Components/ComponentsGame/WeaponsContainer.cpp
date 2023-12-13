@@ -47,6 +47,14 @@ GameObject* WeaponsContainer::GetWeaponByName(const std::string& _name) const
 	return nullptr;
 }
 
+void WeaponsContainer::ChangeWeaponByIndex(const int& _index)
+{
+	if (static_cast<size_t>(_index) < weapons.size())
+	{
+		weapon = weapons[_index];
+	}
+
+}
 void WeaponsContainer::ChangeWeaponByIndex(const size_t& _index)
 {
 	if (_index < weapons.size())

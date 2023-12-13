@@ -13,7 +13,7 @@ void EventManager::Update(const float& _delta)
 	Engine* engine = Engine::GetInstance();
 	while (window->pollEvent(EventManager::event))
 	{
-		if (event.type == sf::Event::Closed) window->close();
+		if (event.type == sf::Event::Closed) engine->Quit();
 		if (event.type == sf::Event::KeyPressed)
 		{
 			if (event.key.code == sf::Keyboard::LAlt) if (event.key.code == sf::Keyboard::F4) engine->Quit();
@@ -28,10 +28,6 @@ void EventManager::Update(const float& _delta)
 		if (SceneManager::GetActiveGameScene() == SceneManager::GetSceneByKey("SceneMainMenu"))
 		{
 			if (event.key.code == sf::Keyboard::Escape) engine->Quit();
-		}
-		if (SceneManager::GetActiveGameScene() == SceneManager::GetSceneByKey("SceneGameLVSR"))
-		{
-			CameraManager::Event(event);
 		}
 	}
 	CameraManager::Update(_delta);
