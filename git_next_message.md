@@ -1,5 +1,5 @@
-NEW: Changement d'arme
+FIX: Master
 
-- Changement des armes avec les boutons 1, 2 et clique molette
+- Fix de la master, spritesheet animation modifié
 
 
