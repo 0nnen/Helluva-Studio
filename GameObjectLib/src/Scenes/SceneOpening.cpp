@@ -1,3 +1,4 @@
+#include<iostream>
 #include "Scenes/SceneOpening.h"
 #include "Managers/WindowManager.h"
 #include "Managers/WindowManager.h"
