@@ -5,14 +5,15 @@
 #include "Managers/CameraManager.h"
 
 
+const int Character::MaxHealth = 100;
+
 Character::Character() : Entity()
 {
 	directionCharacter = false;
 	direction = Direction::Right;
 }
 
-Character::Character(int _hp, int _damage, const float& _speed, const float& _attackSpeed, const float& _range) : Entity(_hp, _damage, _speed, _attackSpeed, _range)
-{
+Character::Character(int maxHealth, int _hp, int _damage, const float& _speed, const float& _attackSpeed, const float& _range) : maxHealth(maxHealth) {
 	directionCharacter = false;
 	direction = Direction::Right;
 }
@@ -57,4 +58,19 @@ void Character::Update(const float& _delta)
     }
 
 	if(centerCameraOnPlayer) CameraManager::SetCenter(GetOwner()->GetPosition().GetX(), GetOwner()->GetPosition().GetY());
+}
+
+int Character::GetHealth() const {
+    return health;
+}
+
+void Character::SetHealth(int hp) {
+    health = hp;
+    if (health > Character::MaxHealth) health = Character::MaxHealth;
+    if (health < 0) health = 0;
+}
+
+void Character::TakeDamage(int damage) {
+    health -= damage;
+    if (health < 0) health = 0; 
 }

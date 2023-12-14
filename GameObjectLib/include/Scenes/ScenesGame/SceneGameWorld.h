@@ -3,7 +3,9 @@
 #include "Scenes/SceneGameAbstract.h"
 #include "Managers/SceneManager.h"
 #include "Managers/AssetManager.h"
+#include "Managers/CameraManager.h"
 #include <Managers/WindowManager.h>
+#include "Components/UIElements/ATH.h"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics.hpp>
@@ -33,5 +35,8 @@ private:
 	std::vector<GameObject*> platformCarreCollision;
 	std::vector<GameObject*> platformTriangleCollision;
 	GameObject* plateform = nullptr;
+
+	Character* playerCharacter;
+	ATH* hud;
 
 };
