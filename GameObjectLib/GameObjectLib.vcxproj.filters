@@ -54,6 +54,7 @@
     <ClCompile Include="src\Scenes\ScenesGame\SceneGameBossRoom.cpp" />
     <ClCompile Include="src\Components\Entity\EnemyAbstract.cpp" />
     <ClCompile Include="src\Components\Entity\Enemy\EnemyA.cpp" />
+    <ClCompile Include="src\Components\UIElements\ATH.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Managers\HUDManager.h" />
@@ -111,6 +112,7 @@
     <ClInclude Include="include\Scenes\ScenesGame\SceneGameBossRoom.h" />
     <ClInclude Include="include\Components\Entity\EnemyAbstract.h" />
     <ClInclude Include="include\Components\Entity\Enemy\EnemyA.h" />
+    <ClInclude Include="include\Components\UIElements\ATH.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="include\Maths\Vector2.inl" />
