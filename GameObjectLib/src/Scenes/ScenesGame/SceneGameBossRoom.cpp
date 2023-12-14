@@ -15,7 +15,7 @@ void SceneGameBossRoom::Awake()
 void SceneGameBossRoom::Preload()
 {
 	SceneGameAbstract::Preload();
-	AssetManager::AddAsset("BackgroundBoss", "../Assets/bossRoom.png");
+	AssetManager::AddAsset("BackgroundBoss", "../Assets/Graphics/Maps/bossRoom.png");
 }
 void SceneGameBossRoom::Create()
 {
