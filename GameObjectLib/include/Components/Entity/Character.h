@@ -18,9 +18,6 @@ public:
 	private:
 		Direction direction;
 		bool directionCharacter;
-		sf::CircleShape shape;
-		std::vector<sf::CircleShape> bullets;
-		std::vector<float> angles;
 		bool centerCameraOnPlayer = true;
 		
 };

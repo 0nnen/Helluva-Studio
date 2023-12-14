@@ -40,6 +40,8 @@ public:
 	inline bool GetOnFloor() const { return onFloor; }
 	inline void SetOnFloor(const bool& _state) { onFloor = _state; }
 
+	inline void SetInvicible(const bool& _state) { isInvicible = _state; }
+	inline bool GetInvicible() const { return isInvicible; }
 	void AddAnimation(const std::string& _name, Animation* animation);
 	Animation* GetAnimation(const std::string& _name);
 	Animation* GetAndSetAnimation(const std::string& _name);
@@ -59,6 +61,7 @@ protected:
 	float attackSpeed;
 	float range;
 	bool onFloor = true;
+	bool isInvicible = true;
 	Animation* actualAnimation = nullptr;
 	std::map<std::string, Animation*> animations;
 };

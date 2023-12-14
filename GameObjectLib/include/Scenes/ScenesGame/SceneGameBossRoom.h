@@ -12,7 +12,10 @@ public:
 	void Update(const float& _delta) override;
 	void Render(sf::RenderWindow* _window) override;
 
+	inline void KillHades() { delete hades; }
+
 private:
 	GameObject* plateforme = nullptr;
+	GameObject* hades = nullptr;
 };
 

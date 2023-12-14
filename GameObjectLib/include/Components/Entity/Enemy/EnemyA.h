@@ -3,5 +3,8 @@
 
 class EnemyA : public EnemyAbstract
 {
+public:
+
+	EnemyA();
 };
 

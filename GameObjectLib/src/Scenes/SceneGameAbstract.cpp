@@ -52,12 +52,12 @@ void SceneGameAbstract::Create()
 
 void SceneGameAbstract::CreatePlayer()
 {
-	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", WindowManager::GetWindowWidth() / 2, 50.f, AssetManager::GetAsset("Character"), 7.f, 7.f);
+	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", WindowManager::GetWindowWidth() / 2, 50.f, AssetManager::GetAsset("Character"), 4.f, 4.f);
 }
 
 void SceneGameAbstract::CreatePlayer(const float& _positionX, const float& _positionY)
 {
-	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", _positionX, _positionY, AssetManager::GetAsset("Character"), 7.f, 7.f);
+	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", _positionX, _positionY, AssetManager::GetAsset("Character"), 4.f, 4.f);
 }
 
 void SceneGameAbstract::Preload()

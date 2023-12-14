@@ -10,18 +10,24 @@ Entity::Entity(const int& _hp, const int& _damage, const float& _speed, const fl
 
 void Entity::TakeDamage(const int& _damage)
 {
-	if (healthPoint > damage)
-	{
-		healthPoint -= _damage;
-	}
-	else {
-		healthPoint = 0;
+	if (!isInvicible) {
+	
+		if (healthPoint > _damage)
+		{
+			healthPoint -= _damage;
+		}
+		else {
+			healthPoint = 0;
+		}
+		std::cout << "Healthpoint : " << healthPoint << std::endl;
+
+		if (healthPoint <= 0)
+		{
+			this->Die();
+			GetOwner()->SetActiveAndVisible(false);
+		}
 	}
 
-	if (healthPoint <= 0)
-	{
-		this->Die();
-	}
 }
 
 void Entity::Die()
@@ -31,11 +37,11 @@ void Entity::Die()
 	SceneManager::GetActiveGameScene()->RemoveGameObject(GetOwner());
 }
 
-void Entity::Update(const float& _delta) 
+void Entity::Update(const float& _delta)
 {
 	Component::Update(_delta);
 
-	if (count < attackSpeed * 500) 
+	if (count < attackSpeed * 500)
 	{
 		count++;
 	}

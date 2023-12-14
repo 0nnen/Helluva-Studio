@@ -3,4 +3,6 @@
 
 class EnemyAbstract : public Entity
 {
+public:
+	EnemyAbstract();
 };

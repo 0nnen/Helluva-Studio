@@ -11,6 +11,7 @@
 #include "Components/Entity/Character.h"
 #include "Components/Inputs/InputCharacter.h"
 #include "Components/Entity/Enemy/EnemyA.h"
+#include "Components/Entity/Enemy/Hades.h"
 
 #include <Components/Shapes/Rectangle.h>
 #include <Components/Shapes/Triangle.h>
@@ -30,8 +31,6 @@ GameObject* BuilderEntityGameObject::CreateBulletGameObject(const std::string& _
 
 	Bullet* bullet = gameObject->CreateComponent<Bullet>();
 	bullet->SetSpeed(_speed);
-	bullet->SetDamage(_damage);
-	bullet->SetInitialPosition(gameObject->GetPosition());
 
 	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
 	rigidBody2D->SetSize(sprite->GetBounds().x, sprite->GetBounds().y);
@@ -39,6 +38,10 @@ GameObject* BuilderEntityGameObject::CreateBulletGameObject(const std::string& _
 	rigidBody2D->AddForces(_direction * bullet->GetSpeed());
 
 	gameObject->SetPosition(Maths::Vector2f(_player->GetPosition().GetX(), _player->GetPosition().GetY()) + gameObject->GetTransform()->TransformPoint());
+
+	bullet->SetDamage(_damage);
+	bullet->SetInitialPosition(gameObject->GetPosition());
+
 	return gameObject;
 }
 
@@ -175,8 +178,8 @@ GameObject* BuilderEntityGameObject::CreateWeaponGameObject(const std::string& _
 GameObject* BuilderEntityGameObject::CreatePlatformTriangleCollisionGameObject(const std::string& _name, const float& _base, const float& _height, const float& _widthPos, const float& _heightPos, const float& _rotation)
 {
 	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
-  
-  Triangle* triangle = gameObject->CreateComponent<Triangle>();
+
+	Triangle* triangle = gameObject->CreateComponent<Triangle>();
 	triangle->SetBase(_base);
 	triangle->SetHeight(_height);
 	triangle->SetPositionTriangle(_widthPos, _heightPos, _rotation);
@@ -190,10 +193,10 @@ GameObject* BuilderEntityGameObject::CreatePlateformGameObject(const std::string
 	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
 	gameObject->SetPosition(Maths::Vector2f(_positionX, _positionY));
 	gameObject->SetScale(Maths::Vector2f(_scalex, _scaley));
-  
-  RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
 	rigidBody2D->SetIsGravity(false);
-  rigidBody2D->SetSize(200.f, 50.f);
+	rigidBody2D->SetSize(200.f, 50.f);
 	rigidBody2D->SetScale(_scalex, _scaley);
 
 	Rectangle* rectangle = gameObject->CreateComponent<Rectangle>();
@@ -227,17 +230,107 @@ GameObject* BuilderEntityGameObject::CreateEnemyAGameObject(const std::string& _
 	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
 	rigidBody2D->SetIsGravity(true);
 	rigidBody2D->SetSize(spriteBody->GetBounds().x, spriteBody->GetBounds().y);
-	rigidBody2D->SetKillImperfection(Maths::Vector2f(8.f, 8.f));
 	rigidBody2D->SetScale(scalex, scaley);
 
 
 	idle->Play();
 
 	enemy->AddAnimation("idle", idle);
-	/*SquareCollider* squareCollider = gameObject->CreateComponent<SquareCollider>();
-	squareCollider->SetSize(sprite->GetBounds().x, sprite->GetBounds().y);
-	squareCollider->SetScale(scalex, scaley);
-	HealthPointBar* healthPointBar = gameObject->CreateComponent<HealthPointBar>();
+
+
+
+	/*HealthPointBar* healthPointBar = gameObject->CreateComponent<HealthPointBar>();
+	healthPointBar->SetHealthPoint(enemy->GetHealthPoint());
+	healthPointBar->SetMaxHealthPoint(enemy->GetMaxHealthPoint());
+	healthPointBar->SetAboveSprite(25);
+	healthPointBar->SetSize(25, 2);
+	healthPointBar->SetScale(2.f, 2.f);
+	healthPointBar->SetHealthPointBar();*/
+	//enemies.push_back(gameObject);
+
+	return gameObject;
+}
+
+
+GameObject* BuilderEntityGameObject::CreateHadesGameObject(const std::string& _name, float _x, float _y, float scalex, float scaley, sf::Texture* _texture)
+{
+	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
+	gameObject->SetPosition(Maths::Vector2f(_x, _y));
+	gameObject->SetDepth(0.9f);
+
+	Hades* enemy = gameObject->CreateComponent<Hades>();
+	enemy->SetInvicible(false);
+
+	Sprite* spriteBody = gameObject->CreateComponent<Sprite>();
+	spriteBody->SetName("bodyEnemyA");
+	spriteBody->SetTexture(_texture);
+	spriteBody->SetScale(scalex, scaley);
+	spriteBody->SetSprite();
+
+	Animation* idle = gameObject->CreateComponent<Animation>();
+	idle->SetLoop(-1);
+	idle->SetName("idle");
+	idle->SetFrame(6);
+	idle->SetAnimationTime(1);
+	idle->SetSpriteSheet(AssetManager::GetAsset("idleHades"));
+
+	Animation* attack = gameObject->CreateComponent<Animation>();
+	attack->SetLoop(1);
+	attack->SetName("attack");
+	attack->SetFrame(6);
+	attack->SetAnimationTime(2);
+	attack->SetSpriteSheet(AssetManager::GetAsset("attackHades"));
+
+	Animation* roar = gameObject->CreateComponent<Animation>();
+	roar->SetLoop(1);
+	roar->SetName("roar");
+	roar->SetFrame(6);
+	roar->SetAnimationTime(2);
+	roar->SetSpriteSheet(AssetManager::GetAsset("roarHades"));
+
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(false);
+	rigidBody2D->SetSize(spriteBody->GetBounds().x, spriteBody->GetBounds().y);
+	rigidBody2D->SetScale(scalex, scaley);
+
+
+	idle->Play();
+
+	enemy->AddAnimation("idle", idle);
+	enemy->AddAnimation("roar", roar);
+	enemy->AddAnimation("attack", attack);
+
+	/*HealthPointBar* healthPointBar = gameObject->CreateComponent<HealthPointBar>();
+	healthPointBar->SetHealthPoint(enemy->GetHealthPoint());
+	healthPointBar->SetMaxHealthPoint(enemy->GetMaxHealthPoint());
+	healthPointBar->SetAboveSprite(25);
+	healthPointBar->SetSize(25, 2);
+	healthPointBar->SetScale(2.f, 2.f);
+	healthPointBar->SetHealthPointBar();*/
+	//enemies.push_back(gameObject);
+
+	return gameObject;
+}
+GameObject* BuilderEntityGameObject::CreateProtectionBallGameObject(const std::string& _name, float _x, float _y, float scalex, float scaley, sf::Texture* _texture, const int& _number)
+{
+	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
+	gameObject->SetPosition(Maths::Vector2f(_x, _y));
+	gameObject->SetScale(Maths::Vector2f(scalex, scaley));
+	gameObject->SetDepth(0.7f);
+
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(false);
+	rigidBody2D->SetScale(scalex, scaley);
+
+	Sprite* spriteBody = gameObject->CreateComponent<Sprite>();
+	spriteBody->SetName("spriteProtection");
+	spriteBody->SetTexture(_texture);
+	spriteBody->SetRecTextureWithFrame(_number % 4, _number % 2, 4, 2);
+	spriteBody->SetScale(scalex, scaley);
+	spriteBody->SetSprite();
+	rigidBody2D->SetSize(spriteBody->GetBounds().x, spriteBody->GetBounds().y);
+
+	/*HealthPointBar* healthPointBar = gameObject->CreateComponent<HealthPointBar>();
 	healthPointBar->SetHealthPoint(enemy->GetHealthPoint());
 	healthPointBar->SetMaxHealthPoint(enemy->GetMaxHealthPoint());
 	healthPointBar->SetAboveSprite(25);

@@ -1,5 +1,5 @@
-ENH: Adaptation Scene Opening
+NEW: Boss final
 
-- Adaptation de la scène opening au moteur
+- Création du boss , début des animations et créations des boules du boss
 
 

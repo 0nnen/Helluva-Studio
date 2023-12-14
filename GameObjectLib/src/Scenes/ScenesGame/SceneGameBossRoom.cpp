@@ -4,6 +4,10 @@
 #include "Managers/AssetManager.h"
 #include "Managers/WindowManager.h"
 #include "Components/Entity/Character.h"
+#include "Components/Entity/Enemy/Hades.h"
+#include "Components/ComponentsGame/WeaponsContainer.h"
+#include "Components/ComponentsGame/Gun.h"
+#include "Components/ComponentsGame/Bullet.h"
 
 SceneGameBossRoom::SceneGameBossRoom() : SceneGameAbstract("SceneGameBossRoom") {}
 SceneGameBossRoom::SceneGameBossRoom(const std::string& _name) : SceneGameAbstract(_name) {}
@@ -12,11 +16,22 @@ void SceneGameBossRoom::Awake()
 {
 	SceneGameAbstract::Awake();
 }
+
 void SceneGameBossRoom::Preload()
 {
 	SceneGameAbstract::Preload();
 	AssetManager::AddAsset("BackgroundBoss", "../Assets/bossRoom.png");
+	AssetManager::AddAsset("breathHades", "../Assets/Enemy/Hades/breath.png");
+	AssetManager::AddAsset("breathFireHades", "../Assets/Enemy/Hades/breath-fire.png");
+	AssetManager::AddAsset("attackHades", "../Assets/Enemy/Hades/demon-attack.png");
+	AssetManager::AddAsset("roarHades", "../Assets/Enemy/Hades/demon-attack-no-breath.png");
+	AssetManager::AddAsset("idleHades", "../Assets/Enemy/Hades/demon-idle.png");
+	AssetManager::AddAsset("protectionHades", "../Assets/Enemy/Hades/protection.png");
+	AssetManager::AddAsset("protectionBallsHades", "../Assets/Boss/balls.png");
+	unsigned seed = static_cast<unsigned>(time(0));
+	srand(seed);
 }
+
 void SceneGameBossRoom::Create()
 {
 	SceneGameAbstract::Create();
@@ -24,14 +39,19 @@ void SceneGameBossRoom::Create()
 	plateforme = BuilderEntityGameObject::CreatePlateformGameObject("Plateforme", WindowManager::GetFloatWindowWidth() / 2, WindowManager::GetFloatWindowHeight(), 12, 2);
 	CreatePlayer(WindowManager::GetFloatWindowWidth() / 1.1 ,WindowManager::GetFloatWindowHeight()/ 1.2);
 	player->GetComponent<Character>()->SetCenterCamera(false);
+	hades = BuilderEntityGameObject::CreateHadesGameObject("Hades", WindowManager::GetFloatWindowWidth() / 6.f, WindowManager::GetFloatWindowHeight() / 1.5f, 1.f, 1.f, AssetManager::GetAsset("idleHades"));
+	hades->GetComponent<Hades>()->SetProtection();
 }
+
 void SceneGameBossRoom::Delete()
 {
 	SceneGameAbstract::Delete();
 }
+
 void SceneGameBossRoom::Update(const float& _delta)
 {
 	SceneGameAbstract::Update(_delta);
+	//if(hades) if (hades->GetComponent<Hades>()->GetHealthPoint() == 0) KillHades();
 	if (player && plateforme)
 	{
 		if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(plateforme->GetComponent<RigidBody2D>())) && firstCollide)
@@ -47,7 +67,25 @@ void SceneGameBossRoom::Update(const float& _delta)
 			player->GetComponent<Character>()->SetOnFloor(false);
 		}
 	}
+	if (player && hades)
+	{
+		Gun* gun = player->GetComponent<WeaponsContainer>()->GetArme()->GetComponent<Gun>();
+		if (gun) {
+			for (GameObject* bullet : gun->GetBullets())
+			{
+				if (RigidBody2D::IsColliding(*(bullet->GetComponent<RigidBody2D>()), *(hades->GetComponent<RigidBody2D>())) && hades->GetActive())
+				{
+					hades->GetComponent<Hades>()->TakeDamage(bullet->GetComponent<Bullet>()->GetDamageReduced());
+					gun->RemoveBullet(bullet);
+					RemoveGameObject(bullet);
+				}
+			}
+		}
+		
+	}
+
 }
+
 void SceneGameBossRoom::Render(sf::RenderWindow* _window)
 {
 	SceneGameAbstract::Render(_window);

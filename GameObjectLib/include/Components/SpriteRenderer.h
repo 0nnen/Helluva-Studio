@@ -30,6 +30,7 @@ public:
 	void SetTexture(sf::Texture* _texture, unsigned int& _frame);
 	void SetRecTexture(const unsigned int& _frame, const int& width, const int& height);
 	void SetRecTexture(const unsigned int& _frameWidth, const unsigned int& _frameHeight, const int& width, const int& height);
+	void SetRecTextureWithFrame(const unsigned int& _frameWidth, const unsigned int& _frameHeight, const unsigned int& _actualFrameWidth, const unsigned int& _actualFrameHeight);
 
 	void Rotate(const float& angle);
 	void Render(sf::RenderWindow* _window) override;
