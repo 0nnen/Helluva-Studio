@@ -71,7 +71,6 @@ void SceneGameWorld::CreatePlatformCollision()
 
 void SceneGameWorld::CreateEnemy()
 {
-	std::cout << "okk";
 	enemy = BuilderEntityGameObject::CreateEnemyAGameObject("EnemyA", WindowManager::GetWindowWidth() / 2, 40.f, 7.f, 7.f, AssetManager::GetAsset("idleEnemyA"));
 }
 
@@ -114,8 +113,10 @@ void SceneGameWorld::Collision(GameObject* _entity)
 void SceneGameWorld::Update(const float& _delta)
 {
 	SceneGameAbstract::Update(_delta);
-	Collision(player);
-	Collision(enemy);
+	if(!isPause) {
+		Collision(player);
+		Collision(enemy);
+	}
 
 	if (hud) {
 		hud->Update(_delta);
