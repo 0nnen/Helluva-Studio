@@ -17,7 +17,7 @@ void EventManager::Update(const float& _delta)
 		if (event.type == sf::Event::KeyPressed)
 		{
 			if (event.key.code == sf::Keyboard::LAlt) if (event.key.code == sf::Keyboard::F4) engine->Quit();
-			if (SceneManager::GetActiveGameScene() == SceneManager::GetSceneByKey("SceneGameWorld") || SceneManager::GetActiveGameScene() == SceneManager::GetSceneByKey("SceneGameAbstract"))
+			if (SceneManager::GetActiveGameScene())
 			{
 				if (event.key.code == sf::Keyboard::Escape)
 				{

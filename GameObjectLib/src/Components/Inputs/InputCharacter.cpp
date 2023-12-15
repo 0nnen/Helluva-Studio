@@ -26,7 +26,8 @@ void InputCharacter::Update(const float& _delta) {
 	{
 		if (!character->GetAnimation("run")->GetIsPlaying()) {
 			if (character->GetActualAnimation()) character->GetActualAnimation()->Stop();
-			if (character->GetAndSetAnimation("idle")) character->GetAndSetAnimation("idle")->Stop();
+			if (character->GetAnimation("jump")) character->GetAnimation("jump")->Stop();
+			if (character->GetAnimation("idle")) character->GetAnimation("idle")->Stop();
 			character->GetAndSetAnimation("run")->Play();
 		}
 		commandMoves->Execute(_delta);
@@ -35,6 +36,8 @@ void InputCharacter::Update(const float& _delta) {
 	{
 		if (character->GetAnimation("run")->GetIsPlaying()) {
 			character->GetAnimation("run")->Stop();
+			if (character->GetAnimation("jump")) character->GetAnimation("jump")->Stop();
+			if (!character->GetAnimation("idle")) character->GetAnimation("idle")->Play();
 		}
 	}
 
@@ -70,6 +73,14 @@ void InputCharacter::Update(const float& _delta) {
 		if (character->GetOnFloor() && character->GetAnimation("jump")->GetIsPlaying())
 		{
 			character->GetAnimation("jump")->Stop();
+		}
+		if (!character->GetOnFloor() && !character->GetAnimation("jump")->GetIsPlaying())
+		{
+			if (character->GetAnimation("idle")->GetIsPlaying()) {
+
+				character->GetAndSetAnimation("idle")->Stop();
+			}
+			character->GetAnimation("jump")->Play();
 		}
 		if (!character->GetAnimation("jump")->GetIsPlaying())
 			if (!character->GetAnimation("shootArm")->GetIsPlaying() && !character->GetAnimation("shootBody")->GetIsPlaying())
