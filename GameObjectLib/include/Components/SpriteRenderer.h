@@ -40,7 +40,7 @@ public:
 private:
 
 	sf::Texture* texture = nullptr;
-	float scalex, scaley;
+	float scalex, scaley, width, height;
 	sf::Sprite sprite;
 	float rotate = 0.f;
 };

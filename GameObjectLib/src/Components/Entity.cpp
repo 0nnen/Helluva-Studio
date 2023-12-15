@@ -24,7 +24,6 @@ void Entity::TakeDamage(const int& _damage)
 		if (healthPoint <= 0)
 		{
 			this->Die();
-			GetOwner()->SetActiveAndVisible(false);
 		}
 	}
 
@@ -33,6 +32,7 @@ void Entity::TakeDamage(const int& _damage)
 void Entity::Die()
 {
 	healthPoint = 0;
+	GetOwner()->SetActiveAndVisible(false);
 	//AudioManager::PlaySound("dead");
 	SceneManager::GetActiveGameScene()->RemoveGameObject(GetOwner());
 }

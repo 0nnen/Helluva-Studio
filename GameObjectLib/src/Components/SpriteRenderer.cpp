@@ -65,9 +65,11 @@ void Sprite::SetRecTexture(const unsigned int& _frame, const int& width, const i
 	rigidBody2D->SetScale(scalex, scaley);
 }
 
-void Sprite::SetRecTexture(const unsigned int& _frameWidth, const unsigned int& _frameHeight, const int& width, const int& height)
+void Sprite::SetRecTexture(const unsigned int& _frameWidth, const unsigned int& _frameHeight, const int& _width, const int& _height)
 {
-	sprite.setTextureRect(sf::IntRect(width * _frameWidth, height * _frameHeight, width, height));
+	width = _width;
+	height = _height;
+	sprite.setTextureRect(sf::IntRect(_width * _frameWidth, _height * _frameHeight, _width, _height));
 	sprite.setOrigin(width / 2, height / 2);
 	RigidBody2D* rigidBody2D = GetOwner()->GetComponent<RigidBody2D>();
 	rigidBody2D->SetSize(width, height);
@@ -77,13 +79,13 @@ void Sprite::SetRecTexture(const unsigned int& _frameWidth, const unsigned int& 
 
 void Sprite::SetRecTextureWithFrame(const unsigned int& _actualFrameWidth, const unsigned int& _actualFrameHeight, const unsigned int& _frameWidth, const unsigned int& _frameHeight)
 {
-	const float width = sprite.getLocalBounds().width;
-	const float height = sprite.getLocalBounds().height;
-	const float widthAfterFrame = width / _frameWidth;
-	const float heightAfterFrame = height / _frameHeight;
-	std::cout << "Width :" << width << std::endl;
-	std::cout << "height :" << height << std::endl;
-	sprite.setTextureRect(sf::IntRect(widthAfterFrame * _actualFrameWidth, heightAfterFrame * _actualFrameHeight, width / _frameWidth, height / _frameHeight));
+	const float _width = sprite.getLocalBounds().width;
+	const float _height = sprite.getLocalBounds().height;
+	const float widthAfterFrame = _width / _frameWidth;
+	const float heightAfterFrame = _height / _frameHeight;
+	width = widthAfterFrame;
+	height = heightAfterFrame;
+	sprite.setTextureRect(sf::IntRect(widthAfterFrame * _actualFrameWidth, heightAfterFrame * _actualFrameHeight, _width / _frameWidth, _height / _frameHeight));
 	sprite.setOrigin(width / 2, height / 2);
 	RigidBody2D* rigidBody2D = GetOwner()->GetComponent<RigidBody2D>();
 	rigidBody2D->SetSize(width, height);

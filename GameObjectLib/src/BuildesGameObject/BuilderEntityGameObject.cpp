@@ -12,6 +12,7 @@
 #include "Components/Inputs/InputCharacter.h"
 #include "Components/Entity/Enemy/EnemyA.h"
 #include "Components/Entity/Enemy/Hades.h"
+#include "Components/Entity/Enemy/ProtectionBall.h"
 
 #include <Components/Shapes/Rectangle.h>
 #include <Components/Shapes/Triangle.h>
@@ -311,16 +312,20 @@ GameObject* BuilderEntityGameObject::CreateHadesGameObject(const std::string& _n
 
 	return gameObject;
 }
-GameObject* BuilderEntityGameObject::CreateProtectionBallGameObject(const std::string& _name, float _x, float _y, float scalex, float scaley, sf::Texture* _texture, const int& _number)
+GameObject* BuilderEntityGameObject::CreateProtectionBallGameObject(const std::string& _name, float _x, float _y, float scalex, float scaley, sf::Texture* _texture, const int& _number, GameObject* _hades)
 {
 	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
 	gameObject->SetPosition(Maths::Vector2f(_x, _y));
 	gameObject->SetScale(Maths::Vector2f(scalex, scaley));
 	gameObject->SetDepth(0.7f);
 
+	ProtectionBall* protectionBall = gameObject->CreateComponent<ProtectionBall>();
+	protectionBall->SetHades(_hades);
+
 	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
 	rigidBody2D->SetIsGravity(false);
 	rigidBody2D->SetScale(scalex, scaley);
+	rigidBody2D->SetKillImperfection(Maths::Vector2f(22.,22.f));
 
 	Sprite* spriteBody = gameObject->CreateComponent<Sprite>();
 	spriteBody->SetName("spriteProtection");
@@ -328,7 +333,6 @@ GameObject* BuilderEntityGameObject::CreateProtectionBallGameObject(const std::s
 	spriteBody->SetRecTextureWithFrame(_number % 4, _number % 2, 4, 2);
 	spriteBody->SetScale(scalex, scaley);
 	spriteBody->SetSprite();
-	rigidBody2D->SetSize(spriteBody->GetBounds().x, spriteBody->GetBounds().y);
 
 	/*HealthPointBar* healthPointBar = gameObject->CreateComponent<HealthPointBar>();
 	healthPointBar->SetHealthPoint(enemy->GetHealthPoint());

@@ -37,8 +37,8 @@ public:
 
 	inline void SetSize(const float& _width, const float& _height)
 	{
-		widthSquareCollider = _width - killImperfection.GetX();
-		heightSquareCollider = _height - killImperfection.GetY();
+		widthSquareCollider = (_width - killImperfection.GetX());
+		heightSquareCollider = (_height - killImperfection.GetY());
 	}
 	inline void SetScale(const float& _scaleX, const float& _scaleY)
 	{

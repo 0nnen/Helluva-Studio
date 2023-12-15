@@ -5,6 +5,7 @@
 #include "Managers/WindowManager.h"
 #include "Components/Entity/Character.h"
 #include "Components/Entity/Enemy/Hades.h"
+#include "Components/Entity/Enemy/ProtectionBall.h"
 #include "Components/ComponentsGame/WeaponsContainer.h"
 #include "Components/ComponentsGame/Gun.h"
 #include "Components/ComponentsGame/Bullet.h"
@@ -37,10 +38,9 @@ void SceneGameBossRoom::Create()
 	SceneGameAbstract::Create();
 	GameObject* backgroundBossRoom = BuilderGameObject::CreateBackgroundGameObject("BossRoom", WindowManager::GetFloatWindowWidth() / 2, WindowManager::GetFloatWindowHeight() / 2, 1, 1, AssetManager::GetAsset("BackgroundBoss"));
 	plateforme = BuilderEntityGameObject::CreatePlateformGameObject("Plateforme", WindowManager::GetFloatWindowWidth() / 2, WindowManager::GetFloatWindowHeight(), 12, 2);
-	CreatePlayer(WindowManager::GetFloatWindowWidth() / 1.1 ,WindowManager::GetFloatWindowHeight()/ 1.2);
+	CreatePlayer(WindowManager::GetFloatWindowWidth() / 1.1, WindowManager::GetFloatWindowHeight() / 1.2);
 	player->GetComponent<Character>()->SetCenterCamera(false);
-	hades = BuilderEntityGameObject::CreateHadesGameObject("Hades", WindowManager::GetFloatWindowWidth() / 6.f, WindowManager::GetFloatWindowHeight() / 1.5f, 1.f, 1.f, AssetManager::GetAsset("idleHades"));
-	hades->GetComponent<Hades>()->SetProtection();
+	hades = BuilderEntityGameObject::CreateHadesGameObject("Hades", WindowManager::GetFloatWindowWidth() / 6.f, WindowManager::GetFloatWindowHeight() / 1.5f, 3.f, 3.f, AssetManager::GetAsset("idleHades"));
 }
 
 void SceneGameBossRoom::Delete()
@@ -79,11 +79,19 @@ void SceneGameBossRoom::Update(const float& _delta)
 					gun->RemoveBullet(bullet);
 					RemoveGameObject(bullet);
 				}
+				for (GameObject* protectionBall : hades->GetComponent<Hades>()->GetProtectionBalls())
+				{
+					if (RigidBody2D::IsColliding(*(bullet->GetComponent<RigidBody2D>()), *(protectionBall->GetComponent<RigidBody2D>())) && hades->GetActive())
+					{
+						protectionBall->GetComponent<ProtectionBall>()->TakeDamage(bullet->GetComponent<Bullet>()->GetDamageReduced());
+						gun->RemoveBullet(bullet);
+						RemoveGameObject(bullet);
+					}
+				}
+
 			}
 		}
-		
 	}
-
 }
 
 void SceneGameBossRoom::Render(sf::RenderWindow* _window)

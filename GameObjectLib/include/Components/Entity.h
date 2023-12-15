@@ -61,7 +61,7 @@ protected:
 	float attackSpeed;
 	float range;
 	bool onFloor = true;
-	bool isInvicible = true;
+	bool isInvicible = false;
 	Animation* actualAnimation = nullptr;
 	std::map<std::string, Animation*> animations;
 };
