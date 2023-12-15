@@ -2,6 +2,7 @@
 
 #include "Managers/SceneManager.h"
 #include "Managers/AssetManager.h"
+#include "Managers/AudioManager.h"
 #include "Managers/WindowManager.h"
 
 #include "Components/UIElements/Button.h"
@@ -86,7 +87,9 @@ void SceneGameAbstract::Pause()
 	this->pausePlayButton->SetActiveAndVisible(!isPause);
 	this->pauseMenuPrincipalButton->SetActiveAndVisible(!isPause);
 	this->pauseQuitButton->SetActiveAndVisible(!isPause);
+
 }
+
 
 void SceneGameAbstract::Awake() 
 {

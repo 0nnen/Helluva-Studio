@@ -1,6 +1,7 @@
 #include "Scenes/ScenesGame/SceneGameBossRoom.h"
 #include "BuilderGameObject.h"
 #include "BuildersGameObject/BuilderEntityGameObject.h"
+#include "Managers/AudioManager.h"
 #include "Managers/AssetManager.h"
 #include "Managers/WindowManager.h"
 #include "Components/Entity/Character.h"
@@ -16,14 +17,17 @@ void SceneGameBossRoom::Preload()
 {
 	SceneGameAbstract::Preload();
 	AssetManager::AddAsset("BackgroundBoss", "../Assets/Graphics/Maps/bossRoom.png");
+	AudioManager::AddMusic("MusicAmbiant_CI", "../Assets/Audio/Musics/MusicAmbiant_CrackerIsland.ogg");
 }
 void SceneGameBossRoom::Create()
 {
 	SceneGameAbstract::Create();
+	AudioManager::PlayMusic("MusicAmbiant_CI");
 	GameObject* backgroundBossRoom = BuilderGameObject::CreateBackgroundGameObject("BossRoom", WindowManager::GetFloatWindowWidth() / 2, WindowManager::GetFloatWindowHeight() / 2, 1, 1, AssetManager::GetAsset("BackgroundBoss"));
 	plateforme = BuilderEntityGameObject::CreatePlateformGameObject("Plateforme", WindowManager::GetFloatWindowWidth() / 2, WindowManager::GetFloatWindowHeight(), 12, 2);
 	CreatePlayer(WindowManager::GetFloatWindowWidth() / 1.1 ,WindowManager::GetFloatWindowHeight()/ 1.2);
 	player->GetComponent<Character>()->SetCenterCamera(false);
+	
 }
 void SceneGameBossRoom::Delete()
 {
