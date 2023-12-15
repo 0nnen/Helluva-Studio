@@ -1,5 +1,6 @@
 #include "Scenes/SceneGameAbstract.h"
 
+#include "Engine.h"
 #include "Managers/SceneManager.h"
 #include "Managers/AssetManager.h"
 #include "Managers/AudioManager.h"
@@ -19,7 +20,7 @@ SceneGameAbstract::SceneGameAbstract(const std::string& _newName) : Scene(_newNa
 {
 	this->Awake();
 	srand(time(nullptr));
-	isPause = true;
+	isPause = false;
 }
 
 
@@ -46,33 +47,33 @@ void SceneGameAbstract::Create()
 	backgroundAlpha2.backgroundAlpha.setFillColor(sf::Color::Transparent);
 	backgroundAlpha2.backgroundAlpha.setPosition(WindowManager::GetFloatWindowWidth() / 2, WindowManager::GetFloatWindowHeight() / 2);
 	//Background
-	GameObject* background1 = BuilderGameObject::CreateBackgroundGameObject("Background1", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, 1.0f, 1.0f, AssetManager::GetAsset("BackgroundAbstract"));
+	//GameObject* background1 = BuilderGameObject::CreateBackgroundGameObject("Background1", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, 1.0f, 1.0f, AssetManager::GetAsset("BackgroundAbstract"));
 	//Player
 	
 }
 
 void SceneGameAbstract::CreatePlayer()
 {
-	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", WindowManager::GetWindowWidth() / 2, 50.f, AssetManager::GetAsset("Character"), 7.f, 7.f);
+	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", WindowManager::GetWindowWidth() / 2, 600.f, AssetManager::GetAsset("idleCharacter"), 4.f, 4.f);
 }
 
 void SceneGameAbstract::CreatePlayer(const float& _positionX, const float& _positionY)
 {
-	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", _positionX, _positionY, AssetManager::GetAsset("Character"), 7.f, 7.f);
+	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", _positionX, _positionY, AssetManager::GetAsset("Character"), 4.f, 4.f);
 }
 
 void SceneGameAbstract::Preload()
 {
 	Scene::Preload();
 
-	AssetManager::AddAsset("BackgroundAbstract", "../Assets/Graphics/Backgrounds/bgMenu.png");
-	AssetManager::AddAsset("idleCharacter", "../Assets/Graphics/Characters/Zephyr/Idle/Character_Idle_48x48.png");
-	AssetManager::AddAsset("Character", "../Assets/Graphics/Characters/Zephyr/Idle/Character-Idle_01.png");
-	AssetManager::AddAsset("jumpCharacter", "../Assets/Graphics/Characters/Zephyr/Jump/Character_Jump_48x48.png");
-	AssetManager::AddAsset("runCharacter", "../Assets/Graphics/Characters/Zephyr/Run/Character_Run_48x48.png");
-	AssetManager::AddAsset("shootArm", "../Assets/Graphics/Characters/Zephyr/Idle_Shoot/Character_Idle_Shoot_ARM_48x48.png");
-	AssetManager::AddAsset("shootBody", "../Assets/Graphics/Characters/Zephyr/Idle_Shoot/Character_Idle_Shoot_BODY_48x48.png");
-	AssetManager::AddAsset("bullet", "../Assets/Graphics/Characters/Zephyr/bullet.png");
+	AssetManager::AddAsset("BackgroundAbstract", "Assets/Graphics/Backgrounds/bgMenu.png");
+	AssetManager::AddAsset("idleCharacter", "Assets/Graphics/Characters/Zephyr/Idle/Character_Idle_48x48.png");
+	AssetManager::AddAsset("Character", "Assets/Graphics/Characters/Zephyr/Idle/Character-Idle_01.png");
+	AssetManager::AddAsset("jumpCharacter", "Assets/Graphics/Characters/Zephyr/Jump/Character_Jump_48x48.png");
+	AssetManager::AddAsset("runCharacter", "Assets/Graphics/Characters/Zephyr/Run/Character_Run_48x48.png");
+	AssetManager::AddAsset("shootArm", "Assets/Graphics/Characters/Zephyr/Idle_Shoot/Character_Idle_Shoot_ARM_48x48.png");
+	AssetManager::AddAsset("shootBody", "Assets/Graphics/Characters/Zephyr/Idle_Shoot/Character_Idle_Shoot_BODY_48x48.png");
+	AssetManager::AddAsset("bullet", "Assets/Graphics/Characters/Zephyr/bullet.png");
 }
 
 
@@ -84,10 +85,10 @@ void SceneGameAbstract::Delete()
 void SceneGameAbstract::Pause()
 {
 	isPause = !isPause;
+
 	this->pausePlayButton->SetActiveAndVisible(!isPause);
 	this->pauseMenuPrincipalButton->SetActiveAndVisible(!isPause);
 	this->pauseQuitButton->SetActiveAndVisible(!isPause);
-
 }
 
 
@@ -107,7 +108,7 @@ void SceneGameAbstract::ManageDefaultButtonsPause(bool _state)
 void SceneGameAbstract::Update(const float& _delta)
 {
 
-	if (isPause)
+	if (!isPause)
 	{
 		Scene::Update(_delta);
 	}
@@ -115,7 +116,7 @@ void SceneGameAbstract::Update(const float& _delta)
 	{
 		if (pausePlayButton->GetComponent<Button>()->IsClicked())
 		{
-			isPause = true;
+			isPause = false;
 			this->ManageDefaultButtonsPause(false);
 		}
 		else if (pauseMenuPrincipalButton->GetComponent<Button>()->IsClicked()) 
@@ -125,7 +126,7 @@ void SceneGameAbstract::Update(const float& _delta)
 		}
 		else if (pauseQuitButton->GetComponent<Button>()->IsClicked()) 
 		{
-			WindowManager::GetWindow()->close();
+			Engine::GetInstance()->Quit();
 		}
 
 	}
@@ -134,4 +135,6 @@ void SceneGameAbstract::Update(const float& _delta)
 void SceneGameAbstract::Render(sf::RenderWindow* _window) 
 {
 	Scene::Render(_window);
+	_window->draw(!isPause ? backgroundAlpha2.backgroundAlpha : backgroundAlpha1.backgroundAlpha);
+	_window->setView(_window->getDefaultView());
 }

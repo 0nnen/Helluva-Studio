@@ -12,7 +12,7 @@ ATH::ATH(Character* character, int maxHealth)
 }
 
 void ATH::Update(float deltaTime) {
-    float healthPercentage = static_cast<float>(character->GetHealth()) / maxHealth;
+    float healthPercentage = static_cast<float>(character->GetHealthPoint()) / maxHealth;
     healthBar.setSize(sf::Vector2f(maxHealthBarWidth * healthPercentage, 20));
 }
 
@@ -37,12 +37,11 @@ void ATH::Render(sf::RenderWindow& window) {
 
     sf::Texture weaponTexture;
     sf::Sprite weaponSprite;
-    if (weaponTexture.loadFromFile("../Assets/Graphics/UI/Icons/gun_icon.png")) {
+    if (weaponTexture.loadFromFile("Assets/Graphics/UI/Icons/gun_icon.png")) {
         weaponSprite.setTexture(weaponTexture);
         weaponSprite.setPosition(50, 100); 
         weaponSprite.setScale(0.5f, 0.5f);
 
-        // Dessin du cadre et de l'image
         window.draw(weaponFrame);
         window.draw(weaponSprite);
     }

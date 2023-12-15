@@ -21,7 +21,7 @@ public:
 
 private:
 	float damage = 20.f;
-	float reductionFactor = 0.01f;
+	float reductionFactor = 0.000001f;
 	float speed = 330.f;
 	Maths::Vector2f initialPosition = Maths::Vector2f::Zero;
 };

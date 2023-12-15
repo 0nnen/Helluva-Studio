@@ -10,9 +10,9 @@ SceneGameWorld::SceneGameWorld(const std::string& _newName) : SceneGameAbstract(
 void SceneGameWorld::Preload()
 {
 	SceneGameAbstract::Preload();
-	AssetManager::AddAsset("BackgroundMapBackgroundWorld", "../Assets/Graphics/Maps/worldMapBackground.png");
-	AssetManager::AddAsset("BackgroundMapWorld", "../Assets/Graphics/Maps/worldMap1.png");
-	AssetManager::AddAsset("idleEnemyA", "../Assets/Enemy/Hell-Beast-Files/PNG/with-stroke/hell-beast-idle.png");
+	AssetManager::AddAsset("BackgroundMapBackgroundWorld", "Assets/Graphics/Maps/worldMapBackground.png");
+	AssetManager::AddAsset("BackgroundMapWorld", "Assets/Graphics/Maps/worldMap1.png");
+	AssetManager::AddAsset("idleEnemyA", "Assets/Enemy/Hell-Beast-Files/PNG/with-stroke/hell-beast-idle.png");
 }
 
 void SceneGameWorld::Create()
@@ -20,12 +20,12 @@ void SceneGameWorld::Create()
 	SceneGameAbstract::Create();
 	CreatePlayer();
 	CreateEnemy();
-	//GameObject* backgroundWorldMap = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld1", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundMapBackgroundWorld"));
-	//GameObject* backgroundWorldMap2 = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld2", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundMapWorld"));
-	plateform = BuilderEntityGameObject::CreatePlateformGameObject("plateform", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 1.2, 5, 2);
-	this->CreatePlatformCollision();
-
-	hud = new ATH(player->GetComponent<Character>(), Character::MaxHealth);
+	GameObject* backgroundWorldMap = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld1", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, 1,1, AssetManager::GetAsset("BackgroundMapBackgroundWorld"), 0);
+	GameObject* backgroundWorldMap2 = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld2", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, 1,1, AssetManager::GetAsset("BackgroundMapWorld"), 0);
+	plateform = BuilderEntityGameObject::CreatePlateformGameObject("plateform", WindowManager::GetWindowWidth() / 2, 1200, 100, 2);
+	//this->CreatePlatformCollision();
+	isPause = false;
+	hud = new ATH(player->GetComponent<Character>(), player->GetComponent<Character>()->GetMaxHealthPoint());
 }
 
 void SceneGameWorld::CreatePlatformCollision()
@@ -71,7 +71,6 @@ void SceneGameWorld::CreatePlatformCollision()
 
 void SceneGameWorld::CreateEnemy()
 {
-	std::cout << "okk";
 	enemy = BuilderEntityGameObject::CreateEnemyAGameObject("EnemyA", WindowManager::GetWindowWidth() / 2, 40.f, 7.f, 7.f, AssetManager::GetAsset("idleEnemyA"));
 }
 
@@ -82,9 +81,7 @@ void SceneGameWorld::Delete()
 
 void SceneGameWorld::Render(sf::RenderWindow* _window)
 {
-	Scene::Render(_window);
-	_window->draw(isPause ? backgroundAlpha2.backgroundAlpha : backgroundAlpha1.backgroundAlpha);
-	_window->setView(_window->getDefaultView());
+	SceneGameAbstract::Render(_window);
 
 	if (hud) {
 		hud->Render(*_window);
@@ -94,10 +91,30 @@ void SceneGameWorld::Render(sf::RenderWindow* _window)
 
 void SceneGameWorld::Collision(GameObject* _entity)
 {
+	/*for (GameObject* onePlatformCarreCollision : platformCarreCollision)
+	{
+		if (_entity, onePlatformCarreCollision) {
+			if (RigidBody2D::IsColliding(*(_entity->GetComponent<RigidBody2D>()), *(onePlatformCarreCollision->GetComponent<RigidBody2D>())))
+			{
+				_entity->SetPosition(_entity->GetPosition() - Maths::Vector2f(0, 0.5f));
+				_entity->GetComponent<RigidBody2D>()->SetIsGravity(false);
+				_entity->GetComponent<Entity>()->SetOnFloor(true);
+				firstCollide = false;
+			}
+			else if (!RigidBody2D::IsColliding(*(_entity->GetComponent<RigidBody2D>()), *(onePlatformCarreCollision->GetComponent<RigidBody2D>())))
+			{
+				firstCollide = true;
+				_entity->GetComponent<RigidBody2D>()->SetIsGravity(true);
+				_entity->GetComponent<Entity>()->SetOnFloor(false);
+			}
+		}
+
+	}*/
 	if (_entity && plateform)
 	{
 		if (RigidBody2D::IsColliding(*(_entity->GetComponent<RigidBody2D>()), *(plateform->GetComponent<RigidBody2D>())))
 		{
+			_entity->SetPosition(_entity->GetPosition() - Maths::Vector2f(0, 0.5f));
 			_entity->GetComponent<RigidBody2D>()->SetIsGravity(false);
 			_entity->GetComponent<Entity>()->SetOnFloor(true);
 			firstCollide = false;
@@ -114,8 +131,10 @@ void SceneGameWorld::Collision(GameObject* _entity)
 void SceneGameWorld::Update(const float& _delta)
 {
 	SceneGameAbstract::Update(_delta);
-	Collision(player);
-	Collision(enemy);
+	if (!isPause) {
+		Collision(player);
+		Collision(enemy);
+	}
 
 	if (hud) {
 		hud->Update(_delta);

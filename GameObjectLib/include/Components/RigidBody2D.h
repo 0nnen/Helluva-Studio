@@ -1,5 +1,7 @@
 #pragma once
 
+#include <SFML/Graphics.hpp>
+
 #include "Component.h"
 #include <iostream>
 class RigidBody2D final : public Component
@@ -8,6 +10,7 @@ public:
 
 	RigidBody2D();
 	void Update(const float& _delta) override;
+	void Render(sf::RenderWindow* _window) override;
 	void Gravity();
 	inline void AddForces(const Maths::Vector2f& _force) { velocity += _force; }
 
@@ -37,8 +40,8 @@ public:
 
 	inline void SetSize(const float& _width, const float& _height)
 	{
-		widthSquareCollider = _width - killImperfection.GetX();
-		heightSquareCollider = _height - killImperfection.GetY();
+		widthSquareCollider = (_width - killImperfection.GetX());
+		heightSquareCollider = (_height - killImperfection.GetY());
 	}
 	inline void SetScale(const float& _scaleX, const float& _scaleY)
 	{
@@ -67,5 +70,7 @@ private:
 	float heightSquareCollider = 1.0f;
 	float scaleSquareColliderX = 1.0f;
 	float scaleSquareColliderY = 1.0f;
+
+	sf::RectangleShape rectangle;
 };
 

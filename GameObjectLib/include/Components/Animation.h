@@ -30,7 +30,8 @@ public:
 	void SetSpriteSheet(sf::Texture* _spriteSheet);
 	inline void SetAnimationTime(const float& _animationTime) { animationTime = _animationTime; }
 
-	
+	inline int GetWidth() { return width; }
+	inline int GetHeight() { return height; }
 private:
 	Sprite* sprite = nullptr;
 	std::string spriteName = "spriteName";

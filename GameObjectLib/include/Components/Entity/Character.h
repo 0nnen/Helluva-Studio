@@ -3,7 +3,7 @@
 #include "SFML/Graphics.hpp"
 #include "Components/Entity.h"
 
-class Character: public Entity
+class Character : public Entity
 {
 public:
 	enum Direction { Left, Right };
@@ -12,24 +12,14 @@ public:
 	void Update(const float& _delta);
 	void SetDirection(Direction _newDirection);
 	Direction GetDirection() const { return direction; }
-	bool GetIsCenter() const{ return direction; }
+	bool GetIsCenter() const { return direction; }
 	void SetCenterCamera(const bool& _state) { centerCameraOnPlayer = _state; }
-
-	int GetHealth() const;
-	void SetHealth(int hp);
-	void TakeDamage(int damage);
-
-	static const int MaxHealth;
 
 private:
 	Direction direction;
 	bool directionCharacter;
-	sf::CircleShape shape;
-	std::vector<sf::CircleShape> bullets;
-	std::vector<float> angles;
 	bool centerCameraOnPlayer = true;
 
-	int health;
-	int maxHealth;
+
 };
 
