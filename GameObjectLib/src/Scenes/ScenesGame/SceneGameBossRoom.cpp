@@ -1,6 +1,7 @@
 #include "Scenes/ScenesGame/SceneGameBossRoom.h"
 #include "BuilderGameObject.h"
 #include "BuildersGameObject/BuilderEntityGameObject.h"
+#include "Managers/AudioManager.h"
 #include "Managers/AssetManager.h"
 #include "Managers/WindowManager.h"
 #include "Components/Entity/Character.h"
@@ -21,6 +22,9 @@ void SceneGameBossRoom::Awake()
 void SceneGameBossRoom::Preload()
 {
 	SceneGameAbstract::Preload();
+
+	AudioManager::AddMusic("MusicAmbiant_CI", "../Assets/Audio/Musics/MusicAmbiant_CrackerIsland.ogg");
+
 	AssetManager::AddAsset("BackgroundBoss", "Assets/Graphics/Maps/bossRoom.png");
 	AssetManager::AddAsset("breathHades", "Assets/Enemy/Hades/breath.png");
 	AssetManager::AddAsset("breathFireHades", "Assets/Enemy/Hades/breath-fire.png");
@@ -31,16 +35,19 @@ void SceneGameBossRoom::Preload()
 	AssetManager::AddAsset("protectionBallsHades", "Assets/Boss/balls.png");
 	unsigned seed = static_cast<unsigned>(time(0));
 	srand(seed);
+
 }
 
 void SceneGameBossRoom::Create()
 {
 	SceneGameAbstract::Create();
+	AudioManager::PlayMusic("MusicAmbiant_CI");
 	GameObject* backgroundBossRoom = BuilderGameObject::CreateBackgroundGameObject("BossRoom", WindowManager::GetFloatWindowWidth() / 2, WindowManager::GetFloatWindowHeight() / 2, 1, 1, AssetManager::GetAsset("BackgroundBoss"));
 	plateforme = BuilderEntityGameObject::CreatePlateformGameObject("Plateforme", WindowManager::GetFloatWindowWidth() / 2, WindowManager::GetFloatWindowHeight() + 50, 12, 2);
 	plateforme->SetVisible(false);
 	CreatePlayer(WindowManager::GetFloatWindowWidth() / 1.1, WindowManager::GetFloatWindowHeight() / 1.2);
 	player->GetComponent<Character>()->SetCenterCamera(false);
+
 	hades = BuilderEntityGameObject::CreateHadesGameObject("Hades", WindowManager::GetFloatWindowWidth() / 6.f, WindowManager::GetFloatWindowHeight() / 1.5f, 2.5f, 2.5f, AssetManager::GetAsset("idleHades"));
 	victoryTime = 5.f;
 }

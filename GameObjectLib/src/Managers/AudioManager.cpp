@@ -101,6 +101,27 @@ void AudioManager::AddSound(const std::string& _key, const std::string& _fileNam
 	}
 }
 
+void AudioManager::PauseMusic()
+{
+	if (AudioManager::music) {
+		AudioManager::music->pause();
+	}
+}
+
+void AudioManager::ResumeMusic()
+{
+	if (AudioManager::music) {
+		AudioManager::music->play();
+	}
+}
+
+void AudioManager::StopMusic()
+{
+	if (AudioManager::music) {
+		AudioManager::music->stop();
+	}
+}
+
 
 AudioManager::~AudioManager() 
 {
@@ -121,5 +142,4 @@ AudioManager::~AudioManager()
 	AudioManager::sounds.clear();
 	AudioManager::soundBuffers.clear();
 	AudioManager::musics.clear();
-	AudioManager::sounds.clear();
 }

@@ -2,9 +2,10 @@
 #include "Components/UIElements/Button.h"
 #include "Components/UIElements/Slider.h"
 #include "Managers/AudioManager.h"
-#include "Managers/WindowManager.h"
 #include "Managers/AssetManager.h"
+#include "Managers/WindowManager.h"
 #include "Managers/CameraManager.h"
+
 #include "Components/SpriteRenderer.h"
 #include "Engine.h"
 
@@ -16,29 +17,33 @@ SceneMainMenu::SceneMainMenu(const std::string& _newName) : Scene(_newName)
 
 void SceneMainMenu::Preload()
 {
-	AssetManager::AddAsset("BackgroundMainMenu", "Assets/Graphics/Backgrounds/bgMenu.png");
-	AssetManager::AddAsset("ButtonsMenu", "Assets/Graphics/UI/Buttons/buttonsMenu.png");
-	AssetManager::AddAsset("ButtonGrey", "Assets/Graphics/UI/Buttons/buttonGrey.png");
+	AssetManager::AddAsset("BackgroundMainMenu", "../Assets/Graphics/Backgrounds/bgMenu.png");
+	AssetManager::AddAsset("ButtonsMenu", "../Assets/Graphics/UI/Buttons/buttonsMenu.png");
+	AssetManager::AddAsset("ButtonGrey", "../Assets/Graphics/UI/Buttons/buttonGrey.png");
 
-	AudioManager::AddSound("ConfirmSelection", "Assets/Audio/SFX/confirm_selection.ogg");
-	AudioManager::AddSound("CancelSelection", "Assets/Audio/SFX/cancel_selection.ogg");
-	AudioManager::AddSound("CursorSelection", "Assets/Audio/SFX/cursor_selection.ogg");
-	AudioManager::AddSound("ErrorSelection", "Assets/Audio/SFX/error_selection.ogg");
+	AudioManager::AddSound("ConfirmSelection", "../Assets/Audio/SFX/confirm_selection.ogg");
+	AudioManager::AddSound("CancelSelection", "../Assets/Audio/SFX/cancel_selection.ogg");
+	AudioManager::AddSound("CursorSelection", "../Assets/Audio/SFX/cursor_selection.ogg");
+	AudioManager::AddSound("ErrorSelection", "../Assets/Audio/SFX/error_selection.ogg");
+
+	AudioManager::AddMusic("MusicAmbiant_HOM", "../Assets/Audio/Musics/MusicAmbiant_Hommage.ogg");
 }
 
 void SceneMainMenu::Create()
 {
 	Scene::Create();
+	AudioManager::PlayMusic("MusicAmbiant_HOM");
 	GameObject* background1 = BuilderGameObject::CreateBackgroundGameObject("BackgroundMenu", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, 1.0f, 1.0f, AssetManager::GetAsset("BackgroundMainMenu"));
 	this->CreateSceneButtonsMenu();
 	this->ActiveOption(false);
 	this->ActiveMenu(true);
 	isFadeIn = true;
-	fadeInTimeDefault = 4.f;
-
+	fadeInTimeDefault = 1.0f;
 }
+
 void SceneMainMenu::Delete()
 {
+	AudioManager::StopMusic();
 	Scene::Delete();
 }
 

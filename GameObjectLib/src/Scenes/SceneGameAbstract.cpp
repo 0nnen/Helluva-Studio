@@ -3,6 +3,7 @@
 #include "Engine.h"
 #include "Managers/SceneManager.h"
 #include "Managers/AssetManager.h"
+#include "Managers/AudioManager.h"
 #include "Managers/WindowManager.h"
 
 #include "Components/UIElements/Button.h"
@@ -84,10 +85,12 @@ void SceneGameAbstract::Delete()
 void SceneGameAbstract::Pause()
 {
 	isPause = !isPause;
-	this->pausePlayButton->SetActiveAndVisible(isPause);
-	this->pauseMenuPrincipalButton->SetActiveAndVisible(isPause);
-	this->pauseQuitButton->SetActiveAndVisible(isPause);
+
+	this->pausePlayButton->SetActiveAndVisible(!isPause);
+	this->pauseMenuPrincipalButton->SetActiveAndVisible(!isPause);
+	this->pauseQuitButton->SetActiveAndVisible(!isPause);
 }
+
 
 void SceneGameAbstract::Awake() 
 {
