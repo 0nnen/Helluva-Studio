@@ -2,6 +2,7 @@
 #include "Managers/SceneManager.h"
 #include "Scenes/ScenesGame/SceneGameWorld.h"
 #include "BuildersGameObject/BuilderEntityGameObject.h"
+#include "Components/RigidBody2D.h"
 
 float EnemyA::cooldown;
 float EnemyA::fireRate;
@@ -51,4 +52,10 @@ void EnemyA::Attack(float _x, float _y)
 	}
 	bulletShoot = false;
 	cooldown--;
+}
+
+void EnemyA::Mouve(const float& _delta, float _speed)
+{
+	GameObject* enemy = SceneManager::GetActiveGameScene()->GetEnemy();
+	enemy->GetComponent<RigidBody2D>()->AddForces(Maths::Vector2f::Left * _delta * _speed);
 }
