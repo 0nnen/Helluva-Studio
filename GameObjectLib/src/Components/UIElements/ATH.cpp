@@ -42,7 +42,6 @@ void ATH::Render(sf::RenderWindow& window) {
         weaponSprite.setPosition(50, 100); 
         weaponSprite.setScale(0.5f, 0.5f);
 
-        // Dessin du cadre et de l'image
         window.draw(weaponFrame);
         window.draw(weaponSprite);
     }
