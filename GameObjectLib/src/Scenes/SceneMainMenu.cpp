@@ -4,6 +4,7 @@
 #include "Managers/AudioManager.h"
 #include "Managers/WindowManager.h"
 #include "Managers/AssetManager.h"
+#include "Managers/CameraManager.h"
 #include "Components/SpriteRenderer.h"
 #include "Engine.h"
 
@@ -63,7 +64,7 @@ void SceneMainMenu::CreateSceneButtonsMenu()
 	sliderFPS = BuilderGameObject::CreateSliderGameObject("SliderFPS", widthScreen / 2, heightScreen / 2, 1200, 40, 50, 50, 20, WindowManager::GetFps(), WindowManager::GetMinFps(), WindowManager::GetMaxFps());
 	sliderVolume = BuilderGameObject::CreateSliderGameObject("SliderVolume", widthScreen / 2, heightScreen / 1.5, 1200, 40, 50, 50, 20, AudioManager::GetVolume(), AudioManager::GetMaxVolume());
 	//signupLoginButton = CreateButtonGameObject("Signup Login", widthScreen / 1.2, heightScreen / 1.2, 30)
-
+	CameraManager::SetCenter(widthScreen / 2, heightScreen / 2);
 }
 
 void SceneMainMenu::Update(const float& _delta)

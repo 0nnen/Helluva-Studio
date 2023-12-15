@@ -21,7 +21,7 @@ void SceneGameBossRoom::Awake()
 void SceneGameBossRoom::Preload()
 {
 	SceneGameAbstract::Preload();
-	AssetManager::AddAsset("BackgroundBoss", "Assets/bossRoom.png");
+	AssetManager::AddAsset("BackgroundBoss", "Assets/Graphics/Maps/bossRoom.png");
 	AssetManager::AddAsset("breathHades", "Assets/Enemy/Hades/breath.png");
 	AssetManager::AddAsset("breathFireHades", "Assets/Enemy/Hades/breath-fire.png");
 	AssetManager::AddAsset("attackHades", "Assets/Enemy/Hades/demon-attack.png");

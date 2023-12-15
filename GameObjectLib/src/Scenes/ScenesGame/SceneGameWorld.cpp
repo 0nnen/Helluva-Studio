@@ -25,7 +25,7 @@ void SceneGameWorld::Create()
 	plateform = BuilderEntityGameObject::CreatePlateformGameObject("plateform", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 1.2, 5, 2);
 	this->CreatePlatformCollision();
 
-	hud = new ATH(player->GetComponent<Character>(), Character::MaxHealth);
+	hud = new ATH(player->GetComponent<Character>(), player->GetComponent<Character>()->GetMaxHealthPoint());
 }
 
 void SceneGameWorld::CreatePlatformCollision()
