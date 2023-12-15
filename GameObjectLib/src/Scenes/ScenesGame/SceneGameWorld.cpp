@@ -5,6 +5,7 @@
 #include "Components/Entity/Character.h"
 #include "Components/Entity/Enemy/EnemyA.h"
 
+
 bool SceneGameWorld::flip;
 
 SceneGameWorld::SceneGameWorld(const std::string& _newName) : SceneGameAbstract(_newName) {
@@ -106,7 +107,7 @@ void SceneGameWorld::CollisionRengePosition(const float& _delta) {
 	RigidBody2D* rigidBody2D = enemy->GetComponent<RigidBody2D>();
 	if (player && rengePosition)
 	{
-		if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(rengePosition->GetComponent<RigidBody2D>())) && shootBullet)
+		if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(rengePosition->GetComponent<RigidBody2D>())))
 		{
 			if (player->GetPosition().GetX() <= enemy->GetPosition().GetX())
 			{
@@ -117,10 +118,9 @@ void SceneGameWorld::CollisionRengePosition(const float& _delta) {
 				EnemyA::Mouve(_delta, -enemyA->GetSpeed());
 			}
 		}
-		else if (!RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(rengePosition->GetComponent<RigidBody2D>())))
+		else 
 		{
-			std::cout << "alors";
-			EnemyA::Mouve(0,0);
+			rigidBody2D->SetVelocity(Maths::Vector2f(0.f, 0.f) );
 		}
 		
 	}
@@ -134,21 +134,16 @@ void SceneGameWorld::CollisionRengeShoot(const float& _delta)
 	{
 		if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(rengeProjectil->GetComponent<RigidBody2D>())))
 		{
-			shootBullet = true;
-			if (!enemyA->GetAnimation("shoot")->GetIsPlaying()) {
-				if (enemyA->GetActualAnimation()) enemyA->GetActualAnimation()->Stop();
-				if (enemyA->GetAndSetAnimation("idle")) enemyA->GetAndSetAnimation("idle")->Stop();
-				enemyA->GetAndSetAnimation("shoot")->Play();
-			}
+			rigidBody2D->SetVelocity(Maths::Vector2f(0.f, 0.f));
 			if (player->GetPosition().GetX() <= enemy->GetPosition().GetX())
 			{
 				flip = false;
-				EnemyA::Attack(-1.f, 0.f);
+				enemyA->Attack(-1.f, 0.f);
 			}
 			if (player->GetPosition().GetX() > enemy->GetPosition().GetX())
 			{
 				flip = true;
-				EnemyA::Attack(1.f, 0.f);
+				enemyA->Attack(1.f, 0.f);
 			}
 
 		}
@@ -156,14 +151,11 @@ void SceneGameWorld::CollisionRengeShoot(const float& _delta)
 		{
 			if (!enemyA->GetAnimation("idle")->GetIsPlaying())
 			{
-				if (enemyA->GetActualAnimation()) enemyA->GetActualAnimation()->Stop();
-				if (enemyA->GetAndSetAnimation("shoot")) enemyA->GetAndSetAnimation("shoot")->Stop();
 				enemyA->GetAndSetAnimation("idle")->Play();
 			}
 		}
 		
 	}
-	shootBullet = false;
 };
 
 

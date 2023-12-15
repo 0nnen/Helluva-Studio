@@ -232,7 +232,7 @@ GameObject* BuilderEntityGameObject::CreateEnemyAGameObject(const std::string& _
 	idle->SetSpriteSheet(AssetManager::GetAsset("idleEnemyA"));
 
 	Animation* shoot = gameObject->CreateComponent<Animation>();
-	shoot->SetLoop(-1);
+	shoot->SetLoop(1);
 	shoot->SetName("idle");
 	shoot->SetFrame(4);
 	shoot->SetAnimationTime(1);
