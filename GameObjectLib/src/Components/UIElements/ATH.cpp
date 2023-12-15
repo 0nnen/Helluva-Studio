@@ -37,7 +37,7 @@ void ATH::Render(sf::RenderWindow& window) {
 
     sf::Texture weaponTexture;
     sf::Sprite weaponSprite;
-    if (weaponTexture.loadFromFile("Assets/Graphics/UI/Icons/gun_icon.png")) {
+    if (weaponTexture.loadFromFile("../Assets/Graphics/UI/Icons/gun_icon.png")) {
         weaponSprite.setTexture(weaponTexture);
         weaponSprite.setPosition(50, 100); 
         weaponSprite.setScale(0.5f, 0.5f);

@@ -32,6 +32,8 @@ public:
 	void SetFirstCollide(const bool& _state) { firstCollide = _state; }
 	bool GetFirstCollide() const { return firstCollide; }
 
+	GameObject* GetEnemy() { return enemy; }
+
 protected:
 	std::vector<GameObject*> enemies;
 	GameObject* player = nullptr;

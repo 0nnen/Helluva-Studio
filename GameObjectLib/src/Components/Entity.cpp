@@ -73,3 +73,20 @@ Animation* Entity::GetAndSetAnimation(const std::string& _name)
 	}
 	return nullptr;
 }
+
+void Entity::SetDirection(Direction _newDirection) {
+
+	direction = _newDirection;
+	if (direction == Direction::Left)
+	{
+		for (Sprite* sprite : GetOwner()->GetComponentsByType<Sprite>()) {
+			if (sprite) sprite->SetScale(-1 * GetOwner()->GetScale().GetX(), GetOwner()->GetScale().GetY());
+		}
+	}
+	else if (direction == Direction::Right)
+	{
+		for (Sprite* sprite : GetOwner()->GetComponentsByType<Sprite>()) {
+			if (sprite) sprite->SetScale(GetOwner()->GetScale().GetX(), GetOwner()->GetScale().GetY());
+		}
+	}
+}

@@ -3,16 +3,20 @@
 
 #include "BuildersGameObject/BuilderEntityGameObject.h"
 #include "Components/Entity/Character.h"
+#include "Components/Entity/Enemy/EnemyA.h"
 
+bool SceneGameWorld::flip;
 
 SceneGameWorld::SceneGameWorld(const std::string& _newName) : SceneGameAbstract(_newName) {}
 
 void SceneGameWorld::Preload()
 {
 	SceneGameAbstract::Preload();
-	AssetManager::AddAsset("BackgroundMapBackgroundWorld", "Assets/Graphics/Maps/worldMapBackground.png");
-	AssetManager::AddAsset("BackgroundMapWorld", "Assets/Graphics/Maps/worldMap1.png");
-	AssetManager::AddAsset("idleEnemyA", "Assets/Enemy/Hell-Beast-Files/PNG/with-stroke/hell-beast-idle.png");
+	AssetManager::AddAsset("BackgroundMapBackgroundWorld", "../Assets/Graphics/Maps/worldMapBackground.png");
+	AssetManager::AddAsset("BackgroundMapWorld", "../Assets/Graphics/Maps/worldMap1.png");
+	AssetManager::AddAsset("idleEnemyA", "../Assets/Enemy/Hell-Beast-Files/PNG/with-stroke/hell-beast-idle.png");
+	AssetManager::AddAsset("shootEnemyA", "../Assets/Enemy/Hell-Beast-Files/PNG/with-stroke/hell-beast-breath.png");
+	AssetManager::AddAsset("FireBallEnemy", "../Assets/Enemy/Hell-Beast-Files/PNG/fire-ball.png");
 }
 
 void SceneGameWorld::Create()
@@ -71,7 +75,13 @@ void SceneGameWorld::CreatePlatformCollision()
 
 void SceneGameWorld::CreateEnemy()
 {
-	enemy = BuilderEntityGameObject::CreateEnemyAGameObject("EnemyA", WindowManager::GetWindowWidth() / 2, 40.f, 7.f, 7.f, AssetManager::GetAsset("idleEnemyA"));
+	enemy = BuilderEntityGameObject::CreateEnemyAGameObject("EnemyA", WindowManager::GetWindowWidth() / 2, 600.f, 7.f, 7.f, AssetManager::GetAsset("idleEnemyA"));
+}
+
+void SceneGameWorld::CreateRengeEnemy()
+{
+	rengePosition = BuilderEntityGameObject::CreatePlateformGameObject("RengePosition", enemy->GetPosition().GetX(), enemy->GetPosition().GetY(), 8.f, 5.f);
+	rengeProjectil = BuilderEntityGameObject::CreatePlateformGameObject("RengeProjectil", enemy->GetPosition().GetX(), enemy->GetPosition().GetY(), 4.f, 5.f);
 }
 
 void SceneGameWorld::Delete()
@@ -88,6 +98,70 @@ void SceneGameWorld::Render(sf::RenderWindow* _window)
 	}
 	_window->setView(CameraManager::GetView());
 }
+
+void SceneGameWorld::CollisionRengePosition(const float& _delta) {
+	EnemyA* enemyA = enemy->GetComponent<EnemyA>();
+	RigidBody2D* rigidBody2D = enemy->GetComponent<RigidBody2D>();
+	if (player && rengePosition)
+	{
+		if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(rengePosition->GetComponent<RigidBody2D>())))
+		{
+			if (player->GetPosition().GetX() <= enemy->GetPosition().GetX())
+			{
+				flip = false;
+				rigidBody2D->AddForces(Maths::Vector2f::Left * _delta * enemyA->GetSpeed());
+			}
+			if (player->GetPosition().GetX() > enemy->GetPosition().GetX())
+			{
+				std::cout << "ok";
+				flip = true;
+				rigidBody2D->AddForces(Maths::Vector2f::Right * _delta * enemyA->GetSpeed());
+			}
+		}
+		
+	}
+}
+
+void SceneGameWorld::CollisionRengeShoot(const float& _delta)
+{
+	EnemyA* enemyA = enemy->GetComponent<EnemyA>();
+	RigidBody2D* rigidBody2D = enemy->GetComponent<RigidBody2D>();
+	if (player && rengeProjectil)
+	{
+		if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(rengeProjectil->GetComponent<RigidBody2D>())) )
+		{
+			enemyA->SetSpeed(0.f);
+			if (rigidBody2D->GetVelocity().GetX() > -enemyA->GetMaxSpeed()) rigidBody2D->AddForces(Maths::Vector2f::Right * _delta * 0);
+			if (!enemyA->GetAnimation("shoot")->GetIsPlaying()) {
+				if (enemyA->GetActualAnimation()) enemyA->GetActualAnimation()->Stop();
+				if (enemyA->GetAndSetAnimation("idle")) enemyA->GetAndSetAnimation("idle")->Stop();
+				enemyA->GetAndSetAnimation("shoot")->Play();
+			}
+			if (player->GetPosition().GetX() <= enemy->GetPosition().GetX())
+			{
+				flip = false;
+				EnemyA::Attack(-1.f, 0.f);
+			}
+			if (player->GetPosition().GetX() > enemy->GetPosition().GetX())
+			{
+				flip = true;
+				EnemyA::Attack(1.f, 0.f);
+			}
+
+		}
+		else if (!RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(rengeProjectil->GetComponent<RigidBody2D>())))
+		{
+			if (!enemyA->GetAnimation("idle")->GetIsPlaying())
+			{
+				if (enemyA->GetActualAnimation()) enemyA->GetActualAnimation()->Stop();
+				if (enemyA->GetAndSetAnimation("shoot")) enemyA->GetAndSetAnimation("shoot")->Stop();
+				enemyA->GetAndSetAnimation("idle")->Play();
+			}
+		}
+
+	}
+};
+
 
 void SceneGameWorld::Collision(GameObject* _entity)
 {
@@ -131,13 +205,27 @@ void SceneGameWorld::Collision(GameObject* _entity)
 void SceneGameWorld::Update(const float& _delta)
 {
 	SceneGameAbstract::Update(_delta);
+	CreateRengeEnemy();
 	if (!isPause) {
+		//CreateRengeEnemy();
 		Collision(player);
 		Collision(enemy);
+		CollisionRengePosition(_delta);
+		CollisionRengeShoot(_delta); 
+		if (EnemyA::GetBulletEnemy()->GetComponent<RigidBody2D>() && player && shootBullet)
+		{
+			if (RigidBody2D::IsColliding(*(EnemyA::GetBulletEnemy()->GetComponent<RigidBody2D>()), *(player->GetComponent<RigidBody2D>())))
+			{
+				std::cout << "coucou";
+			}
+		}
 	}
 
 	if (hud) {
 		hud->Update(_delta);
 	}
+
+	
+	
 }
 

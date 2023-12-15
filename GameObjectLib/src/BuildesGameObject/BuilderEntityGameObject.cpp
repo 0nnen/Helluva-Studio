@@ -8,6 +8,7 @@
 #include "Components/ComponentsGame/WeaponsContainer.h"
 #include "Components/ComponentsGame/Bullet.h"
 #include "Components/ComponentsGame/Sword.h"
+#include "Components/ComponentsGame/FireBullet.h"
 #include "Components/ComponentsGame/Gun.h"
 #include "Components/Entity/Character.h"
 #include "Components/Inputs/InputCharacter.h"
@@ -230,6 +231,13 @@ GameObject* BuilderEntityGameObject::CreateEnemyAGameObject(const std::string& _
 	idle->SetAnimationTime(1);
 	idle->SetSpriteSheet(AssetManager::GetAsset("idleEnemyA"));
 
+	Animation* shoot = gameObject->CreateComponent<Animation>();
+	shoot->SetLoop(-1);
+	shoot->SetName("idle");
+	shoot->SetFrame(4);
+	shoot->SetAnimationTime(1);
+	shoot->SetSpriteSheet(AssetManager::GetAsset("shootEnemyA"));
+
 	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
 	rigidBody2D->SetIsGravity(true);
 	rigidBody2D->SetSize(spriteBody->GetBounds().x, spriteBody->GetBounds().y);
@@ -239,6 +247,7 @@ GameObject* BuilderEntityGameObject::CreateEnemyAGameObject(const std::string& _
 	idle->Play();
 
 	enemy->AddAnimation("idle", idle);
+	enemy->AddAnimation("shoot", shoot);
 
 
 
@@ -377,3 +386,36 @@ GameObject* BuilderEntityGameObject::CreateProtectionGameObject(const std::strin
 
 	return gameObject;
 }
+
+GameObject* BuilderEntityGameObject::CreateFireBallEnemy(const std::string& _name, sf::Texture* _textureBullet, GameObject* _enemy, const float& _scalex, const float& _scaley, const float& _damage, const float& _speed, const Maths::Vector2f& _position)
+{
+	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
+	gameObject->SetPosition(Maths::Vector2f(_enemy->GetPosition().GetX(), _enemy->GetPosition().GetY()) + gameObject->GetTransform()->TransformPoint());
+	gameObject->SetDepth(0.9f);
+
+	FireBullet* bullet = gameObject->CreateComponent<FireBullet>();
+
+	Sprite* sprite = gameObject->CreateComponent<Sprite>();
+	sprite->SetName("FireBall");
+	sprite->SetTexture(_textureBullet);
+	sprite->SetScale(_scalex, _scalex);
+	sprite->SetSprite();
+
+	Animation* idle = gameObject->CreateComponent<Animation>();
+	idle->SetLoop(-1);
+	idle->SetName("idle");
+	idle->SetFrame(3);
+	idle->SetAnimationTime(1);
+	idle->SetSpriteSheet(AssetManager::GetAsset("FireBallEnemy"));
+
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetSize(sprite->GetBounds().x, sprite->GetBounds().y);
+	rigidBody2D->SetIsGravity(false);
+	rigidBody2D->AddForces(_position * bullet->GetSpeed());
+
+	idle->Play();
+
+	bullet->AddAnimation("idle", idle);
+
+	return gameObject;
+};
