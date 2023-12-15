@@ -9,7 +9,7 @@ public:
 
 	inline void SetHealthPoint(const int& _hp) { healthPoint = _hp; }
 	inline void SetMaxHealthPoint(const int& _maxHp) { maxHealthPoint = _maxHp; }
-	inline void SetAboveSprite(const float& _height) { aboveSprite = _height; }
+	inline void SetAboveSprite(const float& _height) { aboveSprite = _height * scaleY; }
 	void SetOrigin();
 	inline void SetSize(const float& _width, const float& _height)
 	{

@@ -32,7 +32,7 @@ void Slider::SetSizeCursor(float _width, float _height)
 
 void Slider::SetCursorText(unsigned int _fontSize) {
 	fontSize = _fontSize;
-	if (!font.loadFromFile("../Assets/Fonts/PixelNES.otf")) 
+	if (!font.loadFromFile("Assets/Fonts/PixelNES.otf")) 
 	{
 		std::cout << "no font found" << std::endl;
 	}
@@ -44,7 +44,7 @@ void Slider::SetCursorText(unsigned int _fontSize, float _data)
 {
 	data = _data;
 	fontSize = _fontSize;
-	if (!font.loadFromFile("../Assets/Fonts/PixelNES.otf")) 
+	if (!font.loadFromFile("Assets/Fonts/PixelNES.otf")) 
 	{
 		std::cout << "no font found" << std::endl;
 	}

@@ -14,7 +14,8 @@ public:
 	void SetScale();
 	void SetScale(const float& _scaleX, const float& _scaleY);
 	void SetOrigin();
-	inline sf::Vector2f GetSize() const { return sf::Vector2f(sprite.getLocalBounds().width * scalex, sprite.getLocalBounds().height * scaley); }
+	inline sf::Vector2f GetSize() const { return sf::Vector2f(sprite.getLocalBounds().width, sprite.getLocalBounds().height); }
+	inline Maths::Vector2f GetSizeV2f() const { return Maths::Vector2f(width, height); }
 	sf::Vector2f GetBounds() const;
 	sf::Vector2f GetPosition() const { return sprite.getPosition(); }
 

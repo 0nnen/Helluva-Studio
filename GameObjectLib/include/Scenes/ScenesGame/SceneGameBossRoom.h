@@ -17,5 +17,6 @@ public:
 private:
 	GameObject* plateforme = nullptr;
 	GameObject* hades = nullptr;
+	float victoryTime = 5.f;
 };
 

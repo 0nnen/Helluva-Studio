@@ -13,6 +13,7 @@ public:
 	Hades(const int& _hp, const int& _damage, const float& _speed, const float& _attackSpeed, const float& _range);
 	
 	void SetProtection();
+	void SetDirection();
 
 	void Update(const float& _delta) override;
 

@@ -1,10 +1,12 @@
 #include "Components/SpriteRenderer.h"
+#include "Components/RigidBody2D.h"
 #include "SFML/Graphics/Texture.hpp"
 #include "SFML/Graphics/Sprite.hpp"
 #include "Managers/AssetManager.h"
 #include "Managers/HUDManager.h"
 #include "Managers/CameraManager.h"
-#include "Components/RigidBody2D.h"
+
+#include <cmath>
 Sprite::Sprite()
 {
 	scalex = 1.0f;
@@ -62,7 +64,7 @@ void Sprite::SetRecTexture(const unsigned int& _frame, const int& width, const i
 	sprite.setOrigin(width / 2, height / 2);
 	RigidBody2D* rigidBody2D = GetOwner()->GetComponent<RigidBody2D>();
 	rigidBody2D->SetSize(width, height);
-	rigidBody2D->SetScale(scalex, scaley);
+	rigidBody2D->SetScale(std::abs(scalex), std::abs(scaley));
 }
 
 void Sprite::SetRecTexture(const unsigned int& _frameWidth, const unsigned int& _frameHeight, const int& _width, const int& _height)
@@ -73,7 +75,7 @@ void Sprite::SetRecTexture(const unsigned int& _frameWidth, const unsigned int& 
 	sprite.setOrigin(width / 2, height / 2);
 	RigidBody2D* rigidBody2D = GetOwner()->GetComponent<RigidBody2D>();
 	rigidBody2D->SetSize(width, height);
-	rigidBody2D->SetScale(scalex, scaley);
+	rigidBody2D->SetScale(std::abs(scalex), std::abs(scaley));
 }
 
 
@@ -89,7 +91,7 @@ void Sprite::SetRecTextureWithFrame(const unsigned int& _actualFrameWidth, const
 	sprite.setOrigin(width / 2, height / 2);
 	RigidBody2D* rigidBody2D = GetOwner()->GetComponent<RigidBody2D>();
 	rigidBody2D->SetSize(width, height);
-	rigidBody2D->SetScale(scalex, scaley);
+	rigidBody2D->SetScale(std::abs(scalex), std::abs(scaley));
 }
 
 void Sprite::Rotate(const float& angle)

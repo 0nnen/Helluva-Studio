@@ -1,4 +1,5 @@
 #include "Components/Entity/Enemy/Hades.h"
+#include "Managers/SceneManager.h"
 
 
 Hades::Hades() : Entity(1000, 200, 500.f, 40.f, 10000.f)
@@ -15,6 +16,8 @@ void Hades::SetProtection()
 	isInvicible = true;
 	int randomNumber;
 	Maths::Vector2f positionHades = GetOwner()->GetPosition();
+
+	protection = BuilderEntityGameObject::CreateProtectionGameObject("Protection", positionHades.GetX(), positionHades.GetY(), 2.5f, 2.5f, AssetManager::GetAsset("protectionHades"));
 	switch (step)
 	{
 	case Hades::Step3:
@@ -34,12 +37,43 @@ void Hades::SetProtection()
 	}
 }
 
+void Hades::SetDirection()
+{
+	Maths::Vector2f positionPlayer = SceneManager::GetActiveGameScene()->GetPlayer()->GetPosition();
+	Maths::Vector2f positioHades = GetOwner()->GetPosition();
+
+	if (positioHades.GetX() <= positionPlayer.GetX())
+	{
+		for (Sprite* sprite : GetOwner()->GetComponentsByType<Sprite>()) {
+			if (sprite) sprite->SetScale(-1 * GetOwner()->GetScale().GetX(), GetOwner()->GetScale().GetY());
+		}
+	}
+	else
+	{
+		for (Sprite* sprite : GetOwner()->GetComponentsByType<Sprite>()) {
+			if (sprite) sprite->SetScale(GetOwner()->GetScale().GetX(), GetOwner()->GetScale().GetY());
+		}
+	}
+}
+
 void Hades::Update(const float& _delta)
 {
 	Entity::Update(_delta);
-	GameObject* hades = GetOwner();
-	if (protection) protection->SetPosition(hades->GetPosition());
 
+
+	GameObject* hades = GetOwner();
+	if (protection)
+	{
+		protection->SetPosition(hades->GetPosition());
+		Animation* animation = protection->GetComponent<Animation>();
+		if (!animation->GetIsPlaying())
+		{
+			animation->GetSprite()->SetRecTexture(5, animation->GetWidth() / 6, animation->GetHeight());
+			animation->GetSprite()->SetActiveAndVisible(true);
+		}
+	}
+
+	SetDirection();
 	if (state == Hades::State::Idle)
 	{
 		if (!GetAnimation("idle")->GetIsPlaying()) {
@@ -79,6 +113,11 @@ void Hades::Update(const float& _delta)
 
 	if (balls.empty())
 	{
+		if (protection) {
+			SceneManager::GetActiveGameScene()->RemoveGameObject(protection);
+			delete protection;
+			protection = nullptr;
+		}
 		isInvicible = false;
 		actualTime += _delta;
 		if (actualTime >= timeSpawnBalls)
@@ -87,9 +126,5 @@ void Hades::Update(const float& _delta)
 			isInvicible = true;
 			actualTime = 0.f;
 		}
-
 	}
-
-
-
 }
