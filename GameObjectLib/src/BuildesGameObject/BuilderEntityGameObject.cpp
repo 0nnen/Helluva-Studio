@@ -181,7 +181,7 @@ GameObject* BuilderEntityGameObject::CreateWeaponGameObject(const std::string& _
 GameObject* BuilderEntityGameObject::CreatePlatformTriangleCollisionGameObject(const std::string& _name, const float& _base, const float& _height, const float& _widthPos, const float& _heightPos, const float& _rotation)
 {
 	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
-
+	
 	Triangle* triangle = gameObject->CreateComponent<Triangle>();
 	triangle->SetBase(_base);
 	triangle->SetHeight(_height);

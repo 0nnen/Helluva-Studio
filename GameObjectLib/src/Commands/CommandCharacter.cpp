@@ -16,7 +16,7 @@ void MoveCharacterRight::Execute(const float& _delta)
 	RigidBody2D* rigidBody2D = player->GetComponent<RigidBody2D>();
 		if (rigidBody2D->GetVelocity().GetX() < character->GetMaxSpeed())
 		{
-			if (SceneManager::GetActiveGameScene()->GetName() != "SceneBossRoom") {
+			if (SceneManager::GetActiveGameScene()->GetName() != "SceneGameBossRoom") {
 				rigidBody2D->AddForces(Maths::Vector2f::Right * _delta * character->GetSpeed());
 			}
 			else
@@ -35,12 +35,15 @@ void MoveCharacterLeft::Execute(const float& _delta)
 	RigidBody2D* rigidBody2D = player->GetComponent<RigidBody2D>();
 	if (rigidBody2D->GetVelocity().GetX() > -character->GetMaxSpeed())
 	{
-		rigidBody2D->AddForces(Maths::Vector2f::Left * _delta * character->GetSpeed());
+		if (SceneManager::GetActiveGameScene()->GetName() != "SceneGameBossRoom") {
+			rigidBody2D->AddForces(Maths::Vector2f::Left * _delta * character->GetSpeed());
+		}
+		else
+		{
+			if (player->GetPosition().GetX() > 20.f) rigidBody2D->AddForces(Maths::Vector2f::Left * _delta * character->GetSpeed());
+		}
 	}
-	else
-	{
-		if (player->GetPosition().GetX() > 20.f) rigidBody2D->AddForces(Maths::Vector2f::Left * _delta * character->GetSpeed());
-	}
+	
 }
 MoveCharacterLeft::MoveCharacterLeft() {}
 

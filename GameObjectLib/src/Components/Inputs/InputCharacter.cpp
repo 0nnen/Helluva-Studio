@@ -74,14 +74,14 @@ void InputCharacter::Update(const float& _delta) {
 		{
 			character->GetAnimation("jump")->Stop();
 		}
-		if (!character->GetOnFloor() && !character->GetAnimation("jump")->GetIsPlaying())
+	/*	if (!character->GetOnFloor() && !character->GetAnimation("jump")->GetIsPlaying())
 		{
 			if (character->GetAnimation("idle")->GetIsPlaying()) {
 
-				character->GetAndSetAnimation("idle")->Stop();
+				character->GetAnimation("idle")->Stop();
 			}
 			character->GetAnimation("jump")->Play();
-		}
+		}*/
 		if (!character->GetAnimation("jump")->GetIsPlaying())
 			if (!character->GetAnimation("shootArm")->GetIsPlaying() && !character->GetAnimation("shootBody")->GetIsPlaying())
 				if (!character->GetAnimation("run")->GetIsPlaying())

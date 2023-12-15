@@ -17,6 +17,18 @@ void RigidBody2D::Update(const float& _delta)
 	GetOwner()->SetPosition(GetOwner()->GetPosition() + velocity * _delta);
 }
 
+void RigidBody2D::Render(sf::RenderWindow* _window)
+{
+	if (false)
+	{
+		rectangle.setFillColor(sf::Color::Red);
+		rectangle.setSize(sf::Vector2f(GetWidthCollider(), GetHeightCollider()));
+		rectangle.setOrigin(sf::Vector2f(GetWidthCollider() / 2, GetHeightCollider() / 2));
+		rectangle.setPosition(sf::Vector2f(GetOwner()->GetPosition().GetX(), GetOwner()->GetPosition().GetY()));
+		_window->draw(rectangle);
+	}
+
+}
 
 void RigidBody2D::Gravity()
 {
