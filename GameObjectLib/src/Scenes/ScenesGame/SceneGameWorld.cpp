@@ -131,7 +131,6 @@ void SceneGameWorld::CollisionRengeShoot(const float& _delta)
 		if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(rengeProjectil->GetComponent<RigidBody2D>())) )
 		{
 			enemyA->SetSpeed(0.f);
-			if (rigidBody2D->GetVelocity().GetX() > -enemyA->GetMaxSpeed()) rigidBody2D->AddForces(Maths::Vector2f::Right * _delta * 0);
 			if (!enemyA->GetAnimation("shoot")->GetIsPlaying()) {
 				if (enemyA->GetActualAnimation()) enemyA->GetActualAnimation()->Stop();
 				if (enemyA->GetAndSetAnimation("idle")) enemyA->GetAndSetAnimation("idle")->Stop();
