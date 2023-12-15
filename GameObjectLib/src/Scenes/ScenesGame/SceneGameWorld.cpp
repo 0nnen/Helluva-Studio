@@ -24,6 +24,8 @@ void SceneGameWorld::Create()
 	//GameObject* backgroundWorldMap2 = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld2", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundMapWorld"));
 	plateform = BuilderEntityGameObject::CreatePlateformGameObject("plateform", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 1.2, 5, 2);
 	this->CreatePlatformCollision();
+
+	hud = new ATH(player->GetComponent<Character>(), Character::MaxHealth);
 }
 
 void SceneGameWorld::CreatePlatformCollision()
@@ -69,7 +71,6 @@ void SceneGameWorld::CreatePlatformCollision()
 
 void SceneGameWorld::CreateEnemy()
 {
-	std::cout << "okk";
 	enemy = BuilderEntityGameObject::CreateEnemyAGameObject("EnemyA", WindowManager::GetWindowWidth() / 2, 40.f, 7.f, 7.f, AssetManager::GetAsset("idleEnemyA"));
 }
 
@@ -82,6 +83,12 @@ void SceneGameWorld::Render(sf::RenderWindow* _window)
 {
 	Scene::Render(_window);
 	_window->draw(isPause ? backgroundAlpha2.backgroundAlpha : backgroundAlpha1.backgroundAlpha);
+	_window->setView(_window->getDefaultView());
+
+	if (hud) {
+		hud->Render(*_window);
+	}
+	_window->setView(CameraManager::GetView());
 }
 
 void SceneGameWorld::Collision(GameObject* _entity)
@@ -106,6 +113,13 @@ void SceneGameWorld::Collision(GameObject* _entity)
 void SceneGameWorld::Update(const float& _delta)
 {
 	SceneGameAbstract::Update(_delta);
-	Collision(player);
-	Collision(enemy);
+	if(!isPause) {
+		Collision(player);
+		Collision(enemy);
+	}
+
+	if (hud) {
+		hud->Update(_delta);
+	}
 }
+

@@ -56,6 +56,7 @@
     <ClCompile Include="src\Components\Entity\Enemy\EnemyA.cpp" />
     <ClCompile Include="src\Components\Entity\Enemy\Hades.cpp" />
     <ClCompile Include="src\Components\Entity\Enemy\ProtectionBall.cpp" />
+    <ClCompile Include="src\Components\UIElements\ATH.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Managers\HUDManager.h" />
@@ -115,6 +116,7 @@
     <ClInclude Include="include\Components\Entity\Enemy\EnemyA.h" />
     <ClInclude Include="include\Components\Entity\Enemy\Hades.h" />
     <ClInclude Include="include\Components\Entity\Enemy\ProtectionBall.h" />
+    <ClInclude Include="include\Components\UIElements\ATH.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="include\Maths\Vector2.inl" />

@@ -27,5 +27,10 @@ private:
 	float pauseTime = 1.f;
 	bool isPauseTime = false;
 	int actualSprite = 0;
+
+	sf::RectangleShape progressBar;
+	float progressBarFill = 0.0f;
+	const float fillRate = 0.5f;
+
 };
 

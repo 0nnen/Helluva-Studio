@@ -57,8 +57,8 @@ protected:
 	bool isActive = true;
 
 
-	float fadeInTimeDefault = 3.f;
-	float fadeOutTimeDefault = 3.f;
+	float fadeInTimeDefault = 1.f;
+	float fadeOutTimeDefault = 1.f;
 	float fadeInTimeActual= 0.f;
 	float fadeOutTimeActual = 0.f;
 	bool isFadeIn = false;
