@@ -13,7 +13,7 @@ SceneLoginSignup::SceneLoginSignup(const std::string& _newName) : Scene(_newName
 void SceneLoginSignup::Preload()
 {
 	Scene:Preload();
-	AssetManager::AddAsset("BackgroundLogin", "Assets/Graphics/Backgrounds/bgMenu.png");
+	AssetManager::AddAsset("BackgroundLogin", "../Assets/Graphics/Backgrounds/bgMenu.png");
 }
 
 void SceneLoginSignup::Create() 

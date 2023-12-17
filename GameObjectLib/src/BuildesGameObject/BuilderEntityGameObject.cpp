@@ -152,6 +152,25 @@ GameObject* BuilderEntityGameObject::CreatePlatformCollisionGameObject(const std
 	return gameObject;
 
 }
+
+GameObject* BuilderEntityGameObject::CreateRangeHadesCollisionGameObject(const std::string& _name, const float& _positionX, const float& _positionY, const float& _scalex, const float& _scaley)
+{
+	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
+	gameObject->SetPosition(Maths::Vector2f(_positionX, _positionY));
+	gameObject->SetScale(Maths::Vector2f(_scalex, _scaley));
+
+
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(false);
+
+	Rectangle* rectangle = gameObject->CreateComponent<Rectangle>();
+	rectangle->SetSize(200.f, 50.f);
+	rectangle->SetScale(_scalex, _scaley);
+
+	return gameObject;
+
+}
+
 GameObject* BuilderEntityGameObject::CreateWeaponGameObject(const std::string& _name, GameObject* _player, const Weapon::TypeWeapon& _typeWeapon, const float& _positionX, const float& _positionY, const float& _damage, const float& _range, const float& _attackSpeed)
 {
 	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
@@ -279,11 +298,11 @@ GameObject* BuilderEntityGameObject::CreateHadesGameObject(const std::string& _n
 	idle->SetSpriteSheet(AssetManager::GetAsset("idleHades"));
 
 	Animation* attack = gameObject->CreateComponent<Animation>();
-	attack->SetLoop(1);
+	attack->SetLoop(-1);
 	attack->SetName("attack");
-	attack->SetFrame(6);
-	attack->SetAnimationTime(2);
-	attack->SetSpriteSheet(AssetManager::GetAsset("attackHades"));
+	attack->SetFrame(5);
+	attack->SetAnimationTime(1);
+	attack->SetSpriteSheet(AssetManager::GetAsset("attackHades2"));
 
 	Animation* roar = gameObject->CreateComponent<Animation>();
 	roar->SetLoop(1);
@@ -373,6 +392,36 @@ GameObject* BuilderEntityGameObject::CreateProtectionGameObject(const std::strin
 	animation->SetFrame(6);
 	animation->SetAnimationTime(2);
 	animation->SetSpriteSheet(AssetManager::GetAsset("protectionHades"));
+	animation->Play();
+
+	return gameObject;
+}
+
+GameObject* BuilderEntityGameObject::CreateChevalGameObject(const std::string& _name, float _x, float _y, float scalex, float scaley, sf::Texture* _texture)
+{
+	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
+	gameObject->SetPosition(Maths::Vector2f(_x, _y));
+	gameObject->SetScale(Maths::Vector2f(scalex, scaley));
+	gameObject->SetDepth(0.8999999f);
+
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(false);
+	rigidBody2D->SetScale(scalex, scaley);
+	rigidBody2D->SetKillImperfection(Maths::Vector2f(22., 22.f));
+
+	Sprite* spriteBody = gameObject->CreateComponent<Sprite>();
+	spriteBody->SetName("spriteCheval");
+	spriteBody->SetTexture(_texture);
+	spriteBody->SetRecTextureWithFrame(0, 0, 6, 1);
+	spriteBody->SetScale(scalex, scaley);
+	spriteBody->SetSprite();
+
+	Animation* animation = gameObject->CreateComponent<Animation>();
+	animation->SetLoop(-1);
+	animation->SetName("Nightmare");
+	animation->SetFrame(4);
+	animation->SetAnimationTime(1);
+	animation->SetSpriteSheet(AssetManager::GetAsset("NightmareGalloping"));
 	animation->Play();
 
 	return gameObject;

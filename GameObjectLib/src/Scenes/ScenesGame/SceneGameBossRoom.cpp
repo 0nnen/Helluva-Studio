@@ -25,14 +25,16 @@ void SceneGameBossRoom::Preload()
 
 	AudioManager::AddMusic("MusicAmbiant_CI", "../Assets/Audio/Musics/MusicAmbiant_CrackerIsland.ogg");
 
-	AssetManager::AddAsset("BackgroundBoss", "Assets/Graphics/Maps/bossRoom.png");
-	AssetManager::AddAsset("breathHades", "Assets/Enemy/Hades/breath.png");
-	AssetManager::AddAsset("breathFireHades", "Assets/Enemy/Hades/breath-fire.png");
-	AssetManager::AddAsset("attackHades", "Assets/Enemy/Hades/demon-attack.png");
-	AssetManager::AddAsset("roarHades", "Assets/Enemy/Hades/demon-attack-no-breath.png");
-	AssetManager::AddAsset("idleHades", "Assets/Enemy/Hades/demon-idle.png");
-	AssetManager::AddAsset("protectionHades", "Assets/Enemy/Hades/protection.png");
-	AssetManager::AddAsset("protectionBallsHades", "Assets/Boss/balls.png");
+	AssetManager::AddAsset("BackgroundBoss", "../Assets/Graphics/Maps/bossRoom.png");
+	AssetManager::AddAsset("breathHades", "../Assets/Enemy/Hades/breath.png");
+	AssetManager::AddAsset("breathFireHades", "../Assets/Enemy/Hades/breath-fire.png");
+	AssetManager::AddAsset("attackHades", "../Assets/Enemy/Hades/demon-attack.png");
+	AssetManager::AddAsset("attackHades2", "../Assets/Enemy/Hades/demon-attack2.png");
+	AssetManager::AddAsset("roarHades", "../Assets/Enemy/Hades/demon-attack-no-breath.png");
+	AssetManager::AddAsset("idleHades", "../Assets/Enemy/Hades/demon-idle.png");
+	AssetManager::AddAsset("protectionHades", "../Assets/Enemy/Hades/protection.png");
+	AssetManager::AddAsset("NightmareGalloping", "../Assets/Enemy/Nightmare/nightmare-galloping.png");
+	AssetManager::AddAsset("protectionBallsHades", "../Assets/Boss/balls.png");
 	unsigned seed = static_cast<unsigned>(time(0));
 	srand(seed);
 

@@ -17,5 +17,7 @@ public:
 	static GameObject* CreateHadesGameObject(const std::string& name, float _x, float _y, float scalex, float scaley, sf::Texture* _texture);
 	static GameObject* CreateProtectionBallGameObject(const std::string& name, float _x, float _y, float scalex, float scaley, sf::Texture* _texture, const int& _number, GameObject* _hades);
 	static GameObject* CreateProtectionGameObject(const std::string& name, float _x, float _y, float scalex, float scaley, sf::Texture* _texture);
+	static GameObject* CreateChevalGameObject(const std::string& name, float _x, float _y, float scalex, float scaley, sf::Texture* _texture);
+	static GameObject* CreateRangeHadesCollisionGameObject(const std::string& _name, const float& _positionX, const float& _positionY, const float& scalex, const float& scaley);
 };
 

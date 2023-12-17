@@ -12,8 +12,12 @@ public:
 	Hades();
 	Hades(const int& _hp, const int& _damage, const float& _speed, const float& _attackSpeed, const float& _range);
 	
-	void SetProtection();
+	void SetProtection(const float& _delta);
 	void SetDirection();
+
+	void AttackFeu();
+	void AttackCheval(int _randomAttackCheval, const float& _delta);
+	void AllerRetourCheval(bool _nightmareArrive, const float& _delta, int& _countAllerRetour, int& _countAllerRetour2, int& _countAllerRetour3);
 
 	void Update(const float& _delta) override;
 
@@ -31,8 +35,20 @@ private:
 	State state = Idle;
 	Step step = Step1;
 	GameObject* protection = nullptr;
+	GameObject* nightmare = nullptr;
 	std::vector<GameObject*> balls;
 	float timeSpawnBalls = 10.f;
 	float actualTime = 10.f;
+	float cooldown = 10.0f;
+	int randomAttackCheval = 0;
+	int newRandomAttackCheval;
+	int randomAttackFeu = 0;
+	bool stateSwitch;
+	int countAllerRetour = 0;
+	int countAllerRetour2 = 0;
+	int countAllerRetour3 = 0;
+	bool nightmareArrive;
+	const float speed = 350.0f;
+	//GameObject* platformFeu;
 };
 
