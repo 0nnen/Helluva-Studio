@@ -57,6 +57,7 @@
     <ClCompile Include="src\Components\Entity\Enemy\Hades.cpp" />
     <ClCompile Include="src\Components\Entity\Enemy\ProtectionBall.cpp" />
     <ClCompile Include="src\Components\UIElements\ATH.cpp" />
+    <ClCompile Include="src\Components\ComponentsGame\FireBullet.cpp" />
     <ClCompile Include="src\TileMap\TileMap.cpp" />
     <ClCompile Include="src\Components\SquareCollider.cpp" />
   </ItemGroup>
@@ -119,6 +120,7 @@
     <ClInclude Include="include\Components\Entity\Enemy\Hades.h" />
     <ClInclude Include="include\Components\Entity\Enemy\ProtectionBall.h" />
     <ClInclude Include="include\Components\UIElements\ATH.h" />
+    <ClInclude Include="include\Components\ComponentsGame\FireBullet.h" />
     <ClInclude Include="include\TileMap\TileMap.h" />
     <ClInclude Include="include\Components\SquareCollider.h" />
   </ItemGroup>

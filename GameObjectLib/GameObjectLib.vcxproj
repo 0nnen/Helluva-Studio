@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Components\ComponentsGame\FireBullet.h" />
     <ClInclude Include="include\Components\Entity\Enemy\Hades.h" />
     <ClInclude Include="include\Components\UIElements\ATH.h" />
     <ClInclude Include="include\Components\Entity\Enemy\EnemyA.h" />
@@ -81,6 +82,7 @@
     <ClInclude Include="include\Components\SquareCollider.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\ComponentsGame\FireBullet.cpp" />
     <ClCompile Include="src\Components\SquareCollider.cpp" />
     <ClCompile Include="src\Components\Entity\Enemy\ProtectionBall.cpp" />
     <ClCompile Include="src\Components\Entity\Enemy\Hades.cpp" />
