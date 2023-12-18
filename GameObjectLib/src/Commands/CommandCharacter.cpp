@@ -9,22 +9,21 @@
 #include "Managers/CameraManager.h"
 
 
-void MoveCharacterRight::Execute(const float& _delta) 
+void MoveCharacterRight::Execute(const float& _delta)
 {
 	GameObject* player = SceneManager::GetActiveGameScene()->GetPlayer();
 	Character* character = player->GetComponent<Character>();
 	RigidBody2D* rigidBody2D = player->GetComponent<RigidBody2D>();
-		if (rigidBody2D->GetVelocity().GetX() < character->GetMaxSpeed())
-		{
-			if (SceneManager::GetActiveGameScene()->GetName() != "SceneGameBossRoom") {
-				rigidBody2D->AddForces(Maths::Vector2f::Right * _delta * character->GetSpeed());
-			}
-			else
-			{
-				if (player->GetPosition().GetX() < 1900.f) rigidBody2D->AddForces(Maths::Vector2f::Right * _delta * character->GetSpeed());
-			}
-			
-		}
+	if (character->GetDirection() == Character::Right) 
+	{
+		rigidBody2D->SetMaxVelocity(Maths::Vector2f(character->GetMaxSpeed(), rigidBody2D->GetMaxVelocity().y));
+		rigidBody2D->AddForces(Maths::Vector2f::Right * _delta * character->GetSpeed());
+	}
+	else 
+	{
+		rigidBody2D->SetMaxVelocity(Maths::Vector2f(character->GetMaxSpeed() / 3, rigidBody2D->GetMaxVelocity().y));
+		rigidBody2D->AddForces(Maths::Vector2f::Right * _delta * character->GetSpeed() / 3);
+	}
 }
 MoveCharacterRight::MoveCharacterRight() {}
 
@@ -33,28 +32,27 @@ void MoveCharacterLeft::Execute(const float& _delta)
 	GameObject* player = SceneManager::GetActiveGameScene()->GetPlayer();
 	Character* character = player->GetComponent<Character>();
 	RigidBody2D* rigidBody2D = player->GetComponent<RigidBody2D>();
-	if (rigidBody2D->GetVelocity().GetX() > -character->GetMaxSpeed())
+	if (character->GetDirection() == Character::Left)
 	{
-		if (SceneManager::GetActiveGameScene()->GetName() != "SceneGameBossRoom") {
-			rigidBody2D->AddForces(Maths::Vector2f::Left * _delta * character->GetSpeed());
-		}
-		else
-		{
-			if (player->GetPosition().GetX() > 20.f) rigidBody2D->AddForces(Maths::Vector2f::Left * _delta * character->GetSpeed());
-		}
+		rigidBody2D->SetMaxVelocity(Maths::Vector2f(character->GetMaxSpeed(), rigidBody2D->GetMaxVelocity().y));
+		rigidBody2D->AddForces(Maths::Vector2f::Left * _delta * character->GetSpeed());
 	}
-	
+	else 
+	{
+		rigidBody2D->SetMaxVelocity(Maths::Vector2f(character->GetMaxSpeed() / 3, rigidBody2D->GetMaxVelocity().y));
+		rigidBody2D->AddForces(Maths::Vector2f::Left * _delta * character->GetSpeed() / 3);
+	}
 }
 MoveCharacterLeft::MoveCharacterLeft() {}
 
-JumpCharacter::JumpCharacter(){}
+JumpCharacter::JumpCharacter() {}
 
 void JumpCharacter::Execute(const float& _delta)
 {
 	GameObject* player = SceneManager::GetActiveGameScene()->GetPlayer();
 	RigidBody2D* rigidBody2D = player->GetComponent<RigidBody2D>();
 	rigidBody2D->SetIsGravity(true);
-	rigidBody2D->AddForces(Maths::Vector2f(0, -1200));
+	rigidBody2D->AddForces(Maths::Vector2f(0, -500));
 }
 
 ShootCharacter::ShootCharacter() {}

@@ -17,33 +17,56 @@ void ScenesTest::Delete()
 
 void ScenesTest::CreatePlatform()
 {
-	platform = BuilderShapeGameObject::CreateCarreGameObject("platform", 1000.f, 1000.f);
+	tileMap = BuilderEntityGameObject::CreateMapGameObject("OverWorld", "Assets/Graphics/Maps/WorldMap/WorldMap.json", "Assets/Graphics/Maps/WorldMap/worldMapBackground.png");
+	CreatePlayer(1000, 50);
 }
 
 void ScenesTest::Create()
 {
-	this->CreatePlatform();
 	SceneGameAbstract::Create();
+	tileMap = BuilderEntityGameObject::CreateMapGameObject("OverWorld", "Assets/Graphics/Maps/WorldMap/WorldMap.json", "Assets/Graphics/Maps/WorldMap/worldMapBackground.png");
+	CreatePlayer(200, 1200);
 }
 
 void ScenesTest::Collinding()
 {
-	player = SceneManager::GetActiveGameScene()->GetPlayer();
-	if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(platform->GetComponent<RigidBody2D>())))
+	if(player && tileMap)
 	{
-		player->GetComponent<RigidBody2D>()->SetIsGravity(false);
-	}
-	else 
-	{
-		player->GetComponent<RigidBody2D>()->SetIsGravity(true);
+		RigidBody2D* rigidBody2DPlayer = player->GetComponent<RigidBody2D>();
+		SquareCollider* squareCollider = player->GetComponent<SquareCollider>();
+		if (tileMap->GetComponent<TileMap>()->CheckCollisionAbove(*squareCollider))
+		{
+			rigidBody2DPlayer->SetIsGravity(false);
+			player->SetPosition(player->GetPosition() - Maths::Vector2f(0, 0.5));
+		}
+		else
+		{
+			rigidBody2DPlayer->SetIsGravity(true);
+		}
+		if (tileMap->GetComponent<TileMap>()->CheckCollisionBelow(*squareCollider))
+		{
+			rigidBody2DPlayer->SetVelocity(Maths::Vector2f(rigidBody2DPlayer->GetVelocity().x, 0));
+			player->SetPosition(player->GetPosition() + Maths::Vector2f(0, 0.5));
+		}
+		if (tileMap->GetComponent<TileMap>()->CheckCollisionLeft(*squareCollider))
+		{
+			rigidBody2DPlayer->SetVelocity(Maths::Vector2f(0, rigidBody2DPlayer->GetVelocity().y));
+			player->SetPosition(player->GetPosition() - Maths::Vector2f(0.5, 0));
+
+		}
+		if (tileMap->GetComponent<TileMap>()->CheckCollisionRight(*squareCollider))
+		{
+			rigidBody2DPlayer->SetVelocity(Maths::Vector2f(0, rigidBody2DPlayer->GetVelocity().y));
+			player->SetPosition(player->GetPosition() + Maths::Vector2f(0.5, 0));
+		}
 	}
 }
 
 
 void ScenesTest::Update(const float& _delta)
 {
-	this->Collinding();
 	SceneGameAbstract::Update(_delta);
+	this->Collinding();
 }
 
 void ScenesTest::Render(sf::RenderWindow* _window)

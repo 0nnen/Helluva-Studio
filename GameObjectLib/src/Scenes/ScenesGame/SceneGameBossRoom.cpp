@@ -11,6 +11,8 @@
 #include "Components/ComponentsGame/Gun.h"
 #include "Components/ComponentsGame/Bullet.h"
 
+#include <nlohmann/json.hpp>
+
 SceneGameBossRoom::SceneGameBossRoom() : SceneGameAbstract("SceneGameBossRoom") {}
 SceneGameBossRoom::SceneGameBossRoom(const std::string& _name) : SceneGameAbstract(_name) {}
 
@@ -23,7 +25,7 @@ void SceneGameBossRoom::Preload()
 {
 	SceneGameAbstract::Preload();
 
-	AudioManager::AddMusic("MusicAmbiant_CI", "../Assets/Audio/Musics/MusicAmbiant_CrackerIsland.ogg");
+	AudioManager::AddMusic("MusicAmbiant_CI", "Assets/Audio/Musics/MusicAmbiant_CrackerIsland.ogg");
 
 	AssetManager::AddAsset("BackgroundBoss", "Assets/Graphics/Maps/bossRoom.png");
 	AssetManager::AddAsset("breathHades", "Assets/Enemy/Hades/breath.png");

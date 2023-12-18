@@ -57,6 +57,8 @@
     <ClCompile Include="src\Components\Entity\Enemy\Hades.cpp" />
     <ClCompile Include="src\Components\Entity\Enemy\ProtectionBall.cpp" />
     <ClCompile Include="src\Components\UIElements\ATH.cpp" />
+    <ClCompile Include="src\TileMap\TileMap.cpp" />
+    <ClCompile Include="src\Components\SquareCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Managers\HUDManager.h" />
@@ -117,6 +119,8 @@
     <ClInclude Include="include\Components\Entity\Enemy\Hades.h" />
     <ClInclude Include="include\Components\Entity\Enemy\ProtectionBall.h" />
     <ClInclude Include="include\Components\UIElements\ATH.h" />
+    <ClInclude Include="include\TileMap\TileMap.h" />
+    <ClInclude Include="include\Components\SquareCollider.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="include\Maths\Vector2.inl" />

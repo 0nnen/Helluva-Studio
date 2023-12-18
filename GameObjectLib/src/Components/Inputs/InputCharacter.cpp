@@ -39,6 +39,33 @@ void InputCharacter::Update(const float& _delta) {
 			if (character->GetAnimation("jump")) character->GetAnimation("jump")->Stop();
 			if (!character->GetAnimation("idle")) character->GetAnimation("idle")->Play();
 		}
+		RigidBody2D* rigidBody = GetOwner()->GetComponent<RigidBody2D>();
+		Maths::Vector2f velocity = rigidBody->GetVelocity();
+
+		//Slide Effect
+		if (velocity.GetX() != 0.f) {
+			if (character->GetOnFloor())
+			{
+				if (velocity.GetX() - 9.f > 0.f) rigidBody->AddForces(Maths::Vector2f(-9.f, 0.f));
+				else if (velocity.GetX() + 9.f < 0.f) rigidBody->AddForces(Maths::Vector2f(9.f, 0.f));
+				else {
+					velocity.SetX(0.f);
+					rigidBody->SetVelocity(velocity);
+				}
+			}
+			else {
+				if (velocity.GetX() - 0.5f > 0.f) {
+					rigidBody->AddForces(Maths::Vector2f(-0.5f, 0.f));
+				}
+				else if (velocity.GetX() + 0.5f < 0.f) {
+					rigidBody->AddForces(Maths::Vector2f(0.5f, 0.f));
+				}
+				else {
+					velocity.SetX(0.f);
+					rigidBody->SetVelocity(velocity);
+				}
+			}
+		}
 	}
 
 	Command* commandJump = this->JumpInput();
@@ -74,14 +101,14 @@ void InputCharacter::Update(const float& _delta) {
 		{
 			character->GetAnimation("jump")->Stop();
 		}
-	/*	if (!character->GetOnFloor() && !character->GetAnimation("jump")->GetIsPlaying())
-		{
-			if (character->GetAnimation("idle")->GetIsPlaying()) {
+		/*	if (!character->GetOnFloor() && !character->GetAnimation("jump")->GetIsPlaying())
+			{
+				if (character->GetAnimation("idle")->GetIsPlaying()) {
 
-				character->GetAnimation("idle")->Stop();
-			}
-			character->GetAnimation("jump")->Play();
-		}*/
+					character->GetAnimation("idle")->Stop();
+				}
+				character->GetAnimation("jump")->Play();
+			}*/
 		if (!character->GetAnimation("jump")->GetIsPlaying())
 			if (!character->GetAnimation("shootArm")->GetIsPlaying() && !character->GetAnimation("shootBody")->GetIsPlaying())
 				if (!character->GetAnimation("run")->GetIsPlaying())
@@ -90,25 +117,6 @@ void InputCharacter::Update(const float& _delta) {
 
 						character->GetAndSetAnimation("idle")->Play();
 					}
-	}
-
-	if (!commandMoves) {
-		RigidBody2D* rigidBody = GetOwner()->GetComponent<RigidBody2D>();
-		Maths::Vector2f velocity = rigidBody->GetVelocity();
-
-		//Slide Effect
-		if (velocity.GetX() != 0.f) {
-			if (velocity.GetX() - 10.f > 0.f) {
-				rigidBody->AddForces(Maths::Vector2f(-10.f, 0.f));
-			}
-			else if (velocity.GetX() + 10.f < 0.f) {
-				rigidBody->AddForces(Maths::Vector2f(10.f, 0.f));
-			}
-			else {
-				velocity.SetX(0.f);
-				rigidBody->SetVelocity(velocity);
-			}
-		}
 	}
 }
 
