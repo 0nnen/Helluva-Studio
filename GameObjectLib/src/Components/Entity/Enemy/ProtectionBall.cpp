@@ -3,6 +3,8 @@
 #include "Components/Entity/Enemy/Hades.h"
 #include "Managers/SceneManager.h"
 
+bool ProtectionBall::alive;
+
 ProtectionBall::ProtectionBall() : Entity() 
 {
 	player = SceneManager::GetActiveGameScene()->GetPlayer();
@@ -26,10 +28,11 @@ void ProtectionBall::Spawn()
 		//std::cout << "ok";
 		/*SetHealthPoint(100.f);
 		SetMaxHealthPoint(100.f);*/
-		if (!GetActive())
+		if (!alive)
 		{
 			player->GetComponent<Character>()->TakeHealt(10);
 			std::cout << player->GetComponent<Character>()->GetHealthPoint();
+			alive = true;
 		}
 		break;
 	case 2:
@@ -51,10 +54,11 @@ void ProtectionBall::Spawn()
 	case 6:
 		/*SetHealthPoint(175.f);
 		SetMaxHealthPoint(175.f);*/
-		if (GetHealthPoint() <= 20)
+		if (!alive)
 		{
 			hades->GetComponent<Hades>()->SetIncible(false);
 			hades->GetComponent<Hades>()->TakeDamage(50);
+			alive = true;
 		}
 		hades->GetComponent<Hades>()->SetIncible(true);
 

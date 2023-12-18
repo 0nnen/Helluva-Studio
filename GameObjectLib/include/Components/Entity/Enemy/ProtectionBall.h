@@ -15,6 +15,7 @@ public:
 	void SetSpawn(int _spawn) { spawn = _spawn; }
 	int GetSpawn() { return spawn; }
 	void Spawn();
+	static void SetAlive(bool _alive) { alive = _alive; }
 
 
 private:
@@ -23,6 +24,6 @@ private:
 	int spawn = 0;
 	int randX;
 	int randY;
-	bool alive;
+	static bool alive;
 	bool ballDamage;
 };

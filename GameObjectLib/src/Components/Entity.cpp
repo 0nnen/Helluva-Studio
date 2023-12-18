@@ -3,6 +3,7 @@
 #include "Managers/AudioManager.h"
 #include "Managers/WindowManager.h"
 #include "Managers/AudioManager.h"
+#include "Components/Entity/Enemy/ProtectionBall.h"
 
 
 Entity::Entity() : healthPoint(100), maxHealthPoint(100), damage(10), attackSpeed(1.0f), maxSpeed(300.f), range(1), speed(300.f) {}
@@ -23,7 +24,7 @@ void Entity::TakeDamage(const int& _damage)
 
 		if (healthPoint <= 0)
 		{
-			isActive = false;
+			ProtectionBall::SetAlive(false);
 			this->Die();
 		}
 	}
