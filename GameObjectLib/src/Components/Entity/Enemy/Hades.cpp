@@ -14,7 +14,6 @@ Hades::Hades(const int& _hp, const int& _damage, const float& _speed, const floa
 void Hades::SetProtection()
 {
 	isInvicible = true;
-	int randomNumber;
 	Maths::Vector2f positionHades = GetOwner()->GetPosition();
 
 	protection = BuilderEntityGameObject::CreateProtectionGameObject("Protection", positionHades.GetX(), positionHades.GetY(), 2.5f, 2.5f, AssetManager::GetAsset("protectionHades"));
@@ -22,15 +21,23 @@ void Hades::SetProtection()
 	{
 	case Hades::Step3:
 		randomNumber = rand() % 8;
-		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection4", 500, 500, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner()));
+		randX = rand() % 1500 + 500;
+		randY = rand() % 400 + 200;
+		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection4", 500, 500, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner(), 5));
 	case Hades::Step2:
 		randomNumber = rand() % 8;
-		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection3", 1500, 800, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner()));
+		randX = rand() % 1500 + 500;
+		randY = rand() % 400 + 200;
+		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection3", 1500, 800, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner(), 5));
 	case Hades::Step1:
-		randomNumber = rand() % 8;
-		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection2", 1250, 400, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner()));
-		randomNumber = rand() % 8;
-		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection1", 1000, 200, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner()));
+		randomNumber = 1;
+		randX = rand() % 1500 + 500;
+		randY = rand() % 400 + 200;
+		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection2", randX, randY, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner(), 6));
+		randomNumber = 1;
+		randX = rand() % 1500 + 500;
+		randY = rand() % 400 + 200;
+		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection1", randX, randY, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner(), 6));
 		break;
 	default:
 		break;
@@ -59,7 +66,6 @@ void Hades::SetDirection()
 void Hades::Update(const float& _delta)
 {
 	Entity::Update(_delta);
-
 
 	GameObject* hades = GetOwner();
 	if (protection)

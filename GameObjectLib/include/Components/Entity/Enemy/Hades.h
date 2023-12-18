@@ -3,6 +3,7 @@
 #include "Components/Entity.h"
 #include "BuildersGameObject/BuilderEntityGameObject.h"
 #include "Managers/AssetManager.h"
+#include "Components/Entity/Enemy/ProtectionBall.h"
 
 class Hades final : public Entity
 {
@@ -26,6 +27,9 @@ public:
 	}
 
 	std::vector<GameObject*> GetProtectionBalls() { return balls; }
+	void setPositionX(int _randX) { randX = _randX; }
+	void setPositionY(int _randY) { randX = _randY; }
+	void SetIncible(bool _invincible) { isInvicible = _invincible; }
 
 private:
 	State state = Idle;
@@ -34,5 +38,8 @@ private:
 	std::vector<GameObject*> balls;
 	float timeSpawnBalls = 10.f;
 	float actualTime = 10.f;
+	int randomNumber;
+	int randX;
+	int randY;
 };
 

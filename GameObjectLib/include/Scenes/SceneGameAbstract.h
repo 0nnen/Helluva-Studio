@@ -33,6 +33,7 @@ public:
 	bool GetFirstCollide() const { return firstCollide; }
 
 	GameObject* GetEnemy() { return enemy; }
+	GameObject* GetHades() { return hades; }
 
 protected:
 	std::vector<GameObject*> enemies;
@@ -52,6 +53,7 @@ protected:
 	AlphaBackkground backgroundAlpha2;
 
 	GameObject* enemy;
+	GameObject* hades;
 
 	bool firstCollide = true;
 	bool isPause = true;
