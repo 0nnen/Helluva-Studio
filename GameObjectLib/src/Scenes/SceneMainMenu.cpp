@@ -17,16 +17,16 @@ SceneMainMenu::SceneMainMenu(const std::string& _newName) : Scene(_newName)
 
 void SceneMainMenu::Preload()
 {
-	AssetManager::AddAsset("BackgroundMainMenu", "../Assets/Graphics/Backgrounds/bgMenu.png");
-	AssetManager::AddAsset("ButtonsMenu", "../Assets/Graphics/UI/Buttons/buttonsMenu.png");
-	AssetManager::AddAsset("ButtonGrey", "../Assets/Graphics/UI/Buttons/buttonGrey.png");
+	AssetManager::AddAsset("BackgroundMainMenu", "Assets/Graphics/Backgrounds/bgMenu.png");
+	AssetManager::AddAsset("ButtonsMenu", "Assets/Graphics/UI/Buttons/buttonsMenu.png");
+	AssetManager::AddAsset("ButtonGrey", "Assets/Graphics/UI/Buttons/buttonGrey.png");
 
-	AudioManager::AddSound("ConfirmSelection", "../Assets/Audio/SFX/confirm_selection.ogg");
-	AudioManager::AddSound("CancelSelection", "../Assets/Audio/SFX/cancel_selection.ogg");
-	AudioManager::AddSound("CursorSelection", "../Assets/Audio/SFX/cursor_selection.ogg");
-	AudioManager::AddSound("ErrorSelection", "../Assets/Audio/SFX/error_selection.ogg");
+	AudioManager::AddSound("ConfirmSelection", "Assets/Audio/SFX/confirm_selection.ogg");
+	AudioManager::AddSound("CancelSelection", "Assets/Audio/SFX/cancel_selection.ogg");
+	AudioManager::AddSound("CursorSelection", "Assets/Audio/SFX/cursor_selection.ogg");
+	AudioManager::AddSound("ErrorSelection", "Assets/Audio/SFX/error_selection.ogg");
 
-	AudioManager::AddMusic("MusicAmbiant_HOM", "../Assets/Audio/Musics/MusicAmbiant_Hommage.ogg");
+	AudioManager::AddMusic("MusicAmbiant_HOM", "Assets/Audio/Musics/MusicAmbiant_Hommage.ogg");
 }
 
 void SceneMainMenu::Create()
@@ -87,7 +87,7 @@ void SceneMainMenu::Update(const float& _delta)
 			if (FadeOut(_delta))
 			{
 				AudioManager::PlaySound("ConfirmSelection");
-				SceneManager::RunScene("SceneGameWorld");
+				SceneManager::RunScene("ScenesTest");
 			}
 
 		}

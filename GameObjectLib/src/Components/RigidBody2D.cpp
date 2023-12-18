@@ -5,6 +5,7 @@ RigidBody2D::RigidBody2D()
 {
 	gravity = Maths::Vector2f(0.f, 9.8f);
 	velocity = Maths::Vector2f::Zero;
+	maxVelocity = Maths::Vector2f(1000,1000);
 	killImperfection = Maths::Vector2f::Zero;
 	isAffectedByGravity = true;
 }
@@ -27,15 +28,14 @@ void RigidBody2D::Render(sf::RenderWindow* _window)
 		rectangle.setPosition(sf::Vector2f(GetOwner()->GetPosition().GetX(), GetOwner()->GetPosition().GetY()));
 		_window->draw(rectangle);
 	}
-
 }
 
 void RigidBody2D::Gravity()
 {
 	// Calculer la force gravitationnelle (F = m * g)
 	velocity += gravity * mass;
-}
 
+}
 bool RigidBody2D::IsColliding(const RigidBody2D& _rigidBody2DA, const RigidBody2D& _rigidBody2DB)
 {
 	const Maths::Vector2f positionA = _rigidBody2DA.GetOwner()->GetPosition();

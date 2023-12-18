@@ -3,6 +3,7 @@
 #include "Components/SpriteRenderer.h"
 #include "Managers/WindowManager.h"
 #include "Managers/CameraManager.h"
+#include "Managers/HUDManager.h"
 
 
 
@@ -38,12 +39,14 @@ void Character::Update(const float& _delta)
 {
     Entity::Update( _delta);
     sf::RenderWindow* window = WindowManager::GetWindow();
-
+    window->setView(CameraManager::GetView());
     const sf::Vector2i mousePosition = sf::Mouse::getPosition(*window);
     const sf::Vector2f worldMousePosition = window->mapPixelToCoords(mousePosition);
     Maths::Vector2f mousePositionVector = Maths::Vector2f(worldMousePosition.x, worldMousePosition.y);
     const Maths::Vector2f directionMouse = mousePositionVector - GetOwner()->GetPosition();
     
+    //std::cout << "Dir x : " << directionMouse.x << std::endl;
+   
 
     if (directionMouse.x <= 0)
     {
