@@ -40,7 +40,17 @@ bool RigidBody2D::IsColliding(const RigidBody2D& _rigidBody2DA, const RigidBody2
 {
 	const Maths::Vector2f positionA = _rigidBody2DA.GetOwner()->GetPosition();
 	const Maths::Vector2f positionB = _rigidBody2DB.GetOwner()->GetPosition();
-	return (positionA.x - _rigidBody2DA.GetWidthCollider() / 2 < positionB.x + _rigidBody2DB.GetWidthCollider() / 2 && positionA.x + _rigidBody2DA.GetWidthCollider() / 2 > positionB.x - _rigidBody2DB.GetWidthCollider() / 2 && positionA.y - _rigidBody2DA.GetHeightCollider() / 2 < positionB.y + _rigidBody2DB.GetHeightCollider() / 2 && positionA.y + _rigidBody2DA.GetHeightCollider() / 2 > positionB.y - _rigidBody2DB.GetHeightCollider() / 2);
+	const float WidthA = _rigidBody2DA.GetWidthCollider();
+	const float WidthB = _rigidBody2DB.GetWidthCollider();
+	const float HeightA = _rigidBody2DA.GetHeightCollider();
+	const float HeightB = _rigidBody2DB.GetHeightCollider();
+	if (positionA.x - WidthA / 2 < positionB.x + WidthB / 2) {
+		if (positionA.x + WidthA / 2 > positionB.x - WidthB / 2) {
+			if (positionA.y - HeightA / 2 < positionB.y + HeightB / 2) {
+				if (positionA.y + HeightA / 2 > positionB.y - HeightB / 2) {
+					return true;
+}}}}
+	return false;
 }
 
 bool RigidBody2D::IsAbove(const RigidBody2D& _rigidBody2DA, const RigidBody2D& _rigidBody2DB)

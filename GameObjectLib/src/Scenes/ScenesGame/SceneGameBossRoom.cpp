@@ -23,18 +23,18 @@ void SceneGameBossRoom::Preload()
 {
 	SceneGameAbstract::Preload();
 
-	AudioManager::AddMusic("MusicAmbiant_CI", "../Assets/Audio/Musics/MusicAmbiant_CrackerIsland.ogg");
+	AudioManager::AddMusic("MusicAmbiant_CI", "Assets/Audio/Musics/MusicAmbiant_CrackerIsland.ogg");
 
-	AssetManager::AddAsset("BackgroundBoss", "../Assets/Graphics/Maps/bossRoom.png");
-	AssetManager::AddAsset("breathHades", "../Assets/Enemy/Hades/breath.png");
-	AssetManager::AddAsset("breathFireHades", "../Assets/Enemy/Hades/breath-fire.png");
-	AssetManager::AddAsset("attackHades", "../Assets/Enemy/Hades/demon-attack.png");
-	AssetManager::AddAsset("attackHades2", "../Assets/Enemy/Hades/demon-attack2.png");
-	AssetManager::AddAsset("roarHades", "../Assets/Enemy/Hades/demon-attack-no-breath.png");
-	AssetManager::AddAsset("idleHades", "../Assets/Enemy/Hades/demon-idle.png");
-	AssetManager::AddAsset("protectionHades", "../Assets/Enemy/Hades/protection.png");
-	AssetManager::AddAsset("NightmareGalloping", "../Assets/Enemy/Nightmare/nightmare-galloping.png");
-	AssetManager::AddAsset("protectionBallsHades", "../Assets/Boss/balls.png");
+	AssetManager::AddAsset("BackgroundBoss", "Assets/Graphics/Maps/bossRoom.png");
+	AssetManager::AddAsset("breathHades", "Assets/Enemy/Hades/breath.png");
+	AssetManager::AddAsset("breathFireHades", "Assets/Enemy/Hades/breath-fire.png");
+	AssetManager::AddAsset("attackHades", "Assets/Enemy/Hades/demon-attack.png");
+	AssetManager::AddAsset("attackHades2", "Assets/Enemy/Hades/demon-attack2.png");
+	AssetManager::AddAsset("roarHades", "Assets/Enemy/Hades/demon-attack-no-breath.png");
+	AssetManager::AddAsset("idleHades", "Assets/Enemy/Hades/demon-idle.png");
+	AssetManager::AddAsset("protectionHades", "Assets/Enemy/Hades/protection.png");
+	AssetManager::AddAsset("NightmareGalloping", "Assets/Enemy/Nightmare/nightmare-galloping.png");
+	AssetManager::AddAsset("protectionBallsHades", "Assets/Boss/balls.png");
 	unsigned seed = static_cast<unsigned>(time(0));
 	srand(seed);
 
@@ -64,13 +64,16 @@ void SceneGameBossRoom::Update(const float& _delta)
 	SceneGameAbstract::Update(_delta);
 	if (player && plateforme)
 	{
-		if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(plateforme->GetComponent<RigidBody2D>())) && firstCollide)
+		if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(plateforme->GetComponent<RigidBody2D>())))
 		{
-			player->GetComponent<RigidBody2D>()->SetIsGravity(false);
-			player->GetComponent<Character>()->SetOnFloor(true);
-			firstCollide = false;
+			if(firstCollide)
+			{
+				player->GetComponent<RigidBody2D>()->SetIsGravity(false);
+				player->GetComponent<Character>()->SetOnFloor(true);
+				firstCollide = false;
+			}
 		}
-		else if (!RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(plateforme->GetComponent<RigidBody2D>())))
+		else
 		{
 			firstCollide = true;
 			player->GetComponent<RigidBody2D>()->SetIsGravity(true);

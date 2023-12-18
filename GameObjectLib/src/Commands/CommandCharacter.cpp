@@ -54,7 +54,7 @@ void JumpCharacter::Execute(const float& _delta)
 	GameObject* player = SceneManager::GetActiveGameScene()->GetPlayer();
 	RigidBody2D* rigidBody2D = player->GetComponent<RigidBody2D>();
 	rigidBody2D->SetIsGravity(true);
-	rigidBody2D->AddForces(Maths::Vector2f(0, -1200));
+	rigidBody2D->AddForces(Maths::Vector2f(0, -6000));
 }
 
 ShootCharacter::ShootCharacter() {}

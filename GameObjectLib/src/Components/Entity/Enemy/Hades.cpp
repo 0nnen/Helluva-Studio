@@ -5,10 +5,11 @@
 
 Hades::Hades() : Entity(1000, 200, 500.f, 40.f, 10000.f)
 {
-	//platformFeu = BuilderEntityGameObject::CreateRangeHadesCollisionGameObject("Platform", 100, 1000, 0.5f, 10.5f);
+	platformFeu = BuilderEntityGameObject::CreateRangeHadesCollisionGameObject("CollisionRangeHades", 100, 1000, 2.0f, 2.5f);
 	float nightmareX = (randomAttackCheval == 0) ? 2200 : 0;
 	nightmare = BuilderEntityGameObject::CreateChevalGameObject("Nightmare", nightmareX, 1000, 2.5f, 2.5f, AssetManager::GetAsset("NightmareGalloping"));
 	stateSwitch = true;
+	this->BouleDeFeu();
 }
 Hades::Hades(const int& _hp, const int& _damage, const float& _speed, const float& _attackSpeed, const float& _range) : Entity(_hp, _damage, _speed, _attackSpeed, _range)
 {
@@ -21,7 +22,7 @@ void Hades::SetProtection(const float& _delta)
 	int randomNumber;
 	Maths::Vector2f positionHades = GetOwner()->GetPosition();
 	protection = BuilderEntityGameObject::CreateProtectionGameObject("Protection", positionHades.GetX(), positionHades.GetY(), 2.5f, 2.5f, AssetManager::GetAsset("protectionHades"));
-	
+
 	switch (step)
 	{
 	case Hades::Step3:
@@ -30,12 +31,14 @@ void Hades::SetProtection(const float& _delta)
 		countAllerRetour3 = 3;
 		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection4", 500, 500, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner()));
 		AllerRetourCheval(true, _delta, countAllerRetour, countAllerRetour2, countAllerRetour3);
+		AttackFeu();
 	case Hades::Step2:
 		randomNumber = rand() % 8;
 		randomAttackCheval = rand() % 2;
 		countAllerRetour2 = 3;
 		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection3", 1500, 800, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner()));
 		AllerRetourCheval(true, _delta, countAllerRetour, countAllerRetour2, countAllerRetour3);
+		AttackFeu();
 	case Hades::Step1:
 		randomNumber = rand() % 8;
 		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection2", 1250, 400, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner()));
@@ -44,6 +47,7 @@ void Hades::SetProtection(const float& _delta)
 		countAllerRetour = 2;
 		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection1", 1000, 200, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner()));
 		AllerRetourCheval(true, _delta, countAllerRetour, countAllerRetour2, countAllerRetour3);
+		AttackFeu();
 		break;
 	default:
 		break;
@@ -74,17 +78,26 @@ void Hades::AttackFeu()
 	Maths::Vector2f positionPlayer = SceneManager::GetActiveGameScene()->GetPlayer()->GetPosition();
 	Maths::Vector2f positionHades = GetOwner()->GetPosition();
 
-	// si y'a collision avec le boss et que le player est dans la range du boss alors il va attacker/toucher le player
+	platformFeu->SetPosition(Maths::Vector2f(positionHades.x + 50.0f, 1000));
+	platformFeu->GetComponent<RigidBody2D>()->SetHeightCollider(positionHades.y);
+	platformFeu->GetComponent<RigidBody2D>()->SetWidthCollider(positionHades.x);
 
-	if (SceneManager::GetActiveGameScene()->GetPlayer(), protection) {
-		if (RigidBody2D::IsColliding(*(SceneManager::GetActiveGameScene()->GetPlayer()->GetComponent<RigidBody2D>()), *(protection->GetComponent<RigidBody2D>())) && positionPlayer.y > positionHades.y && stateSwitch)
+	// si y'a collision avec le boss et que le player est dans la range du boss alors il va attacker/toucher le player
+	if (SceneManager::GetActiveGameScene()->GetPlayer(), platformFeu) {
+		
+		if (RigidBody2D::IsColliding(*(SceneManager::GetActiveGameScene()->GetPlayer()->GetComponent<RigidBody2D>()), *(platformFeu->GetComponent<RigidBody2D>())))
 		{
-			state = Hades::State::Attack;
-			stateSwitch = false;
-			// implémenter les dégats subis du joueur
+			if(positionPlayer.y > positionHades.y && stateSwitch)
+			{
+				std::cout << "collision actif\n";
+				state = Hades::State::Attack;
+				stateSwitch = false;
+				// implémenter les dégats subis du joueur
+			}
 		}
-		else if (!RigidBody2D::IsColliding(*(SceneManager::GetActiveGameScene()->GetPlayer()->GetComponent<RigidBody2D>()), *(protection->GetComponent<RigidBody2D>())))
+		else
 		{
+			std::cout << "collision inactif\n";
 			state = Hades::State::Idle;
 			stateSwitch = true;
 		}
@@ -93,12 +106,25 @@ void Hades::AttackFeu()
 	// le boss track le player
 	if (positionHades.GetX() <= positionPlayer.GetX() - 300)
 	{
-		Hades::GetOwner()->SetPosition(Maths::Vector2f(GetOwner()->GetPosition().x + 0.1f, GetOwner()->GetPosition().y));
+		Hades::GetOwner()->SetPosition(Maths::Vector2f(GetOwner()->GetPosition().x + 0.05f, GetOwner()->GetPosition().y));
 	}
 	else if (positionHades.GetX() >= positionPlayer.GetX() + 300)
 	{
-		Hades::GetOwner()->SetPosition(Maths::Vector2f(GetOwner()->GetPosition().x - 0.1f, GetOwner()->GetPosition().y));
+		Hades::GetOwner()->SetPosition(Maths::Vector2f(GetOwner()->GetPosition().x - 0.05f, GetOwner()->GetPosition().y));
 	}
+}
+
+void Hades::BouleDeFeu()
+{
+	sf::CircleShape bouleFeu(50);
+	bouleFeu.setFillColor(sf::Color(255, 0, 0));
+	bouleFeu.setPosition(300, 500);
+}
+
+void Hades::Render(sf::RenderWindow* _window)
+{
+	Component::Render(_window);
+	_window->draw(bouleFeu);
 }
 
 void Hades::AttackCheval(int _randomAttackCheval, const float& _delta)
@@ -144,12 +170,16 @@ void Hades::AttackCheval(int _randomAttackCheval, const float& _delta)
 	if (SceneManager::GetActiveGameScene()->GetPlayer(), nightmare) {
 		if (RigidBody2D::IsColliding(*(SceneManager::GetActiveGameScene()->GetPlayer()->GetComponent<RigidBody2D>()), *(nightmare->GetComponent<RigidBody2D>())))
 		{
-			SceneManager::GetActiveGameScene()->GetPlayer()->SetPosition(Maths::Vector2f(positionPlayer.x, positionPlayer.y - 4.0f));
-			//std::cout << "y'a collisions \n";
-		}
-		else if (!RigidBody2D::IsColliding(*(SceneManager::GetActiveGameScene()->GetPlayer()->GetComponent<RigidBody2D>()), *(nightmare->GetComponent<RigidBody2D>())))
-		{
-			//std::cout << "y'a PAS collisions \n";
+			if (nightmare->GetPosition().GetX() > positionPlayer.GetX())
+			{
+				SceneManager::GetActiveGameScene()->GetPlayer()->GetComponent<RigidBody2D>()->AddForces(Maths::Vector2f(nightmare->GetPosition().x / nightmare->GetPosition().x - 15.0f, nightmare->GetPosition().y / nightmare->GetPosition().y - 80.0f));
+			}
+			else
+			{
+				SceneManager::GetActiveGameScene()->GetPlayer()->GetComponent<RigidBody2D>()->AddForces(Maths::Vector2f(nightmare->GetPosition().x / nightmare->GetPosition().x + 20.0f, nightmare->GetPosition().y / nightmare->GetPosition().y - 60.0f));
+			}
+			
+			
 		}
 	}
 }
@@ -196,19 +226,22 @@ void Hades::Update(const float& _delta)
 	Entity::Update(_delta);
 	GameObject* hades = GetOwner();
 
-	if (cooldown >= 0.0f)
+	if (platformFeu)
 	{
-		cooldown -= _delta;
-		if (randomAttackFeu <= 2)
+		if (cooldown >= 0.0f)
 		{
-			AttackFeu();
+			cooldown -= _delta;
+			if (randomAttackFeu <= 1)
+			{
+				AttackFeu();
+			}
 		}
-	}
-	else
-	{
-		state = Hades::State::Idle;
-		cooldown = 10.0f;
-		randomAttackFeu = rand() % 4;
+		else
+		{
+			state = Hades::State::Idle;
+			cooldown = 10.0f;
+			randomAttackFeu = rand() % 4;
+		}
 	}
 
 	if (protection)
@@ -224,7 +257,6 @@ void Hades::Update(const float& _delta)
 
 	SetDirection();
 	AttackCheval(randomAttackCheval, _delta);
-	//std::cout << countAllerRetour << "\n";
 	if (state == Hades::State::Idle)
 	{
 		if (!GetAnimation("idle")->GetIsPlaying()) {
