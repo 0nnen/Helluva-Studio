@@ -87,7 +87,7 @@ void SceneMainMenu::Update(const float& _delta)
 			if (FadeOut(_delta))
 			{
 				AudioManager::PlaySound("ConfirmSelection");
-				SceneManager::RunScene("SceneGameWorld");
+				SceneManager::RunScene("ScenesTest");
 			}
 
 		}

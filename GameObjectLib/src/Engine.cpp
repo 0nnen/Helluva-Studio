@@ -44,9 +44,7 @@ void Engine::Init() const
 
 void Engine::Run() const
 {
-	//SceneManager::RunScene("SceneGameBossRoom");
 	SceneManager::RunScene("SceneOpening");
-	SceneManager::RunScene("ScenesTest");
 	while (!shouldQuit)
 	{
 		TimeManager::Update();

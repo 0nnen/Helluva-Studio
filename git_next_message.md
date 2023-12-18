@@ -1,7 +1,4 @@
-NEW: Collisions
+FIX: Aller sur le menu principal
 
-- Nouvelles facons d'implémenter la map
-- Nouvelles facons d'implémenter les colliders
-- Bug a voir avec Adrien : ne peut toujours pas sauter 
-
+- Engin start  opening
 
