@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Components\Shapes\Circle.h" />
     <ClInclude Include="include\Components\Entity\Enemy\Hades.h" />
     <ClInclude Include="include\Components\UIElements\ATH.h" />
     <ClInclude Include="include\Components\Entity\Enemy\EnemyA.h" />
@@ -79,6 +80,7 @@
     <ClInclude Include="include\Scenes\ScenesGame\SceneGameBossRoom.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\Shapes\Circle.cpp" />
     <ClCompile Include="src\Components\Entity\Enemy\ProtectionBall.cpp" />
     <ClCompile Include="src\Components\Entity\Enemy\Hades.cpp" />
     <ClCompile Include="src\Components\UIElements\ATH.cpp" />

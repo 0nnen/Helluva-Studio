@@ -10,6 +10,7 @@ Hades::Hades() : Entity(1000, 200, 500.f, 40.f, 10000.f)
 	float nightmareX = (randomAttackCheval == 0) ? 2200 : 0;
 	nightmare = BuilderEntityGameObject::CreateChevalGameObject("Nightmare", nightmareX, 1000, 2.5f, 2.5f, AssetManager::GetAsset("NightmareGalloping"));
 	stateSwitch = true;
+	this->BouleFeu();
 }
 Hades::Hades(const int& _hp, const int& _damage, const float& _speed, const float& _attackSpeed, const float& _range) : Entity(_hp, _damage, _speed, _attackSpeed, _range)
 {
@@ -31,14 +32,12 @@ void Hades::SetProtection(const float& _delta)
 		countAllerRetour3 = 3;
 		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection4", 500, 500, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner()));
 		AllerRetourCheval(true, _delta, countAllerRetour, countAllerRetour2, countAllerRetour3);
-		AttackFeu();
 	case Hades::Step2:
 		randomNumber = rand() % 8;
 		randomAttackCheval = rand() % 2;
 		countAllerRetour2 = 3;
 		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection3", 1500, 800, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner()));
 		AllerRetourCheval(true, _delta, countAllerRetour, countAllerRetour2, countAllerRetour3);
-		AttackFeu();
 	case Hades::Step1:
 		randomNumber = rand() % 8;
 		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection2", 1250, 400, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner()));
@@ -47,7 +46,6 @@ void Hades::SetProtection(const float& _delta)
 		countAllerRetour = 2;
 		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection1", 1000, 200, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner()));
 		AllerRetourCheval(true, _delta, countAllerRetour, countAllerRetour2, countAllerRetour3);
-		AttackFeu();
 		break;
 	default:
 		break;
@@ -194,6 +192,22 @@ void Hades::AttackCheval(int _randomAttackCheval, const float& _delta)
 			}
 			
 			
+		}
+	}
+}
+
+void Hades::BouleFeu()
+{
+	bouleFeu = BuilderEntityGameObject::CreateProtectionBallGameObject("BouleFeu", 500, 500, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), 1, GetOwner());
+	circle = BuilderEntityGameObject::CreateSphereFeuGameObject("BouleFeu", 500, 500, 100);
+	if (SceneManager::GetActiveGameScene()->GetPlayer(), circle) {
+		if (RigidBody2D::IsColliding(*(SceneManager::GetActiveGameScene()->GetPlayer()->GetComponent<RigidBody2D>()), *(circle->GetComponent<RigidBody2D>())))
+		{
+			std::cout << "Cirlce en collision";
+		}
+		else
+		{
+			std::cout << "Cirlce PAS collision";
 		}
 	}
 }

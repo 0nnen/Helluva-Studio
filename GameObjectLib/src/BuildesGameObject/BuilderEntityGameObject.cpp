@@ -18,7 +18,7 @@
 #include <Components/Shapes/Rectangle.h>
 #include <Components/Shapes/Triangle.h>
 #include "Components/Transform.h"
-
+#include <Components/Shapes/Circle.h>
 
 
 GameObject* BuilderEntityGameObject::CreateBulletGameObject(const std::string& _name, sf::Texture* _textureBullet, GameObject* _player, const float& _scalex, const float& _scaley, const float& _damage, const float& _speed, const Maths::Vector2f& _direction, const float& _rotate, const Maths::Vector2f& _position)
@@ -166,6 +166,22 @@ GameObject* BuilderEntityGameObject::CreateRangeHadesCollisionGameObject(const s
 	Rectangle* rectangle = gameObject->CreateComponent<Rectangle>();
 	rectangle->SetSize(200.f, 50.f);
 	rectangle->SetScale(_scalex, _scaley);
+
+	return gameObject;
+
+}
+
+GameObject* BuilderEntityGameObject::CreateSphereFeuGameObject(const std::string& _name, const float& _positionX, const float& _positionY, const float& _radius)
+{
+	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
+	gameObject->SetPosition(Maths::Vector2f(_positionX, _positionY));
+
+
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(false);
+
+	Circle* circle = gameObject->CreateComponent<Circle>();
+	circle->SetRadius(_radius);
 
 	return gameObject;
 

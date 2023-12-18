@@ -3,6 +3,7 @@
 #include "Components/Entity.h"
 #include "BuildersGameObject/BuilderEntityGameObject.h"
 #include "Managers/AssetManager.h"
+#include <SFML/Graphics.hpp>
 
 class Hades final : public Entity
 {
@@ -19,6 +20,7 @@ public:
 	void AttackCheval(int _randomAttackCheval, const float& _delta);
 	void AllerRetourCheval(bool _nightmareArrive, const float& _delta, int& _countAllerRetour, int& _countAllerRetour2, int& _countAllerRetour3);
 	void DamageZoneHades();
+	void BouleFeu();
 
 	void Update(const float& _delta) override;
 
@@ -31,6 +33,7 @@ public:
 	}
 
 	std::vector<GameObject*> GetProtectionBalls() { return balls; }
+	GameObject* GetBouleDeFeuBalls() { return bouleFeu; }
 
 private:
 	State state = Idle;
@@ -53,5 +56,7 @@ private:
 	const float speed = 350.0f;
 	GameObject* platformFeu;
 	GameObject* damageZone;
+	GameObject* circle;
+	GameObject* bouleFeu;
 };
 
