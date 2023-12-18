@@ -6,10 +6,10 @@
 Hades::Hades() : Entity(1000, 200, 500.f, 40.f, 10000.f)
 {
 	platformFeu = BuilderEntityGameObject::CreateRangeHadesCollisionGameObject("CollisionRangeHades", 100, 1000, 2.0f, 2.5f);
+	damageZone = BuilderEntityGameObject::CreateRangeHadesCollisionGameObject("DamageZone", 0, 1000, 2.0f, 7.5f);
 	float nightmareX = (randomAttackCheval == 0) ? 2200 : 0;
 	nightmare = BuilderEntityGameObject::CreateChevalGameObject("Nightmare", nightmareX, 1000, 2.5f, 2.5f, AssetManager::GetAsset("NightmareGalloping"));
 	stateSwitch = true;
-	this->BouleDeFeu();
 }
 Hades::Hades(const int& _hp, const int& _damage, const float& _speed, const float& _attackSpeed, const float& _range) : Entity(_hp, _damage, _speed, _attackSpeed, _range)
 {
@@ -89,7 +89,6 @@ void Hades::AttackFeu()
 		{
 			if(positionPlayer.y > positionHades.y && stateSwitch)
 			{
-				std::cout << "collision actif\n";
 				state = Hades::State::Attack;
 				stateSwitch = false;
 				// implémenter les dégats subis du joueur
@@ -97,7 +96,6 @@ void Hades::AttackFeu()
 		}
 		else
 		{
-			std::cout << "collision inactif\n";
 			state = Hades::State::Idle;
 			stateSwitch = true;
 		}
@@ -114,17 +112,33 @@ void Hades::AttackFeu()
 	}
 }
 
-void Hades::BouleDeFeu()
+void Hades::DamageZoneHades()
 {
-	sf::CircleShape bouleFeu(50);
-	bouleFeu.setFillColor(sf::Color(255, 0, 0));
-	bouleFeu.setPosition(300, 500);
-}
+	Maths::Vector2f positionPlayer = SceneManager::GetActiveGameScene()->GetPlayer()->GetPosition();
+	Maths::Vector2f positionHades = GetOwner()->GetPosition();
 
-void Hades::Render(sf::RenderWindow* _window)
-{
-	Component::Render(_window);
-	_window->draw(bouleFeu);
+	damageZone->SetPosition(Maths::Vector2f(positionHades.x + 50.0f, positionHades.y));
+	damageZone->GetComponent<RigidBody2D>()->SetHeightCollider(positionHades.y);
+	damageZone->GetComponent<RigidBody2D>()->SetWidthCollider(positionHades.x);
+
+	// si y'a collision avec le boss et que le player est dans la range du boss alors il va attacker/toucher le player
+	if (SceneManager::GetActiveGameScene()->GetPlayer(), damageZone) {
+
+		if (RigidBody2D::IsColliding(*(SceneManager::GetActiveGameScene()->GetPlayer()->GetComponent<RigidBody2D>()), *(damageZone->GetComponent<RigidBody2D>())))
+		{
+			if (stateSwitchZone)
+			{
+				std::cout << "collision actif\n";
+				stateSwitchZone = false;
+				// implémenter les dégats subis du joueur
+			}
+		}
+		else
+		{
+			std::cout << "collision inactif\n";
+			stateSwitchZone = true;
+		}
+	}
 }
 
 void Hades::AttackCheval(int _randomAttackCheval, const float& _delta)
@@ -225,6 +239,8 @@ void Hades::Update(const float& _delta)
 {
 	Entity::Update(_delta);
 	GameObject* hades = GetOwner();
+
+	DamageZoneHades();
 
 	if (platformFeu)
 	{

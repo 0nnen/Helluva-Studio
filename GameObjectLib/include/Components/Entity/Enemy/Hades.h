@@ -18,8 +18,7 @@ public:
 	void AttackFeu();
 	void AttackCheval(int _randomAttackCheval, const float& _delta);
 	void AllerRetourCheval(bool _nightmareArrive, const float& _delta, int& _countAllerRetour, int& _countAllerRetour2, int& _countAllerRetour3);
-	void BouleDeFeu();
-	void Render(sf::RenderWindow* _window);
+	void DamageZoneHades();
 
 	void Update(const float& _delta) override;
 
@@ -46,12 +45,13 @@ private:
 	int newRandomAttackCheval;
 	int randomAttackFeu = 0;
 	bool stateSwitch;
+	bool stateSwitchZone;
 	int countAllerRetour = 0;
 	int countAllerRetour2 = 0;
 	int countAllerRetour3 = 0;
 	bool nightmareArrive;
 	const float speed = 350.0f;
 	GameObject* platformFeu;
-	sf::CircleShape bouleFeu;
+	GameObject* damageZone;
 };
 
