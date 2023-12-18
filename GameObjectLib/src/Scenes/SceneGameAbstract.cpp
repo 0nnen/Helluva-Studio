@@ -65,14 +65,14 @@ void SceneGameAbstract::Preload()
 {
 	Scene::Preload();
 
-	AssetManager::AddAsset("BackgroundAbstract", "../Assets/Graphics/Backgrounds/bgMenu.png");
-	AssetManager::AddAsset("idleCharacter", "../Assets/Graphics/Characters/Zephyr/Idle/Character_Idle_48x48.png");
-	AssetManager::AddAsset("Character", "../Assets/Graphics/Characters/Zephyr/Idle/Character-Idle_01.png");
-	AssetManager::AddAsset("jumpCharacter", "../Assets/Graphics/Characters/Zephyr/Jump/Character_Jump_48x48.png");
-	AssetManager::AddAsset("runCharacter", "../Assets/Graphics/Characters/Zephyr/Run/Character_Run_48x48.png");
-	AssetManager::AddAsset("shootArm", "../Assets/Graphics/Characters/Zephyr/Idle_Shoot/Character_Idle_Shoot_ARM_48x48.png");
-	AssetManager::AddAsset("shootBody", "../Assets/Graphics/Characters/Zephyr/Idle_Shoot/Character_Idle_Shoot_BODY_48x48.png");
-	AssetManager::AddAsset("bullet", "../Assets/Graphics/Characters/Zephyr/bullet.png");
+	AssetManager::AddAsset("BackgroundAbstract", "Assets/Graphics/Backgrounds/bgMenu.png");
+	AssetManager::AddAsset("idleCharacter", "Assets/Graphics/Characters/Zephyr/Idle/Character_Idle_48x48.png");
+	AssetManager::AddAsset("Character", "Assets/Graphics/Characters/Zephyr/Idle/Character-Idle_01.png");
+	AssetManager::AddAsset("jumpCharacter", "Assets/Graphics/Characters/Zephyr/Jump/Character_Jump_48x48.png");
+	AssetManager::AddAsset("runCharacter", "Assets/Graphics/Characters/Zephyr/Run/Character_Run_48x48.png");
+	AssetManager::AddAsset("shootArm", "Assets/Graphics/Characters/Zephyr/Idle_Shoot/Character_Idle_Shoot_ARM_48x48.png");
+	AssetManager::AddAsset("shootBody", "Assets/Graphics/Characters/Zephyr/Idle_Shoot/Character_Idle_Shoot_BODY_48x48.png");
+	AssetManager::AddAsset("bullet", "Assets/Graphics/Characters/Zephyr/bullet.png");
 }
 
 

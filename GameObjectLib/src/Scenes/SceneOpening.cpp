@@ -10,9 +10,9 @@ SceneOpening::SceneOpening(const std::string& _name) : Scene(_name){}
 void SceneOpening::Preload()
 {
     Scene::Preload();
-    AssetManager::AddAsset("HelluvaStudioLogo", "../Assets/Graphics/UI/Icons/Helluva_Logo.png");
-    AssetManager::AddAsset("Pegi", "../Assets/Graphics/UI/Icons/PEGI_16.png");
-    AssetManager::AddAsset("Warning", "../Assets/Graphics/UI/Icons/warning_content.jpg");
+    AssetManager::AddAsset("HelluvaStudioLogo", "Assets/Graphics/UI/Icons/Helluva_Logo.png");
+    AssetManager::AddAsset("Pegi", "Assets/Graphics/UI/Icons/PEGI_16.png");
+    AssetManager::AddAsset("Warning", "Assets/Graphics/UI/Icons/warning_content.jpg");
 }
 
 void SceneOpening::Create() 

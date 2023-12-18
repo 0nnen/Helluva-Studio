@@ -15,11 +15,11 @@ SceneGameWorld::SceneGameWorld(const std::string& _newName) : SceneGameAbstract(
 void SceneGameWorld::Preload()
 {
 	SceneGameAbstract::Preload();
-	AssetManager::AddAsset("BackgroundMapBackgroundWorld", "../Assets/Graphics/Maps/worldMapBackground.png");
-	AssetManager::AddAsset("BackgroundMapWorld", "../Assets/Graphics/Maps/worldMap1.png");
-	AssetManager::AddAsset("idleEnemyA", "../Assets/Enemy/Hell-Beast-Files/PNG/with-stroke/hell-beast-idle.png");
-	AssetManager::AddAsset("shootEnemyA", "../Assets/Enemy/Hell-Beast-Files/PNG/with-stroke/hell-beast-breath.png");
-	AssetManager::AddAsset("FireBallEnemy", "../Assets/Enemy/Hell-Beast-Files/PNG/fire-ball.png");
+	AssetManager::AddAsset("BackgroundMapBackgroundWorld", "Assets/Graphics/Maps/worldMapBackground.png");
+	AssetManager::AddAsset("BackgroundMapWorld", "Assets/Graphics/Maps/worldMap1.png");
+	AssetManager::AddAsset("idleEnemyA", "Assets/Enemy/Hell-Beast-Files/PNG/with-stroke/hell-beast-idle.png");
+	AssetManager::AddAsset("shootEnemyA", "Assets/Enemy/Hell-Beast-Files/PNG/with-stroke/hell-beast-breath.png");
+	AssetManager::AddAsset("FireBallEnemy", "Assets/Enemy/Hell-Beast-Files/PNG/fire-ball.png");
 }
 
 void SceneGameWorld::Create()
