@@ -102,12 +102,15 @@ void SceneGameBossRoom::Update(const float& _delta)
 						RemoveGameObject(bullet);
 					}
 				}
-				if (RigidBody2D::IsColliding(*(bullet->GetComponent<RigidBody2D>()), *(hades->GetComponent<Hades>()->GetBouleDeFeuBalls()->GetComponent<RigidBody2D>())) && hades->GetActive())
-				{
-					hades->GetComponent<Hades>()->GetBouleDeFeuBalls()->GetComponent<ProtectionBall>()->TakeDamage(bullet->GetComponent<Bullet>()->GetDamageReduced());
-					gun->RemoveBullet(bullet);
-					RemoveGameObject(bullet);
-				}
+				//if (RigidBody2D::IsColliding(*(bullet->GetComponent<RigidBody2D>()), *(hades->GetComponent<Hades>()->GetBouleDeFeuBalls()->GetComponent<RigidBody2D>())) && hades->GetActive())
+				//{
+				//	if (hades->GetComponent<Hades>()->GetBouleDeFeuBalls())
+				//	{
+				//		hades->GetComponent<Hades>()->GetBouleDeFeuBalls()->GetComponent<ProtectionBall>()->TakeDamageFireCircle(bullet->GetComponent<Bullet>()->GetDamageReduced());
+				//		gun->RemoveBullet(bullet);
+				//		RemoveGameObject(bullet);
+				//	}
+				//}
 			}
 		}
 	}

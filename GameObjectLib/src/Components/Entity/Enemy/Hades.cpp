@@ -1,7 +1,7 @@
 #include "Components/Entity/Enemy/Hades.h"
 #include "Managers/SceneManager.h"
 #include <Components/RigidBody2D.h>
-
+#include <Components/Entity/Enemy/ProtectionBall.h>
 
 Hades::Hades() : Entity(1000, 200, 500.f, 40.f, 10000.f)
 {
@@ -10,7 +10,7 @@ Hades::Hades() : Entity(1000, 200, 500.f, 40.f, 10000.f)
 	float nightmareX = (randomAttackCheval == 0) ? 2200 : 0;
 	nightmare = BuilderEntityGameObject::CreateChevalGameObject("Nightmare", nightmareX, 1000, 2.5f, 2.5f, AssetManager::GetAsset("NightmareGalloping"));
 	stateSwitch = true;
-	this->BouleFeu();
+	this->CreateBouleFeu();
 }
 Hades::Hades(const int& _hp, const int& _damage, const float& _speed, const float& _attackSpeed, const float& _range) : Entity(_hp, _damage, _speed, _attackSpeed, _range)
 {
@@ -45,6 +45,7 @@ void Hades::SetProtection(const float& _delta)
 		randomAttackCheval = rand() % 2;
 		countAllerRetour = 2;
 		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection1", 1000, 200, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner()));
+		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("FireBall", 500, 1000, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), 1, GetOwner()));
 		AllerRetourCheval(true, _delta, countAllerRetour, countAllerRetour2, countAllerRetour3);
 		break;
 	default:
@@ -126,14 +127,12 @@ void Hades::DamageZoneHades()
 		{
 			if (stateSwitchZone)
 			{
-				std::cout << "collision actif\n";
 				stateSwitchZone = false;
 				// implémenter les dégats subis du joueur
 			}
 		}
 		else
 		{
-			std::cout << "collision inactif\n";
 			stateSwitchZone = true;
 		}
 	}
@@ -196,18 +195,46 @@ void Hades::AttackCheval(int _randomAttackCheval, const float& _delta)
 	}
 }
 
+void Hades::SpawnRandomBall()
+{
+	switch (spawn)
+	{
+	case 0:
+		break;
+	case 1:
+		break;
+	case 2:
+		break;
+	case 3:
+		break;
+	case 4:
+		break;
+	case 5:
+		break;
+	case 6:
+		break;
+	default:
+		break;
+	}
+}
+
+void Hades::CreateBouleFeu()
+{
+	circle = BuilderEntityGameObject::CreateSphereFeuGameObject("FireCircle", 500, 1000, 100);
+}
+
 void Hades::BouleFeu()
 {
-	bouleFeu = BuilderEntityGameObject::CreateProtectionBallGameObject("BouleFeu", 500, 500, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), 1, GetOwner());
-	circle = BuilderEntityGameObject::CreateSphereFeuGameObject("BouleFeu", 500, 500, 100);
+	std::cout << "\n" << balls[2]->GetComponent<ProtectionBall>()->GetHealthPoint() << "\n";
+	if (balls[2]->GetComponent<ProtectionBall>()->GetHealthPoint() <= 0)
+	{
+		std::cout << "il est dead boy\n";
+	}
 	if (SceneManager::GetActiveGameScene()->GetPlayer(), circle) {
 		if (RigidBody2D::IsColliding(*(SceneManager::GetActiveGameScene()->GetPlayer()->GetComponent<RigidBody2D>()), *(circle->GetComponent<RigidBody2D>())))
 		{
-			std::cout << "Cirlce en collision";
-		}
-		else
-		{
-			std::cout << "Cirlce PAS collision";
+			// enelver des PV au joueur;
+			std::cout << "Cirlce en collision\n";
 		}
 	}
 }
@@ -253,6 +280,8 @@ void Hades::Update(const float& _delta)
 {
 	Entity::Update(_delta);
 	GameObject* hades = GetOwner();
+
+	SpawnRandomBall();
 
 	DamageZoneHades();
 
@@ -338,6 +367,7 @@ void Hades::Update(const float& _delta)
 			SetProtection(_delta);
 			isInvicible = true;
 			actualTime = 0.f;
+			BouleFeu();
 		}
 	}
 }
