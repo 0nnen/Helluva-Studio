@@ -14,7 +14,8 @@ public:
 	void Update(const float& _delta);
 	void SetSpawn(int _spawn) { spawn = _spawn; }
 	int GetSpawn() { return spawn; }
-	void Spawn();
+	void SetHealth();
+	void SetPower();
 	static void SetAlive(bool _alive) { alive = _alive; }
 
 
@@ -22,8 +23,8 @@ private:
 	GameObject* hades = nullptr;
 	GameObject* player = nullptr;
 	int spawn = 0;
-	int randX;
-	int randY;
+	float randX;
+	float randY;
 	static bool alive;
 	bool ballDamage;
 };

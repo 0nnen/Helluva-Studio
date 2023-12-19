@@ -21,23 +21,23 @@ void Hades::SetProtection()
 	{
 	case Hades::Step3:
 		randomNumber = rand() % 8;
-		randX = rand() % 1500 + 500;
+		randX = rand() % 1300 + 500;
 		randY = rand() % 400 + 200;
-		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection4", 500, 500, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner(), 5));
+		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection4", randX, randY, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner(), randomNumber));
 	case Hades::Step2:
 		randomNumber = rand() % 8;
-		randX = rand() % 1500 + 500;
+		randX = rand() % 1300 + 500;
 		randY = rand() % 400 + 200;
-		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection3", 1500, 800, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner(), 5));
+		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection3", randX, randY, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner(), randomNumber));
 	case Hades::Step1:
 		randomNumber = 1;
-		randX = rand() % 1500 + 500;
+		randX = rand() % 1300 + 500;
 		randY = rand() % 400 + 200;
-		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection2", randX, randY, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner(), 6));
+		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection2", 1500, 300, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner(), 4));
 		randomNumber = 1;
-		randX = rand() % 1500 + 500;
+		randX = rand() % 1300 + 500;
 		randY = rand() % 400 + 200;
-		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection1", randX, randY, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner(), 6));
+		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection1", 1300, 500, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner(), 4));
 		break;
 	default:
 		break;

@@ -365,7 +365,7 @@ GameObject* BuilderEntityGameObject::CreateProtectionBallGameObject(const std::s
 	ProtectionBall* protectionBall = gameObject->CreateComponent<ProtectionBall>();
 	protectionBall->SetHades(_hades);
 	protectionBall->SetSpawn(_randSpawn);
-	protectionBall->Spawn();
+	protectionBall->SetHealth();
 
 
 	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();

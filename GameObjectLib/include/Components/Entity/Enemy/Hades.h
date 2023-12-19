@@ -27,8 +27,6 @@ public:
 	}
 
 	std::vector<GameObject*> GetProtectionBalls() { return balls; }
-	void setPositionX(int _randX) { randX = _randX; }
-	void setPositionY(int _randY) { randX = _randY; }
 	void SetIncible(bool _invincible) { isInvicible = _invincible; }
 
 private:
@@ -39,7 +37,7 @@ private:
 	float timeSpawnBalls = 10.f;
 	float actualTime = 10.f;
 	int randomNumber;
-	int randX;
-	int randY;
+	float randX;
+	float randY;
 };
 
