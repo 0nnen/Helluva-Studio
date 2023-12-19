@@ -15,7 +15,6 @@ public:
 	
 	void SetProtection();
 	void SetDirection();
-
 	void Update(const float& _delta) override;
 
 	void RemoveBall(GameObject* _objectToRemove) {

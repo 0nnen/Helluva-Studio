@@ -24,7 +24,6 @@ void Entity::TakeDamage(const int& _damage)
 
 		if (healthPoint <= 0)
 		{
-			ProtectionBall::SetAlive(false);
 			this->Die();
 		}
 	}

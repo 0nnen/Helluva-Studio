@@ -15,8 +15,7 @@ public:
 	void SetSpawn(int _spawn) { spawn = _spawn; }
 	int GetSpawn() { return spawn; }
 	void SetHealth();
-	void SetPower();
-	static void SetAlive(bool _alive) { alive = _alive; }
+	void SetPower(const float& _delta);
 
 
 private:
@@ -25,6 +24,6 @@ private:
 	int spawn = 0;
 	float randX;
 	float randY;
-	static bool alive;
 	bool ballDamage;
+	float tp;
 };
