@@ -49,7 +49,7 @@ void SquareCollider::Render(sf::RenderWindow* _window)
 	if (GetOwner()) SetPosition((GetOwner()->GetPosition() + perfectPosition));
 
 		
-	/*	sf::RectangleShape rectangle = sf::RectangleShape(sf::Vector2f(widthCollider, heightCollider));
+		/*sf::RectangleShape rectangle = sf::RectangleShape(sf::Vector2f(widthCollider, heightCollider));
 		if (name == "ground") rectangle.setFillColor(sf::Color::Red);
 		rectangle.setOrigin(widthCollider / 2, heightCollider / 2);
 		rectangle.setPosition(GetPosition().x, GetPosition().y);

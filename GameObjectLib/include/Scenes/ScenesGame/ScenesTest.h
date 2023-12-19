@@ -18,6 +18,7 @@ public:
 	~ScenesTest();
 
 	void Awake() override;
+	void Preload() override;
 
 	void CreatePlatform();
 	void Collinding();

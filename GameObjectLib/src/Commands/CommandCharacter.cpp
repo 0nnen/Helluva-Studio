@@ -56,7 +56,7 @@ void JumpCharacter::Execute(const float& _delta)
 	SquareCollider* squareColliderGround = player->GetComponentsByType<SquareCollider>()[1];
 	squareColliderGround->SetActiveCollider(false);
 	squareCollider->SetActiveCollider(true);
-	rigidBody2D->AddForces(Maths::Vector2f(0, -2000));
+	rigidBody2D->AddForces(Maths::Vector2f(0, -1400));
 }
 
 ShootCharacter::ShootCharacter() {}

@@ -59,12 +59,12 @@ void Gun::Attack() {
 
 
 		if (length != 0) {
-			if (direction.x >= 0) bullets.push_back(BuilderEntityGameObject::CreateBulletGameObject("Bullet", AssetManager::GetAsset("bullet"), player, 1.f, 1.f, 25.f, 1500.f, direction / length, angleRadian, Maths::Vector2f(50.f, -15.f)));
-			else bullets.push_back(BuilderEntityGameObject::CreateBulletGameObject("Bullet", AssetManager::GetAsset("bullet"), player, 1.f, 1.f, 25.f, 1500.f, direction / length, -angleRadian + M_PI, Maths::Vector2f(50.f, 15.f)));
+			if (direction.x >= 0) bullets.push_back(BuilderEntityGameObject::CreateBulletGameObject("Bullet", AssetManager::GetAsset("bullet"), player, 1.f, 1.f, 25.f, 1500.f, direction / length, angleRadian, Maths::Vector2f(25.f, -7.f)));
+			else bullets.push_back(BuilderEntityGameObject::CreateBulletGameObject("Bullet", AssetManager::GetAsset("bullet"), player, 1.f, 1.f, 25.f, 1500.f, direction / length, -angleRadian + M_PI, Maths::Vector2f(25.f, 7.f)));
 		}
 		else
 		{
-			bullets.push_back(BuilderEntityGameObject::CreateBulletGameObject("Bullet", AssetManager::GetAsset("bullet"), player, 1.f, 1.f, 25.f, 1500.f, direction / 1, angleRadian, Maths::Vector2f(50.f, -15.f)));
+			bullets.push_back(BuilderEntityGameObject::CreateBulletGameObject("Bullet", AssetManager::GetAsset("bullet"), player, 1.f, 1.f, 25.f, 1500.f, direction / 1, angleRadian, Maths::Vector2f(25.f, -7.f)));
 		}
 		mag -= 1;
 		if (mag == 0) {

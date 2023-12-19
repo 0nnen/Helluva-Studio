@@ -13,7 +13,6 @@ void Weapon::Attack() {
 	if (!underCooldown)
 	{
 		if (!character->GetAnimation("shootArm")->GetIsPlaying() && !character->GetAnimation("shootBody")->GetIsPlaying()) {
-			if (character->GetActualAnimation()) character->GetActualAnimation()->Stop();
 			if (character->GetAnimation("idle")->GetIsPlaying()) character->GetAndSetAnimation("idle")->Stop();
 			if (character->GetAnimation("run")->GetIsPlaying()) character->GetAndSetAnimation("run")->Stop();
 			if (character->GetAnimation("jump")->GetIsPlaying()) character->GetAndSetAnimation("jump")->Stop();

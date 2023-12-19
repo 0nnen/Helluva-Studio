@@ -16,7 +16,7 @@ void RigidBody2D::Physics(const float& _delta)
 	{
 		Gravity();
 	}
-	GetOwner()->SetPosition(GetOwner()->GetPosition() + velocity * _delta);
+	GetOwner()->SetPosition(GetOwner()->GetPosition() + velocity * 0.001);
 }
 
 void RigidBody2D::Update(const float& _delta)

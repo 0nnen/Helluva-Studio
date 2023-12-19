@@ -137,16 +137,16 @@ void TileMap::LoadTile(const std::string& _jsonFileName, const std::string& _til
 						if (ContainId(idCollisionsLeft, tileNumber))
 						{
 							SquareCollider* squareColliderLeft = new SquareCollider();
-							squareColliderLeft->SetWidthCollider(epaisseur);
-							squareColliderLeft->SetHeightCollider(tileHeight - epaisseur * factor);
+							squareColliderLeft->SetWidthCollider(marge);
+							squareColliderLeft->SetHeightCollider(tileHeight - epaisseur);
 							squareColliderLeft->SetPosition(Maths::Vector2f(i * tileSize.x + marge / factor + 1.f, j * tileSize.y + tileHeight / 2));
 							collisionsLeft.push_back(squareColliderLeft);
 						}
 						if (ContainId(idCollisionsRight, tileNumber))
 						{
 							SquareCollider* squareColliderRight = new SquareCollider();
-							squareColliderRight->SetWidthCollider(epaisseur);
-							squareColliderRight->SetHeightCollider(tileHeight - epaisseur * factor);
+							squareColliderRight->SetWidthCollider(marge);
+							squareColliderRight->SetHeightCollider(tileHeight - epaisseur);
 							squareColliderRight->SetPosition(Maths::Vector2f(i * tileSize.x + tileWidth - marge / factor - 1.f, j * tileSize.y + tileHeight / 2));
 
 							collisionsRight.push_back(squareColliderRight);

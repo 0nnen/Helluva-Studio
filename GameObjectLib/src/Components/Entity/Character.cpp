@@ -7,7 +7,7 @@
 
 
 
-Character::Character() : Entity(100.f, 25.f, 400.f, 20.f, 1)
+Character::Character() : Entity(100.f, 25.f, 300.f, 20.f, 1)
 {
 	directionCharacter = false;
 	direction = Direction::Right;

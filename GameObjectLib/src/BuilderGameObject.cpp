@@ -96,6 +96,22 @@ GameObject* BuilderGameObject::CreateBackgroundGameObject(const std::string& _na
 	return gameObject;
 }
 
+GameObject* BuilderGameObject::CreateBackgroundGameObject(const std::string& _name, const float& _x, const float& _y, const float& _scalex, const float& _scaley, sf::Texture* _texture, int _number, const float& _depth)
+{
+	GameObject* gameObject = SceneManager::GetActiveScene()->CreateGameObject(_name);
+	gameObject->SetPosition(Maths::Vector2f(_x, _y));
+	gameObject->SetDepth(_depth);
+	gameObject->SetScale(Maths::Vector2f(_scalex, _scaley));
+
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(false);
+
+	Sprite* sprite = gameObject->CreateComponent<Sprite>();
+	sprite->SetTexture(_texture);
+
+	return gameObject;
+}
+
 GameObject* BuilderGameObject::CreateSliderGameObject(const std::string& _name, const float& _x, const float& _y, const float& _widthBar, const float& _heightBar, const float& _widthCursor, const float& _heightCursor, const unsigned int& _fontSize, const float& _data, const float& _maxData)
 {
 	GameObject* gameObject = SceneManager::GetActiveScene()->CreateGameObject(_name);

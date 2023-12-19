@@ -22,6 +22,10 @@
 #include "Components/SquareCollider.h"
 #include "TileMap/TileMap.h"
 
+
+# define M_PI           3.14159265358979323846  /* pi */
+
+
 GameObject* BuilderEntityGameObject::CreateMapGameObject(const std::string& _name, const std::string& _jsonFile, const std::string& _tilesetName, const int& _idEmptyCollision)
 {
 	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
@@ -48,6 +52,7 @@ GameObject* BuilderEntityGameObject::CreateBulletGameObject(const std::string& _
 
 	Sprite* sprite = gameObject->CreateComponent<Sprite>();
 	sprite->SetTexture(_textureBullet);
+	sprite->Rotate(_rotate * 180 / M_PI);
 
 	Bullet* bullet = gameObject->CreateComponent<Bullet>();
 	bullet->SetSpeed(_speed);
@@ -97,7 +102,7 @@ GameObject* BuilderEntityGameObject::CreateCharacterGameObject(const std::string
 	SquareCollider* squareCollider = gameObject->CreateComponent<SquareCollider>();
 	squareCollider->SetName("shape");
 	squareCollider->SetWidthCollider((spriteBody->GetBounds().x - 30.f) * scalex);
-	squareCollider->SetHeightCollider((spriteBody->GetBounds().y) * scaley);
+	squareCollider->SetHeightCollider((spriteBody->GetBounds().y - 10.f) * scaley);
 
 	SquareCollider* squareColliderGround = gameObject->CreateComponent<SquareCollider>();
 	squareColliderGround->SetName("ground");
