@@ -93,10 +93,10 @@ void Scene::Update(const float& _delta)
 
 void Scene::Physics(const float& _delta)
 {
-	/*for (GameObject* const& gameObject : gameObjects)
+	for (GameObject* const& gameObject : gameObjects)
 	{
-		gameObject->Render(_window);
-	}*/
+		gameObject->Physics(_delta);
+	}
 }
 
 void Scene::Render(sf::RenderWindow* _window)

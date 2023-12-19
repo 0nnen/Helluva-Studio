@@ -44,13 +44,14 @@ void Engine::Init() const
 
 void Engine::Run() const
 {
-	SceneManager::RunScene("SceneOpening");
+	SceneManager::RunScene("ScenesTest");
 	while (!shouldQuit)
 	{
 		TimeManager::Update();
 
 		const float delta = TimeManager::GetDeltaTime();
 		sf::RenderWindow* window = WindowManager::GetWindow();
+		SceneManager::GetActiveScene()->Physics(delta);
 		EventManager::Update(delta);
 		SceneManager::GetActiveScene()->Update(delta);
 

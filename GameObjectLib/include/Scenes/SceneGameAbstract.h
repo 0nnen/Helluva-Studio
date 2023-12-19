@@ -21,6 +21,7 @@ public:
 	void CreatePlayer(const float& _positionX, const float& _positionY);
 	void Preload() override;
 	void Delete() override;
+	void Physics(const float& _delta) override;
 	void Update(const float& _delta) override;
 	void Render(sf::RenderWindow* _window) override;
 

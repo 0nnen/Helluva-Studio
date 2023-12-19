@@ -9,8 +9,11 @@ class RigidBody2D final : public Component
 public:
 
 	RigidBody2D();
+
+	void Physics(const float& _delta) override;
 	void Update(const float& _delta) override;
 	void Render(sf::RenderWindow* _window) override;
+
 	void Gravity();
 	inline void AddForces(const Maths::Vector2f& _force)
 	{
@@ -19,7 +22,6 @@ public:
 		if (velocity.x < -maxVelocity.x) velocity.x = -maxVelocity.x;
 		if (velocity.y > maxVelocity.y) velocity.y = maxVelocity.y;
 		if (velocity.y < -maxVelocity.y) velocity.y = -maxVelocity.y;
-
 	}
 
 	inline float GetMass() const { return mass; }
@@ -36,9 +38,6 @@ public:
 
 		if (_newVelocity.y <= 0) velocity.y = _newVelocity.y < -maxVelocity.y ? -maxVelocity.y : _newVelocity.y;
 		else velocity.y = _newVelocity.y > maxVelocity.y ? maxVelocity.y : _newVelocity.y;
-
-		/*std::cout << "velocity x :" << velocity.x << std::endl;
-		std::cout << "velocity y :" << velocity.y << std::endl;*/
 	}
 
 	inline Maths::Vector2f GetMaxVelocity() { return maxVelocity; }
@@ -66,16 +65,10 @@ public:
 
 	inline void SetSize(const float& _width, const float& _height)
 	{
-		widthSquareCollider = (_width - killImperfection.GetX());
-		heightSquareCollider = (_height - killImperfection.GetY());
+		widthSquareCollider = (_width - killImperfection.GetX()) * GetOwner()->GetScale().x;
+		heightSquareCollider = (_height - killImperfection.GetY()) * GetOwner()->GetScale().y;
 	}
-	inline void SetScale(const float& _scaleX, const float& _scaleY)
-	{
-		scaleSquareColliderX = _scaleX;
-		widthSquareCollider *= _scaleX;
-		heightSquareCollider *= _scaleY;
-		scaleSquareColliderY = _scaleY;
-	}
+
 
 	static bool IsColliding(const RigidBody2D& _rigidBody2DA, const RigidBody2D& _rigidBody2DB);
 
@@ -95,8 +88,6 @@ private:
 	Maths::Vector2f killImperfection = Maths::Vector2f::Zero;
 	float widthSquareCollider = 1.0f;
 	float heightSquareCollider = 1.0f;
-	float scaleSquareColliderX = 1.0f;
-	float scaleSquareColliderY = 1.0f;
 
 	sf::RectangleShape rectangle;
 };

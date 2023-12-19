@@ -9,7 +9,8 @@ RigidBody2D::RigidBody2D()
 	killImperfection = Maths::Vector2f::Zero;
 	isAffectedByGravity = true;
 }
-void RigidBody2D::Update(const float& _delta)
+
+void RigidBody2D::Physics(const float& _delta)
 {
 	if (isAffectedByGravity)
 	{
@@ -18,16 +19,25 @@ void RigidBody2D::Update(const float& _delta)
 	GetOwner()->SetPosition(GetOwner()->GetPosition() + velocity * _delta);
 }
 
+void RigidBody2D::Update(const float& _delta)
+{
+
+}
+
 void RigidBody2D::Render(sf::RenderWindow* _window)
 {
-	if (false)
-	{
-		rectangle.setFillColor(sf::Color::Red);
-		rectangle.setSize(sf::Vector2f(GetWidthCollider(), GetHeightCollider()));
-		rectangle.setOrigin(sf::Vector2f(GetWidthCollider() / 2, GetHeightCollider() / 2));
-		rectangle.setPosition(sf::Vector2f(GetOwner()->GetPosition().GetX(), GetOwner()->GetPosition().GetY()));
-		_window->draw(rectangle);
-	}
+//#ifdef _DEBUG
+//	{
+//		const Maths::Vector2f position = GetOwner()->GetPosition();
+//		const Maths::Vector2f scale = GetOwner()->GetScale();
+//		rectangle.setFillColor(sf::Color::Red);
+//		rectangle.setSize(sf::Vector2f(GetWidthCollider(), GetHeightCollider()));
+//		rectangle.setScale(sf::Vector2f(scale.x, scale.y));
+//		rectangle.setOrigin(sf::Vector2f(GetWidthCollider() / 2, GetHeightCollider() / 2));
+//		rectangle.setPosition(sf::Vector2f(position.x, position.y));
+//		_window->draw(rectangle);
+//	}
+//#endif
 }
 
 void RigidBody2D::Gravity()

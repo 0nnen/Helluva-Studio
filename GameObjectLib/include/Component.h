@@ -13,6 +13,7 @@ public:
 	virtual ~Component() = default;
 
 	virtual void Start();
+	virtual void Physics(const float& _delta);
 	virtual void Update(const float& _delta);
 
 	//Render Methods

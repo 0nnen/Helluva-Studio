@@ -24,7 +24,8 @@ public:
 
 	void Create() override;
 	void Delete() override;
-	void Update(const float& _delta);
+	void Physics(const float& _delta) override;
+	void Update(const float& _delta) override;
 	void Render(sf::RenderWindow* _window) override;
 
 private:

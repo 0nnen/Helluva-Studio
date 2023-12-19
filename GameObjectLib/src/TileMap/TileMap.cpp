@@ -1,11 +1,52 @@
 #include "TileMap/TileMap.h"
 
 TileMap::TileMap() {}
-TileMap::TileMap(const std::string& _jsonFileName, const std::string& _tilesetFileName)
+TileMap::TileMap(const std::string& _jsonFileName, const std::string& _tilesetFileName, const int& _idEmptyCollision)
 {
+	LoadIdCollision(_idEmptyCollision);
 	LoadTile(_jsonFileName, _tilesetFileName);
 }
 
+void TileMap::LoadIdCollision(const int& _idEmpty)
+{
+	//ID Top : 
+	idCollisionsTop.push_back(_idEmpty + 1);
+	idCollisionsTop.push_back(_idEmpty + 2);
+	idCollisionsTop.push_back(_idEmpty + 3);
+	idCollisionsTop.push_back(_idEmpty + 4);
+	idCollisionsTop.push_back(_idEmpty + 6);
+	idCollisionsTop.push_back(_idEmpty + 9);
+	idCollisionsTop.push_back(_idEmpty + 10);
+	idCollisionsTop.push_back(_idEmpty + 12);
+	//ID Bottom : 
+	idCollisionsBottom.push_back(_idEmpty + 1);
+	idCollisionsBottom.push_back(_idEmpty + 2);
+	idCollisionsBottom.push_back(_idEmpty + 3);
+	idCollisionsBottom.push_back(_idEmpty + 5);
+	idCollisionsBottom.push_back(_idEmpty + 7);
+	idCollisionsBottom.push_back(_idEmpty + 8);
+	idCollisionsBottom.push_back(_idEmpty + 10);
+	idCollisionsBottom.push_back(_idEmpty + 15);
+
+	//ID Left : 
+	idCollisionsLeft.push_back(_idEmpty + 1);
+	idCollisionsLeft.push_back(_idEmpty + 3);
+	idCollisionsLeft.push_back(_idEmpty + 4);
+	idCollisionsLeft.push_back(_idEmpty + 5);
+	idCollisionsLeft.push_back(_idEmpty + 6);
+	idCollisionsLeft.push_back(_idEmpty + 7);
+	idCollisionsLeft.push_back(_idEmpty + 11);
+	idCollisionsLeft.push_back(_idEmpty + 13);
+	//ID Right : 
+	idCollisionsRight.push_back(_idEmpty + 1);
+	idCollisionsRight.push_back(_idEmpty + 2);
+	idCollisionsRight.push_back(_idEmpty + 4);
+	idCollisionsRight.push_back(_idEmpty + 5);
+	idCollisionsRight.push_back(_idEmpty + 8);
+	idCollisionsRight.push_back(_idEmpty + 9);
+	idCollisionsRight.push_back(_idEmpty + 11);
+	idCollisionsRight.push_back(_idEmpty + 14);
+}
 
 void TileMap::LoadTile(const std::string& _jsonFileName, const std::string& _tilesetFileName)
 {
@@ -71,32 +112,45 @@ void TileMap::LoadTile(const std::string& _jsonFileName, const std::string& _til
 					quad[3].texCoords = sf::Vector2f(tu * tileSize.x, (tv + 1) * tileSize.y);
 					if (name == "Collision" || name == std::string("Collision") && tileNumber > 0)
 					{
-						const float marge = 5.f;
+						const float marge = 10.f;
 						const float factor = 2.f;
 						const float epaisseur = marge * factor;
-						SquareCollider* squareColliderTop = new SquareCollider();
-						squareColliderTop->SetWidthCollider(tileWidth - marge);
-						squareColliderTop->SetHeightCollider(epaisseur);
-						squareColliderTop->SetPosition(Maths::Vector2f(i * tileSize.x + tileWidth / 2, j * tileSize.y + marge / factor));
-						collisionsTop.push_back(squareColliderTop);
 
-						SquareCollider* squareColliderBottom = new SquareCollider();
-						squareColliderBottom->SetWidthCollider(tileWidth - marge);
-						squareColliderBottom->SetHeightCollider(epaisseur);
-						squareColliderBottom->SetPosition(Maths::Vector2f(i * tileSize.x + tileWidth / 2, j * tileSize.y + tileHeight - marge / factor));
-						collisionsBottom.push_back(squareColliderBottom);
+						if (ContainId(idCollisionsTop, tileNumber))
+						{
+							SquareCollider* squareColliderTop = new SquareCollider();
+							squareColliderTop->SetWidthCollider(tileWidth - marge);
+							squareColliderTop->SetHeightCollider(marge);
+							squareColliderTop->SetPosition(Maths::Vector2f(i * tileSize.x + tileWidth / 2, j * tileSize.y + marge / factor + 1.f));
+							//squareColliderTop->SetShow(true);
+							collisionsTop.push_back(squareColliderTop);
+						}
+						
+						if (ContainId(idCollisionsBottom, tileNumber))
+						{
+							SquareCollider* squareColliderBottom = new SquareCollider();
+							squareColliderBottom->SetWidthCollider(tileWidth - marge);
+							squareColliderBottom->SetHeightCollider(marge);
+							squareColliderBottom->SetPosition(Maths::Vector2f(i * tileSize.x + tileWidth / 2, j * tileSize.y + tileHeight - marge / factor - 1.f));
+							collisionsBottom.push_back(squareColliderBottom);
+						}
+						if (ContainId(idCollisionsLeft, tileNumber))
+						{
+							SquareCollider* squareColliderLeft = new SquareCollider();
+							squareColliderLeft->SetWidthCollider(epaisseur);
+							squareColliderLeft->SetHeightCollider(tileHeight - epaisseur * factor);
+							squareColliderLeft->SetPosition(Maths::Vector2f(i * tileSize.x + marge / factor + 1.f, j * tileSize.y + tileHeight / 2));
+							collisionsLeft.push_back(squareColliderLeft);
+						}
+						if (ContainId(idCollisionsRight, tileNumber))
+						{
+							SquareCollider* squareColliderRight = new SquareCollider();
+							squareColliderRight->SetWidthCollider(epaisseur);
+							squareColliderRight->SetHeightCollider(tileHeight - epaisseur * factor);
+							squareColliderRight->SetPosition(Maths::Vector2f(i * tileSize.x + tileWidth - marge / factor - 1.f, j * tileSize.y + tileHeight / 2));
 
-						SquareCollider* squareColliderLeft = new SquareCollider();
-						squareColliderLeft->SetWidthCollider(epaisseur);
-						squareColliderLeft->SetHeightCollider(tileHeight - epaisseur);
-						squareColliderLeft->SetPosition(Maths::Vector2f(i * tileSize.x + marge , j * tileSize.y + tileHeight / 2));
-						collisionsLeft.push_back(squareColliderLeft);
-
-						SquareCollider* squareColliderRight = new SquareCollider();
-						squareColliderRight->SetWidthCollider(epaisseur);
-						squareColliderRight->SetHeightCollider(tileHeight - epaisseur);
-						squareColliderRight->SetPosition(Maths::Vector2f(i * tileSize.x + tileWidth - marge, j * tileSize.y + tileHeight / 2));
-						collisionsRight.push_back(squareColliderRight);
+							collisionsRight.push_back(squareColliderRight);
+						}
 					}
 				}
 			}

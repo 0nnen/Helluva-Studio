@@ -25,9 +25,8 @@ void InputCharacter::Update(const float& _delta) {
 	if (commandMoves)
 	{
 		if (!character->GetAnimation("run")->GetIsPlaying()) {
-			if (character->GetActualAnimation()) character->GetActualAnimation()->Stop();
-			if (character->GetAnimation("jump")) character->GetAnimation("jump")->Stop();
-			if (character->GetAnimation("idle")) character->GetAnimation("idle")->Stop();
+			if (character->GetAnimation("jump")->GetIsPlaying()) character->GetAnimation("jump")->Stop();
+			if (character->GetAnimation("idle")->GetIsPlaying()) character->GetAnimation("idle")->Stop();
 			character->GetAndSetAnimation("run")->Play();
 		}
 		commandMoves->Execute(_delta);
@@ -36,8 +35,11 @@ void InputCharacter::Update(const float& _delta) {
 	{
 		if (character->GetAnimation("run")->GetIsPlaying()) {
 			character->GetAnimation("run")->Stop();
-			if (character->GetAnimation("jump")) character->GetAnimation("jump")->Stop();
-			if (!character->GetAnimation("idle")) character->GetAnimation("idle")->Play();
+			if (!character->GetOnFloor()) character->GetAnimation("jump")->Play();
+			else
+			{
+				if (!character->GetAnimation("idle")) character->GetAnimation("idle")->Play();
+			}
 		}
 		RigidBody2D* rigidBody = GetOwner()->GetComponent<RigidBody2D>();
 		Maths::Vector2f velocity = rigidBody->GetVelocity();
@@ -54,11 +56,11 @@ void InputCharacter::Update(const float& _delta) {
 				}
 			}
 			else {
-				if (velocity.GetX() - 0.5f > 0.f) {
-					rigidBody->AddForces(Maths::Vector2f(-0.5f, 0.f));
+				if (velocity.GetX() - 0.3f > 0.f) {
+					rigidBody->AddForces(Maths::Vector2f(-0.3f, 0.f));
 				}
-				else if (velocity.GetX() + 0.5f < 0.f) {
-					rigidBody->AddForces(Maths::Vector2f(0.5f, 0.f));
+				else if (velocity.GetX() + 0.3f < 0.f) {
+					rigidBody->AddForces(Maths::Vector2f(0.3f, 0.f));
 				}
 				else {
 					velocity.SetX(0.f);
@@ -73,8 +75,8 @@ void InputCharacter::Update(const float& _delta) {
 	if (commandJump && !GetOwner()->GetComponent<RigidBody2D>()->GetIsGravity())
 	{
 		if (!character->GetAnimation("jump")->GetIsPlaying()) {
-			if (character->GetActualAnimation()) character->GetActualAnimation()->Stop();
-			if (character->GetAndSetAnimation("idle")) character->GetAndSetAnimation("idle")->Stop();
+			if (character->GetAnimation("idle")->GetIsPlaying()) character->GetAndSetAnimation("idle")->Stop();
+			if (character->GetAnimation("run")->GetIsPlaying()) character->GetAndSetAnimation("run")->Stop();
 			if (!character->GetAnimation("shootArm")->GetIsPlaying() && !character->GetAnimation("shootBody")->GetIsPlaying())
 				character->GetAndSetAnimation("jump")->Play();
 		}

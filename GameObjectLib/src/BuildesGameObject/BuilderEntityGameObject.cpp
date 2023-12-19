@@ -22,13 +22,14 @@
 #include "Components/SquareCollider.h"
 #include "TileMap/TileMap.h"
 
-GameObject* BuilderEntityGameObject::CreateMapGameObject(const std::string& _name, const std::string& _jsonFile, const std::string& _tilesetName)
+GameObject* BuilderEntityGameObject::CreateMapGameObject(const std::string& _name, const std::string& _jsonFile, const std::string& _tilesetName, const int& _idEmptyCollision)
 {
 	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
 	gameObject->SetPosition(Maths::Vector2f(0, 0));
 	gameObject->SetDepth(0.1f);
 
 	TileMap* tileMap = gameObject->CreateComponent<TileMap>();
+	tileMap->LoadIdCollision(_idEmptyCollision);
 	tileMap->LoadTile(_jsonFile, _tilesetName);
 
 	return gameObject;
@@ -39,17 +40,18 @@ GameObject* BuilderEntityGameObject::CreateBulletGameObject(const std::string& _
 	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
 	gameObject->SetPosition(_position);
 	gameObject->SetRotation(_rotate);
+	gameObject->SetScale(Maths::Vector2f(_scalex, _scaley));
+	gameObject->SetDepth(0.5f);
+
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(false);
 
 	Sprite* sprite = gameObject->CreateComponent<Sprite>();
 	sprite->SetTexture(_textureBullet);
-	sprite->SetSprite();
 
 	Bullet* bullet = gameObject->CreateComponent<Bullet>();
 	bullet->SetSpeed(_speed);
 
-	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
-	rigidBody2D->SetSize(sprite->GetBounds().x, sprite->GetBounds().y);
-	rigidBody2D->SetIsGravity(false);
 	rigidBody2D->AddForces(_direction * bullet->GetSpeed());
 
 	SquareCollider* squareCollider = gameObject->CreateComponent<SquareCollider>();
@@ -71,31 +73,40 @@ GameObject* BuilderEntityGameObject::CreateCharacterGameObject(const std::string
 	gameObject->SetDepth(0.9f);
 	gameObject->SetScale(Maths::Vector2f(scalex, scaley));
 
+
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(true);
+	rigidBody2D->SetMass(0.5);
+	rigidBody2D->SetMaxVelocity(Maths::Vector2f(300, 5000));
+
+
 	Character* character = gameObject->CreateComponent<Character>();
+
 
 	Sprite* spriteBody = gameObject->CreateComponent<Sprite>();
 	spriteBody->SetName("body");
 	spriteBody->SetTexture(texture);
-	spriteBody->SetScale(scalex, scaley);
-	spriteBody->SetSprite();
+	spriteBody->SetRecTextureWithFrame(0, 0, 10, 1);
 
 	Sprite* spriteArm = gameObject->CreateComponent<Sprite>();
 	spriteArm->SetName("arm");
 	spriteArm->SetTexture(texture);
-	spriteArm->SetScale(scalex, scaley);
-	spriteArm->SetSprite();
 	spriteArm->SetActiveAndVisible(false);
 
-	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
-	rigidBody2D->SetIsGravity(true);
-	rigidBody2D->SetSize(spriteBody->GetBounds().x, spriteBody->GetBounds().y);
-	rigidBody2D->SetKillImperfection(Maths::Vector2f(8.f, 8.f));
-	rigidBody2D->SetScale(scalex, scaley);
-	rigidBody2D->SetMass(1.2);
-	rigidBody2D->SetMaxVelocity(Maths::Vector2f(300,1000));
-	spriteBody->SetRecTextureWithFrame(0, 0, 10, 1);
 
-	std::cout << "Max Veloc" << rigidBody2D->GetMaxVelocity().x;
+	SquareCollider* squareCollider = gameObject->CreateComponent<SquareCollider>();
+	squareCollider->SetName("shape");
+	squareCollider->SetWidthCollider((spriteBody->GetBounds().x - 30.f) * scalex);
+	squareCollider->SetHeightCollider((spriteBody->GetBounds().y) * scaley);
+
+	SquareCollider* squareColliderGround = gameObject->CreateComponent<SquareCollider>();
+	squareColliderGround->SetName("ground");
+	squareColliderGround->SetWidthCollider((spriteBody->GetBounds().x - 30.f) * scalex);
+	squareColliderGround->SetHeightCollider(2);
+	squareColliderGround->SetPerfectPosition(Maths::Vector2f(0, squareCollider->GetBottomCollider() + 1.f));
+	squareColliderGround->SetActiveCollider(false);
+
+
 	Animation* idle = gameObject->CreateComponent<Animation>();
 	idle->SetLoop(-1);
 	idle->SetName("idle");
@@ -131,10 +142,6 @@ GameObject* BuilderEntityGameObject::CreateCharacterGameObject(const std::string
 	shootArm->SetAnimationTime(0.2f);
 	shootArm->SetSpriteSheet(AssetManager::GetAsset("shootArm"));
 
-	SquareCollider* squareCollider = gameObject->CreateComponent<SquareCollider>();
-	squareCollider->SetWidthCollider((spriteBody->GetBounds().x - 20) * scalex);
-	squareCollider->SetHeightCollider((spriteBody->GetBounds().y - 15) * scaley);
-
 	idle->Play();
 
 	character->AddAnimation("idle", idle);
@@ -143,7 +150,9 @@ GameObject* BuilderEntityGameObject::CreateCharacterGameObject(const std::string
 	character->AddAnimation("shootBody", shootBody);
 	character->AddAnimation("shootArm", shootArm);
 
+
 	InputCharacter* inputCharacter = gameObject->CreateComponent<InputCharacter>();
+
 
 	WeaponsContainer* weaponsContainer = gameObject->CreateComponent<WeaponsContainer>();
 	weaponsContainer->AddNewWeapon(BuilderEntityGameObject::CreateWeaponGameObject(std::string("Gun"), gameObject, Weapon::TypeWeapon::Gun, _x, _y, 25.f, 100.f, 0.02f));
@@ -168,10 +177,9 @@ GameObject* BuilderEntityGameObject::CreatePlatformCollisionGameObject(const std
 
 	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
 	rigidBody2D->SetIsGravity(false);
+	rigidBody2D->SetSize(200.f, 50.f);
 
 	Rectangle* rectangle = gameObject->CreateComponent<Rectangle>();
-	rectangle->SetSize(200.f, 50.f);
-	rectangle->SetScale(_scalex, _scaley);
 
 	return gameObject;
 
@@ -205,6 +213,8 @@ GameObject* BuilderEntityGameObject::CreateWeaponGameObject(const std::string& _
 GameObject* BuilderEntityGameObject::CreatePlatformTriangleCollisionGameObject(const std::string& _name, const float& _base, const float& _height, const float& _widthPos, const float& _heightPos, const float& _rotation)
 {
 	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
+	gameObject->SetPosition(Maths::Vector2f(_widthPos, _heightPos));
+	gameObject->SetRotation(_rotation);
 
 	Triangle* triangle = gameObject->CreateComponent<Triangle>();
 	triangle->SetBase(_base);
@@ -224,11 +234,8 @@ GameObject* BuilderEntityGameObject::CreatePlateformGameObject(const std::string
 	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
 	rigidBody2D->SetIsGravity(false);
 	rigidBody2D->SetSize(200.f, 50.f);
-	rigidBody2D->SetScale(_scalex, _scaley);
 
 	Rectangle* rectangle = gameObject->CreateComponent<Rectangle>();
-	rectangle->SetSize(200.f, 50.f);
-	rectangle->SetScale(_scalex, _scaley);
 
 	return gameObject;
 }
@@ -237,15 +244,21 @@ GameObject* BuilderEntityGameObject::CreateEnemyAGameObject(const std::string& _
 {
 	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
 	gameObject->SetPosition(Maths::Vector2f(_x, _y));
+	gameObject->SetScale(Maths::Vector2f(scalex, scaley));
 	gameObject->SetDepth(0.9f);
 
+
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(true);
+
+
 	EnemyA* enemy = gameObject->CreateComponent<EnemyA>();
+
 
 	Sprite* spriteBody = gameObject->CreateComponent<Sprite>();
 	spriteBody->SetName("bodyEnemyA");
 	spriteBody->SetTexture(_texture);
-	spriteBody->SetScale(scalex, scaley);
-	spriteBody->SetSprite();
+
 
 	Animation* idle = gameObject->CreateComponent<Animation>();
 	idle->SetLoop(-1);
@@ -261,19 +274,15 @@ GameObject* BuilderEntityGameObject::CreateEnemyAGameObject(const std::string& _
 	shoot->SetAnimationTime(1);
 	shoot->SetSpriteSheet(AssetManager::GetAsset("shootEnemyA"));
 
-	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
-	rigidBody2D->SetIsGravity(true);
-	rigidBody2D->SetSize(spriteBody->GetBounds().x, spriteBody->GetBounds().y);
-	rigidBody2D->SetScale(scalex, scaley);
-
-	SquareCollider* squareCollider = gameObject->CreateComponent<SquareCollider>();
-	squareCollider->SetWidthCollider(spriteBody->GetBounds().x);
-	squareCollider->SetHeightCollider(spriteBody->GetBounds().y);
-
 	idle->Play();
 
 	enemy->AddAnimation("idle", idle);
 	enemy->AddAnimation("shoot", shoot);
+
+
+	SquareCollider* squareCollider = gameObject->CreateComponent<SquareCollider>();
+	squareCollider->SetWidthCollider(spriteBody->GetBounds().x);
+	squareCollider->SetHeightCollider(spriteBody->GetBounds().y);
 
 
 
@@ -297,14 +306,15 @@ GameObject* BuilderEntityGameObject::CreateHadesGameObject(const std::string& _n
 	gameObject->SetScale(Maths::Vector2f(scalex, scaley));
 	gameObject->SetDepth(0.9f);
 
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(false);
+
 	Hades* enemy = gameObject->CreateComponent<Hades>();
 	enemy->SetInvicible(false);
 
 	Sprite* spriteBody = gameObject->CreateComponent<Sprite>();
 	spriteBody->SetName("bodyEnemyA");
 	spriteBody->SetTexture(_texture);
-	spriteBody->SetScale(scalex, scaley);
-	spriteBody->SetSprite();
 
 	Animation* idle = gameObject->CreateComponent<Animation>();
 	idle->SetLoop(-1);
@@ -333,18 +343,13 @@ GameObject* BuilderEntityGameObject::CreateHadesGameObject(const std::string& _n
 	enemy->AddAnimation("roar", roar);
 	enemy->AddAnimation("attack", attack);
 
-	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
-	rigidBody2D->SetIsGravity(false);
-	rigidBody2D->SetScale(scalex, scaley);
-	rigidBody2D->SetSize(spriteBody->GetBounds().x, spriteBody->GetBounds().y);
-
 	spriteBody->SetRecTextureWithFrame(0, 0, 6, 1);
 
 	SquareCollider* squareCollider = gameObject->CreateComponent<SquareCollider>();
 	squareCollider->SetWidthCollider(spriteBody->GetBounds().x);
 	squareCollider->SetHeightCollider(spriteBody->GetBounds().y);
 
-	std::cout << "X :" << rigidBody2D->GetWidthCollider() << "Y :" << rigidBody2D->GetHeightCollider() << std::endl;
+
 	HealthPointBar* healthPointBar = gameObject->CreateComponent<HealthPointBar>();
 	healthPointBar->SetScale(scalex, scaley);
 	healthPointBar->SetSize(spriteBody->GetSizeV2f().GetX() + 25, 5);
@@ -367,15 +372,12 @@ GameObject* BuilderEntityGameObject::CreateProtectionBallGameObject(const std::s
 
 	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
 	rigidBody2D->SetIsGravity(false);
-	rigidBody2D->SetScale(scalex, scaley);
 	rigidBody2D->SetKillImperfection(Maths::Vector2f(22., 22.f));
 
 	Sprite* spriteBody = gameObject->CreateComponent<Sprite>();
 	spriteBody->SetName("spriteProtectionBall");
 	spriteBody->SetTexture(_texture);
 	spriteBody->SetRecTextureWithFrame(_number % 4, _number % 2, 4, 2);
-	spriteBody->SetScale(scalex, scaley);
-	spriteBody->SetSprite();
 
 
 	SquareCollider* squareCollider = gameObject->CreateComponent<SquareCollider>();
@@ -401,15 +403,12 @@ GameObject* BuilderEntityGameObject::CreateProtectionGameObject(const std::strin
 
 	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
 	rigidBody2D->SetIsGravity(false);
-	rigidBody2D->SetScale(scalex, scaley);
 	rigidBody2D->SetKillImperfection(Maths::Vector2f(22., 22.f));
 
 	Sprite* spriteBody = gameObject->CreateComponent<Sprite>();
 	spriteBody->SetName("spriteProtection");
 	spriteBody->SetTexture(_texture);
 	spriteBody->SetRecTextureWithFrame(0, 0, 6, 1);
-	spriteBody->SetScale(scalex, scaley);
-	spriteBody->SetSprite();
 
 	Animation* animation = gameObject->CreateComponent<Animation>();
 	animation->SetLoop(1);
@@ -433,8 +432,6 @@ GameObject* BuilderEntityGameObject::CreateFireBallEnemy(const std::string& _nam
 	Sprite* sprite = gameObject->CreateComponent<Sprite>();
 	sprite->SetName("FireBall");
 	sprite->SetTexture(_textureBullet);
-	sprite->SetScale(_scalex, _scalex);
-	sprite->SetSprite();
 
 	Animation* idle = gameObject->CreateComponent<Animation>();
 	idle->SetLoop(-1);

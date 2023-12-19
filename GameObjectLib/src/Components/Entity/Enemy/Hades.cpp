@@ -44,15 +44,11 @@ void Hades::SetDirection()
 
 	if (positioHades.GetX() <= positionPlayer.GetX())
 	{
-		for (Sprite* sprite : GetOwner()->GetComponentsByType<Sprite>()) {
-			if (sprite) sprite->SetScale(-1 * GetOwner()->GetScale().GetX(), GetOwner()->GetScale().GetY());
-		}
+		GetOwner()->SetScale(Maths::Vector2f(-std::abs(GetOwner()->GetScale().x), GetOwner()->GetScale().y));
 	}
 	else
 	{
-		for (Sprite* sprite : GetOwner()->GetComponentsByType<Sprite>()) {
-			if (sprite) sprite->SetScale(GetOwner()->GetScale().GetX(), GetOwner()->GetScale().GetY());
-		}
+		GetOwner()->SetScale(Maths::Vector2f(std::abs(GetOwner()->GetScale().x), GetOwner()->GetScale().y));
 	}
 }
 

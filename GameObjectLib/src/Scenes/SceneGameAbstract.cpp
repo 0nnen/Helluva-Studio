@@ -103,6 +103,13 @@ void SceneGameAbstract::ManageDefaultButtonsPause(bool _state)
 	this->pauseQuitButton->SetActiveAndVisible(_state);
 }
 
+void SceneGameAbstract::Physics(const float& _delta)
+{
+	if (!isPause)
+	{
+		Scene::Physics(_delta);
+	}
+}
 
 void SceneGameAbstract::Update(const float& _delta)
 {

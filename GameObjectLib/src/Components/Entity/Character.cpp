@@ -7,7 +7,7 @@
 
 
 
-Character::Character() : Entity()
+Character::Character() : Entity(100.f, 25.f, 400.f, 20.f, 1)
 {
 	directionCharacter = false;
 	direction = Direction::Right;
@@ -23,15 +23,11 @@ void Character::SetDirection(Direction _newDirection) {
 		direction = _newDirection;
 		if (direction == Direction::Left)
 		{
-            for (Sprite* sprite : GetOwner()->GetComponentsByType<Sprite>()) {
-                if(sprite) sprite->SetScale(-1 * GetOwner()->GetScale().GetX(), GetOwner()->GetScale().GetY());
-            }
+            GetOwner()->SetScale(Maths::Vector2f(-std::abs(GetOwner()->GetScale().x), GetOwner()->GetScale().y));
 		}
 		else if (direction == Direction::Right)
 		{
-            for (Sprite* sprite : GetOwner()->GetComponentsByType<Sprite>()) {
-                if (sprite) sprite->SetScale(GetOwner()->GetScale().GetX(), GetOwner()->GetScale().GetY());
-            }
+            GetOwner()->SetScale(Maths::Vector2f(std::abs(GetOwner()->GetScale().x), GetOwner()->GetScale().y));
 		}
 }
 

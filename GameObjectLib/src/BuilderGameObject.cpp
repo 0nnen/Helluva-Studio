@@ -24,14 +24,11 @@ GameObject* BuilderGameObject::CreateButtonGameObject(const std::string& _name, 
 	gameObject->SetDepth(1.f);
 	gameObject->SetScale(Maths::Vector2f(_scaleX, _scaleY));
 
-	Sprite* sprite = gameObject->CreateComponent<Sprite>();
-	sprite->SetTexture(_texture);
-	sprite->SetScale(_scaleX, _scaleY);
-
 	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
-	rigidBody2D->SetSize(sprite->GetBounds().x, sprite->GetBounds().y);
 	rigidBody2D->SetIsGravity(false);
 
+	Sprite* sprite = gameObject->CreateComponent<Sprite>();
+	sprite->SetTexture(_texture);
 	sprite->SetRecTexture(_frameWidth, _frameHeight, sprite->GetBounds().x / _totalFrameWidth, sprite->GetBounds().y / _totalFrameHeight);
 
 	Button* button = gameObject->CreateComponent<Button>();
@@ -54,6 +51,9 @@ GameObject* BuilderGameObject::CreateButtonGameObject(const std::string& _name, 
 	gameObject->SetLayer(LayerType::HUD);
 	gameObject->SetDepth(1.f);
 
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(false);
+
 	Button* button = gameObject->CreateComponent<Button>();
 	button->SetPosition(_x, _y);
 	button->SetFontSize(_fontSize);
@@ -71,15 +71,11 @@ GameObject* BuilderGameObject::CreateBackgroundGameObject(const std::string& _na
 	gameObject->SetDepth(0.f);
 	gameObject->SetScale(Maths::Vector2f(_scalex, _scaley));
 
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(false);
+
 	Sprite* sprite = gameObject->CreateComponent<Sprite>();
 	sprite->SetTexture(_texture);
-	sprite->SetScale(_scalex, _scaley);
-
-	float scalerX = (float)WindowManager::GetWindowWidth() / _texture->getSize().x;
-	float scalerY = (float)WindowManager::GetWindowHeight() / _texture->getSize().y;
-	sprite->SetScale(scalerX, scalerY);
-	sprite->SetOrigin();
-	sprite->SetSprite();
 
 	return gameObject;
 }
@@ -91,14 +87,11 @@ GameObject* BuilderGameObject::CreateBackgroundGameObject(const std::string& _na
 	gameObject->SetDepth(0.f);
 	gameObject->SetScale(Maths::Vector2f(_scalex, _scaley));
 
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(false);
+
 	Sprite* sprite = gameObject->CreateComponent<Sprite>();
 	sprite->SetTexture(_texture);
-	sprite->SetScale(_scalex, _scaley);
-
-	//float scalerX = (float)WindowManager::GetWindowWidth() / _texture->getSize().x;
-	//float scalerY = (float)WindowManager::GetWindowHeight() / _texture->getSize().y;
-	sprite->SetOrigin();
-	sprite->SetSprite();
 
 	return gameObject;
 }
@@ -107,6 +100,9 @@ GameObject* BuilderGameObject::CreateSliderGameObject(const std::string& _name, 
 {
 	GameObject* gameObject = SceneManager::GetActiveScene()->CreateGameObject(_name);
 	gameObject->SetPosition(Maths::Vector2f(_x, _y));
+
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(false);
 
 	Slider* slider = gameObject->CreateComponent<Slider>();
 	slider->SetMaxData(_maxData);
@@ -125,6 +121,9 @@ GameObject* BuilderGameObject::CreateSliderGameObject(const std::string& _name, 
 	GameObject* gameObject = SceneManager::GetActiveScene()->CreateGameObject(_name);
 	gameObject->SetPosition(Maths::Vector2f(_x, _y));
 
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(false);
+
 	Slider* slider = gameObject->CreateComponent<Slider>();
 	slider->SetMaxData(_maxData);
 	slider->SetMinData(_minData);
@@ -142,6 +141,9 @@ GameObject* BuilderGameObject::CreateInputGameObject(const std::string& _name, c
 {
 	GameObject* gameObject = SceneManager::GetActiveScene()->CreateGameObject(_name);
 	gameObject->SetPosition(Maths::Vector2f(_x, _y));
+
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(false);
 
 	Input* input = gameObject->CreateComponent<Input>();
 	input->SetInput(50);

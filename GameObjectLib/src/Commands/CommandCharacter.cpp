@@ -2,6 +2,7 @@
 #include "BuilderGameObject.h"
 #include "Components/Entity/Character.h"
 #include "Components/Animation.h"
+#include "Components/SquareCollider.h"
 #include "Components/ComponentsGame/WeaponsContainer.h"
 #include "Components/ComponentsGame/Weapon.h"
 #include "Components/ComponentsGame/Gun.h"
@@ -51,8 +52,11 @@ void JumpCharacter::Execute(const float& _delta)
 {
 	GameObject* player = SceneManager::GetActiveGameScene()->GetPlayer();
 	RigidBody2D* rigidBody2D = player->GetComponent<RigidBody2D>();
-	rigidBody2D->SetIsGravity(true);
-	rigidBody2D->AddForces(Maths::Vector2f(0, -500));
+	SquareCollider* squareCollider = player->GetComponentsByType<SquareCollider>()[0];
+	SquareCollider* squareColliderGround = player->GetComponentsByType<SquareCollider>()[1];
+	squareColliderGround->SetActiveCollider(false);
+	squareCollider->SetActiveCollider(true);
+	rigidBody2D->AddForces(Maths::Vector2f(0, -2000));
 }
 
 ShootCharacter::ShootCharacter() {}

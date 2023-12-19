@@ -55,17 +55,13 @@ Animation* FireBullet::GetAndSetAnimation(const std::string& _name)
 void FireBullet::SetDirection(Direction _newDirection) {
 	direction = _newDirection;
 	if (direction == Direction::Left)
-	{
-		for (Sprite* sprite : GetOwner()->GetComponentsByType<Sprite>()) {
-			if (sprite) sprite->SetScale(-1 * GetOwner()->GetScale().GetX(), GetOwner()->GetScale().GetY());
+		{
+            GetOwner()->SetScale(Maths::Vector2f(-std::abs(GetOwner()->GetScale().x), GetOwner()->GetScale().y));
 		}
-	}
-	else if (direction == Direction::Right)
-	{
-		for (Sprite* sprite : GetOwner()->GetComponentsByType<Sprite>()) {
-			if (sprite) sprite->SetScale(GetOwner()->GetScale().GetX(), GetOwner()->GetScale().GetY());
+		else if (direction == Direction::Right)
+		{
+            GetOwner()->SetScale(Maths::Vector2f(std::abs(GetOwner()->GetScale().x), GetOwner()->GetScale().y));
 		}
-	}
 }
 
 void FireBullet::Collision()
