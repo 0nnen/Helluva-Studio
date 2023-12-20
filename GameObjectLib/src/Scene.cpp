@@ -13,12 +13,13 @@ Scene::Scene(const std::string& _name)
 //Initialize the scene
 void Scene::Preload() 
 {
-	language = LanguageManager::GetInstance()->GetLanguage();
+	
 }
 
 //Create Object from the scene
 void Scene::Create() 
 {
+	language = LanguageManager::GetInstance()->GetLanguage();
 	CameraManager::DefaultZoom();
 	fadeOutRectangle.setSize(sf::Vector2f(WindowManager::GetFloatWindowWidth(), WindowManager::GetFloatWindowHeight()));
 	fadeInRectangle.setSize(sf::Vector2f(WindowManager::GetFloatWindowWidth(), WindowManager::GetFloatWindowHeight()));

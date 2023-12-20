@@ -57,15 +57,39 @@ GameObject* BuilderGameObject::CreateButtonGameObject(const std::string& _name, 
 
 	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
 	rigidBody2D->SetIsGravity(false);
+	rigidBody2D->SetSize(Maths::Vector2f(300, 100));
 
 	Button* button = gameObject->CreateComponent<Button>();
 	button->SetPosition(_x, _y);
 	button->SetFontSize(_fontSize);
-	button->SetText(_name, sf::Color::Black);
+	button->SetText(_name, sf::Color::White);
 	button->SetOrigin();
 
 	return gameObject;
 }
+
+GameObject* BuilderGameObject::CreateButtonGameObject(const std::string& _name, const float& _x, const float& _y, const float& _width, const float& _height, const unsigned int& _fontSize)
+{
+	GameObject* gameObject = SceneManager::GetActiveScene()->CreateGameObject(_name);
+	gameObject->SetPosition(Maths::Vector2f(_x, _y));
+	gameObject->SetActiveAndVisible(true);
+	gameObject->SetLayer(LayerType::HUD);
+	gameObject->SetDepth(1.f);
+
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(false);
+	rigidBody2D->SetSize(Maths::Vector2f(_width, _height));
+
+
+	Button* button = gameObject->CreateComponent<Button>();
+	button->SetPosition(_x, _y);
+	button->SetFontSize(_fontSize);
+	button->SetText(_name, sf::Color::White);
+	button->SetOrigin();
+
+	return gameObject;
+}
+
 
 
 GameObject* BuilderGameObject::CreateBackgroundGameObject(const std::string& _name, const float& _x, const float& _y, const float& _scalex, const float& _scaley, sf::Texture* _texture)
@@ -84,7 +108,7 @@ GameObject* BuilderGameObject::CreateBackgroundGameObject(const std::string& _na
 	return gameObject;
 }
 
-GameObject* BuilderGameObject::CreateBackgroundGameObject(const std::string& _name, const float& _x, const float& _y, const Maths::Vector2f& _size,const float& _scalex, const float& _scaley, const LayerType& _layer, const sf::Color& _color)
+GameObject* BuilderGameObject::CreateBackgroundGameObject(const std::string& _name, const float& _x, const float& _y, const Maths::Vector2f& _size, const float& _scalex, const float& _scaley, const LayerType& _layer, const sf::Color& _color)
 {
 	GameObject* gameObject = SceneManager::GetActiveScene()->CreateGameObject(_name);
 	gameObject->SetPosition(Maths::Vector2f(_x, _y));
@@ -193,7 +217,7 @@ GameObject* BuilderGameObject::CreateInputGameObject(const std::string& _name, c
 }
 
 
-GameObject* BuilderGameObject::CreateDropDownGameObject(const std::string& _name, const float& _x, const float& _y, std::vector<std::string>& _buttons)
+GameObject* BuilderGameObject::CreateDropDownGameObject(const std::string& _name, const float& _x, const float& _y, std::vector<std::string>& _buttons, const unsigned int& _fontSize)
 {
 	GameObject* gameObject = SceneManager::GetActiveScene()->CreateGameObject(_name);
 	gameObject->SetPosition(Maths::Vector2f(_x, _y));
@@ -203,15 +227,19 @@ GameObject* BuilderGameObject::CreateDropDownGameObject(const std::string& _name
 
 	Button* button = nullptr;
 
-	for (const std::string& button : _buttons)
+	for (const std::string& _button : _buttons)
 	{
-		//button = BuilderGameObject::CreateButtonGameObject();
+		button = gameObject->CreateComponent<Button>();
+		button->SetPosition(_x, _y);
+		button->SetFontSize(_fontSize);
+		button->SetText(_button, sf::Color::White);
+		button->SetOrigin();
 	}
 
 	return gameObject;
 }
 
-GameObject* BuilderGameObject::CreateTextDialogueGameObject(const std::string& _name, const std::string& _firstText ,const float& _x, const float& _y, const float& _width, const float& _height, const unsigned int& _fontSize, const sf::Uint32& _style, const sf::Color& _color)
+GameObject* BuilderGameObject::CreateTextDialogueGameObject(const std::string& _name, const std::string& _firstText, const float& _x, const float& _y, const float& _width, const float& _height, const unsigned int& _fontSize, const sf::Uint32& _style, const sf::Color& _color)
 {
 	GameObject* gameObject = SceneManager::GetActiveScene()->CreateGameObject(_name);
 	gameObject->SetPosition(Maths::Vector2f(_x, _y));
@@ -231,8 +259,8 @@ GameObject* BuilderGameObject::CreateTextDialogueGameObject(const std::string& _
 	Text* text = gameObject->CreateComponent<Text>();
 	text->SetTitle(_name, _fontSize + 12, styleBold, sf::Color::White);
 	text->SetText(_firstText, _fontSize, _style, _color);
-	text->SetPositionTitle(Maths::Vector2f(_x -_width/2 + 10, _y - _height / 2));
-	text->SetPositionText(Maths::Vector2f(_x -_width/2 + 10, _y ));
+	text->SetPositionTitle(Maths::Vector2f(_x - _width / 2 + 10, _y - _height / 2));
+	text->SetPositionText(Maths::Vector2f(_x - _width / 2 + 10, _y));
 
 	return gameObject;
 }

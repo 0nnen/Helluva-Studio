@@ -1,4 +1,5 @@
 #include "Components/UIElements/Button.h"
+#include "Components/RigidBody2D.h"
 #include "Managers/WindowManager.h"
 #include "Managers/HUDManager.h"
 #include "Managers/CameraManager.h"
@@ -8,16 +9,15 @@
 
 Button::Button()
 {
-	this->height = 50.f;
-	this->width = 100.f;
+	this->height = 0.f;
+	this->width = 0.f;
 	this->fontSize = 16;
-	this->rectangle.setFillColor(sf::Color::White);
-	this->rectangle.setOutlineColor(sf::Color::Black);
-	text.setFillColor(sf::Color::Black);
+	this->rectangle.setFillColor(sf::Color(90, 34, 139));
+	this->rectangle.setOutlineColor(sf::Color::White);
+	text.setFillColor(sf::Color::White);
 	this->SetFontSize(16);
 
 	this->SetFont(*FontManager::GetFont("PixelNES"));
-	this->SetSize();
 	this->SetOrigin();
 }
 
@@ -37,6 +37,12 @@ void Button::SetSize(const float& _width, const float& _height)
 	width = _width;
 	height = _height;
 	rectangle.setSize(sf::Vector2f(width, height));
+}
+
+void Button::SetScale(const Maths::Vector2f& _scale)
+{
+	rectangle.setScale(_scale.x, _scale.y);
+	text.setScale(_scale.x, _scale.y);
 }
 
 void Button::SetPosition(const float& _x, const float& _y)
@@ -77,13 +83,21 @@ void Button::SetText(const std::string& _text, const sf::Color& _color)
 void Button::Render(sf::RenderWindow* _window)
 {
 	Component::Render(_window);
-	const auto position = GetOwner()->GetPosition();
+	const Maths::Vector2f position = GetOwner()->GetPosition();
 	SetPosition(position.x, position.y);
-	if (needBackground && !rectangle.getTexture()) {
-		rectangle.setFillColor(sf::Color::White); 
-		rectangle.setSize(sf::Vector2f(width, height));
+	const  Maths::Vector2f scale = GetOwner()->GetScale();
+	SetScale(scale);
+	if (width == 0 && height == 0)
+	{
+		RigidBody2D* rigidBody2D = GetOwner()->GetComponent<RigidBody2D>();
+		SetSize(rigidBody2D->GetWidthCollider(), rigidBody2D->GetHeightCollider());	
 	}
 
+	if (needBackground && !rectangle.getTexture()) {
+		rectangle.setFillColor(sf::Color(90, 34, 139));
+		rectangle.setSize(sf::Vector2f(width, height));
+	}
+	SetOrigin();
 	if (needBackground) {
 		_window->draw(rectangle);
 	}
@@ -93,9 +107,21 @@ void Button::Render(sf::RenderWindow* _window)
 void Button::RenderGUI(sf::RenderWindow* _window)
 {
 	Component::RenderGUI(_window);
-	const auto position = GetOwner()->GetPosition();
-	SetPosition(position.x, position.y - 10);
+	const Maths::Vector2f position = GetOwner()->GetPosition();
+	SetPosition(position.x, position.y);
+	const  Maths::Vector2f scale = GetOwner()->GetScale();
+	SetScale(scale);
+	if (width == 0 && height == 0)
+	{
+		RigidBody2D* rigidBody2D = GetOwner()->GetComponent<RigidBody2D>();
+		SetSize(rigidBody2D->GetWidthCollider(), rigidBody2D->GetHeightCollider());
+	}
 
+	if (needBackground && !rectangle.getTexture()) {
+		rectangle.setFillColor(sf::Color(90, 34, 139));
+		rectangle.setSize(sf::Vector2f(width, height));
+	}
+	SetOrigin();
 	if (needBackground) _window->draw(rectangle);
 	_window->draw(text);
 }

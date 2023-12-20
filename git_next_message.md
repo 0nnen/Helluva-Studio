@@ -1,3 +1,5 @@
-NEW : Début d'un drop down
+ENH : Boutons Langues
 
-- Début de création d'un drop down pour les langues
+- Création d'un boutonpar langue
+- Change le texte d'hadès
+

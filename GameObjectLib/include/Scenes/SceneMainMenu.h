@@ -23,10 +23,12 @@ private:
 	GameObject* fadeButton = nullptr;
 	GameObject* optionsButton = nullptr;
 	GameObject* quitButton = nullptr;
+	GameObject* englishButton = nullptr;
+	GameObject* frenchButton = nullptr;
 	GameObject* backButton = nullptr;
-	GameObject* successButton = nullptr;
-	GameObject* rankButton = nullptr;
-	GameObject* creditsButton = nullptr;
+	//GameObject* successButton = nullptr;
+	//GameObject* rankButton = nullptr;
+	//GameObject* creditsButton = nullptr;
 	GameObject* signupLoginButton = nullptr;
 	GameObject* sliderVolume = nullptr;
 	GameObject* sliderFPS = nullptr;
