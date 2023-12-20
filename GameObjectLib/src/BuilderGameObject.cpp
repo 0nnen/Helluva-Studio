@@ -192,6 +192,25 @@ GameObject* BuilderGameObject::CreateInputGameObject(const std::string& _name, c
 	return gameObject;
 }
 
+
+GameObject* BuilderGameObject::CreateDropDownGameObject(const std::string& _name, const float& _x, const float& _y, std::vector<std::string>& _buttons)
+{
+	GameObject* gameObject = SceneManager::GetActiveScene()->CreateGameObject(_name);
+	gameObject->SetPosition(Maths::Vector2f(_x, _y));
+
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(false);
+
+	Button* button = nullptr;
+
+	for (const std::string& button : _buttons)
+	{
+		//button = BuilderGameObject::CreateButtonGameObject();
+	}
+
+	return gameObject;
+}
+
 GameObject* BuilderGameObject::CreateTextDialogueGameObject(const std::string& _name, const std::string& _firstText ,const float& _x, const float& _y, const float& _width, const float& _height, const unsigned int& _fontSize, const sf::Uint32& _style, const sf::Color& _color)
 {
 	GameObject* gameObject = SceneManager::GetActiveScene()->CreateGameObject(_name);

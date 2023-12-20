@@ -1,4 +1,3 @@
-NEW : Text et langues
+NEW : Début d'un drop down
 
-- Création d'un texte animé pour les dialogues
-- Ajout d'un mode langue
+- Début de création d'un drop down pour les langues
