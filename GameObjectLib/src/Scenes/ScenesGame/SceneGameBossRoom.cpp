@@ -29,7 +29,6 @@ void SceneGameBossRoom::Preload()
 	AssetManager::AddAsset("breathHades", "Assets/Enemy/Hades/breath.png");
 	AssetManager::AddAsset("breathFireHades", "Assets/Enemy/Hades/breath-fire.png");
 	AssetManager::AddAsset("attackHades", "Assets/Enemy/Hades/demon-attack.png");
-	AssetManager::AddAsset("attackHades2", "Assets/Enemy/Hades/demon-attack2.png");
 	AssetManager::AddAsset("roarHades", "Assets/Enemy/Hades/demon-attack-no-breath.png");
 	AssetManager::AddAsset("idleHades", "Assets/Enemy/Hades/demon-idle.png");
 	AssetManager::AddAsset("protectionHades", "Assets/Enemy/Hades/protection.png");

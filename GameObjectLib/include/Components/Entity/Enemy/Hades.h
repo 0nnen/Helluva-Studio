@@ -8,17 +8,19 @@
 class Hades final : public Entity
 {
 public:
-	enum Step {Step1, Step2, Step3};
+	enum Step { Step1, Step2, Step3 };
 	enum State { Idle, Attack, Move, Roar };
 	Hades();
 	Hades(const int& _hp, const int& _damage, const float& _speed, const float& _attackSpeed, const float& _range);
-	
+
 	void SetProtection(const float& _delta);
 	void SetDirection();
 
-	void AttackFeu(const float& _delta);
-	void AttackCheval(int _randomAttackCheval, const float& _delta);
-	void AllerRetourCheval(bool _nightmareArrive, const float& _delta, int& _countAllerRetour, int& _countAllerRetour2, int& _countAllerRetour3);
+	void AttackFire(const float& _delta);
+	void AttackHorse(int _randomAttackCheval, const float& _delta);
+	void ManageHorseAllerRetour(const float& _delta);
+	void ManageAttack(const float& _delta);
+	void AllerRetourHorse(bool _nightmareArrive, const float& _delta);
 	void DamageZoneHades(const float& _delta);
 
 	void Update(const float& _delta) override;
@@ -39,25 +41,28 @@ private:
 	Step step = Step1;
 	GameObject* protection = nullptr;
 	GameObject* nightmare = nullptr;
+	GameObject* attackFire;
+	GameObject* damageZone;
+	GameObject* player = nullptr;;
 	std::vector<GameObject*> balls;
 	float timeSpawnBalls = 10.f;
 	float actualTime = 10.f;
 	float cooldown = 10.0f;
+	float randX;
+	float randY;
+	float cooldownAttackFeu = 1.0f;
+	float cooldownDamageZone = 2.0f;
+	float cooldownAttackHorse = 0.15f;
+	float cooldoawnRoar = 3.0f;
+	float cooldoawnAttack = 5.0f;
+	const float speed = 350.0f;
 	int randomAttackCheval = 0;
 	int newRandomAttackCheval;
 	int randomAttackFeu = 0;
 	int countAllerRetour = 0;
 	int countAllerRetour2 = 0;
 	int countAllerRetour3 = 0;
-	bool nightmareArrive;
-	const float speed = 350.0f;
-	GameObject* platformFeu;
-	GameObject* damageZone;
 	int randomNumber;
-	float randX;
-	float randY;
-	float cooldownAttackFeu = 1.0f;
-	float cooldownDamageZone = 2.0f;
-	float cooldownAttackCheval = 0.0f;
+	bool nightmareArrive;
+	bool hitHorse;
 };
-

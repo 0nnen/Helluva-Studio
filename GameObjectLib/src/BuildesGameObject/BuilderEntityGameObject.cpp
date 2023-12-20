@@ -20,6 +20,7 @@
 #include "Components/Transform.h"
 #include <Components/Shapes/Circle.h>
 #include <Components/ComponentsGame/ExplosionCircle.h>
+#include <Components/Shapes/Carre.h>
 
 
 GameObject* BuilderEntityGameObject::CreateBulletGameObject(const std::string& _name, sf::Texture* _textureBullet, GameObject* _player, const float& _scalex, const float& _scaley, const float& _damage, const float& _speed, const Maths::Vector2f& _direction, const float& _rotate, const Maths::Vector2f& _position)
@@ -318,17 +319,17 @@ GameObject* BuilderEntityGameObject::CreateHadesGameObject(const std::string& _n
 	idle->SetSpriteSheet(AssetManager::GetAsset("idleHades"));
 
 	Animation* attack = gameObject->CreateComponent<Animation>();
-	attack->SetLoop(-1);
+	attack->SetLoop(1);
 	attack->SetName("attack");
-	attack->SetFrame(5);
+	attack->SetFrame(11);
 	attack->SetAnimationTime(1);
-	attack->SetSpriteSheet(AssetManager::GetAsset("attackHades2"));
+	attack->SetSpriteSheet(AssetManager::GetAsset("attackHades"));
 
 	Animation* roar = gameObject->CreateComponent<Animation>();
 	roar->SetLoop(1);
 	roar->SetName("roar");
-	roar->SetFrame(6);
-	roar->SetAnimationTime(2);
+	roar->SetFrame(8);
+	roar->SetAnimationTime(1);
 	roar->SetSpriteSheet(AssetManager::GetAsset("roarHades"));
 
 	idle->Play();
