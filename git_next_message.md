@@ -1,3 +1,4 @@
-FIX : Master
+NEW : Text et langues
 
-- Fix de la Master
+- Création d'un texte animé pour les dialogues
+- Ajout d'un mode langue

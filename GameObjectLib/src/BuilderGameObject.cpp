@@ -5,9 +5,12 @@
 #include "Components/Entity.h"
 #include "Components/HealthPointBar.h"
 #include "Components/SpriteRenderer.h"
+
 #include "Components/UIElements/Button.h"
 #include "Components/UIElements/Input.h"
 #include "Components/UIElements/Slider.h"
+#include "Components/UIElements/Text.h"
+
 #include "Components/Shapes/Carre.h"
 #include "Components/Shapes/Rectangle.h"
 
@@ -185,6 +188,32 @@ GameObject* BuilderGameObject::CreateInputGameObject(const std::string& _name, c
 	input->SetPosition(_x, _y);
 	input->SetOrigin();
 	input->SetSize(WindowManager::GetFloatWindowWidth() / 1.5, WindowManager::GetFloatWindowHeight() / 8);
+
+	return gameObject;
+}
+
+GameObject* BuilderGameObject::CreateTextDialogueGameObject(const std::string& _name, const std::string& _firstText ,const float& _x, const float& _y, const float& _width, const float& _height, const unsigned int& _fontSize, const sf::Uint32& _style, const sf::Color& _color)
+{
+	GameObject* gameObject = SceneManager::GetActiveScene()->CreateGameObject(_name);
+	gameObject->SetPosition(Maths::Vector2f(_x, _y));
+	gameObject->SetScale(Maths::Vector2f(1.f, 1.f));
+	gameObject->SetLayer(LayerType::HUD);
+	gameObject->SetDepth(1.f);
+
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(false);
+	rigidBody2D->SetSize(Maths::Vector2f(_width, _height));
+
+	Rectangle* rectangle = gameObject->CreateComponent<Rectangle>();
+	rectangle->SetColor(sf::Color(0, 0, 0, 112));
+
+	sf::Uint32 styleBold = static_cast<sf::Uint32>(sf::Text::Bold);
+
+	Text* text = gameObject->CreateComponent<Text>();
+	text->SetTitle(_name, _fontSize + 12, styleBold, sf::Color::White);
+	text->SetText(_firstText, _fontSize, _style, _color);
+	text->SetPositionTitle(Maths::Vector2f(_x -_width/2 + 10, _y - _height / 2));
+	text->SetPositionText(Maths::Vector2f(_x -_width/2 + 10, _y ));
 
 	return gameObject;
 }

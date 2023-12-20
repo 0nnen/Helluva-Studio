@@ -1,6 +1,7 @@
 #include "Scene.h"
 #include "Managers/WindowManager.h"
 #include "Managers/CameraManager.h"
+#include "Managers/LanguageManager.h"
 #include "BuilderGameObject.h"
 
 #include <iostream>
@@ -12,6 +13,7 @@ Scene::Scene(const std::string& _name)
 //Initialize the scene
 void Scene::Preload() 
 {
+	language = LanguageManager::GetInstance()->GetLanguage();
 }
 
 //Create Object from the scene

@@ -2,16 +2,16 @@
 
 #include "Scenes/SceneGameAbstract.h"
 
-class ScenesTest : public SceneGameAbstract 
+#include "TileMap/TileMap.h"
+
+class SceneGameSpawn : public SceneGameAbstract
 {
 public:
-	ScenesTest(const std::string& _newName);
-	~ScenesTest();
+	SceneGameSpawn(const std::string& _newName);
+	~SceneGameSpawn();
 
 	void Awake() override;
 	void Preload() override;
-
-	void Collinding();
 
 	void Create() override;
 	void Delete() override;
@@ -20,6 +20,9 @@ public:
 	void Render(sf::RenderWindow* _window) override;
 
 private:
-	GameObject* tileMap = nullptr;
+	GameObject* hades = nullptr;
+	GameObject* textDialogue = nullptr;
+	float timeBetweenDialogues = 3.f;
+	float currentTime = 0.f;
+	unsigned int step = 0;
 };
-

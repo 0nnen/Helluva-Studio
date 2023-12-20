@@ -6,12 +6,14 @@
 #include "Managers/WindowManager.h"
 #include "Managers/HUDManager.h"
 #include "Managers/FontManager.h"
+#include "Managers/LanguageManager.h"
 #include "Managers/CameraManager.h"
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Scenes/ScenesGame/SceneGameUnderground.h"
 #include "Scenes/ScenesGame/SceneGameWorld.h"
 #include "Scenes/ScenesGame/SceneGameBossRoom.h"
+#include "Scenes/ScenesGame/SceneGameSpawn.h"
 #include "Scenes/SceneGameAbstract.h"
 #include "Scenes/ScenesGame/ScenesTest.h"
 #include "Scenes/SceneOpening.h"
@@ -32,6 +34,9 @@ void Engine::Init() const
 	FontManager::AddFont("Roboto", "Assets/Fonts/Roboto-Medium.ttf");
 	FontManager::AddFont("PixelNES", "Assets/Fonts/PixelNES.otf");
 	CameraManager::Init(WindowManager::GetWindow());
+	LanguageManager* languageManager = LanguageManager::GetInstance();
+	languageManager->RecoverLanguages("Assets/Texts/LanguagesList.txt");
+	languageManager->SetLanguage("English");
 	HUDManager::Init(WindowManager::GetWindow());
 	SceneManager::AddScene("SceneMainMenu", new SceneMainMenu(std::string("MainMenu")));
 	//SceneManager::AddScene("SceneGameUnderground", new SceneGameUnderground(std::string("SceneGameUnderground")));
@@ -40,11 +45,13 @@ void Engine::Init() const
 	SceneManager::AddScene("SceneGameWorld", new SceneGameWorld(std::string("SceneGameWorld")));
 	SceneManager::AddScene("SceneOpening", new SceneOpening(std::string("SceneOpening")));
 	SceneManager::AddScene("SceneGameBossRoom", new SceneGameBossRoom(std::string("SceneGameBossRoom")));
+	SceneManager::AddScene("SceneGameSpawn", new SceneGameSpawn(std::string("SceneGameSpawn")));
 }
 
 void Engine::Run() const
 {
-	SceneManager::RunScene("SceneOpening");
+	//SceneManager::RunScene("SceneOpening");
+	SceneManager::RunScene("SceneGameSpawn");
 	while (!shouldQuit)
 	{
 		TimeManager::Update();
