@@ -25,12 +25,13 @@ void ScenesTest::Preload()
 
 void ScenesTest::Create()
 {
+	CameraManager::DefaultZoom();
 	SceneGameAbstract::Create();
 	backgrounds.push_back(BuilderGameObject::CreateBackgroundGameObject("BackgroundSceneGame1", 0, 0, 7.0f, 3.0f, AssetManager::GetAsset("BackgroundSceneGame1"), 0, 0.f));
 
 	tileMap = BuilderEntityGameObject::CreateMapGameObject("OverWorld", "Assets/Graphics/Maps/WorldMap/WorldMap.json", "Assets/Graphics/Maps/WorldMap/worldMapBackground.png", 89);
 
-	CreatePlayer(500, 1400);
+	CreatePlayer(500,1400);
 	CameraManager::SetZoom(1.75f);
 }
 
@@ -115,23 +116,35 @@ void ScenesTest::Physics(const float& _delta)
 void ScenesTest::Update(const float& _delta)
 {
 	SceneGameAbstract::Update(_delta);
-	if (player->GetPosition().y >= 1600.f)
+	if (!isPause)
 	{
-		Character* character = player->GetComponent<Character>();
-		if (character->GetIsCenter())
+		if (player->GetPosition().y >= 1600.f)
 		{
-			character->SetCenterCamera(false);
+			Character* character = player->GetComponent<Character>();
+			if (character->GetIsCenter())
+			{
+				character->SetCenterCamera(false);
+			}
+		}
+		if (player->GetPosition().y >= 9000.f)
+		{
+			player->SetPosition(Maths::Vector2f(500.f, 1400.f));
+			Character* character = player->GetComponent<Character>();
+			if (!character->GetIsCenter())
+			{
+				character->SetCenterCamera(true);
+			}
+		}
+		if (player->GetPosition().x >= 210.f * 32.f)
+		{
+
+			player->GetComponent<RigidBody2D>()->SetVelocity(Maths::Vector2f::Zero);
+
+			this->Pause(true);
+			SceneManager::RunScene("SceneGameBossRoom");
 		}
 	}
-	if (player->GetPosition().y >= 9000.f)
-	{
-		player->SetPosition(Maths::Vector2f(500.f, 1400.f));
-		Character* character = player->GetComponent<Character>();
-		if (!character->GetIsCenter())
-		{
-			character->SetCenterCamera(true);
-		}
-	}
+
 }
 
 void ScenesTest::Render(sf::RenderWindow* _window)

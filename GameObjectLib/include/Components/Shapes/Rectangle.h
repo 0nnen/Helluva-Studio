@@ -11,6 +11,7 @@ public:
 	void RenderGUI(sf::RenderWindow* _window) override;
 	void Update(const float& _delta) override;
 
+	void SetColor(const sf::Color& _color) { rectangle.setFillColor(_color); }
 private:
 	sf::RectangleShape rectangle;
 

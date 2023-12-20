@@ -10,10 +10,8 @@ public:
 	SceneGameAbstract(const std::string& _newName);
 	~SceneGameAbstract();
 
-	//void ManagePause();
-	void ManageDefaultButtonsPause(bool _states);
-
 	void Pause();
+	void Pause(const bool& _state);
 
 	void Awake() override;
 	void Create() override;
@@ -42,15 +40,8 @@ protected:
 	GameObject* pausePlayButton = nullptr;
 	GameObject* pauseMenuPrincipalButton = nullptr;
 	GameObject* pauseQuitButton = nullptr;
+	GameObject* backgroundPause = nullptr;
 	float endTime = 5.f;
-
-	struct AlphaBackkground
-	{
-		sf::RectangleShape backgroundAlpha;
-	};
-
-	AlphaBackkground backgroundAlpha1;
-	AlphaBackkground backgroundAlpha2;
 
 	GameObject* enemy;
 

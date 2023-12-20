@@ -2,6 +2,7 @@
 #include "BuilderGameObject.h"
 #include "BuildersGameObject/BuilderEntityGameObject.h"
 #include "Managers/AudioManager.h"
+#include "Managers/CameraManager.h"
 #include "Managers/AssetManager.h"
 #include "Managers/WindowManager.h"
 #include "Components/Entity/Character.h"
@@ -10,6 +11,7 @@
 #include "Components/ComponentsGame/WeaponsContainer.h"
 #include "Components/ComponentsGame/Gun.h"
 #include "Components/ComponentsGame/Bullet.h"
+#include "Components/SquareCollider.h"
 
 #include <nlohmann/json.hpp>
 
@@ -42,10 +44,12 @@ void SceneGameBossRoom::Preload()
 
 void SceneGameBossRoom::Create()
 {
+	CameraManager::DefaultZoom();
+	CameraManager::DefaultCenter();
 	SceneGameAbstract::Create();
 	AudioManager::PlayMusic("MusicAmbiant_CI");
 	GameObject* backgroundBossRoom = BuilderGameObject::CreateBackgroundGameObject("BossRoom", WindowManager::GetFloatWindowWidth() / 2, WindowManager::GetFloatWindowHeight() / 2, 1, 1, AssetManager::GetAsset("BackgroundBoss"));
-	plateforme = BuilderEntityGameObject::CreatePlateformGameObject("Plateforme", WindowManager::GetFloatWindowWidth() / 2, WindowManager::GetFloatWindowHeight() + 50, 12, 2);
+	plateforme = BuilderEntityGameObject::CreatePlateformGameObject("Plateforme", WindowManager::GetFloatWindowWidth() / 2, WindowManager::GetFloatWindowHeight() + 50.f, 12, 2);
 	plateforme->SetVisible(false);
 	CreatePlayer(WindowManager::GetFloatWindowWidth() / 1.1, WindowManager::GetFloatWindowHeight() / 1.2);
 	player->GetComponent<Character>()->SetCenterCamera(false);
@@ -62,54 +66,79 @@ void SceneGameBossRoom::Delete()
 void SceneGameBossRoom::Update(const float& _delta)
 {
 	SceneGameAbstract::Update(_delta);
-	if (player && plateforme)
+	if (!isPause)
 	{
-		if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(plateforme->GetComponent<RigidBody2D>())) && firstCollide)
-		{
-			player->GetComponent<RigidBody2D>()->SetIsGravity(false);
-			player->GetComponent<Character>()->SetOnFloor(true);
-			firstCollide = false;
-		}
-		else if (!RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(plateforme->GetComponent<RigidBody2D>())))
-		{
-			firstCollide = true;
-			player->GetComponent<RigidBody2D>()->SetIsGravity(true);
-			player->GetComponent<Character>()->SetOnFloor(false);
-		}
-	}
-	if (player && hades)
-	{
-		Gun* gun = player->GetComponent<WeaponsContainer>()->GetArme()->GetComponent<Gun>();
-		if (gun) {
-			for (GameObject* bullet : gun->GetBullets())
-			{
+		RigidBody2D* rigidBody2DPlayer = player->GetComponent<RigidBody2D>();
+		Character* character = player->GetComponent<Character>();
+		std::vector<SquareCollider*> squareColliders = player->GetComponentsByType<SquareCollider>();
+		SquareCollider* squareCollider = squareColliders[0];
+		SquareCollider* squareColliderGround = squareColliders[1];
+		SquareCollider* squareColliderPlateforme = plateforme->GetComponent<SquareCollider>();
 
-				if (RigidBody2D::IsColliding(*(bullet->GetComponent<RigidBody2D>()), *(hades->GetComponent<RigidBody2D>())) && hades->GetActive())
+		if (!squareColliderGround->GetActiveCollider())
+		{
+			if (SquareCollider::IsColliding(*squareCollider, *squareColliderPlateforme))
+			{
+				character->SetOnFloor(true);
+				rigidBody2DPlayer->SetIsGravity(false);
+				const float distanceY = std::abs(squareCollider->GetCenterY() - squareColliderPlateforme->GetCenterY());
+				const float height = squareCollider->GetHeightCollider() / 2.f + squareColliderPlateforme->GetHeightCollider() / 2.f;
+				const float difference = height - distanceY;
+				player->SetPosition(player->GetPosition() - Maths::Vector2f(0.f, difference));
+				squareColliderGround->SetActiveCollider(true);
+				squareCollider->SetActiveCollider(false);
+			}
+			else
+			{
+				character->SetOnFloor(false);
+				rigidBody2DPlayer->SetIsGravity(true);
+			}
+		}
+		else if (squareColliderGround->GetActiveCollider())
+		{
+
+			if (!SquareCollider::IsColliding(*squareColliderGround, *(plateforme->GetComponent<SquareCollider>())))
+			{
+				squareColliderGround->SetActiveCollider(false);
+				squareCollider->SetActiveCollider(true);
+				rigidBody2DPlayer->SetIsGravity(true);
+				character->SetOnFloor(false);
+			}
+		}
+		if (player && hades)
+		{
+			Gun* gun = player->GetComponent<WeaponsContainer>()->GetArme()->GetComponent<Gun>();
+			if (gun) {
+				for (GameObject* bullet : gun->GetBullets())
 				{
-					hades->GetComponent<Hades>()->TakeDamage(bullet->GetComponent<Bullet>()->GetDamageReduced());
-					gun->RemoveBullet(bullet);
-					RemoveGameObject(bullet);
-				}
-				for (GameObject* protectionBall : hades->GetComponent<Hades>()->GetProtectionBalls())
-				{
-					if (RigidBody2D::IsColliding(*(bullet->GetComponent<RigidBody2D>()), *(protectionBall->GetComponent<RigidBody2D>())) && hades->GetActive())
+
+					if (SquareCollider::IsColliding(*(bullet->GetComponent<SquareCollider>()), *(hades->GetComponent<SquareCollider>())) && hades->GetActive())
 					{
-						protectionBall->GetComponent<ProtectionBall>()->TakeDamage(bullet->GetComponent<Bullet>()->GetDamageReduced());
+						hades->GetComponent<Hades>()->TakeDamage(bullet->GetComponent<Bullet>()->GetDamageReduced());
 						gun->RemoveBullet(bullet);
 						RemoveGameObject(bullet);
+					}
+					for (GameObject* protectionBall : hades->GetComponent<Hades>()->GetProtectionBalls())
+					{
+						if (SquareCollider::IsColliding(*(bullet->GetComponent<SquareCollider>()), *(protectionBall->GetComponent<SquareCollider>())) && hades->GetActive())
+						{
+							protectionBall->GetComponent<ProtectionBall>()->TakeDamage(bullet->GetComponent<Bullet>()->GetDamageReduced());
+							gun->RemoveBullet(bullet);
+							RemoveGameObject(bullet);
+						}
 					}
 				}
 			}
 		}
-	}
-	if (hades->GetComponent<Hades>()->GetHealthPoint() == 0)
-	{
-		if (victoryTime <= 0.f)
+		if (hades->GetComponent<Hades>()->GetHealthPoint() == 0)
 		{
-			std::cout << "victory";
-			SceneManager::RunScene("SceneMainMenu");
+			if (victoryTime <= 0.f)
+			{
+				std::cout << "victory";
+				SceneManager::RunScene("SceneMainMenu");
+			}
+			victoryTime -= _delta;
 		}
-		victoryTime -= _delta;
 	}
 }
 

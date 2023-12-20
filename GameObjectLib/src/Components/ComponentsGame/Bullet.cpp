@@ -10,6 +10,7 @@ void Bullet::Update(const float& _delta)
 	if (distance > 1920.f) SceneManager::GetActiveGameScene()->RemoveGameObject(GetOwner());
 }
 
+
 float Bullet::GetDamageReduced() const
 {
 	Maths::Vector2f currentPosition = GetOwner()->GetPosition();

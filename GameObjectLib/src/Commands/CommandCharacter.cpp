@@ -15,6 +15,8 @@ void MoveCharacterRight::Execute(const float& _delta)
 	GameObject* player = SceneManager::GetActiveGameScene()->GetPlayer();
 	Character* character = player->GetComponent<Character>();
 	RigidBody2D* rigidBody2D = player->GetComponent<RigidBody2D>();
+	
+
 	if (character->GetDirection() == Character::Right) 
 	{
 		rigidBody2D->SetMaxVelocity(Maths::Vector2f(character->GetMaxSpeed(), rigidBody2D->GetMaxVelocity().y));
@@ -33,6 +35,8 @@ void MoveCharacterLeft::Execute(const float& _delta)
 	GameObject* player = SceneManager::GetActiveGameScene()->GetPlayer();
 	Character* character = player->GetComponent<Character>();
 	RigidBody2D* rigidBody2D = player->GetComponent<RigidBody2D>();
+	float fireKnockback = 1.f;
+	if (character->GetFiring()) fireKnockback = 10.f;
 	if (character->GetDirection() == Character::Left)
 	{
 		rigidBody2D->SetMaxVelocity(Maths::Vector2f(character->GetMaxSpeed(), rigidBody2D->GetMaxVelocity().y));
@@ -74,7 +78,7 @@ void ChangeWeaponCharacter::Execute(const float& _delta)
 {
 	GameObject* player = SceneManager::GetActiveGameScene()->GetPlayer();
 	WeaponsContainer* weaponsContainer = player->GetComponent<WeaponsContainer>();
-	std::cout << numberWeapon << std::endl;
+
 	if (numberWeapon == 0) weaponsContainer->ChangeWeapon();
 	else weaponsContainer->ChangeWeaponByIndex(numberWeapon);
 }

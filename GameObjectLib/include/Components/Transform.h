@@ -29,10 +29,10 @@ public:
 		float sinTheta = std::sin(rotation);
 
 		// Matrice de transformation
-		float m00 = cosTheta;
-		float m01 = -sinTheta;
-		float m10 = sinTheta;
-		float m11 = cosTheta;
+		float m00 = cosTheta * scale.x;
+		float m01 = -sinTheta * scale.y;
+		float m10 = sinTheta * scale.x;
+		float m11 = cosTheta * scale.y;
 		float m20 = 0.0f;
 		float m21 = 0.0f;
 		float m22 = 1.0f;

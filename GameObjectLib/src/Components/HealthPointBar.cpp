@@ -38,10 +38,13 @@ void HealthPointBar::SetHealthPointBar()
 	const float percent = width * healthPoint / maxHealthPoint;
 	hpBar.setSize(sf::Vector2f(percent, height));
 	backgroundBar.setSize(sf::Vector2f(width, height));
+
 	const auto position = GetOwner()->GetPosition();
+	const auto scale = GetOwner()->GetScale();
+
 	this->SetPosition(position.x, position.y);
-	hpBar.setScale(sf::Vector2f(scaleX, scaleY));
-	backgroundBar.setScale(sf::Vector2f(scaleX, scaleY));
+	hpBar.setScale(sf::Vector2f(std::abs(scale.x), scale.y));
+	backgroundBar.setScale(sf::Vector2f(std::abs(scale.x), scale.y));
 	this->SetOrigin();
 }
 void HealthPointBar::Update(const float& _delta) 

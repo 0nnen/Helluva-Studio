@@ -5,6 +5,7 @@ Rectangle::Rectangle()
 {
 	rectangle.setFillColor(sf::Color::Green);
 }
+
 void Rectangle::Render(sf::RenderWindow* _window)
 {
 	const Maths::Vector2f position = GetOwner()->GetPosition();
@@ -15,7 +16,7 @@ void Rectangle::Render(sf::RenderWindow* _window)
 
 	rectangle.setPosition(sf::Vector2f(position.x, position.y));
 	rectangle.setScale(sf::Vector2f(scale.x, scale.y));
-	rectangle.setPosition(sf::Vector2f(width, height));
+	rectangle.setSize(sf::Vector2f(width, height));
 	rectangle.setOrigin(sf::Vector2f(width / 2, height / 2));
 
 	Component::Render(_window);
@@ -24,8 +25,17 @@ void Rectangle::Render(sf::RenderWindow* _window)
 
 void Rectangle::RenderGUI(sf::RenderWindow* _window)
 {
-	const auto position = GetOwner()->GetPosition();
-	rectangle.setPosition(position.x, position.y);
+	const Maths::Vector2f position = GetOwner()->GetPosition();
+	const Maths::Vector2f scale = GetOwner()->GetScale();
+	const RigidBody2D* rigidBody = GetOwner()->GetComponent< RigidBody2D>();
+	const float width = rigidBody->GetWidthCollider();
+	const float height = rigidBody->GetHeightCollider();
+
+	rectangle.setPosition(sf::Vector2f(position.x, position.y));
+	rectangle.setScale(sf::Vector2f(scale.x, scale.y));
+	rectangle.setSize(sf::Vector2f(width, height));
+	rectangle.setOrigin(sf::Vector2f(width / 2, height / 2));
+
 	Component::RenderGUI(_window);
 	_window->draw(rectangle);
 }

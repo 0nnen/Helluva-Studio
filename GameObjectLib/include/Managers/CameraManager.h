@@ -15,8 +15,10 @@ public:
     static void Move(const float& offsetX, const float& offsetY);
 
     static void SetCenter(const float& x, const float& y);
+    static void DefaultCenter();
 
     static void Zoom(const float& factor);
+    static void DefaultZoom();
 
     static void SetZoom(const float& _zoom);
 

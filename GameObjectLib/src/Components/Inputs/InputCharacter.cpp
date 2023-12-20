@@ -49,8 +49,8 @@ void InputCharacter::Update(const float& _delta) {
 		if (velocity.GetX() != 0.f) {
 			if (character->GetOnFloor())
 			{
-				if (velocity.GetX() - 9.f > 0.f) rigidBody->AddForces(Maths::Vector2f(-9.f, 0.f));
-				else if (velocity.GetX() + 9.f < 0.f) rigidBody->AddForces(Maths::Vector2f(9.f, 0.f));
+				if (velocity.GetX() - 8.f > 0.f) rigidBody->AddForces(Maths::Vector2f(-8.f, 0.f));
+				else if (velocity.GetX() + 8.f < 0.f) rigidBody->AddForces(Maths::Vector2f(8.f, 0.f));
 				else {
 					velocity.SetX(0.f);
 					rigidBody->SetVelocity(velocity);
@@ -88,8 +88,10 @@ void InputCharacter::Update(const float& _delta) {
 
 	if (shootBullet)
 	{
+		character->SetFiring(true);
 		shootBullet->Execute(_delta);
 	}
+	else character->SetFiring(false);
 
 	Command* changeWeapon = this->ChangeWeaponInput();
 

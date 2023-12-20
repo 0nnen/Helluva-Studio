@@ -40,8 +40,7 @@ void Character::Update(const float& _delta)
     const sf::Vector2f worldMousePosition = window->mapPixelToCoords(mousePosition);
     Maths::Vector2f mousePositionVector = Maths::Vector2f(worldMousePosition.x, worldMousePosition.y);
     const Maths::Vector2f directionMouse = mousePositionVector - GetOwner()->GetPosition();
-    
-    //std::cout << "Dir x : " << directionMouse.x << std::endl;
+ 
    
 
     if (directionMouse.x <= 0)
