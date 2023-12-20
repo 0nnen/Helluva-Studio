@@ -125,8 +125,6 @@ GameObject* SceneCreditsMenu::CreateCreditsGameObject(const std::string& name, c
 
 	Sprite* sprite = gameObject->CreateComponent<Sprite>();
 	sprite->SetTexture(texture);
-	sprite->SetScale(scalex, scaley);
-	sprite->SetSprite();
 
 	return gameObject;
 }

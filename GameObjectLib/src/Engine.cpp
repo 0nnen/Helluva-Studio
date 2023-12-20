@@ -44,7 +44,6 @@ void Engine::Init() const
 
 void Engine::Run() const
 {
-	//SceneManager::RunScene("SceneGameBossRoom");
 	SceneManager::RunScene("SceneOpening");
 	while (!shouldQuit)
 	{
@@ -52,6 +51,7 @@ void Engine::Run() const
 
 		const float delta = TimeManager::GetDeltaTime();
 		sf::RenderWindow* window = WindowManager::GetWindow();
+		SceneManager::GetActiveScene()->Physics(delta);
 		EventManager::Update(delta);
 		SceneManager::GetActiveScene()->Update(delta);
 

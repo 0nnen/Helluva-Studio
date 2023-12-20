@@ -10,10 +10,8 @@ public:
 	SceneGameAbstract(const std::string& _newName);
 	~SceneGameAbstract();
 
-	//void ManagePause();
-	void ManageDefaultButtonsPause(bool _states);
-
 	void Pause();
+	void Pause(const bool& _state);
 
 	void Awake() override;
 	void Create() override;
@@ -21,6 +19,7 @@ public:
 	void CreatePlayer(const float& _positionX, const float& _positionY);
 	void Preload() override;
 	void Delete() override;
+	void Physics(const float& _delta) override;
 	void Update(const float& _delta) override;
 	void Render(sf::RenderWindow* _window) override;
 
@@ -32,6 +31,9 @@ public:
 	void SetFirstCollide(const bool& _state) { firstCollide = _state; }
 	bool GetFirstCollide() const { return firstCollide; }
 
+	GameObject* GetEnemy() { return enemy; }
+	GameObject* GetHades() { return hades; }
+
 protected:
 	std::vector<GameObject*> enemies;
 	GameObject* player = nullptr;
@@ -39,17 +41,11 @@ protected:
 	GameObject* pausePlayButton = nullptr;
 	GameObject* pauseMenuPrincipalButton = nullptr;
 	GameObject* pauseQuitButton = nullptr;
+	GameObject* backgroundPause = nullptr;
 	float endTime = 5.f;
 
-	struct AlphaBackkground
-	{
-		sf::RectangleShape backgroundAlpha;
-	};
-
-	AlphaBackkground backgroundAlpha1;
-	AlphaBackkground backgroundAlpha2;
-
 	GameObject* enemy;
+	GameObject* hades;
 
 	bool firstCollide = true;
 	bool isPause = true;

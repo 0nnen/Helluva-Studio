@@ -1,6 +1,7 @@
 #include "Scene.h"
 #include "Managers/WindowManager.h"
-#include "Managers/WindowManager.h"
+#include "Managers/CameraManager.h"
+#include "BuilderGameObject.h"
 
 #include <iostream>
 Scene::Scene(const std::string& _name)
@@ -9,11 +10,14 @@ Scene::Scene(const std::string& _name)
 }
 
 //Initialize the scene
-void Scene::Preload() {}
+void Scene::Preload() 
+{
+}
 
 //Create Object from the scene
 void Scene::Create() 
 {
+	CameraManager::DefaultZoom();
 	fadeOutRectangle.setSize(sf::Vector2f(WindowManager::GetFloatWindowWidth(), WindowManager::GetFloatWindowHeight()));
 	fadeInRectangle.setSize(sf::Vector2f(WindowManager::GetFloatWindowWidth(), WindowManager::GetFloatWindowHeight()));
 	fadeOutRectangle.setFillColor(sf::Color::Transparent);
@@ -93,10 +97,10 @@ void Scene::Update(const float& _delta)
 
 void Scene::Physics(const float& _delta)
 {
-	/*for (GameObject* const& gameObject : gameObjects)
+	for (GameObject* const& gameObject : gameObjects)
 	{
-		gameObject->Render(_window);
-	}*/
+		gameObject->Physics(_delta);
+	}
 }
 
 void Scene::Render(sf::RenderWindow* _window)
@@ -147,7 +151,6 @@ bool Scene::FadeIn(const float& _delta)
 
 bool Scene::FadeOut(const float& _delta)
 {
-
 	sf::Uint8 currentAlpha = fadeOutRectangle.getFillColor().a;
 	if (fadeOutTimeDefault > fadeOutTimeActual) {
 		currentAlpha = static_cast<sf::Uint8>(std::min(255, static_cast<int>(255.0f * (fadeOutTimeActual / fadeOutTimeDefault))));

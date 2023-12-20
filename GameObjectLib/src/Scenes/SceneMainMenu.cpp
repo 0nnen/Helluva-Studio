@@ -32,8 +32,9 @@ void SceneMainMenu::Preload()
 void SceneMainMenu::Create()
 {
 	Scene::Create();
+
 	AudioManager::PlayMusic("MusicAmbiant_HOM");
-	GameObject* background1 = BuilderGameObject::CreateBackgroundGameObject("BackgroundMenu", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, 1.0f, 1.0f, AssetManager::GetAsset("BackgroundMainMenu"));
+	GameObject* background1 = BuilderGameObject::CreateBackgroundGameObject("BackgroundMenu", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, 1.0f, 1.0f, AssetManager::GetAsset("BackgroundMainMenu"), 0, 0.f);
 	this->CreateSceneButtonsMenu();
 	this->ActiveOption(false);
 	this->ActiveMenu(true);
@@ -87,7 +88,7 @@ void SceneMainMenu::Update(const float& _delta)
 			if (FadeOut(_delta))
 			{
 				AudioManager::PlaySound("ConfirmSelection");
-				SceneManager::RunScene("SceneGameWorld");
+				SceneManager::RunScene("ScenesTest");
 			}
 
 		}

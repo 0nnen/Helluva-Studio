@@ -4,10 +4,12 @@
 #include "Managers/SceneManager.h"
 #include <Components/RigidBody2D.h>
 
-ProtectionBall::ProtectionBall() : Entity()
+ProtectionBall::ProtectionBall() : Entity() 
 {
 	player = SceneManager::GetActiveGameScene()->GetPlayer();
+	hades = SceneManager::GetActiveGameScene()->GetHades();
 }
+  
 ProtectionBall::ProtectionBall(const int& _hp, const int& _damage, const float& _speed, const float& _attackSpeed, const float& _range) : Entity(_hp, _damage, _speed, _attackSpeed, _range) {}
 
 void ProtectionBall::Update(const float& _delta)
@@ -33,6 +35,7 @@ void ProtectionBall::CollisionFireBall()
 	}
 }
 
+
 void ProtectionBall::SetHealth()
 {
 	switch (spawn)
@@ -42,6 +45,7 @@ void ProtectionBall::SetHealth()
 		SetMaxHealthPoint(175.f);
 		break;
 	case 1:
+
 		SetHealthPoint(50.f);
 		SetMaxHealthPoint(50.f);
 		break;
@@ -54,7 +58,6 @@ void ProtectionBall::SetHealth()
 		SetMaxHealthPoint(250.f);
 		break;
 	case 4:
-
 		break;
 	case 5:
 		SetHealthPoint(100.f);
@@ -74,7 +77,9 @@ void ProtectionBall::SetPower(const float& _delta)
 	case 1:
 		positionFireCircle.x = GetOwner()->GetPosition().x;
 		positionFireCircle.y = GetOwner()->GetPosition().y;
-	case 2:
+
+	case 2: 
+
 		if (tp >= 5)
 		{
 			randX = rand() % 1300 + 500;
@@ -94,15 +99,19 @@ void ProtectionBall::Die()
 	Entity::Die();
 	switch (spawn)
 	{
+
 	case 0:
+
 		hades->GetComponent<Hades>()->SetIncible(false);
 		hades->GetComponent<Hades>()->TakeDamage(50);
 		hades->GetComponent<Hades>()->SetIncible(true);
 		break;
+
 	case 1:
 		CreateBouleFeu();
 		circle->SetPosition(Maths::Vector2f(positionFireCircle.x, positionFireCircle.y));
 		break;
+
 	case 5:
 		player->GetComponent<Character>()->TakeHealt(10);
 		break;

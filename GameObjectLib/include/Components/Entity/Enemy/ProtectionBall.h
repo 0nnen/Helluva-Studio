@@ -11,10 +11,10 @@ public:
 
 	void SetHades(GameObject* _hades) { hades = _hades; }
 	void Die() override;
+
 	//void DieFireCirlce() override;
 	void Update(const float& _delta);
 
-	void SetSpawn(int _spawn) { spawn = _spawn; }
 	int GetSpawn() { return spawn; }
 	void SetHealth();
 	void SetPower(const float& _delta);
@@ -22,16 +22,18 @@ public:
 	void CreateBouleFeu();
 	void CollisionFireBall();
 
-
 private:
 	GameObject* hades = nullptr;
 	GameObject* player = nullptr;
+
 	GameObject* circle;
-	bool ballDamage;
+	Maths::Vector2f positionFireCircle;
+	bool activeCollision = false;
+
 	int spawn = 0;
 	float randX;
 	float randY;
+	bool ballDamage;
 	float tp;
-	Maths::Vector2f positionFireCircle;
-	bool activeCollision = false;
+
 };

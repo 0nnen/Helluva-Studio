@@ -8,6 +8,7 @@ Component::Component(GameObject* owner)
 }
 void Component::Start() {}
 
+void Component::Physics(const float& _delta) {}
 void Component::Update(const float& _delta) {}
 
 void Component::Render(sf::RenderWindow* _window) 

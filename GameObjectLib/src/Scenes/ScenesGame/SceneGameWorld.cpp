@@ -3,9 +3,14 @@
 
 #include "BuildersGameObject/BuilderEntityGameObject.h"
 #include "Components/Entity/Character.h"
+#include "Components/Entity/Enemy/EnemyA.h"
 
 
-SceneGameWorld::SceneGameWorld(const std::string& _newName) : SceneGameAbstract(_newName) {}
+bool SceneGameWorld::flip;
+
+SceneGameWorld::SceneGameWorld(const std::string& _newName) : SceneGameAbstract(_newName) {
+	shootBullet = true;
+}
 
 void SceneGameWorld::Preload()
 {
@@ -13,6 +18,8 @@ void SceneGameWorld::Preload()
 	AssetManager::AddAsset("BackgroundMapBackgroundWorld", "Assets/Graphics/Maps/worldMapBackground.png");
 	AssetManager::AddAsset("BackgroundMapWorld", "Assets/Graphics/Maps/worldMap1.png");
 	AssetManager::AddAsset("idleEnemyA", "Assets/Enemy/Hell-Beast-Files/PNG/with-stroke/hell-beast-idle.png");
+	AssetManager::AddAsset("shootEnemyA", "Assets/Enemy/Hell-Beast-Files/PNG/with-stroke/hell-beast-breath.png");
+	AssetManager::AddAsset("FireBallEnemy", "Assets/Enemy/Hell-Beast-Files/PNG/fire-ball.png");
 }
 
 void SceneGameWorld::Create()
@@ -71,7 +78,13 @@ void SceneGameWorld::CreatePlatformCollision()
 
 void SceneGameWorld::CreateEnemy()
 {
-	enemy = BuilderEntityGameObject::CreateEnemyAGameObject("EnemyA", WindowManager::GetWindowWidth() / 2, 40.f, 7.f, 7.f, AssetManager::GetAsset("idleEnemyA"));
+	enemy = BuilderEntityGameObject::CreateEnemyAGameObject("EnemyA", WindowManager::GetWindowWidth() / 2, 600.f, 7.f, 7.f, AssetManager::GetAsset("idleEnemyA"));
+}
+
+void SceneGameWorld::CreateRengeEnemy()
+{
+	rengePosition = BuilderEntityGameObject::CreatePlateformGameObject("RengePosition", enemy->GetPosition().GetX(), enemy->GetPosition().GetY(), 8.f, 5.f);
+	rengeProjectil = BuilderEntityGameObject::CreatePlateformGameObject("RengeProjectil", enemy->GetPosition().GetX(), enemy->GetPosition().GetY(), 4.f, 5.f);
 }
 
 void SceneGameWorld::Delete()
@@ -88,6 +101,63 @@ void SceneGameWorld::Render(sf::RenderWindow* _window)
 	}
 	_window->setView(CameraManager::GetView());
 }
+
+void SceneGameWorld::CollisionRengePosition(const float& _delta) {
+	EnemyA* enemyA = enemy->GetComponent<EnemyA>();
+	RigidBody2D* rigidBody2D = enemy->GetComponent<RigidBody2D>();
+	if (player && rengePosition)
+	{
+		if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(rengePosition->GetComponent<RigidBody2D>())))
+		{
+			if (player->GetPosition().GetX() <= enemy->GetPosition().GetX())
+			{
+				EnemyA::Mouve(_delta, enemyA->GetSpeed());
+			}
+			if (player->GetPosition().GetX() > enemy->GetPosition().GetX())
+			{
+				EnemyA::Mouve(_delta, -enemyA->GetSpeed());
+			}
+		}
+		else 
+		{
+			rigidBody2D->SetVelocity(Maths::Vector2f(0.f, 0.f) );
+		}
+		
+	}
+}
+
+void SceneGameWorld::CollisionRengeShoot(const float& _delta)
+{
+	EnemyA* enemyA = enemy->GetComponent<EnemyA>();
+	RigidBody2D* rigidBody2D = enemy->GetComponent<RigidBody2D>();
+	if (player && rengeProjectil)
+	{
+		if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(rengeProjectil->GetComponent<RigidBody2D>())))
+		{
+			rigidBody2D->SetVelocity(Maths::Vector2f(0.f, 0.f));
+			if (player->GetPosition().GetX() <= enemy->GetPosition().GetX())
+			{
+				flip = false;
+				enemyA->Attack(-1.f, 0.f);
+			}
+			if (player->GetPosition().GetX() > enemy->GetPosition().GetX())
+			{
+				flip = true;
+				enemyA->Attack(1.f, 0.f);
+			}
+
+		}
+		else if (!RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(rengeProjectil->GetComponent<RigidBody2D>())))
+		{
+			if (!enemyA->GetAnimation("idle")->GetIsPlaying())
+			{
+				enemyA->GetAndSetAnimation("idle")->Play();
+			}
+		}
+		
+	}
+};
+
 
 void SceneGameWorld::Collision(GameObject* _entity)
 {
@@ -132,12 +202,25 @@ void SceneGameWorld::Update(const float& _delta)
 {
 	SceneGameAbstract::Update(_delta);
 	if (!isPause) {
+		CreateRengeEnemy();
 		Collision(player);
 		Collision(enemy);
+		CollisionRengePosition(_delta);
+		CollisionRengeShoot(_delta); 
+		if (EnemyA::GetBulletEnemy()->GetComponent<RigidBody2D>() && player)
+		{
+			if (RigidBody2D::IsColliding(*(EnemyA::GetBulletEnemy()->GetComponent<RigidBody2D>()), *(player->GetComponent<RigidBody2D>())))
+			{
+				
+			}
+		}
 	}
 
 	if (hud) {
 		hud->Update(_delta);
 	}
+
+	
+	
 }
 

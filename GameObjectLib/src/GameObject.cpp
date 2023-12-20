@@ -67,6 +67,19 @@ void GameObject::Start()
 	}
 }
 
+void GameObject::Physics(const float& _delta) const
+{
+	if (this->isActive)
+	{
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			if (components[i]->GetActive()) {
+				components[i]->Physics(_delta);
+			}
+		}
+	}
+}
+
 void GameObject::Update(const float& _delta) const
 {
 	if (this->isActive)

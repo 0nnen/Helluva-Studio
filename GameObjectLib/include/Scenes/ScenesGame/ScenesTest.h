@@ -9,6 +9,7 @@
 #include "BuildersGameObject/BuilderShapeGameObject.h"
 
 #include "Components/RigidBody2D.h"
+#include "TileMap/TileMap.h"
 
 class ScenesTest : public SceneGameAbstract 
 {
@@ -17,20 +18,18 @@ public:
 	~ScenesTest();
 
 	void Awake() override;
+	void Preload() override;
 
 	void CreatePlatform();
 	void Collinding();
 
 	void Create() override;
 	void Delete() override;
-	void Update(const float& _delta);
+	void Physics(const float& _delta) override;
+	void Update(const float& _delta) override;
 	void Render(sf::RenderWindow* _window) override;
-	GameObject* GetPlayer() { return player; }
 
 private:
-
-	GameObject* player;
-	GameObject* platform;
-
+	GameObject* tileMap = nullptr;
 };
 

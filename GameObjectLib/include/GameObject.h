@@ -29,14 +29,14 @@ public:
 
 	Transform* GetTransform() const;
 
-	 Maths::Vector2f GetPosition() const;
-	 void SetPosition(Maths::Vector2f _newPosition);
+	Maths::Vector2f GetPosition() const;
+	void SetPosition(Maths::Vector2f _newPosition);
 
-	 Maths::Vector2<float> GetScale() const;
-	 void SetScale(Maths::Vector2f _newScale);
+	Maths::Vector2<float> GetScale() const;
+	void SetScale(Maths::Vector2f _newScale);
 
-	 float GetRotation() const;
-	 void SetRotation(float _newRotation);
+	float GetRotation() const;
+	void SetRotation(float _newRotation);
 
 	inline void SetActive(const bool& _state) { isActive = _state; }
 	inline bool GetActive() const { return isActive; }
@@ -90,9 +90,23 @@ public:
 		return componentsByType;
 	}
 
+	template<typename T>
+	T* GetComponentByName(const std::string& _name) {
+		std::vector<T*> componentsByType = GetComponentsByType<T>();
+		for (size_t i = 0; i < componentsByType.size(); i++) {
+			// Vérifie si le composant est un Component
+			T* componentResult = dynamic_cast<T*>(componentsByType[i]);
+			if (componentResult && static_cast<Component*>(componentResult)->GetName() == _name) {
+				return componentResult; // Renvoie le Component trouvé
+			}
+		}
+		return nullptr; // Renvoie nullptr si aucun Component n'est trouvé
+	}
+
 	void RemoveComponent(Component* _component);
 
 	virtual void Start();
+	void Physics(const float& _delta) const;
 	void Update(const float& _delta) const;
 	void Render(sf::RenderWindow* _window) const;
 

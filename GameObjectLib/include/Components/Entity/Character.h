@@ -12,7 +12,7 @@ public:
 	void Update(const float& _delta);
 	void SetDirection(Direction _newDirection);
 	Direction GetDirection() const { return direction; }
-	bool GetIsCenter() const { return direction; }
+	bool GetIsCenter() const { return centerCameraOnPlayer; }
 	void SetCenterCamera(const bool& _state) { centerCameraOnPlayer = _state; }
 
 private:

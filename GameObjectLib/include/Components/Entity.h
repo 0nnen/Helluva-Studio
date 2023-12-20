@@ -8,6 +8,8 @@ public:
 	Entity();
 	explicit Entity(const int& _hp, const int& _damage, const float& _speed, const float& _attackSpeed, const float& _range);
 
+	enum Direction { Left, Right };
+
 	inline int GetHealthPoint() const { return healthPoint; }
 	inline int GetMaxHealthPoint() const { return maxHealthPoint; }
 	inline int GetDamage() const { return damage; }
@@ -33,6 +35,8 @@ public:
 	inline void ResetCount() { count = 0; }
 	inline int GetCount() { return count; }
 
+	void SetDirection(Direction _newDirection);
+
 	void TakeDamage(const int& damage);
 	void TakeHealt(const int& _healt) { healthPoint += _healt; }
 	virtual void Die();
@@ -43,6 +47,11 @@ public:
 
 	inline void SetInvicible(const bool& _state) { isInvicible = _state; }
 	inline bool GetInvicible() const { return isInvicible; }
+
+	inline void SetFiring(const bool& _state) { isFiring = _state; }
+	inline bool GetFiring() const { return isFiring; }
+
+
 	void AddAnimation(const std::string& _name, Animation* animation);
 	Animation* GetAnimation(const std::string& _name);
 	Animation* GetAndSetAnimation(const std::string& _name);
@@ -63,6 +72,10 @@ protected:
 	float range;
 	bool onFloor = true;
 	bool isInvicible = false;
+	bool isFiring = false;
 	Animation* actualAnimation = nullptr;
 	std::map<std::string, Animation*> animations;
+	Direction direction;
+	bool directionEnemy;
+
 };

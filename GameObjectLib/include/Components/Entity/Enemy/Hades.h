@@ -3,7 +3,11 @@
 #include "Components/Entity.h"
 #include "BuildersGameObject/BuilderEntityGameObject.h"
 #include "Managers/AssetManager.h"
+
 #include <SFML/Graphics.hpp>
+
+#include "Components/Entity/Enemy/ProtectionBall.h"
+
 
 class Hades final : public Entity
 {
@@ -15,6 +19,7 @@ public:
 
 	void SetProtection(const float& _delta);
 	void SetDirection();
+
 
 	void AttackFire(const float& _delta);
 	void AttackHorse(int _randomAttackCheval, const float& _delta);
@@ -47,6 +52,7 @@ private:
 	std::vector<GameObject*> balls;
 	float timeSpawnBalls = 10.f;
 	float actualTime = 10.f;
+
 	float cooldown = 10.0f;
 	float randX;
 	float randY;
@@ -65,4 +71,9 @@ private:
 	int randomNumber;
 	bool nightmareArrive;
 	bool hitHorse;
+
+	int randomNumber;
+	float randX;
+	float randY;
+
 };

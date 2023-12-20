@@ -3,11 +3,15 @@
 #include "Managers/AudioManager.h"
 #include "Managers/WindowManager.h"
 #include "Managers/AudioManager.h"
+
 #include <Components/Entity/Enemy/Hades.h>
 
+#include "Components/Entity/Enemy/ProtectionBall.h"
 
-Entity::Entity() : healthPoint(100), maxHealthPoint(100), damage(10), attackSpeed(1.0f), maxSpeed(2000.0f), range(1), speed(300.f) {}
-Entity::Entity(const int& _hp, const int& _damage, const float& _speed, const float& _attackSpeed, const float& _range) : healthPoint(_hp), maxHealthPoint(_hp), damage(_damage), speed(_speed), maxSpeed(_speed + 20.f), attackSpeed(_attackSpeed), range(_range) {}
+
+
+Entity::Entity() : healthPoint(100), maxHealthPoint(100), damage(10), attackSpeed(1.0f), maxSpeed(300.f), range(1), speed(300.f) {}
+Entity::Entity(const int& _hp, const int& _damage, const float& _speed, const float& _attackSpeed, const float& _range) : healthPoint(_hp), maxHealthPoint(_hp), damage(_damage), speed(_speed), maxSpeed(_speed + 100.f), attackSpeed(_attackSpeed), range(_range) {}
 
 void Entity::TakeDamage(const int& _damage)
 {
@@ -20,7 +24,6 @@ void Entity::TakeDamage(const int& _damage)
 		else {
 			healthPoint = 0;
 		}
-		std::cout << "Healthpoint : " << healthPoint << std::endl;
 
 		if (healthPoint <= 0)
 		{
@@ -102,4 +105,17 @@ Animation* Entity::GetAndSetAnimation(const std::string& _name)
 		return actualAnimation;
 	}
 	return nullptr;
+}
+
+void Entity::SetDirection(Direction _newDirection) {
+
+	direction = _newDirection;
+	if (direction == Direction::Left)
+	{
+		GetOwner()->SetScale(Maths::Vector2f(-std::abs(GetOwner()->GetScale().x), GetOwner()->GetScale().y));
+	}
+	else if (direction == Direction::Right)
+	{
+		GetOwner()->SetScale(Maths::Vector2f(std::abs(GetOwner()->GetScale().x), GetOwner()->GetScale().y));
+	}
 }

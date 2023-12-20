@@ -9,10 +9,20 @@ class RigidBody2D final : public Component
 public:
 
 	RigidBody2D();
+
+	void Physics(const float& _delta) override;
 	void Update(const float& _delta) override;
 	void Render(sf::RenderWindow* _window) override;
+
 	void Gravity();
-	inline void AddForces(const Maths::Vector2f& _force) { velocity += _force; }
+	inline void AddForces(const Maths::Vector2f& _force)
+	{
+		velocity += _force;
+		if (velocity.x > maxVelocity.x) velocity.x = maxVelocity.x;
+		if (velocity.x < -maxVelocity.x) velocity.x = -maxVelocity.x;
+		if (velocity.y > maxVelocity.y) velocity.y = maxVelocity.y;
+		if (velocity.y < -maxVelocity.y) velocity.y = -maxVelocity.y;
+	}
 
 	inline float GetMass() const { return mass; }
 	inline void SetMass(const float& _mass) { mass = _mass; }
@@ -21,7 +31,19 @@ public:
 	inline void SetGravityScale(const float& _newGravityScale) { gravityScale = _newGravityScale; }
 
 	inline Maths::Vector2f GetVelocity() { return velocity; }
-	inline void SetVelocity(const Maths::Vector2f& _newVelocity) { velocity = _newVelocity; }
+	inline void SetVelocity(const Maths::Vector2f& _newVelocity)
+	{
+		if (_newVelocity.x >= 0) velocity.x = _newVelocity.x > maxVelocity.x ? maxVelocity.x : _newVelocity.x;
+		else velocity.x = _newVelocity.x < -maxVelocity.x ? -maxVelocity.x : _newVelocity.x;
+
+		if (_newVelocity.y <= 0) velocity.y = _newVelocity.y < -maxVelocity.y ? -maxVelocity.y : _newVelocity.y;
+		else velocity.y = _newVelocity.y > maxVelocity.y ? maxVelocity.y : _newVelocity.y;
+	}
+
+	inline Maths::Vector2f GetMaxVelocity() { return maxVelocity; }
+	inline void SetMaxVelocity(const Maths::Vector2f& _newMaxVelocity) {
+		maxVelocity = _newMaxVelocity;
+	}
 
 	inline Maths::Vector2f GetGravity() { return gravity; }
 	inline void SetGravity(const Maths::Vector2f& _newGravity) { gravity = _newGravity; }
@@ -29,7 +51,10 @@ public:
 	inline bool GetIsGravity() const { return isAffectedByGravity; }
 	inline void SetIsGravity(const bool& _state) {
 		isAffectedByGravity = _state;
-		if (!isAffectedByGravity) velocity.SetY(0.f);
+		if (!isAffectedByGravity)
+		{
+			velocity.SetY(0.f);
+		}
 	}
 
 	inline Maths::Vector2f GetKillImperfection() const { return killImperfection; }
@@ -43,16 +68,15 @@ public:
 
 	inline void SetSize(const float& _width, const float& _height)
 	{
-		widthSquareCollider = (_width - killImperfection.GetX());
-		heightSquareCollider = (_height - killImperfection.GetY());
+		widthSquareCollider = (_width - killImperfection.GetX()) * GetOwner()->GetScale().x;
+		heightSquareCollider = (_height - killImperfection.GetY()) * GetOwner()->GetScale().y;
 	}
-	inline void SetScale(const float& _scaleX, const float& _scaleY)
+	inline void SetSize(const Maths::Vector2f& _size)
 	{
-		scaleSquareColliderX = _scaleX;
-		widthSquareCollider *= _scaleX;
-		heightSquareCollider *= _scaleY;
-		scaleSquareColliderY = _scaleY;
+		widthSquareCollider = (_size.x - killImperfection.GetX()) * GetOwner()->GetScale().x;
+		heightSquareCollider = (_size.y - killImperfection.GetY()) * GetOwner()->GetScale().y;
 	}
+
 
 	static bool IsColliding(const RigidBody2D& _rigidBody2DA, const RigidBody2D& _rigidBody2DB);
 
@@ -64,6 +88,7 @@ public:
 private:
 	float mass = 1.0f;
 	float gravityScale = 1.f;
+	Maths::Vector2f maxVelocity;
 	Maths::Vector2f velocity;
 	Maths::Vector2f gravity;
 	bool isAffectedByGravity;
@@ -71,8 +96,6 @@ private:
 	Maths::Vector2f killImperfection = Maths::Vector2f::Zero;
 	float widthSquareCollider = 1.0f;
 	float heightSquareCollider = 1.0f;
-	float scaleSquareColliderX = 1.0f;
-	float scaleSquareColliderY = 1.0f;
 
 	sf::RectangleShape rectangle;
 };

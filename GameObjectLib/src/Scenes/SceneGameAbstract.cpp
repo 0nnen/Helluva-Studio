@@ -32,34 +32,23 @@ SceneGameAbstract::~SceneGameAbstract()
 void SceneGameAbstract::Create() 
 {
 	Scene::Create();
+	//Background Pause
+	backgroundPause = BuilderGameObject::CreateBackgroundGameObject("BackgroundPause", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, Maths::Vector2f(WindowManager::GetWindowWidth(), WindowManager::GetWindowHeight()), 1.f, 1.f, LayerType::HUD, sf::Color(0, 0, 0, static_cast <sf::Uint8>(170)));
 	//Pause Buttons
 	pausePlayButton = BuilderGameObject::CreateButtonGameObject("Continue", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 4.0, 25);
 	pauseMenuPrincipalButton = BuilderGameObject::CreateButtonGameObject("Menu Principal", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2.5, 15);
 	pauseQuitButton = BuilderGameObject::CreateButtonGameObject("Quit", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 1.8,  40);
-	this->ManageDefaultButtonsPause(false);
-	//Background Pause
-	backgroundAlpha1.backgroundAlpha.setSize(sf::Vector2f(WindowManager::GetFloatWindowWidth(), WindowManager::GetFloatWindowHeight()));
-	backgroundAlpha1.backgroundAlpha.setOrigin(sf::Vector2f(WindowManager::GetFloatWindowWidth() / 2, WindowManager::GetFloatWindowHeight() / 2));
-	backgroundAlpha1.backgroundAlpha.setFillColor(sf::Color(0, 0, 0, 112));
-	backgroundAlpha1.backgroundAlpha.setPosition(WindowManager::GetFloatWindowWidth() / 2, WindowManager::GetFloatWindowHeight() / 2);
-	backgroundAlpha2.backgroundAlpha.setSize(sf::Vector2f(WindowManager::GetFloatWindowWidth(), WindowManager::GetFloatWindowHeight()));
-	backgroundAlpha2.backgroundAlpha.setOrigin(sf::Vector2f(WindowManager::GetFloatWindowWidth() / 2, WindowManager::GetFloatWindowHeight() / 2));
-	backgroundAlpha2.backgroundAlpha.setFillColor(sf::Color::Transparent);
-	backgroundAlpha2.backgroundAlpha.setPosition(WindowManager::GetFloatWindowWidth() / 2, WindowManager::GetFloatWindowHeight() / 2);
-	//Background
-	//GameObject* background1 = BuilderGameObject::CreateBackgroundGameObject("Background1", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, 1.0f, 1.0f, AssetManager::GetAsset("BackgroundAbstract"));
-	//Player
-	
+	this->Pause(false);
 }
 
 void SceneGameAbstract::CreatePlayer()
 {
-	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", WindowManager::GetWindowWidth() / 2, 600.f, AssetManager::GetAsset("idleCharacter"), 4.f, 4.f);
+	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", WindowManager::GetWindowWidth() / 2, 600.f, AssetManager::GetAsset("idleCharacter"), 2.f, 2.f);
 }
 
 void SceneGameAbstract::CreatePlayer(const float& _positionX, const float& _positionY)
 {
-	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", _positionX, _positionY, AssetManager::GetAsset("Character"), 4.f, 4.f);
+	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", _positionX, _positionY, AssetManager::GetAsset("idleCharacter"), 2.f, 2.f);
 }
 
 void SceneGameAbstract::Preload()
@@ -86,9 +75,20 @@ void SceneGameAbstract::Pause()
 {
 	isPause = !isPause;
 
-	this->pausePlayButton->SetActiveAndVisible(!isPause);
-	this->pauseMenuPrincipalButton->SetActiveAndVisible(!isPause);
-	this->pauseQuitButton->SetActiveAndVisible(!isPause);
+	this->pausePlayButton->SetActiveAndVisible(isPause);
+	this->pauseMenuPrincipalButton->SetActiveAndVisible(isPause);
+	this->pauseQuitButton->SetActiveAndVisible(isPause);
+	this->backgroundPause->SetActiveAndVisible(isPause);
+}
+
+void SceneGameAbstract::Pause(const bool& _state)
+{
+	isPause = _state;
+
+	this->pausePlayButton->SetActiveAndVisible(_state);
+	this->pauseMenuPrincipalButton->SetActiveAndVisible(_state);
+	this->pauseQuitButton->SetActiveAndVisible(_state);
+	this->backgroundPause->SetActiveAndVisible(_state);
 }
 
 
@@ -97,13 +97,13 @@ void SceneGameAbstract::Awake()
 	Scene::Awake();
 }
 
-void SceneGameAbstract::ManageDefaultButtonsPause(bool _state)
+void SceneGameAbstract::Physics(const float& _delta)
 {
-	this->pauseMenuPrincipalButton->SetActiveAndVisible(_state);
-	this->pausePlayButton->SetActiveAndVisible(_state);
-	this->pauseQuitButton->SetActiveAndVisible(_state);
+	if (!isPause)
+	{
+		Scene::Physics(_delta);
+	}
 }
-
 
 void SceneGameAbstract::Update(const float& _delta)
 {
@@ -116,12 +116,11 @@ void SceneGameAbstract::Update(const float& _delta)
 	{
 		if (pausePlayButton->GetComponent<Button>()->IsClicked())
 		{
-			isPause = false;
-			this->ManageDefaultButtonsPause(false);
+			this->Pause(false);
 		}
 		else if (pauseMenuPrincipalButton->GetComponent<Button>()->IsClicked()) 
 		{
-			isPause = true;
+			this->Pause(true);
 			SceneManager::RunScene("SceneMainMenu");
 		}
 		else if (pauseQuitButton->GetComponent<Button>()->IsClicked()) 
@@ -135,6 +134,4 @@ void SceneGameAbstract::Update(const float& _delta)
 void SceneGameAbstract::Render(sf::RenderWindow* _window) 
 {
 	Scene::Render(_window);
-	_window->draw(!isPause ? backgroundAlpha2.backgroundAlpha : backgroundAlpha1.backgroundAlpha);
-	_window->setView(_window->getDefaultView());
 }

@@ -34,26 +34,32 @@ void Hades::SetProtection(const float& _delta)
 		randomNumber = rand() % 8;
 		randX = rand() % 1300 + 500;
 		randY = rand() % 400 + 200;
+
 		randomAttackCheval = rand() % 2;
 		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection4", randX, randY, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner(), randomNumber));
 		AllerRetourHorse(true, _delta);
+
 	case Hades::Step2:
 		randomNumber = rand() % 8;
 		randX = rand() % 1300 + 500;
 		randY = rand() % 400 + 200;
+
 		randomAttackCheval = rand() % 2;
 		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection3", randX, randY, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner(), randomNumber));
 		AllerRetourHorse(true, _delta);
+
 	case Hades::Step1:
-		randomNumber = 0;
+		randomNumber =rand() % 8;
 		randX = rand() % 1300 + 500;
 		randY = rand() % 400 + 200;
+
 		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection2", randX, randY, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner(), 1));
-		randomNumber = 0;
+		randomNumber = rand() % 8;
 		randX = rand() % 1300 + 500;
 		randY = rand() % 400 + 200;
 		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection1", randX, randY, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner(), 1));
 		AllerRetourHorse(true, _delta);
+
 		break;
 	default:
 		break;
@@ -67,15 +73,11 @@ void Hades::SetDirection()
 
 	if (positioHades.GetX() <= positionPlayer.GetX())
 	{
-		for (Sprite* sprite : GetOwner()->GetComponentsByType<Sprite>()) {
-			if (sprite) sprite->SetScale(-1 * GetOwner()->GetScale().GetX(), GetOwner()->GetScale().GetY());
-		}
+		GetOwner()->SetScale(Maths::Vector2f(-std::abs(GetOwner()->GetScale().x), GetOwner()->GetScale().y));
 	}
 	else
 	{
-		for (Sprite* sprite : GetOwner()->GetComponentsByType<Sprite>()) {
-			if (sprite) sprite->SetScale(GetOwner()->GetScale().GetX(), GetOwner()->GetScale().GetY());
-		}
+		GetOwner()->SetScale(Maths::Vector2f(std::abs(GetOwner()->GetScale().x), GetOwner()->GetScale().y));
 	}
 }
 
@@ -255,7 +257,7 @@ void Hades::ManageHorseAllerRetour(const float& _delta)
 		countAllerRetour3--;
 	}
 
-	// Permet de relancer l'attaque cheval elle est appellé
+	// Permet de relancer l'attaque cheval elle est appellï¿½
 
 	if (countAllerRetour == 0)
 	{
@@ -324,7 +326,6 @@ void Hades::Update(const float& _delta)
 {
 	Entity::Update(_delta);
 	GameObject* hades = GetOwner();
-
 	DamageZoneHades(_delta);
 
 	ManageAttack(_delta);

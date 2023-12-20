@@ -59,6 +59,9 @@
     <ClCompile Include="src\Components\UIElements\ATH.cpp" />
     <ClCompile Include="src\Components\Shapes\Circle.cpp" />
     <ClCompile Include="src\Components\ComponentsGame\ExplosionCircle.cpp" />
+    <ClCompile Include="src\Components\ComponentsGame\FireBullet.cpp" />
+    <ClCompile Include="src\TileMap\TileMap.cpp" />
+    <ClCompile Include="src\Components\SquareCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Managers\HUDManager.h" />
@@ -121,6 +124,9 @@
     <ClInclude Include="include\Components\UIElements\ATH.h" />
     <ClInclude Include="include\Components\Shapes\Circle.h" />
     <ClInclude Include="include\Components\ComponentsGame\ExplosionCircle.h" />
+    <ClInclude Include="include\Components\ComponentsGame\FireBullet.h" />
+    <ClInclude Include="include\TileMap\TileMap.h" />
+    <ClInclude Include="include\Components\SquareCollider.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="include\Maths\Vector2.inl" />
