@@ -378,8 +378,47 @@ GameObject* BuilderEntityGameObject::CreateHadesGameObject(const std::string& _n
 	return gameObject;
 }
 
-
 GameObject* BuilderEntityGameObject::CreateProtectionBallGameObject(const std::string& _name, float _x, float _y, float scalex, float scaley, sf::Texture* _texture, const int& _number, GameObject* _hades)
+
+  {
+	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
+	gameObject->SetPosition(Maths::Vector2f(_x, _y));
+	gameObject->SetScale(Maths::Vector2f(scalex, scaley));
+	gameObject->SetDepth(0.7f);
+
+	ProtectionBall* protectionBall = gameObject->CreateComponent<ProtectionBall>();
+	protectionBall->SetHades(_hades);
+	protectionBall->SetSpawn(_randSpawn);
+	protectionBall->SetHealth();
+
+
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(false);
+	rigidBody2D->SetKillImperfection(Maths::Vector2f(22., 22.f));
+
+	Sprite* spriteBody = gameObject->CreateComponent<Sprite>();
+	spriteBody->SetName("spriteProtectionBall");
+	spriteBody->SetTexture(_texture);
+	spriteBody->SetRecTextureWithFrame(_number % 4, _number % 2, 4, 2);
+
+
+	SquareCollider* squareCollider = gameObject->CreateComponent<SquareCollider>();
+	squareCollider->SetWidthCollider(spriteBody->GetBounds().x);
+	squareCollider->SetHeightCollider(spriteBody->GetBounds().y);
+
+	HealthPointBar* healthPointBar = gameObject->CreateComponent<HealthPointBar>();
+	healthPointBar->SetScale(scalex, scaley);
+	healthPointBar->SetSize(spriteBody->GetSize().x + 25, 5);
+	healthPointBar->SetHealthPoint(protectionBall->GetHealthPoint());
+	healthPointBar->SetMaxHealthPoint(protectionBall->GetMaxHealthPoint());
+	healthPointBar->SetAboveSprite(100);
+	healthPointBar->SetHealthPointBar();
+
+	return gameObject;
+}
+
+GameObject* BuilderEntityGameObject::CreateProtectionBallGameObject(const std::string& _name, float _x, float _y, float scalex, float scaley, sf::Texture* _texture, const int& _number, GameObject* _hades, int _randSpawn)
+
 {
 	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
 	gameObject->SetPosition(Maths::Vector2f(_x, _y));
@@ -388,6 +427,9 @@ GameObject* BuilderEntityGameObject::CreateProtectionBallGameObject(const std::s
 
 	ProtectionBall* protectionBall = gameObject->CreateComponent<ProtectionBall>();
 	protectionBall->SetHades(_hades);
+	protectionBall->SetSpawn(_randSpawn);
+	protectionBall->SetHealth();
+
 
 	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
 	rigidBody2D->SetIsGravity(false);

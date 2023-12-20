@@ -38,6 +38,7 @@ public:
 	void SetDirection(Direction _newDirection);
 
 	void TakeDamage(const int& damage);
+	void TakeHealt(const int& _healt) { healthPoint += _healt; }
 	virtual void Die();
 	void Update(const float& _delta) override;
 
