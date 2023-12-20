@@ -63,6 +63,9 @@ public:
 	inline float GetWidthCollider() const { return widthSquareCollider; }
 	inline float GetHeightCollider() const { return heightSquareCollider; }
 
+	inline void SetWidthCollider(float _widthSquareCollider) { widthSquareCollider = _widthSquareCollider; }
+	inline void SetHeightCollider(float _heightSquareCollider) { heightSquareCollider = _heightSquareCollider; }
+
 	inline void SetSize(const float& _width, const float& _height)
 	{
 		widthSquareCollider = (_width - killImperfection.GetX()) * GetOwner()->GetScale().x;

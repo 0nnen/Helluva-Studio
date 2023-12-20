@@ -2,13 +2,14 @@
 #include "Components/Entity/Character.h"
 #include "Components/Entity/Enemy/Hades.h"
 #include "Managers/SceneManager.h"
-
+#include <Components/RigidBody2D.h>
 
 ProtectionBall::ProtectionBall() : Entity() 
 {
 	player = SceneManager::GetActiveGameScene()->GetPlayer();
 	hades = SceneManager::GetActiveGameScene()->GetHades();
 }
+  
 ProtectionBall::ProtectionBall(const int& _hp, const int& _damage, const float& _speed, const float& _attackSpeed, const float& _range) : Entity(_hp, _damage, _speed, _attackSpeed, _range) {}
 
 void ProtectionBall::Update(const float& _delta)
@@ -17,10 +18,31 @@ void ProtectionBall::Update(const float& _delta)
 	SetPower(_delta);
 }
 
+
 void ProtectionBall::CreateLava()
 {
 	area = BuilderEntityGameObject::CreateRectangleSpriteGameObject("Lava",position.x, 1100.f, 1.f, 0.5f, AssetManager::GetAsset("lavaArea"));
 }
+
+
+void ProtectionBall::CreateBouleFeu()
+{
+	circle = BuilderEntityGameObject::CreateSphereFeuGameObject("FireCircle", 500, 1000, 100);
+}
+
+void ProtectionBall::CollisionFireBall()
+{
+	if (player, circle) {
+		std::cout << "debug\n";
+		if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(circle->GetComponent<RigidBody2D>())))
+		{
+			// enelver des PV au joueur;
+			std::cout << "Cirlce en collision\n";
+		}
+	}
+}
+
+
 
 void ProtectionBall::SetHealth()
 {
@@ -29,6 +51,7 @@ void ProtectionBall::SetHealth()
 		// astral
 		SetHealthPoint(175.f);
 		SetMaxHealthPoint(175.f);
+
 	}
 	else if (spawn >= 6 && spawn <= 30)
 	{
@@ -42,7 +65,7 @@ void ProtectionBall::SetHealth()
 	}
 	else if (spawn >= 41 && spawn <= 55)
 	{
-		//eau ténébreuse
+		//eau tï¿½nï¿½breuse
 		SetHealthPoint(250.f);
 		SetMaxHealthPoint(250.f);
 	}
