@@ -47,6 +47,11 @@ public:
 
 	inline void SetInvicible(const bool& _state) { isInvicible = _state; }
 	inline bool GetInvicible() const { return isInvicible; }
+
+	inline void SetFiring(const bool& _state) { isFiring = _state; }
+	inline bool GetFiring() const { return isFiring; }
+
+
 	void AddAnimation(const std::string& _name, Animation* animation);
 	Animation* GetAnimation(const std::string& _name);
 	Animation* GetAndSetAnimation(const std::string& _name);
@@ -67,6 +72,7 @@ protected:
 	float range;
 	bool onFloor = true;
 	bool isInvicible = false;
+	bool isFiring = false;
 	Animation* actualAnimation = nullptr;
 	std::map<std::string, Animation*> animations;
 	Direction direction;

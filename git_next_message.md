@@ -1,4 +1,8 @@
-FIX: Erratum SceneOpening
+END : Fin 
 
-- J'ai oublié de remettre la SceneOpening en ouverture du jeu, promis je vais bientot me coucher
-
+- Fin de la construction de la map
+- Raccord avec le boss fait
+- Bugs réglés : 
+ - position de la balle par rapport à la souris
+ - Pause qui faisait tout planter
+ - HealthPointBarmal créée

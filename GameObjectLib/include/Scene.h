@@ -54,6 +54,7 @@ public:
 protected:
 	std::string name = "DefaultScene";
 	std::vector<GameObject*> gameObjects;
+	std::vector<GameObject*> backgrounds;
 	bool isActive = true;
 
 

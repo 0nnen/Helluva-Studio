@@ -68,6 +68,11 @@ public:
 		widthSquareCollider = (_width - killImperfection.GetX()) * GetOwner()->GetScale().x;
 		heightSquareCollider = (_height - killImperfection.GetY()) * GetOwner()->GetScale().y;
 	}
+	inline void SetSize(const Maths::Vector2f& _size)
+	{
+		widthSquareCollider = (_size.x - killImperfection.GetX()) * GetOwner()->GetScale().x;
+		heightSquareCollider = (_size.y - killImperfection.GetY()) * GetOwner()->GetScale().y;
+	}
 
 
 	static bool IsColliding(const RigidBody2D& _rigidBody2DA, const RigidBody2D& _rigidBody2DB);

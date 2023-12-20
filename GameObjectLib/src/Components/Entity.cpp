@@ -20,7 +20,6 @@ void Entity::TakeDamage(const int& _damage)
 		else {
 			healthPoint = 0;
 		}
-		std::cout << "Healthpoint : " << healthPoint << std::endl;
 
 		if (healthPoint <= 0)
 		{

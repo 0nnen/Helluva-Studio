@@ -9,6 +9,7 @@
 #include "Components/UIElements/Input.h"
 #include "Components/UIElements/Slider.h"
 #include "Components/Shapes/Carre.h"
+#include "Components/Shapes/Rectangle.h"
 
 
 
@@ -80,11 +81,45 @@ GameObject* BuilderGameObject::CreateBackgroundGameObject(const std::string& _na
 	return gameObject;
 }
 
+GameObject* BuilderGameObject::CreateBackgroundGameObject(const std::string& _name, const float& _x, const float& _y, const Maths::Vector2f& _size,const float& _scalex, const float& _scaley, const LayerType& _layer, const sf::Color& _color)
+{
+	GameObject* gameObject = SceneManager::GetActiveScene()->CreateGameObject(_name);
+	gameObject->SetPosition(Maths::Vector2f(_x, _y));
+	gameObject->SetScale(Maths::Vector2f(_scalex, _scaley));
+	gameObject->SetDepth(0.9f);
+	gameObject->SetLayer(_layer);
+
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(false);
+	rigidBody2D->SetSize(_size);
+
+	Rectangle* rectangle = gameObject->CreateComponent<Rectangle>();
+	rectangle->SetColor(_color);
+
+	return gameObject;
+}
+
 GameObject* BuilderGameObject::CreateBackgroundGameObject(const std::string& _name, const float& _x, const float& _y, const float& _scalex, const float& _scaley, sf::Texture* _texture, int _number)
 {
 	GameObject* gameObject = SceneManager::GetActiveScene()->CreateGameObject(_name);
 	gameObject->SetPosition(Maths::Vector2f(_x, _y));
 	gameObject->SetDepth(0.f);
+	gameObject->SetScale(Maths::Vector2f(_scalex, _scaley));
+
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(false);
+
+	Sprite* sprite = gameObject->CreateComponent<Sprite>();
+	sprite->SetTexture(_texture);
+
+	return gameObject;
+}
+
+GameObject* BuilderGameObject::CreateBackgroundGameObject(const std::string& _name, const float& _x, const float& _y, const float& _scalex, const float& _scaley, sf::Texture* _texture, int _number, const float& _depth)
+{
+	GameObject* gameObject = SceneManager::GetActiveScene()->CreateGameObject(_name);
+	gameObject->SetPosition(Maths::Vector2f(_x, _y));
+	gameObject->SetDepth(_depth);
 	gameObject->SetScale(Maths::Vector2f(_scalex, _scaley));
 
 	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();

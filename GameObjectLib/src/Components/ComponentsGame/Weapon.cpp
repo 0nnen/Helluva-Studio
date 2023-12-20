@@ -13,11 +13,10 @@ void Weapon::Attack() {
 	if (!underCooldown)
 	{
 		if (!character->GetAnimation("shootArm")->GetIsPlaying() && !character->GetAnimation("shootBody")->GetIsPlaying()) {
-			if (character->GetActualAnimation()) character->GetActualAnimation()->Stop();
-			if (character->GetAnimation("idle")->GetIsPlaying()) character->GetAndSetAnimation("idle")->Stop();
-			if (character->GetAnimation("run")->GetIsPlaying()) character->GetAndSetAnimation("run")->Stop();
-			if (character->GetAnimation("jump")->GetIsPlaying()) character->GetAndSetAnimation("jump")->Stop();
-			character->GetAndSetAnimation("shootBody")->Play();
+			if (character->GetAnimation("idle")->GetIsPlaying()) character->GetAnimation("idle")->Stop();
+			if (character->GetAnimation("run")->GetIsPlaying()) character->GetAnimation("run")->Stop();
+			if (character->GetAnimation("jump")->GetIsPlaying()) character->GetAnimation("jump")->Stop();
+			character->GetAnimation("shootBody")->Play();
 			const std::string nameArm = "arm";
 			character->GetAnimation("shootArm")->Play(nameArm);
 		}

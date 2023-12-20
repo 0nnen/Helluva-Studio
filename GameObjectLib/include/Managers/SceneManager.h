@@ -24,7 +24,7 @@ public:
 
 	//Get the current scene
 	inline static Scene* GetActiveScene() { return activeScene; }
-	inline static SceneGameAbstract* GetActiveGameScene() { return static_cast<SceneGameAbstract*>(activeScene); }
+	inline static SceneGameAbstract* GetActiveGameScene() { return dynamic_cast<SceneGameAbstract*>(activeScene); }
 	static Scene* GetSceneByKey(const std::string& _key);
 
 	inline static void SetPause(const bool& _state) { isPaused = _state; }

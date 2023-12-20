@@ -145,15 +145,24 @@ void CameraManager::Move(const float& offsetX, const float& offsetY)
 }
 
 void CameraManager::SetCenter(const float& x, const float& y) {
-	CameraManager::initialX = x;
-	CameraManager::initialY = y;
 	CameraManager::view.setCenter(x, y);
+	window->setView(CameraManager::GetView());
+}
+
+void CameraManager::DefaultCenter() {
+	CameraManager::view.setCenter(CameraManager::initialX, CameraManager::initialY);
+	CameraManager::view = CameraManager::window->getDefaultView();
 	window->setView(CameraManager::GetView());
 }
 
 void CameraManager::Zoom(const float& factor) 
 {
 	view.setSize(CameraManager::window->getDefaultView().getSize() / CameraManager::zoom);
+}
+
+void CameraManager::DefaultZoom()
+{
+	view.setSize(CameraManager::window->getDefaultView().getSize());
 }
 
 void CameraManager::SetZoom(const float& _zoom) 

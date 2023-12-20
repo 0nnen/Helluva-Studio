@@ -41,6 +41,7 @@ bool SquareCollider::IsBelow(const SquareCollider& _rigidBody2DA, const SquareCo
 void SquareCollider::Update(const float& _delta)
 {
 	Component::Update(_delta);
+	if (GetOwner()) SetPosition((GetOwner()->GetPosition() + perfectPosition));
 }
 
 void SquareCollider::Render(sf::RenderWindow* _window)
@@ -49,10 +50,10 @@ void SquareCollider::Render(sf::RenderWindow* _window)
 	if (GetOwner()) SetPosition((GetOwner()->GetPosition() + perfectPosition));
 
 		
-	/*	sf::RectangleShape rectangle = sf::RectangleShape(sf::Vector2f(widthCollider, heightCollider));
-		if (name == "ground") rectangle.setFillColor(sf::Color::Red);
-		rectangle.setOrigin(widthCollider / 2, heightCollider / 2);
-		rectangle.setPosition(GetPosition().x, GetPosition().y);
-		_window->draw(rectangle);*/
+		//sf::RectangleShape rectangle = sf::RectangleShape(sf::Vector2f(widthCollider, heightCollider));
+		//if (name == "ground") rectangle.setFillColor(sf::Color::Red);
+		//rectangle.setOrigin(widthCollider / 2, heightCollider / 2);
+		//rectangle.setPosition(GetPosition().x, GetPosition().y);
+		//_window->draw(rectangle);
 	
 }
