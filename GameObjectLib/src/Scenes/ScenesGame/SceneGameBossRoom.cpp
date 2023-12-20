@@ -71,16 +71,6 @@ void SceneGameBossRoom::Update(const float& _delta)
 	SceneGameAbstract::Update(_delta);
 	if (!isPause)
 	{
-		if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(plateforme->GetComponent<RigidBody2D>())))
-		{
-			if(firstCollide)
-			{
-				player->GetComponent<RigidBody2D>()->SetIsGravity(false);
-				player->GetComponent<Character>()->SetOnFloor(true);
-				firstCollide = false;
-			}
-		}
-		else
 		RigidBody2D* rigidBody2DPlayer = player->GetComponent<RigidBody2D>();
 		Character* character = player->GetComponent<Character>();
 		std::vector<SquareCollider*> squareColliders = player->GetComponentsByType<SquareCollider>();
@@ -141,15 +131,6 @@ void SceneGameBossRoom::Update(const float& _delta)
 						}
 					}
 				}
-				//if (RigidBody2D::IsColliding(*(bullet->GetComponent<RigidBody2D>()), *(hades->GetComponent<Hades>()->GetBouleDeFeuBalls()->GetComponent<RigidBody2D>())) && hades->GetActive())
-				//{
-				//	if (hades->GetComponent<Hades>()->GetBouleDeFeuBalls())
-				//	{
-				//		hades->GetComponent<Hades>()->GetBouleDeFeuBalls()->GetComponent<ProtectionBall>()->TakeDamageFireCircle(bullet->GetComponent<Bullet>()->GetDamageReduced());
-				//		gun->RemoveBullet(bullet);
-				//		RemoveGameObject(bullet);
-				//	}
-				//}
 			}
 		}
 		if (hades->GetComponent<Hades>()->GetHealthPoint() == 0)

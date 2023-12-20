@@ -1,3 +1,3 @@
-FIX : Master
+FIX : Fix des collisions
 
-- Fix de la Master
+- Merci tutur
