@@ -19,6 +19,11 @@
 #include <Components/Shapes/Rectangle.h>
 #include <Components/Shapes/Triangle.h>
 #include "Components/Transform.h"
+
+#include <Components/Shapes/Circle.h>
+#include <Components/ComponentsGame/ExplosionCircle.h>
+#include <Components/Shapes/Carre.h>
+
 #include "Components/SquareCollider.h"
 #include "TileMap/TileMap.h"
 
@@ -194,6 +199,43 @@ GameObject* BuilderEntityGameObject::CreatePlatformCollisionGameObject(const std
 }
 
 
+GameObject* BuilderEntityGameObject::CreateRangeHadesCollisionGameObject(const std::string& _name, const float& _positionX, const float& _positionY, const float& _scalex, const float& _scaley)
+{
+	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
+	gameObject->SetPosition(Maths::Vector2f(_positionX, _positionY));
+	gameObject->SetScale(Maths::Vector2f(_scalex, _scaley));
+
+
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(false);
+
+	Rectangle* rectangle = gameObject->CreateComponent<Rectangle>();
+	rectangle->SetSize(200.f, 50.f);
+	rectangle->SetScale(_scalex, _scaley);
+
+	return gameObject;
+
+}
+
+GameObject* BuilderEntityGameObject::CreateSphereFeuGameObject(const std::string& _name, const float& _positionX, const float& _positionY, const float& _radius)
+{
+	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
+	gameObject->SetPosition(Maths::Vector2f(_positionX, _positionY));
+
+
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(false);
+
+	Circle* circle = gameObject->CreateComponent<Circle>();
+	circle->SetRadius(_radius);
+
+	ExplosionCircle* explosionCircle = gameObject->CreateComponent<ExplosionCircle>();
+	explosionCircle->SetGameObject(gameObject);
+
+	return gameObject;
+
+}
+
 GameObject* BuilderEntityGameObject::CreateWeaponGameObject(const std::string& _name, GameObject* _player, const Weapon::TypeWeapon& _typeWeapon, const float& _positionX, const float& _positionY, const float& _damage, const float& _range, const float& _attackSpeed)
 {
 	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
@@ -343,15 +385,15 @@ GameObject* BuilderEntityGameObject::CreateHadesGameObject(const std::string& _n
 	Animation* attack = gameObject->CreateComponent<Animation>();
 	attack->SetLoop(1);
 	attack->SetName("attack");
-	attack->SetFrame(6);
-	attack->SetAnimationTime(2);
+	attack->SetFrame(11);
+	attack->SetAnimationTime(1);
 	attack->SetSpriteSheet(AssetManager::GetAsset("attackHades"));
 
 	Animation* roar = gameObject->CreateComponent<Animation>();
 	roar->SetLoop(1);
 	roar->SetName("roar");
-	roar->SetFrame(6);
-	roar->SetAnimationTime(2);
+	roar->SetFrame(8);
+	roar->SetAnimationTime(1);
 	roar->SetSpriteSheet(AssetManager::GetAsset("roarHades"));
 
 	idle->Play();
@@ -418,7 +460,6 @@ GameObject* BuilderEntityGameObject::CreateProtectionBallGameObject(const std::s
 }
 
 GameObject* BuilderEntityGameObject::CreateProtectionBallGameObject(const std::string& _name, float _x, float _y, float scalex, float scaley, sf::Texture* _texture, const int& _number, GameObject* _hades, int _randSpawn)
-
 {
 	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
 	gameObject->SetPosition(Maths::Vector2f(_x, _y));
@@ -429,7 +470,6 @@ GameObject* BuilderEntityGameObject::CreateProtectionBallGameObject(const std::s
 	protectionBall->SetHades(_hades);
 	protectionBall->SetSpawn(_randSpawn);
 	protectionBall->SetHealth();
-
 
 	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
 	rigidBody2D->SetIsGravity(false);
@@ -484,6 +524,36 @@ GameObject* BuilderEntityGameObject::CreateProtectionGameObject(const std::strin
 	return gameObject;
 }
 
+GameObject* BuilderEntityGameObject::CreateChevalGameObject(const std::string& _name, float _x, float _y, float scalex, float scaley, sf::Texture* _texture)
+{
+	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
+	gameObject->SetPosition(Maths::Vector2f(_x, _y));
+	gameObject->SetScale(Maths::Vector2f(scalex, scaley));
+	gameObject->SetDepth(0.8999999f);
+
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(false);
+	rigidBody2D->SetScale(scalex, scaley);
+	rigidBody2D->SetKillImperfection(Maths::Vector2f(22., 22.f));
+
+	Sprite* spriteBody = gameObject->CreateComponent<Sprite>();
+	spriteBody->SetName("spriteCheval");
+	spriteBody->SetTexture(_texture);
+	spriteBody->SetRecTextureWithFrame(0, 0, 6, 1);
+	spriteBody->SetScale(scalex, scaley);
+	spriteBody->SetSprite();
+
+	Animation* animation = gameObject->CreateComponent<Animation>();
+	animation->SetLoop(-1);
+	animation->SetName("Nightmare");
+	animation->SetFrame(4);
+	animation->SetAnimationTime(1);
+	animation->SetSpriteSheet(AssetManager::GetAsset("NightmareGalloping"));
+	animation->Play();
+
+	return gameObject;
+}
+
 
 GameObject* BuilderEntityGameObject::CreateFireBallEnemy(const std::string& _name, sf::Texture* _textureBullet, GameObject* _enemy, const float& _scalex, const float& _scaley, const float& _damage, const float& _speed, const Maths::Vector2f& _position)
 {
@@ -515,3 +585,4 @@ GameObject* BuilderEntityGameObject::CreateFireBallEnemy(const std::string& _nam
 
 	return gameObject;
 };
+

@@ -4,7 +4,7 @@
 
 
 ATH::ATH(Character* character, int maxHealth)
-    : character(character), maxHealth(maxHealth), maxHealthBarWidth(200.0f) {
+    : character(character), maxHealth(maxHealth), maxHealthBarWidth(100.0f) {
 
     healthBar.setSize(sf::Vector2f(maxHealthBarWidth, 20));
     healthBar.setFillColor(sf::Color::Red);
@@ -23,10 +23,10 @@ void ATH::Render(sf::RenderWindow& window) {
 */
 
 void ATH::Render(sf::RenderWindow& window) {
-    sf::RectangleShape healthbar(sf::Vector2f(600, 30));
-    healthbar.setFillColor(sf::Color::Green);
-    healthbar.setPosition(50, 50);
-    window.draw(healthbar);
+    sf::RectangleShape healthBar(sf::Vector2f(character->GetHealthPoint() * 6, 30));
+    healthBar.setFillColor(sf::Color::Green);
+    healthBar.setPosition(50, 50);
+    window.draw(healthBar);
 
     sf::RectangleShape weaponFrame;
     weaponFrame.setSize(sf::Vector2f(150, 150)); // Taille du cadre
