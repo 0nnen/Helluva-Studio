@@ -73,7 +73,7 @@ void SceneGameBossRoom::Update(const float& _delta)
 	{
 		if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(plateforme->GetComponent<RigidBody2D>())))
 		{
-			if(firstCollide)
+			if (firstCollide)
 			{
 				player->GetComponent<RigidBody2D>()->SetIsGravity(false);
 				player->GetComponent<Character>()->SetOnFloor(true);
@@ -81,41 +81,32 @@ void SceneGameBossRoom::Update(const float& _delta)
 			}
 		}
 		else
-		RigidBody2D* rigidBody2DPlayer = player->GetComponent<RigidBody2D>();
-		Character* character = player->GetComponent<Character>();
-		std::vector<SquareCollider*> squareColliders = player->GetComponentsByType<SquareCollider>();
-		SquareCollider* squareCollider = squareColliders[0];
-		SquareCollider* squareColliderGround = squareColliders[1];
-		SquareCollider* squareColliderPlateforme = plateforme->GetComponent<SquareCollider>();
-
-		if (!squareColliderGround->GetActiveCollider())
 		{
-			if (SquareCollider::IsColliding(*squareCollider, *squareColliderPlateforme))
-			{
-				character->SetOnFloor(true);
-				rigidBody2DPlayer->SetIsGravity(false);
-				const float distanceY = std::abs(squareCollider->GetCenterY() - squareColliderPlateforme->GetCenterY());
-				const float height = squareCollider->GetHeightCollider() / 2.f + squareColliderPlateforme->GetHeightCollider() / 2.f;
-				const float difference = height - distanceY;
-				player->SetPosition(player->GetPosition() - Maths::Vector2f(0.f, difference));
-				squareColliderGround->SetActiveCollider(true);
-				squareCollider->SetActiveCollider(false);
-			}
-			else
-			{
-				character->SetOnFloor(false);
-				rigidBody2DPlayer->SetIsGravity(true);
-			}
-		}
-		else if (squareColliderGround->GetActiveCollider())
-		{
+			RigidBody2D* rigidBody2DPlayer = player->GetComponent<RigidBody2D>();
+			Character* character = player->GetComponent<Character>();
+			std::vector<SquareCollider*> squareColliders = player->GetComponentsByType<SquareCollider>();
+			SquareCollider* squareCollider = squareColliders[0];
+			SquareCollider* squareColliderGround = squareColliders[1];
+			SquareCollider* squareColliderPlateforme = plateforme->GetComponent<SquareCollider>();
 
-			if (!SquareCollider::IsColliding(*squareColliderGround, *(plateforme->GetComponent<SquareCollider>())))
+			if (!squareColliderGround->GetActiveCollider())
 			{
-				squareColliderGround->SetActiveCollider(false);
-				squareCollider->SetActiveCollider(true);
-				rigidBody2DPlayer->SetIsGravity(true);
-				character->SetOnFloor(false);
+				if (SquareCollider::IsColliding(*squareCollider, *squareColliderPlateforme))
+				{
+					character->SetOnFloor(true);
+					rigidBody2DPlayer->SetIsGravity(false);
+					const float distanceY = std::abs(squareCollider->GetCenterY() - squareColliderPlateforme->GetCenterY());
+					const float height = squareCollider->GetHeightCollider() / 2.f + squareColliderPlateforme->GetHeightCollider() / 2.f;
+					const float difference = height - distanceY;
+					player->SetPosition(player->GetPosition() - Maths::Vector2f(0.f, difference));
+					squareColliderGround->SetActiveCollider(true);
+					squareCollider->SetActiveCollider(false);
+				}
+				else
+				{
+					character->SetOnFloor(false);
+					rigidBody2DPlayer->SetIsGravity(true);
+				}
 			}
 		}
 		if (player && hades)
@@ -141,15 +132,6 @@ void SceneGameBossRoom::Update(const float& _delta)
 						}
 					}
 				}
-				//if (RigidBody2D::IsColliding(*(bullet->GetComponent<RigidBody2D>()), *(hades->GetComponent<Hades>()->GetBouleDeFeuBalls()->GetComponent<RigidBody2D>())) && hades->GetActive())
-				//{
-				//	if (hades->GetComponent<Hades>()->GetBouleDeFeuBalls())
-				//	{
-				//		hades->GetComponent<Hades>()->GetBouleDeFeuBalls()->GetComponent<ProtectionBall>()->TakeDamageFireCircle(bullet->GetComponent<Bullet>()->GetDamageReduced());
-				//		gun->RemoveBullet(bullet);
-				//		RemoveGameObject(bullet);
-				//	}
-				//}
 			}
 		}
 		if (hades->GetComponent<Hades>()->GetHealthPoint() == 0)

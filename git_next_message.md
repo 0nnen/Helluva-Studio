@@ -1,3 +1,3 @@
-FIX : Master
+NEW : Changment des collisions
 
-- Fix de la Master
+- Changement des collisions avec la plateforme et le joueur

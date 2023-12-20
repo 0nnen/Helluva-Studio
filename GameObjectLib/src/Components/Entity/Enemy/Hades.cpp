@@ -159,9 +159,9 @@ void Hades::AttackHorse(int _randomAttackCheval, const float& _delta)
 			if (nightmare->GetPosition().x <= 2200)
 			{
 				nightmare->SetPosition(Maths::Vector2f(nightmare->GetPosition().x + (speed * _delta), nightmare->GetPosition().y));
-				for (Sprite* sprite : nightmare->GetComponentsByType<Sprite>()) {
-					if (sprite) sprite->SetScale(-1 * nightmare->GetScale().GetX(), nightmare->GetScale().GetY());
-				}
+				
+				nightmare->SetScale(Maths::Vector2f(- 1 * std::abs(nightmare->GetScale().GetX()), nightmare->GetScale().GetY()));
+				
 				if (nightmare->GetPosition().x >= 2200)
 				{
 					nightmareArrive = true;
@@ -174,9 +174,7 @@ void Hades::AttackHorse(int _randomAttackCheval, const float& _delta)
 			if (nightmare->GetPosition().x >= -200)
 			{
 				nightmare->SetPosition(Maths::Vector2f(nightmare->GetPosition().x - (speed * _delta), nightmare->GetPosition().y));
-				for (Sprite* sprite : nightmare->GetComponentsByType<Sprite>()) {
-					if (sprite) sprite->SetScale(nightmare->GetScale().GetX(), nightmare->GetScale().GetY());
-				}
+				nightmare->SetScale(Maths::Vector2f(std::abs(nightmare->GetScale().GetX()), nightmare->GetScale().GetY()));
 				if (nightmare->GetPosition().x <= -200)
 				{
 					nightmareArrive = true;

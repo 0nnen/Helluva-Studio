@@ -208,10 +208,10 @@ GameObject* BuilderEntityGameObject::CreateRangeHadesCollisionGameObject(const s
 
 	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
 	rigidBody2D->SetIsGravity(false);
+	rigidBody2D->SetSize(200.f, 50.f);
 
 	Rectangle* rectangle = gameObject->CreateComponent<Rectangle>();
-	rectangle->SetSize(200.f, 50.f);
-	rectangle->SetScale(_scalex, _scaley);
+	
 
 	return gameObject;
 
@@ -430,7 +430,6 @@ GameObject* BuilderEntityGameObject::CreateProtectionBallGameObject(const std::s
 
 	ProtectionBall* protectionBall = gameObject->CreateComponent<ProtectionBall>();
 	protectionBall->SetHades(_hades);
-	protectionBall->SetSpawn(0);
 	protectionBall->SetHealth();
 
 
@@ -468,7 +467,6 @@ GameObject* BuilderEntityGameObject::CreateProtectionBallGameObject(const std::s
 
 	ProtectionBall* protectionBall = gameObject->CreateComponent<ProtectionBall>();
 	protectionBall->SetHades(_hades);
-	protectionBall->SetSpawn(_randSpawn);
 	protectionBall->SetHealth();
 
 	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
@@ -533,15 +531,12 @@ GameObject* BuilderEntityGameObject::CreateChevalGameObject(const std::string& _
 
 	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
 	rigidBody2D->SetIsGravity(false);
-	rigidBody2D->SetScale(scalex, scaley);
 	rigidBody2D->SetKillImperfection(Maths::Vector2f(22., 22.f));
 
 	Sprite* spriteBody = gameObject->CreateComponent<Sprite>();
 	spriteBody->SetName("spriteCheval");
 	spriteBody->SetTexture(_texture);
 	spriteBody->SetRecTextureWithFrame(0, 0, 6, 1);
-	spriteBody->SetScale(scalex, scaley);
-	spriteBody->SetSprite();
 
 	Animation* animation = gameObject->CreateComponent<Animation>();
 	animation->SetLoop(-1);

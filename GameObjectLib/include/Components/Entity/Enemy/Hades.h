@@ -72,8 +72,4 @@ private:
 	bool nightmareArrive;
 	bool hitHorse;
 
-	int randomNumber;
-	float randX;
-	float randY;
-
 };
