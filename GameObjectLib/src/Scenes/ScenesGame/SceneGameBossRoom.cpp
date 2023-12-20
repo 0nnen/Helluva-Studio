@@ -38,6 +38,7 @@ void SceneGameBossRoom::Preload()
 	AssetManager::AddAsset("protectionHades", "Assets/Enemy/Hades/protection.png");
 	AssetManager::AddAsset("NightmareGalloping", "Assets/Enemy/Nightmare/nightmare-galloping.png");
 	AssetManager::AddAsset("protectionBallsHades", "Assets/Boss/balls.png");
+	AssetManager::AddAsset("lavaArea", "Assets/Graphics/Lava/lava.png");
 	unsigned seed = static_cast<unsigned>(time(0));
 	srand(seed);
 

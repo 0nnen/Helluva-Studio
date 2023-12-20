@@ -67,6 +67,7 @@
     <ClInclude Include="include\Components\Inputs\InputCharacter.h" />
     <ClInclude Include="include\Components\Shapes\Rectangle.h" />
     <ClInclude Include="include\Components\Entity\Enemy\ProtectionBall.h" />
+    <ClInclude Include="include\Components\ComponentsGame\LavaArea.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="include\Scenes\SceneLoginSignup.h" />
     <ClInclude Include="include\Managers\TimeManager.h" />
@@ -84,6 +85,7 @@
     <ClInclude Include="include\Components\SquareCollider.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\ComponentsGame\LavaArea.cpp" />
     <ClCompile Include="src\Components\ComponentsGame\ExplosionCircle.cpp" />
     <ClCompile Include="src\Components\Shapes\Circle.cpp" />
     <ClCompile Include="src\Components\ComponentsGame\FireBullet.cpp" />

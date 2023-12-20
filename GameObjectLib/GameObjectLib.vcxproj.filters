@@ -62,6 +62,7 @@
     <ClCompile Include="src\Components\ComponentsGame\FireBullet.cpp" />
     <ClCompile Include="src\TileMap\TileMap.cpp" />
     <ClCompile Include="src\Components\SquareCollider.cpp" />
+    <ClCompile Include="src\Components\ComponentsGame\LavaArea.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Managers\HUDManager.h" />
@@ -127,6 +128,7 @@
     <ClInclude Include="include\Components\ComponentsGame\FireBullet.h" />
     <ClInclude Include="include\TileMap\TileMap.h" />
     <ClInclude Include="include\Components\SquareCollider.h" />
+    <ClInclude Include="include\Components\ComponentsGame\LavaArea.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="include\Maths\Vector2.inl" />
