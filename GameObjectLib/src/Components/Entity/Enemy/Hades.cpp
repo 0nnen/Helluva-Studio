@@ -20,21 +20,21 @@ void Hades::SetProtection()
 	switch (step)
 	{
 	case Hades::Step3:
-		randomNumber = rand() % 8;
+		randomNumber = rand() % 100;
 		randX = rand() % 1300 + 500;
 		randY = rand() % 400 + 200;
 		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection4", randX, randY, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner(), randomNumber));
 	case Hades::Step2:
-		randomNumber = rand() % 8;
+		randomNumber = rand() % 100;
 		randX = rand() % 1300 + 500;
 		randY = rand() % 400 + 200;
 		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection3", randX, randY, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner(), randomNumber));
 	case Hades::Step1:
-		randomNumber = 0;
+		randomNumber = rand() % 100;
 		randX = rand() % 1300 + 500;
 		randY = rand() % 400 + 200;
 		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection2", randX, randY, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner(), randomNumber));
-		randomNumber = 0;
+		randomNumber = rand() % 100;
 		randX = rand() % 1300 + 500;
 		randY = rand() % 400 + 200;
 		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection1", randX, randY, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner(), randomNumber));

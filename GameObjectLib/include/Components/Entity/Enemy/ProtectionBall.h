@@ -12,6 +12,7 @@ public:
 	void SetHades(GameObject* _hades) { hades = _hades; }
 	void Die() override;
 	void Update(const float& _delta);
+	void CreateLava();
 	void SetSpawn(int _spawn) { spawn = _spawn; }
 	int GetSpawn() { return spawn; }
 	void SetHealth();
@@ -21,6 +22,8 @@ public:
 private:
 	GameObject* hades = nullptr;
 	GameObject* player = nullptr;
+	GameObject* area = nullptr;
+	Maths::Vector2f position;
 	int spawn = 0;
 	float randX;
 	float randY;
