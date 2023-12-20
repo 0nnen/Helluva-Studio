@@ -34,9 +34,8 @@ public:
 	inline int GetCount() { return count; }
 
 	void TakeDamage(const int& damage);
-	//void TakeDamageFireCircle(const int& damage);
+	void TakeHealt(const int& _healt) { healthPoint += _healt; }
 	virtual void Die();
-	//virtual void DieFireCirlce();
 	void Update(const float& _delta) override;
 
 	inline bool GetOnFloor() const { return onFloor; }

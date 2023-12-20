@@ -1,5 +1,7 @@
 #pragma once
 #include "Scenes/SceneGameAbstract.h"
+#include "Components/UIElements/ATH.h"
+
 class SceneGameBossRoom final : public SceneGameAbstract
 {
 public:
@@ -18,5 +20,6 @@ private:
 	GameObject* plateforme = nullptr;
 	GameObject* hades = nullptr;
 	float victoryTime = 5.f;
+	ATH* hud;
 };
 

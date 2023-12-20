@@ -14,12 +14,24 @@ public:
 	//void DieFireCirlce() override;
 	void Update(const float& _delta);
 
+	void SetSpawn(int _spawn) { spawn = _spawn; }
+	int GetSpawn() { return spawn; }
+	void SetHealth();
+	void SetPower(const float& _delta);
+
+	void CreateBouleFeu();
+	void CollisionFireBall();
+
 
 private:
 	GameObject* hades = nullptr;
 	GameObject* player = nullptr;
-	int randX;
-	int randY;
-	bool alive;
+	GameObject* circle;
 	bool ballDamage;
+	int spawn = 0;
+	float randX;
+	float randY;
+	float tp;
+	Maths::Vector2f positionFireCircle;
+	bool activeCollision = false;
 };

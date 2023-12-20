@@ -2,7 +2,7 @@
 
 Circle::Circle()
 {
-	circle.setFillColor(sf::Color::Blue);
+	circle.setFillColor(sf::Color::Transparent);
 }
 
 void Circle::Render(sf::RenderWindow* _window)

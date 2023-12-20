@@ -19,6 +19,7 @@
 #include <Components/Shapes/Triangle.h>
 #include "Components/Transform.h"
 #include <Components/Shapes/Circle.h>
+#include <Components/ComponentsGame/ExplosionCircle.h>
 
 
 GameObject* BuilderEntityGameObject::CreateBulletGameObject(const std::string& _name, sf::Texture* _textureBullet, GameObject* _player, const float& _scalex, const float& _scaley, const float& _damage, const float& _speed, const Maths::Vector2f& _direction, const float& _rotate, const Maths::Vector2f& _position)
@@ -182,6 +183,9 @@ GameObject* BuilderEntityGameObject::CreateSphereFeuGameObject(const std::string
 
 	Circle* circle = gameObject->CreateComponent<Circle>();
 	circle->SetRadius(_radius);
+
+	ExplosionCircle* explosionCircle = gameObject->CreateComponent<ExplosionCircle>();
+	explosionCircle->SetGameObject(gameObject);
 
 	return gameObject;
 
@@ -350,7 +354,7 @@ GameObject* BuilderEntityGameObject::CreateHadesGameObject(const std::string& _n
 
 	return gameObject;
 }
-GameObject* BuilderEntityGameObject::CreateProtectionBallGameObject(const std::string& _name, float _x, float _y, float scalex, float scaley, sf::Texture* _texture, const int& _number, GameObject* _hades)
+GameObject* BuilderEntityGameObject::CreateProtectionBallGameObject(const std::string& _name, float _x, float _y, float scalex, float scaley, sf::Texture* _texture, const int& _number, GameObject* _hades, int _randSpawn)
 {
 	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
 	gameObject->SetPosition(Maths::Vector2f(_x, _y));
@@ -359,6 +363,8 @@ GameObject* BuilderEntityGameObject::CreateProtectionBallGameObject(const std::s
 
 	ProtectionBall* protectionBall = gameObject->CreateComponent<ProtectionBall>();
 	protectionBall->SetHades(_hades);
+	protectionBall->SetSpawn(_randSpawn);
+	protectionBall->SetHealth();
 
 	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
 	rigidBody2D->SetIsGravity(false);

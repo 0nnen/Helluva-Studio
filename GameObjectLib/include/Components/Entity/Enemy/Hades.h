@@ -16,17 +16,10 @@ public:
 	void SetProtection(const float& _delta);
 	void SetDirection();
 
-	void AttackFeu();
+	void AttackFeu(const float& _delta);
 	void AttackCheval(int _randomAttackCheval, const float& _delta);
 	void AllerRetourCheval(bool _nightmareArrive, const float& _delta, int& _countAllerRetour, int& _countAllerRetour2, int& _countAllerRetour3);
-	void DamageZoneHades();
-
-	void BouleFeu();
-	void CreateBouleFeu();
-
-	void SpawnRandomBall();
-	void SetSpawnRandomBall(int _spawn) { spawn = _spawn; }
-	int GetSpawnRandomBall() { return spawn; }
+	void DamageZoneHades(const float& _delta);
 
 	void Update(const float& _delta) override;
 
@@ -39,6 +32,7 @@ public:
 	}
 
 	std::vector<GameObject*> GetProtectionBalls() { return balls; }
+	void SetIncible(bool _invincible) { isInvicible = _invincible; }
 
 private:
 	State state = Idle;
@@ -52,16 +46,18 @@ private:
 	int randomAttackCheval = 0;
 	int newRandomAttackCheval;
 	int randomAttackFeu = 0;
-	bool stateSwitch;
-	bool stateSwitchZone;
 	int countAllerRetour = 0;
 	int countAllerRetour2 = 0;
 	int countAllerRetour3 = 0;
 	bool nightmareArrive;
 	const float speed = 350.0f;
-	int spawn = 0;
 	GameObject* platformFeu;
 	GameObject* damageZone;
-	GameObject* circle;
+	int randomNumber;
+	float randX;
+	float randY;
+	float cooldownAttackFeu = 1.0f;
+	float cooldownDamageZone = 2.0f;
+	float cooldownAttackCheval = 0.0f;
 };
 
