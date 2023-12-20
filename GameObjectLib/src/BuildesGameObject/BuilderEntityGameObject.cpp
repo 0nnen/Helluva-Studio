@@ -388,7 +388,7 @@ GameObject* BuilderEntityGameObject::CreateProtectionBallGameObject(const std::s
 
 	ProtectionBall* protectionBall = gameObject->CreateComponent<ProtectionBall>();
 	protectionBall->SetHades(_hades);
-	protectionBall->SetSpawn(_randSpawn);
+	protectionBall->SetSpawn(0);
 	protectionBall->SetHealth();
 
 
@@ -442,8 +442,8 @@ GameObject* BuilderEntityGameObject::CreateProtectionBallGameObject(const std::s
 
 
 	SquareCollider* squareCollider = gameObject->CreateComponent<SquareCollider>();
-	squareCollider->SetWidthCollider(spriteBody->GetBounds().x);
-	squareCollider->SetHeightCollider(spriteBody->GetBounds().y);
+	squareCollider->SetWidthCollider(spriteBody->GetBounds().x / 1.5);
+	squareCollider->SetHeightCollider(spriteBody->GetBounds().y / 1.5);
 
 	HealthPointBar* healthPointBar = gameObject->CreateComponent<HealthPointBar>();
 	healthPointBar->SetScale(scalex, scaley);
