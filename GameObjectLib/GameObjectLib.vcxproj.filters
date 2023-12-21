@@ -57,12 +57,15 @@
     <ClCompile Include="src\Components\Entity\Enemy\Hades.cpp" />
     <ClCompile Include="src\Components\Entity\Enemy\ProtectionBall.cpp" />
     <ClCompile Include="src\Components\UIElements\ATH.cpp" />
+    <ClCompile Include="src\Components\Shapes\Circle.cpp" />
+    <ClCompile Include="src\Components\ComponentsGame\ExplosionCircle.cpp" />
     <ClCompile Include="src\Components\ComponentsGame\FireBullet.cpp" />
     <ClCompile Include="src\TileMap\TileMap.cpp" />
     <ClCompile Include="src\Components\SquareCollider.cpp" />
     <ClCompile Include="src\Scenes\ScenesGame\SceneGameSpawn.cpp" />
     <ClCompile Include="src\Components\UIElements\Text.cpp" />
     <ClCompile Include="src\Managers\LanguageManager.cpp" />
+    <ClCompile Include="src\Components\ComponentsGame\LavaArea.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Managers\HUDManager.h" />
@@ -123,12 +126,15 @@
     <ClInclude Include="include\Components\Entity\Enemy\Hades.h" />
     <ClInclude Include="include\Components\Entity\Enemy\ProtectionBall.h" />
     <ClInclude Include="include\Components\UIElements\ATH.h" />
+    <ClInclude Include="include\Components\Shapes\Circle.h" />
+    <ClInclude Include="include\Components\ComponentsGame\ExplosionCircle.h" />
     <ClInclude Include="include\Components\ComponentsGame\FireBullet.h" />
     <ClInclude Include="include\TileMap\TileMap.h" />
     <ClInclude Include="include\Components\SquareCollider.h" />
     <ClInclude Include="include\Scenes\ScenesGame\SceneGameSpawn.h" />
     <ClInclude Include="include\Components\UIElements\Text.h" />
     <ClInclude Include="include\Managers\LanguageManager.h" />
+    <ClInclude Include="include\Components\ComponentsGame\LavaArea.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="include\Maths\Vector2.inl" />

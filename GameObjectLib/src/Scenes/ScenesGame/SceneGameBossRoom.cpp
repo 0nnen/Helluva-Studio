@@ -36,7 +36,9 @@ void SceneGameBossRoom::Preload()
 	AssetManager::AddAsset("roarHades", "Assets/Enemy/Hades/demon-attack-no-breath.png");
 	AssetManager::AddAsset("idleHades", "Assets/Enemy/Hades/demon-idle.png");
 	AssetManager::AddAsset("protectionHades", "Assets/Enemy/Hades/protection.png");
+	AssetManager::AddAsset("NightmareGalloping", "Assets/Enemy/Nightmare/nightmare-galloping.png");
 	AssetManager::AddAsset("protectionBallsHades", "Assets/Boss/balls.png");
+	AssetManager::AddAsset("lavaArea", "Assets/Graphics/Lava/lava.png");
 	unsigned seed = static_cast<unsigned>(time(0));
 	srand(seed);
 
@@ -53,6 +55,8 @@ void SceneGameBossRoom::Create()
 	plateforme->SetVisible(false);
 	CreatePlayer(WindowManager::GetFloatWindowWidth() / 1.1, WindowManager::GetFloatWindowHeight() / 1.2);
 	player->GetComponent<Character>()->SetCenterCamera(false);
+
+	hud = new ATH(player->GetComponent<Character>(), player->GetComponent<Character>()->GetMaxHealthPoint());
 
 	hades = BuilderEntityGameObject::CreateHadesGameObject("Hades", WindowManager::GetFloatWindowWidth() / 6.f, WindowManager::GetFloatWindowHeight() / 1.5f, 2.5f, 2.5f, AssetManager::GetAsset("idleHades"));
 	victoryTime = 5.f;
@@ -145,4 +149,7 @@ void SceneGameBossRoom::Update(const float& _delta)
 void SceneGameBossRoom::Render(sf::RenderWindow* _window)
 {
 	SceneGameAbstract::Render(_window);
+	if (hud) {
+		hud->Render(*_window);
+	}
 }

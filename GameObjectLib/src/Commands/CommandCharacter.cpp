@@ -56,11 +56,13 @@ void JumpCharacter::Execute(const float& _delta)
 {
 	GameObject* player = SceneManager::GetActiveGameScene()->GetPlayer();
 	RigidBody2D* rigidBody2D = player->GetComponent<RigidBody2D>();
+
 	SquareCollider* squareCollider = player->GetComponentsByType<SquareCollider>()[0];
 	SquareCollider* squareColliderGround = player->GetComponentsByType<SquareCollider>()[1];
 	squareColliderGround->SetActiveCollider(false);
 	squareCollider->SetActiveCollider(true);
 	rigidBody2D->AddForces(Maths::Vector2f(0, -1400));
+
 }
 
 ShootCharacter::ShootCharacter() {}
