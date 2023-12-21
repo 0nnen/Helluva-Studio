@@ -2,6 +2,16 @@
 #include "Components/Entity/Character.h"
 #include "BuilderGameObject.h"
 #include "Managers/CameraManager.h"
+#include "Managers/AssetManager.h"
+#include "Managers/WindowManager.h"
+#include "Managers/SceneManager.h"
+
+#include "BuildersGameObject/BuilderEntityGameObject.h"
+#include "BuildersGameObject/BuilderShapeGameObject.h"
+
+#include "Components/RigidBody2D.h"
+#include "TileMap/TileMap.h"
+
 ScenesTest::ScenesTest(const std::string& _newName) : SceneGameAbstract(_newName) {
 }
 

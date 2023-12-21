@@ -62,6 +62,9 @@
     <ClCompile Include="src\Components\ComponentsGame\FireBullet.cpp" />
     <ClCompile Include="src\TileMap\TileMap.cpp" />
     <ClCompile Include="src\Components\SquareCollider.cpp" />
+    <ClCompile Include="src\Scenes\ScenesGame\SceneGameSpawn.cpp" />
+    <ClCompile Include="src\Components\UIElements\Text.cpp" />
+    <ClCompile Include="src\Managers\LanguageManager.cpp" />
     <ClCompile Include="src\Components\ComponentsGame\LavaArea.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -128,6 +131,9 @@
     <ClInclude Include="include\Components\ComponentsGame\FireBullet.h" />
     <ClInclude Include="include\TileMap\TileMap.h" />
     <ClInclude Include="include\Components\SquareCollider.h" />
+    <ClInclude Include="include\Scenes\ScenesGame\SceneGameSpawn.h" />
+    <ClInclude Include="include\Components\UIElements\Text.h" />
+    <ClInclude Include="include\Managers\LanguageManager.h" />
     <ClInclude Include="include\Components\ComponentsGame\LavaArea.h" />
   </ItemGroup>
   <ItemGroup>

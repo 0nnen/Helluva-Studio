@@ -33,11 +33,14 @@ void SceneGameAbstract::Create()
 {
 	Scene::Create();
 	//Background Pause
+	const float& widthScreen = WindowManager::GetWindowWidth();
+	const float& heightScreen = WindowManager::GetWindowHeight();
 	backgroundPause = BuilderGameObject::CreateBackgroundGameObject("BackgroundPause", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, Maths::Vector2f(WindowManager::GetWindowWidth(), WindowManager::GetWindowHeight()), 1.f, 1.f, LayerType::HUD, sf::Color(0, 0, 0, static_cast <sf::Uint8>(170)));
 	//Pause Buttons
-	pausePlayButton = BuilderGameObject::CreateButtonGameObject("Continue", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 4.0, 25);
-	pauseMenuPrincipalButton = BuilderGameObject::CreateButtonGameObject("Menu Principal", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2.5, 15);
-	pauseQuitButton = BuilderGameObject::CreateButtonGameObject("Quit", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 1.8,  40);
+	
+	pausePlayButton = BuilderGameObject::CreateButtonGameObject("continue", widthScreen / 2, heightScreen / 3, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 40);
+	pauseMenuPrincipalButton = BuilderGameObject::CreateButtonGameObject("mainMenu", widthScreen / 2, heightScreen / 2, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 25);
+	pauseQuitButton = BuilderGameObject::CreateButtonGameObject("quit", widthScreen / 2, heightScreen / 1.5, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 40);
 	this->Pause(false);
 }
 
@@ -63,6 +66,7 @@ void SceneGameAbstract::Preload()
 	AssetManager::AddAsset("shootArm", "Assets/Graphics/Characters/Zephyr/Idle_Shoot/Character_Idle_Shoot_ARM_48x48.png");
 	AssetManager::AddAsset("shootBody", "Assets/Graphics/Characters/Zephyr/Idle_Shoot/Character_Idle_Shoot_BODY_48x48.png");
 	AssetManager::AddAsset("bullet", "Assets/Graphics/Characters/Zephyr/bullet.png");
+	AssetManager::AddAsset("ButtonsMenu", "Assets/Graphics/UI/Buttons/buttonsMenu.png");
 }
 
 
@@ -114,12 +118,15 @@ void SceneGameAbstract::Update(const float& _delta)
 	}
 	else
 	{
+		AudioManager::PauseMusic();
 		if (pausePlayButton->GetComponent<Button>()->IsClicked())
 		{
+			AudioManager::ResumeMusic();
 			this->Pause(false);
 		}
 		else if (pauseMenuPrincipalButton->GetComponent<Button>()->IsClicked()) 
 		{
+			AudioManager::Stop();
 			this->Pause(true);
 			SceneManager::RunScene("SceneMainMenu");
 		}

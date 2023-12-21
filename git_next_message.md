@@ -1,3 +1,3 @@
-FIX : Fix master
+ENH : Changement langues boutons
 
-- ALED QUENTIN
+- Changement de la langue des boutons

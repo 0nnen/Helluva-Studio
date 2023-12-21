@@ -18,6 +18,7 @@ public:
 	static GameObject* CreateEnemyAGameObject(const std::string& name, float _x, float _y, float scalex, float scaley, sf::Texture* _texture);
 
 	static GameObject* CreateHadesGameObject(const std::string& name, float _x, float _y, float scalex, float scaley, sf::Texture* _texture);
+	static GameObject* CreateHadesSpawnGameObject(const std::string& name, float _x, float _y, float scalex, float scaley, sf::Texture* _texture);
 
 
 	static GameObject* CreateChevalGameObject(const std::string& name, float _x, float _y, float scalex, float scaley, sf::Texture* _texture);

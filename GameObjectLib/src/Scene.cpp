@@ -1,6 +1,7 @@
 #include "Scene.h"
 #include "Managers/WindowManager.h"
 #include "Managers/CameraManager.h"
+#include "Managers/LanguageManager.h"
 #include "BuilderGameObject.h"
 
 #include <iostream>
@@ -12,11 +13,13 @@ Scene::Scene(const std::string& _name)
 //Initialize the scene
 void Scene::Preload() 
 {
+	
 }
 
 //Create Object from the scene
 void Scene::Create() 
 {
+	language = LanguageManager::GetInstance()->GetLanguage();
 	CameraManager::DefaultZoom();
 	fadeOutRectangle.setSize(sf::Vector2f(WindowManager::GetFloatWindowWidth(), WindowManager::GetFloatWindowHeight()));
 	fadeInRectangle.setSize(sf::Vector2f(WindowManager::GetFloatWindowWidth(), WindowManager::GetFloatWindowHeight()));
@@ -178,3 +181,4 @@ void Scene::ShowFadeOut(sf::RenderWindow* _window)
 {
 	_window->draw(fadeOutRectangle);
 }
+

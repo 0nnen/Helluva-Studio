@@ -13,6 +13,7 @@ public:
 	void SetOrigin();
 	void SetSize();
 	void SetSize(const float& _width, const float& _height);
+	void SetScale(const Maths::Vector2f& _scale);
 	void SetPosition(const float& _x, const float& _y);
 	void SetPosition(const Maths::Vector2f& _position);
 	void SetFont(const sf::Font& _font);

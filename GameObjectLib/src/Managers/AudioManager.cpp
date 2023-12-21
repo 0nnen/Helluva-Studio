@@ -40,8 +40,8 @@ void AudioManager::PlayMusic(const std::string& _key)
 {
 	if (AudioManager::musics.find(_key) != AudioManager::musics.end())
 	{
-		AudioManager::music = AudioManager::musics.at(_key);
 		AudioManager::Stop();
+		AudioManager::music = AudioManager::musics.at(_key);
 		AudioManager::music->setVolume(volume);
 		AudioManager::music->play();
 	}

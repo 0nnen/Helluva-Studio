@@ -10,10 +10,10 @@ public:
 	inline static float GetMaxVolume() { return maxVolume; }
 	static void SetVolume(float _volume);
 	
-	inline static void Loop(const bool& _state) { music->setLoop(_state); }
+	inline static void Loop(const bool& _state) { if (music) music->setLoop(_state); }
 
-	inline static void Pause() { music->pause(); }
-	inline static void Stop() { music->stop(); }
+	inline static void Pause() { if (music) music->pause(); }
+	inline static void Stop() { if(music) music->stop(); }
 
 	static void PlayMusic(const std::string& _key);
 	static void PlaySound(const std::string& _key);
