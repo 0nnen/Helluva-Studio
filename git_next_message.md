@@ -1,5 +1,4 @@
-ENH : Boutons Langues
+ENH : Changement langues boutons
 
-- Création d'un boutonpar langue
-- Change le texte d'hadès
+- Changement de la langue des boutons
 

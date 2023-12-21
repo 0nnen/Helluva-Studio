@@ -5,6 +5,7 @@
 #include "Managers/CameraManager.h"
 #include "Managers/FontManager.h"
 #include "Managers/AudioManager.h"
+#include "Managers/LanguageManager.h"
 #include <iostream>
 
 Button::Button()
@@ -72,7 +73,7 @@ void Button::SetFont(const sf::Font& _font)
 
 void Button::SetText(const std::string& _text, const sf::Color& _color)
 {
-	text.setString(_text);
+	text.setString(LanguageManager::GetInstance()->GetButtonsByKey(GetOwner()->GetName()));
 	text.setFillColor(_color);
 	if (width == 0 && height == 0)
 	{
@@ -147,6 +148,7 @@ void Button::Update(const float& _delta)
 			sprite->SetRecTexture(0, 0, sprite->GetBounds().x, sprite->GetBounds().y);
 		}
 	}
+	text.setString(LanguageManager::GetInstance()->GetButtonsByKey(GetOwner()->GetName()));
 }
 
 bool Button::IsOver(const Sprite* sprite)

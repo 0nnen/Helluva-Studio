@@ -180,3 +180,4 @@ void Scene::ShowFadeOut(sf::RenderWindow* _window)
 {
 	_window->draw(fadeOutRectangle);
 }
+

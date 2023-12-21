@@ -37,6 +37,7 @@ void Engine::Init() const
 	LanguageManager* languageManager = LanguageManager::GetInstance();
 	languageManager->RecoverLanguages("Assets/Texts/LanguagesList.txt");
 	languageManager->SetLanguage("English");
+	languageManager->GetButton();
 	HUDManager::Init(WindowManager::GetWindow());
 	SceneManager::AddScene("SceneMainMenu", new SceneMainMenu(std::string("MainMenu")));
 	//SceneManager::AddScene("SceneGameUnderground", new SceneGameUnderground(std::string("SceneGameUnderground")));

@@ -1,7 +1,5 @@
 #include "Managers/LanguageManager.h"
 
-#include <iostream>
-#include <fstream>
 
 LanguageManager* LanguageManager::instance = nullptr;
 

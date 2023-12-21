@@ -59,20 +59,20 @@ void SceneMainMenu::CreateSceneButtonsMenu()
 {
 	float widthScreen = WindowManager::GetFloatWindowWidth();
 	float heightScreen = WindowManager::GetFloatWindowHeight();
-	playButton = BuilderGameObject::CreateButtonGameObject("PLAY", widthScreen / 2, heightScreen / 2.1, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"),40);
-	worldButton = BuilderGameObject::CreateButtonGameObject("PLAY BOSS", widthScreen / 2, heightScreen / 1.6, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"),30);
-	optionsButton = BuilderGameObject::CreateButtonGameObject("OPTIONS", widthScreen / 2, heightScreen / 1.3, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"),40);
-	quitButton = BuilderGameObject::CreateButtonGameObject("QUIT", widthScreen / 2, heightScreen / 1.1, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"),40);
+	playButton = BuilderGameObject::CreateButtonGameObject("play", widthScreen / 2, heightScreen / 2.1, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 40);
+	worldButton = BuilderGameObject::CreateButtonGameObject("playBoss", widthScreen / 2, heightScreen / 1.6, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"),30);
+	optionsButton = BuilderGameObject::CreateButtonGameObject("settings", widthScreen / 2, heightScreen / 1.3, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"),40);
+	quitButton = BuilderGameObject::CreateButtonGameObject("quit", widthScreen / 2, heightScreen / 1.1, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"),40);
 
 	//successButton = BuilderGameObject::CreateButtonGameObject("Success", widthScreen / 1.2, heightScreen / 10, 18);
 	//rankButton = BuilderGameObject::CreateButtonGameObject("Rank", widthScreen / 1.3, heightScreen / 10, 18);
 	//creditsButton = BuilderGameObject::CreateButtonGameObject("Credits", widthScreen / 1.1, heightScreen / 10, 18);
 	
-	backButton = BuilderGameObject::CreateButtonGameObject("Back", widthScreen / 10, heightScreen / 10, 0.5f, 0.5f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 40);
-	englishButton = BuilderGameObject::CreateButtonGameObject("English", widthScreen / 3, heightScreen / 1.2, 0.5f, 0.5f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 40);
-	frenchButton = BuilderGameObject::CreateButtonGameObject("French", widthScreen / 1.2, heightScreen / 1.2, 0.5f, 0.5f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 40);
-	sliderFPS = BuilderGameObject::CreateSliderGameObject("SliderFPS", widthScreen / 2, heightScreen / 2, 1200, 40, 50, 50, 20, WindowManager::GetFps(), WindowManager::GetMinFps(), WindowManager::GetMaxFps());
-	sliderVolume = BuilderGameObject::CreateSliderGameObject("SliderVolume", widthScreen / 2, heightScreen / 1.5, 1200, 40, 50, 50, 20, AudioManager::GetVolume(), AudioManager::GetMaxVolume());
+	backButton = BuilderGameObject::CreateButtonGameObject("back", widthScreen / 10, heightScreen / 10, 0.5f, 0.5f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 40);
+	englishButton = BuilderGameObject::CreateButtonGameObject("englishButton", widthScreen / 3, heightScreen / 1.2, 0.5f, 0.5f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 40);
+	frenchButton = BuilderGameObject::CreateButtonGameObject("frenchButton", widthScreen / 1.2, heightScreen / 1.2, 0.5f, 0.5f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 40);
+	sliderFPS = BuilderGameObject::CreateSliderGameObject("sliderFps", widthScreen / 2, heightScreen / 2, 1200, 40, 50, 50, 20, WindowManager::GetFps(), WindowManager::GetMinFps(), WindowManager::GetMaxFps());
+	sliderVolume = BuilderGameObject::CreateSliderGameObject("sliderVolume", widthScreen / 2, heightScreen / 1.5, 1200, 40, 50, 50, 20, AudioManager::GetVolume(), AudioManager::GetMaxVolume());
 	//signupLoginButton = CreateButtonGameObject("Signup Login", widthScreen / 1.2, heightScreen / 1.2, 30)
 	CameraManager::SetCenter(widthScreen / 2, heightScreen / 2);
 }
@@ -129,12 +129,17 @@ void SceneMainMenu::Update(const float& _delta)
 		else if (englishButton->GetComponent<Button>()->IsClicked())
 		{
 			language = "English";
-			LanguageManager::GetInstance()->SetLanguage("English");
+			LanguageManager* manager = LanguageManager::GetInstance();
+			manager->SetLanguage("English");
+			manager->GetButton();
+
 		}
 		else if (frenchButton->GetComponent<Button>()->IsClicked())
 		{
 			language = "Francais";
-			LanguageManager::GetInstance()->SetLanguage("Francais");
+			LanguageManager* manager = LanguageManager::GetInstance();
+			manager->SetLanguage("Francais");
+			manager->GetButton();
 		}
 	/*	else if (successButton->GetComponent<Button>()->IsClicked())
 		{

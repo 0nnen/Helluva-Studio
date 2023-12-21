@@ -49,6 +49,8 @@ public:
 	void ShowFadeIn(sf::RenderWindow* _window);
 	void ShowFadeOut(sf::RenderWindow* _window);
 
+	void UpdateButtonsLanguage();
+
 	void ApplyDepth();
 
 protected:

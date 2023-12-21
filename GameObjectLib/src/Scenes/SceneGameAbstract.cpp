@@ -38,9 +38,9 @@ void SceneGameAbstract::Create()
 	backgroundPause = BuilderGameObject::CreateBackgroundGameObject("BackgroundPause", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, Maths::Vector2f(WindowManager::GetWindowWidth(), WindowManager::GetWindowHeight()), 1.f, 1.f, LayerType::HUD, sf::Color(0, 0, 0, static_cast <sf::Uint8>(170)));
 	//Pause Buttons
 	
-	pausePlayButton = BuilderGameObject::CreateButtonGameObject("Continue", widthScreen / 2, heightScreen / 3, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 40);
-	pauseMenuPrincipalButton = BuilderGameObject::CreateButtonGameObject("Menu Principal", widthScreen / 2, heightScreen / 2, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 25);
-	pauseQuitButton = BuilderGameObject::CreateButtonGameObject("Quit", widthScreen / 2, heightScreen / 1.5, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 40);
+	pausePlayButton = BuilderGameObject::CreateButtonGameObject("continue", widthScreen / 2, heightScreen / 3, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 40);
+	pauseMenuPrincipalButton = BuilderGameObject::CreateButtonGameObject("mainMenu", widthScreen / 2, heightScreen / 2, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 25);
+	pauseQuitButton = BuilderGameObject::CreateButtonGameObject("quit", widthScreen / 2, heightScreen / 1.5, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 40);
 	this->Pause(false);
 }
 
