@@ -49,7 +49,7 @@ void SceneOpening::Create()
 
     progressBar.setSize(sf::Vector2f(300, 20));
     progressBar.setPosition(widthWindow / 2 - 150, heightWindow - 50);
-    progressBar.setFillColor(sf::Color::Green);
+    progressBar.setFillColor(sf::Color::Magenta);
 }
 
 void SceneOpening::Delete()
