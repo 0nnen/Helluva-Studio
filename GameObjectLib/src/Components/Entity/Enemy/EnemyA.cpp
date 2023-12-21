@@ -1,6 +1,6 @@
 #include "Components/Entity/Enemy/EnemyA.h"
 #include "Managers/SceneManager.h"
-#include "Scenes/ScenesGame/SceneGameWorld.h"
+#include "Scenes/ScenesGame/ScenesTest.h"
 #include "BuildersGameObject/BuilderEntityGameObject.h"
 #include "Components/RigidBody2D.h"
 
@@ -24,13 +24,13 @@ void EnemyA::Update(const float& _delta)
 {
 	Entity::Update(_delta);
 
-	if (SceneGameWorld::GetFlip())
+	if (!ScenesTest::GetFlip())
 	{
 
 		SetDirection(Left);
 		directionEnemy = true;
 	}
-	if (!SceneGameWorld::GetFlip())
+	if (ScenesTest::GetFlip())
 	{
 
 		SetDirection(Right);
@@ -41,9 +41,15 @@ void EnemyA::Update(const float& _delta)
 
 }
 
-
-void EnemyA::Attack(float _x, float _y)
+void EnemyA::CreateBullet(float _x, float _y)
 {
+	bulletEnemy = BuilderEntityGameObject::CreateFireBallEnemy("fireBallEnemy", AssetManager::GetAsset("FireBallEnemy"), GetOwner(), 2.f, 1.f, 15.f, 15.f, Maths::Vector2f(_x, _y));
+};
+
+
+void EnemyA::Attack()
+{
+	Entity::Attack();
 	GameObject* enemy = GetOwner();
 	if (cooldown <= 0)
 	{
@@ -53,12 +59,17 @@ void EnemyA::Attack(float _x, float _y)
 		{
 			this->GetAndSetAnimation("shoot")->Play();
 		}
-		bulletEnemy = BuilderEntityGameObject::CreateFireBallEnemy("fireBallEnemy", AssetManager::GetAsset("FireBallEnemy"), enemy, 2.f, 1.f, 15.f, 15.f, Maths::Vector2f(_x, _y));
-		bulletShoot = true;
+		if (!ScenesTest::GetFlip())
+		{
+			CreateBullet(-1.f, 0.f);
+		}
+		if (ScenesTest::GetFlip())
+		{
+			CreateBullet(1.f, 0.f);
+		}
 		
-		;
 	}
-	cooldown--;
+	cooldown++;
 	bulletShoot = false;
 }
 

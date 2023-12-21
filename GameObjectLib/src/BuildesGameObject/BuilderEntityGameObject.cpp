@@ -289,7 +289,7 @@ GameObject* BuilderEntityGameObject::CreatePlateformGameObject(const std::string
 	rigidBody2D->SetSize(200.f, 50.f);
 
 	SquareCollider* squareCollider = gameObject->CreateComponent<SquareCollider>();
-	squareCollider->SetName("shape");
+	squareCollider->SetName("shapePlatforme");
 	squareCollider->SetWidthCollider(200.f * _scalex);
 	squareCollider->SetHeightCollider(50.f * _scaley);
 
@@ -308,8 +308,9 @@ GameObject* BuilderEntityGameObject::CreateEnemyAGameObject(const std::string& _
 
 
 	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetSize(200.f, 50.f);
 	rigidBody2D->SetIsGravity(true);
-
+	rigidBody2D->AddForces(Maths::Vector2f(10.f, 10.f));
 
 	EnemyA* enemy = gameObject->CreateComponent<EnemyA>();
 
@@ -317,6 +318,19 @@ GameObject* BuilderEntityGameObject::CreateEnemyAGameObject(const std::string& _
 	Sprite* spriteBody = gameObject->CreateComponent<Sprite>();
 	spriteBody->SetName("bodyEnemyA");
 	spriteBody->SetTexture(_texture);
+	spriteBody->SetRecTextureWithFrame(0, 0, 6, 1);
+
+	SquareCollider* squareCollider = gameObject->CreateComponent<SquareCollider>();
+	squareCollider->SetName("shapeEnemy");
+	squareCollider->SetWidthCollider((spriteBody->GetBounds().x - 30.f) * scalex);
+	squareCollider->SetHeightCollider((spriteBody->GetBounds().y) * scaley);
+
+	SquareCollider* squareColliderGround = gameObject->CreateComponent<SquareCollider>();
+	squareColliderGround->SetName("groundEneNmy");
+	squareColliderGround->SetWidthCollider((spriteBody->GetBounds().x - 30.f) * scalex);
+	squareColliderGround->SetHeightCollider(2);
+	squareColliderGround->SetPerfectPosition(Maths::Vector2f(0, squareCollider->GetBottomCollider() + 1.f));
+	squareColliderGround->SetActiveCollider(false);
 
 
 	Animation* idle = gameObject->CreateComponent<Animation>();
@@ -337,11 +351,6 @@ GameObject* BuilderEntityGameObject::CreateEnemyAGameObject(const std::string& _
 
 	enemy->AddAnimation("idle", idle);
 	enemy->AddAnimation("shoot", shoot);
-
-
-	SquareCollider* squareCollider = gameObject->CreateComponent<SquareCollider>();
-	squareCollider->SetWidthCollider(spriteBody->GetBounds().x);
-	squareCollider->SetHeightCollider(spriteBody->GetBounds().y);
 
 
 
@@ -536,7 +545,6 @@ GameObject* BuilderEntityGameObject::CreateChevalGameObject(const std::string& _
 	Sprite* spriteBody = gameObject->CreateComponent<Sprite>();
 	spriteBody->SetName("spriteCheval");
 	spriteBody->SetTexture(_texture);
-	spriteBody->SetRecTextureWithFrame(0, 0, 6, 1);
 
 	Animation* animation = gameObject->CreateComponent<Animation>();
 	animation->SetLoop(-1);
@@ -558,9 +566,19 @@ GameObject* BuilderEntityGameObject::CreateFireBallEnemy(const std::string& _nam
 
 	FireBullet* bullet = gameObject->CreateComponent<FireBullet>();
 
-	Sprite* sprite = gameObject->CreateComponent<Sprite>();
-	sprite->SetName("FireBall");
-	sprite->SetTexture(_textureBullet);
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(false);
+	rigidBody2D->SetKillImperfection(Maths::Vector2f(22., 22.f));
+
+	Sprite* spriteBody = gameObject->CreateComponent<Sprite>();
+	spriteBody->SetName("idleFireBall");
+	spriteBody->SetTexture(_textureBullet);
+	spriteBody->SetRecTextureWithFrame(0, 0, 3, 1);
+
+	SquareCollider* squareCollider = gameObject->CreateComponent<SquareCollider>();
+	squareCollider->SetName("shapeFireBall");
+	squareCollider->SetWidthCollider(spriteBody->GetBounds().x / 1.5);
+	squareCollider->SetHeightCollider(spriteBody->GetBounds().y / 1.5);
 
 	Animation* idle = gameObject->CreateComponent<Animation>();
 	idle->SetLoop(-1);
@@ -568,11 +586,6 @@ GameObject* BuilderEntityGameObject::CreateFireBallEnemy(const std::string& _nam
 	idle->SetFrame(3);
 	idle->SetAnimationTime(1);
 	idle->SetSpriteSheet(AssetManager::GetAsset("FireBallEnemy"));
-
-	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
-	rigidBody2D->SetSize(sprite->GetBounds().x, sprite->GetBounds().y);
-	rigidBody2D->SetIsGravity(false);
-	rigidBody2D->AddForces(_position * bullet->GetSpeed());
 
 	idle->Play();
 

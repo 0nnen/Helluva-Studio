@@ -1,5 +1,6 @@
 #include "Components/ComponentsGame/FireBullet.h"
 #include "Scenes/ScenesGame/SceneGameWorld.h"
+#include "Scenes/ScenesGame/ScenesTest.h"
 #include "BuildersGameObject/BuilderEntityGameObject.h"
 
 FireBullet::FireBullet()
@@ -11,12 +12,12 @@ FireBullet::FireBullet()
 void FireBullet::Update(const float& _delta)
 {
 	Component::Update(_delta);
-	if (SceneGameWorld::GetFlip())
+	if (ScenesTest::GetFlip())
 	{
 		SetDirection(Left);
 		directionFireBullet = true;
 	}
-	if (!SceneGameWorld::GetFlip())
+	if (!ScenesTest::GetFlip())
 	{
 		SetDirection(Right);
 		directionFireBullet = false;

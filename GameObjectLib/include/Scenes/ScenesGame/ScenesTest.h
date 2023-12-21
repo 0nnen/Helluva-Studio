@@ -21,7 +21,16 @@ public:
 	void Preload() override;
 
 	void CreatePlatform();
+	void CreateEnemy();
+	void CreateRengeEnemy();
 	void Collinding();
+	void CollindingEntity(GameObject* _entity);
+	void CollisionRengePosition(const float& _delta, GameObject* _entity, GameObject* regnePosition);
+	void CollisionRengeAttack(const float& _delta, GameObject* _entity, GameObject* _rengeAttack);
+
+	GameObject* GetEnemy() { return enemy; }
+
+	static bool GetFlip() { return flip; }
 
 	void Create() override;
 	void Delete() override;
@@ -31,5 +40,11 @@ public:
 
 private:
 	GameObject* tileMap = nullptr;
+	GameObject* plateform = nullptr;
+	GameObject* rengePosition = nullptr;
+	GameObject* rengeAttack = nullptr;
+	GameObject* bulletEnemy = nullptr;
+
+	static bool flip;
 };
 

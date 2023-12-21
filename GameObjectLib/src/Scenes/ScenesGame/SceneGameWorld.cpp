@@ -83,7 +83,7 @@ void SceneGameWorld::CreateEnemy()
 
 void SceneGameWorld::CreateRengeEnemy()
 {
-	rengePosition = BuilderEntityGameObject::CreatePlateformGameObject("RengePosition", enemy->GetPosition().GetX(), enemy->GetPosition().GetY(), 8.f, 5.f);
+	rengePosition = BuilderEntityGameObject::CreatePlateformGameObject("RengePosition", enemy->GetPosition().GetX(), enemy->GetPosition().GetY(), 15.f, 5.f);
 	rengeProjectil = BuilderEntityGameObject::CreatePlateformGameObject("RengeProjectil", enemy->GetPosition().GetX(), enemy->GetPosition().GetY(), 4.f, 5.f);
 }
 
@@ -134,7 +134,7 @@ void SceneGameWorld::CollisionRengeShoot(const float& _delta)
 	{
 		if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(rengeProjectil->GetComponent<RigidBody2D>())))
 		{
-			rigidBody2D->SetVelocity(Maths::Vector2f(0.f, 0.f));
+			/*rigidBody2D->SetVelocity(Maths::Vector2f(0.f, 0.f));
 			if (player->GetPosition().GetX() <= enemy->GetPosition().GetX())
 			{
 				flip = false;
@@ -144,7 +144,7 @@ void SceneGameWorld::CollisionRengeShoot(const float& _delta)
 			{
 				flip = true;
 				enemyA->Attack(1.f, 0.f);
-			}
+			}*/
 
 		}
 		else if (!RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(rengeProjectil->GetComponent<RigidBody2D>())))

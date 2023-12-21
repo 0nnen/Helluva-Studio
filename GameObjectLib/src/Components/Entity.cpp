@@ -3,6 +3,7 @@
 #include "Managers/AudioManager.h"
 #include "Managers/WindowManager.h"
 #include "Managers/AudioManager.h"
+#include "Components/RigidBody2D.h"
 
 #include <Components/Entity/Enemy/Hades.h>
 
@@ -32,6 +33,8 @@ void Entity::TakeDamage(const int& _damage)
 	}
 
 }
+
+void Entity::Attack(){}
 
 //void Entity::TakeDamageFireCircle(const int& _damage)
 //{
