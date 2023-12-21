@@ -149,7 +149,7 @@ void Text::Update(const float& _delta)
 	{
 		if (currentTime >= pauseDuration)
 		{
-			GetOwner()->SetVisible(false);
+			GetOwner()->SetActiveAndVisible(false);
 		}
 	}
 	currentTime += _delta;

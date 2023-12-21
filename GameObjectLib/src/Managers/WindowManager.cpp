@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-int WindowManager::fps = 60;
+int WindowManager::fps = 240;
 int WindowManager::minFps = 30;
 int WindowManager::maxFps = 240;
 sf::RenderWindow* WindowManager::window = nullptr;

@@ -20,6 +20,7 @@
 #include <Components/Shapes/Rectangle.h>
 #include <Components/Shapes/Triangle.h>
 #include "Components/Transform.h"
+#include "Components/Lantern.h"
 
 #include <Components/Shapes/Circle.h>
 #include <Components/ComponentsGame/ExplosionCircle.h>
@@ -669,3 +670,23 @@ GameObject* BuilderEntityGameObject::CreateFireBallEnemy(const std::string& _nam
 	return gameObject;
 };
 
+
+GameObject* BuilderEntityGameObject::CreateLanternGameObject(const std::string& _name, sf::Texture* _textureLantern, const float& _scalex, const float& _scaley, const Maths::Vector2f& _position)
+{
+	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
+	gameObject->SetPosition(_position);
+	gameObject->SetScale(Maths::Vector2f(_scalex, _scaley));
+	gameObject->SetDepth(0.7f);
+
+	Sprite* sprite = gameObject->CreateComponent<Sprite>();
+	sprite->SetName("lantern");
+	sprite->SetTexture(_textureLantern);
+
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetSize(sprite->GetBounds().x, sprite->GetBounds().y);
+	rigidBody2D->SetIsGravity(false);
+
+	Lantern* lantern = gameObject->CreateComponent<Lantern>();
+
+	return gameObject;
+}

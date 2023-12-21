@@ -1,3 +1,4 @@
-ENH : Changement langues boutons
+FIX : Button et background
 
-- Changement de la langue des boutons
+- Fix de l'état des buttons lorsqu'on clique dessus
+- Background recentré

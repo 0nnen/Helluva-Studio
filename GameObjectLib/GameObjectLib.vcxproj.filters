@@ -66,6 +66,7 @@
     <ClCompile Include="src\Components\UIElements\Text.cpp" />
     <ClCompile Include="src\Managers\LanguageManager.cpp" />
     <ClCompile Include="src\Components\ComponentsGame\LavaArea.cpp" />
+    <ClCompile Include="src\Components\Lantern.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Managers\HUDManager.h" />
@@ -135,6 +136,7 @@
     <ClInclude Include="include\Components\UIElements\Text.h" />
     <ClInclude Include="include\Managers\LanguageManager.h" />
     <ClInclude Include="include\Components\ComponentsGame\LavaArea.h" />
+    <ClInclude Include="include\Components\Lantern.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="include\Maths\Vector2.inl" />

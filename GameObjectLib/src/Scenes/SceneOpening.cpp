@@ -11,7 +11,7 @@ void SceneOpening::Preload()
 {
     Scene::Preload();
     AssetManager::AddAsset("HelluvaStudioLogo", "Assets/Graphics/UI/Icons/Helluva_Logo.png");
-    AssetManager::AddAsset("Pegi", "Assets/Graphics/UI/Icons/PEGI_16.png");
+    AssetManager::AddAsset("HellEngine", "Assets/Graphics/UI/Icons/HellEngine.png");
     AssetManager::AddAsset("Warning", "Assets/Graphics/UI/Icons/warning_content.jpg");
 }
 
@@ -27,11 +27,11 @@ void SceneOpening::Create()
     spriteLogo->setScale(1.2, 1.2);
     
    
-    sf::Sprite* spritePegi_16 = new sf::Sprite();
-    spritePegi_16->setTexture(*AssetManager::GetAsset("Pegi"));
-    spritePegi_16->setPosition(widthWindow / 2, heightWindow / 2);
-    spritePegi_16->setOrigin(spritePegi_16->getLocalBounds().width / 2, spritePegi_16->getLocalBounds().height / 2);
-    spritePegi_16->setScale(0.3, 0.3);
+    sf::Sprite* spriteEngine = new sf::Sprite();
+    spriteEngine->setTexture(*AssetManager::GetAsset("HellEngine"));
+    spriteEngine->setPosition(widthWindow / 2, heightWindow / 2);
+    spriteEngine->setOrigin(spriteEngine->getLocalBounds().width / 2, spriteEngine->getLocalBounds().height / 2);
+    spriteEngine->setScale(1.2, 1.2);
 
     sf::Sprite* spriteWarning = new sf::Sprite();
     spriteWarning->setTexture(*AssetManager::GetAsset("Warning"));
@@ -40,7 +40,7 @@ void SceneOpening::Create()
     spriteWarning->setScale(1.3, 1.3);
 
     sprites.push_back(spriteLogo);
-    sprites.push_back(spritePegi_16);
+    sprites.push_back(spriteEngine);
     sprites.push_back(spriteWarning);
     fadeInTimeDefault = 0.2f;
     fadeOutTimeDefault = 0.3f;
@@ -61,7 +61,7 @@ void SceneOpening::Delete()
     }
     sprites.clear();
     AssetManager::DeleteAsset("HelluvaStudioLogo");
-    AssetManager::DeleteAsset("Pegi");
+    AssetManager::DeleteAsset("HellEngine");
     AssetManager::DeleteAsset("Warning");
 }
 

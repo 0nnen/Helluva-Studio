@@ -69,6 +69,7 @@
     <ClInclude Include="include\Components\Entity\Enemy\ProtectionBall.h" />
     <ClInclude Include="include\Managers\LanguageManager.h" />
     <ClInclude Include="include\Components\ComponentsGame\LavaArea.h" />
+    <ClInclude Include="include\Components\Lantern.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="include\Scenes\SceneLoginSignup.h" />
     <ClInclude Include="include\Managers\TimeManager.h" />
@@ -88,6 +89,7 @@
     <ClInclude Include="include\Components\UIElements\Text.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\Lantern.cpp" />
     <ClCompile Include="src\Managers\LanguageManager.cpp" />
     <ClCompile Include="src\Scenes\ScenesGame\SceneGameSpawn.cpp" />
     <ClCompile Include="src\Components\ComponentsGame\LavaArea.cpp" />

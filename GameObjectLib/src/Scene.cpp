@@ -89,7 +89,6 @@ void Scene::Awake()
 
 void Scene::Update(const float& _delta)
 {
-	std::cout << _delta << std::endl;
 	if (isActive)
 	{
 		for (size_t i = 0; i < gameObjects.size(); i++)

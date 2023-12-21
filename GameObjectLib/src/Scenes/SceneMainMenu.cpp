@@ -69,10 +69,10 @@ void SceneMainMenu::CreateSceneButtonsMenu()
 	//creditsButton = BuilderGameObject::CreateButtonGameObject("Credits", widthScreen / 1.1, heightScreen / 10, 18);
 	
 	backButton = BuilderGameObject::CreateButtonGameObject("back", widthScreen / 10, heightScreen / 10, 0.5f, 0.5f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 40);
-	englishButton = BuilderGameObject::CreateButtonGameObject("englishButton", widthScreen / 3, heightScreen / 1.2, 0.5f, 0.5f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 40);
-	frenchButton = BuilderGameObject::CreateButtonGameObject("frenchButton", widthScreen / 1.2, heightScreen / 1.2, 0.5f, 0.5f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 40);
-	sliderFPS = BuilderGameObject::CreateSliderGameObject("sliderFps", widthScreen / 2, heightScreen / 2, 1200, 40, 50, 50, 20, WindowManager::GetFps(), WindowManager::GetMinFps(), WindowManager::GetMaxFps());
-	sliderVolume = BuilderGameObject::CreateSliderGameObject("sliderVolume", widthScreen / 2, heightScreen / 1.5, 1200, 40, 50, 50, 20, AudioManager::GetVolume(), AudioManager::GetMaxVolume());
+	englishButton = BuilderGameObject::CreateButtonGameObject("englishButton", widthScreen / 2.4, heightScreen / 1.2, 0.5f, 0.5f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 40);
+	frenchButton = BuilderGameObject::CreateButtonGameObject("frenchButton", widthScreen / 1.7, heightScreen / 1.2, 0.5f, 0.5f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 40);
+	sliderFPS = BuilderGameObject::CreateSliderGameObject("slider Fps", widthScreen / 2, heightScreen / 2, 1200, 40, 50, 50, 20, WindowManager::GetFps(), WindowManager::GetMinFps(), WindowManager::GetMaxFps());
+	sliderVolume = BuilderGameObject::CreateSliderGameObject("slider Volume", widthScreen / 2, heightScreen / 1.5, 1200, 40, 50, 50, 20, AudioManager::GetVolume(), AudioManager::GetMaxVolume());
 	//signupLoginButton = CreateButtonGameObject("Signup Login", widthScreen / 1.2, heightScreen / 1.2, 30)
 	CameraManager::SetCenter(widthScreen / 2, heightScreen / 2);
 }
@@ -82,18 +82,21 @@ void SceneMainMenu::Update(const float& _delta)
 	Scene::Update(_delta);
 	if (isFadeIn)
 	{
-		if(FadeIn(_delta)) isFadeIn = false;
+		playButton->SetActive(false);
+		worldButton->SetActive(false);
+		optionsButton->SetActive(false);
+		quitButton->SetActive(false);
+		if (FadeIn(_delta))
+		{
+			isFadeIn = false;
+			playButton->SetActive(true);
+			worldButton->SetActive(true);
+			optionsButton->SetActive(true);
+			quitButton->SetActive(true);
+		}
 	} 
 	else
 	{
-		if (LanguageManager::GetInstance()->GetLanguage() == "English")
-		{
-			englishButton->GetComponent<Button>()->SetState(Button::Clicked);
-		}
-		if (LanguageManager::GetInstance()->GetLanguage() == "French")
-		{
-			frenchButton->GetComponent<Button>()->SetState(Button::Clicked);
-		}
 		if (playButton->GetComponent<Button>()->IsClicked() || isFadeOut)
 		{
 			isFadeOut = true;
@@ -132,6 +135,7 @@ void SceneMainMenu::Update(const float& _delta)
 			LanguageManager* manager = LanguageManager::GetInstance();
 			manager->SetLanguage("English");
 			manager->GetButton();
+			frenchButton->GetComponent<Button>()->SetState(Button::Normal);
 
 		}
 		else if (frenchButton->GetComponent<Button>()->IsClicked())
@@ -140,6 +144,7 @@ void SceneMainMenu::Update(const float& _delta)
 			LanguageManager* manager = LanguageManager::GetInstance();
 			manager->SetLanguage("Francais");
 			manager->GetButton();
+			englishButton->GetComponent<Button>()->SetState(Button::Normal);
 		}
 	/*	else if (successButton->GetComponent<Button>()->IsClicked())
 		{
@@ -205,6 +210,16 @@ void SceneMainMenu::ActiveOption(const bool& _state)
 	this->englishButton->SetActiveAndVisible(_state);
 	this->frenchButton->SetActiveAndVisible(_state);
 	option = _state;
+	if (LanguageManager::GetInstance()->GetLanguage() == "English")
+	{
+		englishButton->GetComponent<Button>()->SetState(Button::Clicked);
+		frenchButton->GetComponent<Button>()->SetState(Button::Normal);
+	}
+	if (LanguageManager::GetInstance()->GetLanguage() == "French")
+	{
+		frenchButton->GetComponent<Button>()->SetState(Button::Clicked);
+		englishButton->GetComponent<Button>()->SetState(Button::Normal);
+	}
 }
 
 SceneMainMenu::~SceneMainMenu()

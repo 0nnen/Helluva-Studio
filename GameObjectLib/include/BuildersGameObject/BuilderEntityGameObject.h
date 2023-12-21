@@ -29,6 +29,8 @@ public:
 	static GameObject* CreateProtectionBallGameObject(const std::string& name, float _x, float _y, float scalex, float scaley, sf::Texture* _texture, const int& _number, GameObject* _hades, int _randSpawn);
 	static GameObject* CreateProtectionGameObject(const std::string& name, float _x, float _y, float scalex, float scaley, sf::Texture* _texture);
 	static GameObject* CreateFireBallEnemy(const std::string& _name, sf::Texture* _textureBullet, GameObject* _enemy, const float& _scalex, const float& _scaley, const float& _damage, const float& _speed, const Maths::Vector2f& _position);
+	
+	static GameObject* CreateLanternGameObject(const std::string& _name, sf::Texture* _textureLantern, const float& _scalex, const float& _scaley, const Maths::Vector2f& _position);
 
 };
 

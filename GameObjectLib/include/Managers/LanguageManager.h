@@ -45,15 +45,12 @@ public:
 	}
 
 	inline std::string GetLanguage() const { 
-		std::cout << language << std::endl;
 		return language;
 	}
 	inline void SetLanguage(const std::string& _language)
 	{
-		std::cout << "Langue entrée : " << _language << std::endl;
 		for (const std::string& language_ : languages)
 		{
-			std::cout << "Langue comparée : " << language_ << std::endl;
 			if (_language == language_) language = _language;
 		}
 	}

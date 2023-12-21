@@ -25,6 +25,7 @@ void SceneGameSpawn::Preload()
 	AssetManager::AddAsset("BackgroundBoss", "Assets/Graphics/Maps/bossRoom.png");
 	AssetManager::AddAsset("roarHades", "Assets/Enemy/Hades/demon-attack-no-breath.png");
 	AssetManager::AddAsset("idleHades", "Assets/Enemy/Hades/demon-idle.png");
+	AssetManager::AddAsset("NightmareGalloping", "Assets/Enemy/Nightmare/nightmare-galloping.png");
 }
 
 void SceneGameSpawn::Create() 
@@ -75,6 +76,15 @@ void SceneGameSpawn::Update(const float& _delta)
 	else
 	{
 		textDialogue->SetVisible(true);
+	}
+
+	if (!textDialogue->GetActive())
+	{
+		isFadeOut = true;
+		if (FadeOut(_delta))
+		{
+			SceneManager::RunScene("ScenesTest");
+		}
 	}
 }
 
