@@ -499,6 +499,7 @@ GameObject* BuilderEntityGameObject::CreateProtectionBallGameObject(const std::s
 	ProtectionBall* protectionBall = gameObject->CreateComponent<ProtectionBall>();
 	protectionBall->SetHades(_hades);
 	protectionBall->SetHealth();
+	protectionBall->SetSpawn(_number);
 
 	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
 	rigidBody2D->SetIsGravity(false);
@@ -507,14 +508,22 @@ GameObject* BuilderEntityGameObject::CreateProtectionBallGameObject(const std::s
 	Sprite* spriteBody = gameObject->CreateComponent<Sprite>();
 	spriteBody->SetName("spriteProtectionBall");
 	spriteBody->SetTexture(_texture);
+	// astral
 	if(_number <= 5) spriteBody->SetRecTextureWithFrame(0, 0, 4, 2);
-	else if(_number >= 6 && _number <= 30) spriteBody->SetRecTextureWithFrame(1, 1, 4, 2); 
-	else if(_number >= 31 && _number <= 40) spriteBody->SetRecTextureWithFrame(0, 2, 4, 2);
-	else if(_number >= 41 && _number <= 55) spriteBody->SetRecTextureWithFrame(1, 3, 4, 2);
+	// feu
+	else if(_number >= 6 && _number <= 30) spriteBody->SetRecTextureWithFrame(1, 0, 4, 2); 
+	//spirituel
+	else if(_number >= 31 && _number <= 40) spriteBody->SetRecTextureWithFrame(2, 0, 4, 2);
+	//eau ténébreuse
+	else if(_number >= 41 && _number <= 55) spriteBody->SetRecTextureWithFrame(3, 1, 4, 2);
+	//lave
 	else if(_number >= 56 && _number <= 70) spriteBody->SetRecTextureWithFrame(0, 1, 4, 2);
-	else if(_number >= 71 && _number <= 75) spriteBody->SetRecTextureWithFrame(0, 1, 4, 2);
-	else if(_number >= 86 && _number <= 90) spriteBody->SetRecTextureWithFrame(1, 2, 4, 2);
-	else if(_number >= 91 &&  _number <= 100) spriteBody->SetRecTextureWithFrame(0, 3, 4, 2);
+	//verte
+	else if(_number >= 71 && _number <= 75) spriteBody->SetRecTextureWithFrame(0, 3, 4, 2);
+	//abysse
+	else if(_number >= 86 && _number <= 90) spriteBody->SetRecTextureWithFrame(3, 0, 4, 2);
+	//eau
+	else if(_number >= 91 &&  _number <= 100) spriteBody->SetRecTextureWithFrame(2, 1, 4, 2);
 
 
 	SquareCollider* squareCollider = gameObject->CreateComponent<SquareCollider>();

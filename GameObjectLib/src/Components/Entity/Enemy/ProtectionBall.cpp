@@ -145,31 +145,31 @@ void ProtectionBall::Die()
 		hades->GetComponent<Hades>()->TakeDamage(50);
 		hades->GetComponent<Hades>()->SetInvicible(true);
 	}
-	if (spawn >= 6 || spawn <= 30)
+	if (spawn >= 6 && spawn <= 30)
 	{
 
 	}
-	if (spawn >= 31 || spawn <= 40)
+	if (spawn >= 31 && spawn <= 40)
 	{
 		
 	}
-	if (spawn >= 41 || spawn <= 55)
+	if (spawn >= 41 && spawn <= 55)
 	{
 
 	}
-	if (spawn >= 56 || spawn <= 70)
+	if (spawn >= 56 && spawn <= 70)
 	{
 		CreateLava();
 	}
-	if (spawn >= 71 || spawn <= 75)
+	if (spawn >= 71 && spawn <= 75)
 	{
 		player->GetComponent<Character>()->TakeHealt(10);
 	}
-	if (spawn >= 86 || spawn <= 90)
+	if (spawn >= 86 && spawn <= 90)
 	{
 
 	}
-	if (spawn >= 91 || spawn <= 100)
+	if (spawn >= 91 && spawn <= 100)
 	{
 
 	}

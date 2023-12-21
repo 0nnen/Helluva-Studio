@@ -1,3 +1,3 @@
-FIX : Fix des collisions
+FIX : Fix master
 
-- Merci tutur
+- ALED QUENTIN

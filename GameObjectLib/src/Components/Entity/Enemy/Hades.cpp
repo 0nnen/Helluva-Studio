@@ -54,11 +54,12 @@ void Hades::SetProtection(const float& _delta)
 		randX = rand() % 1300 + 500;
 		randY = rand() % 400 + 200;
 		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection2", randX, randY, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner(), randomNumber));
+		
+		
 		randomNumber = rand() % 100;
-
 		randX = rand() % 1300 + 500;
 		randY = rand() % 400 + 200;
-		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection1", randX, randY, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner(), 1));
+		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection1", randX, randY, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner(), randomNumber));
 		AllerRetourHorse(true, _delta);
 
 		break;
