@@ -3,6 +3,7 @@
 #include <Components/RigidBody2D.h>
 #include <Components/Entity/Enemy/ProtectionBall.h>
 #include <Components/Entity/Character.h>
+#include <Managers/AudioManager.h>
 
 Hades::Hades() : Entity(1000, 200, 500.f, 40.f, 10000.f)
 {
@@ -374,6 +375,7 @@ void Hades::Update(const float& _delta)
 			GetAnimation("idle")->Stop();
 			GetAnimation("attack")->Stop();
 			GetAnimation("roar")->Play();
+			AudioManager::PlaySound("Hades_Scream");
 		}
 	}
 

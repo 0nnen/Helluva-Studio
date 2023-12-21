@@ -5,6 +5,7 @@
 #include "Components/Entity/Character.h"
 #include "Components/Animation.h"
 #include "Scenes/ScenesGame/ScenesTest.h"
+#include <Managers/AudioManager.h>
 
 InputCharacter::InputCharacter() {
 	this->KeyD_ = new MoveCharacterRight();
@@ -18,12 +19,24 @@ InputCharacter::InputCharacter() {
 
 void InputCharacter::Update(const float& _delta) {
 	Component::Update(_delta);
+	timeSinceLastFootstep += _delta;
 
 	Character* character = GetOwner()->GetComponent<Character>();
 
 	Command* commandMoves = this->HandleInput();
 	if (commandMoves)
 	{
+		// Sounds Effects
+		bool isMoving = sf::Keyboard::isKeyPressed(sf::Keyboard::Q) || sf::Keyboard::isKeyPressed(sf::Keyboard::D);
+		if (isMoving && timeSinceLastFootstep >= 0.5f) {
+			timeSinceLastFootstep = 0.0f;
+
+			std::string footstepSoundKey = "Character_Footstep" + std::to_string(currentFootstepSound);
+			AudioManager::PlaySound(footstepSoundKey);
+			currentFootstepSound = (currentFootstepSound % 7) + 1;
+		}
+		// ====
+
 		if(!character->GetAnimation("shootArm")->GetIsPlaying() && !character->GetAnimation("shootBody")->GetIsPlaying())
 		if (!character->GetAnimation("run")->GetIsPlaying()) {
 			if (character->GetAnimation("jump")->GetIsPlaying()) character->GetAnimation("jump")->Stop();
@@ -49,8 +62,8 @@ void InputCharacter::Update(const float& _delta) {
 		if (velocity.GetX() != 0.f) {
 			if (character->GetOnFloor())
 			{
-				if (velocity.GetX() - 8.f > 0.f) rigidBody->AddForces(Maths::Vector2f(-8.f, 0.f));
-				else if (velocity.GetX() + 8.f < 0.f) rigidBody->AddForces(Maths::Vector2f(8.f, 0.f));
+				if (velocity.GetX() - 3.f > 0.f) rigidBody->AddForces(Maths::Vector2f(-3.f, 0.f));
+				else if (velocity.GetX() + 3.f < 0.f) rigidBody->AddForces(Maths::Vector2f(3.f, 0.f));
 				else {
 					velocity.SetX(0.f);
 					rigidBody->SetVelocity(velocity);
@@ -82,6 +95,7 @@ void InputCharacter::Update(const float& _delta) {
 				character->GetAndSetAnimation("jump")->Play();
 		}
 		commandJump->Execute(_delta);
+		AudioManager::PlaySound("Character_Jump");
 	}
 
 	Command* shootBullet = this->ShootInput();

@@ -56,4 +56,3 @@ void Character::Update(const float& _delta)
 
 	if(centerCameraOnPlayer) CameraManager::SetCenter(GetOwner()->GetPosition().GetX(), GetOwner()->GetPosition().GetY());
 }
-

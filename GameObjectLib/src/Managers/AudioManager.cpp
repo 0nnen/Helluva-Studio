@@ -1,13 +1,17 @@
 #include "Managers/AudioManager.h"
 #include <iostream>
+#include <list>
+#include <memory>
 
-float AudioManager::volume = 100.f;
+float AudioManager::volume = 50.f;
 float AudioManager::maxVolume = 100.f;
 sf::Music* AudioManager::music = nullptr;
 sf::Sound* AudioManager::sound = nullptr;
 std::map<std::string, sf::Music*> AudioManager::musics;
 std::map<std::string, sf::Sound*> AudioManager::sounds;
 std::map<std::string, sf::SoundBuffer*> AudioManager::soundBuffers;
+static std::list<std::unique_ptr<sf::Sound>> activeSounds;
+
 
 void AudioManager::SetVolume(float _volume)
 {
@@ -51,17 +55,26 @@ void AudioManager::PlayMusic(const std::string& _key)
 	}
 }
 
-void AudioManager::PlaySound(const std::string& _key)
-{
-	if (AudioManager::sounds.find(_key) != AudioManager::sounds.end())
-	{
-		AudioManager::sounds.at(_key)->play();
+void AudioManager::PlaySound(const std::string& _key) {
+	auto bufferIter = AudioManager::soundBuffers.find(_key);
+	if (bufferIter != AudioManager::soundBuffers.end()) {
+		std::unique_ptr<sf::Sound> sound(new sf::Sound());
+		sound->setBuffer(*bufferIter->second);
+		sound->play();
+
+		activeSounds.push_back(std::move(sound));
 	}
-	else
-	{
+	else {
 		std::cout << "Sound not found: " << _key << std::endl;
 	}
+
+	activeSounds.remove_if([](const std::unique_ptr<sf::Sound>& sound) {
+		return sound->getStatus() != sf::Sound::Playing;
+		});
 }
+
+
+
 
 void AudioManager::AddMusic(const std::string& _key, const std::string& _fileName)
 {

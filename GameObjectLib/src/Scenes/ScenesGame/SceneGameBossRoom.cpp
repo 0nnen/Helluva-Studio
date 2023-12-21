@@ -29,6 +29,8 @@ void SceneGameBossRoom::Preload()
 
 	AudioManager::AddMusic("MusicAmbiant_CI", "Assets/Audio/Musics/MusicAmbiant_CrackerIsland.ogg");
 
+	AudioManager::AddSound("Hades_Scream", "Assets/Audio/SFX/Enemies/Hades/scream.ogg");
+
 	AssetManager::AddAsset("BackgroundBoss", "Assets/Graphics/Maps/bossRoom.png");
 	AssetManager::AddAsset("breathHades", "Assets/Enemy/Hades/breath.png");
 	AssetManager::AddAsset("breathFireHades", "Assets/Enemy/Hades/breath-fire.png");

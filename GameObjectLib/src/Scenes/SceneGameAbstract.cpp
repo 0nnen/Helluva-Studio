@@ -67,6 +67,20 @@ void SceneGameAbstract::Preload()
 	AssetManager::AddAsset("shootBody", "Assets/Graphics/Characters/Zephyr/Idle_Shoot/Character_Idle_Shoot_BODY_48x48.png");
 	AssetManager::AddAsset("bullet", "Assets/Graphics/Characters/Zephyr/bullet.png");
 	AssetManager::AddAsset("ButtonsMenu", "Assets/Graphics/UI/Buttons/buttonsMenu.png");
+
+	AudioManager::AddSound("GunShot", "Assets/Audio/SFX/Character/gun_shot.ogg");
+	AudioManager::AddSound("GunEmpty", "Assets/Audio/SFX/Character/gun_empty.ogg");
+	AudioManager::AddSound("GunReload", "Assets/Audio/SFX/Character/gun_reload.ogg");
+
+	AudioManager::AddSound("Character_Footstep1", "Assets/Audio/SFX/Character/Movements/footstep1.ogg");
+	AudioManager::AddSound("Character_Footstep2", "Assets/Audio/SFX/Character/Movements/footstep2.ogg");
+	AudioManager::AddSound("Character_Footstep3", "Assets/Audio/SFX/Character/Movements/footstep3.ogg");
+	AudioManager::AddSound("Character_Footstep4", "Assets/Audio/SFX/Character/Movements/footstep4.ogg");
+	AudioManager::AddSound("Character_Footstep5", "Assets/Audio/SFX/Character/Movements/footstep5.ogg");
+	AudioManager::AddSound("Character_Footstep6", "Assets/Audio/SFX/Character/Movements/footstep6.ogg");
+	AudioManager::AddSound("Character_Footstep7", "Assets/Audio/SFX/Character/Movements/footstep7.ogg");
+	AudioManager::AddSound("Character_Jump", "Assets/Audio/SFX/Character/Movements/jump.ogg");
+	AudioManager::AddSound("Character_JumpImpact", "Assets/Audio/SFX/Character/Movements/jump_impact.ogg");
 }
 
 
@@ -78,7 +92,6 @@ void SceneGameAbstract::Delete()
 void SceneGameAbstract::Pause()
 {
 	isPause = !isPause;
-
 	this->pausePlayButton->SetActiveAndVisible(isPause);
 	this->pauseMenuPrincipalButton->SetActiveAndVisible(isPause);
 	this->pauseQuitButton->SetActiveAndVisible(isPause);
@@ -88,7 +101,6 @@ void SceneGameAbstract::Pause()
 void SceneGameAbstract::Pause(const bool& _state)
 {
 	isPause = _state;
-
 	this->pausePlayButton->SetActiveAndVisible(_state);
 	this->pauseMenuPrincipalButton->SetActiveAndVisible(_state);
 	this->pauseQuitButton->SetActiveAndVisible(_state);
@@ -121,8 +133,8 @@ void SceneGameAbstract::Update(const float& _delta)
 		AudioManager::PauseMusic();
 		if (pausePlayButton->GetComponent<Button>()->IsClicked())
 		{
-			AudioManager::ResumeMusic();
 			this->Pause(false);
+			AudioManager::ResumeMusic();
 		}
 		else if (pauseMenuPrincipalButton->GetComponent<Button>()->IsClicked()) 
 		{
