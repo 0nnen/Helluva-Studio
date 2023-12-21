@@ -40,7 +40,7 @@ void SceneMainMenu::Create()
 	this->ActiveOption(false);
 	this->ActiveMenu(true);
 	isFadeIn = true;
-	fadeInTimeDefault = 5.0f;
+	fadeInTimeDefault = 2.0f;
 }
 
 void SceneMainMenu::Delete()

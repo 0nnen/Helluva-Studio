@@ -6,6 +6,7 @@
 #include "Components/SpriteRenderer.h"
 #include "Components/Entity/Character.h"
 #include <cmath>
+#include <Managers/AudioManager.h>
 # define M_PI           3.14159265358979323846  /* pi */
 
 Gun::Gun() {
@@ -33,6 +34,7 @@ void Gun::Update(const float& _delta) {
 
 void Gun::Attack() {
 	Weapon::Attack();
+
 	if (mag > 0 && cooldown <= 0 && activeReload <= 0) {
 		cooldown = fireRate;
 		sf::RenderWindow* window = WindowManager::GetWindow();
@@ -49,6 +51,7 @@ void Gun::Attack() {
 		float angleRadian = 0.f;
 		for (Sprite* _sprite : player->GetComponentsByType<Sprite>())
 		{
+
 			if (_sprite->GetName() == nameArm) {
 				if (direction.x >= 0) angleRadian = std::atan2(worldMousePositionVector.y - player->GetPosition().y, worldMousePositionVector.x - player->GetPosition().x);
 				else angleRadian = std::atan2(worldMousePositionVector.y - player->GetPosition().y, -(worldMousePositionVector.x - player->GetPosition().x));
@@ -66,6 +69,7 @@ void Gun::Attack() {
 			}
 		}
 		if (length != 0) {
+			AudioManager::PlaySound("GunShot");
 			if (direction.x >= 0)bullets.push_back(BuilderEntityGameObject::CreateBulletGameObject("Bullet", AssetManager::GetAsset("bullet"), player, 1.f, 1.f, 25.f, 1500.f, worldMousePositionVector, angleRadian, Maths::Vector2f(25.f, -7.f)));
 			else bullets.push_back(BuilderEntityGameObject::CreateBulletGameObject("Bullet", AssetManager::GetAsset("bullet"), player, 1.f, 1.f, 25.f, 1500.f, worldMousePositionVector, -angleRadian + M_PI, Maths::Vector2f(25.f, 7.f)));
 		}
@@ -74,6 +78,11 @@ void Gun::Attack() {
 			underCooldown = true;
 			activeReload = reload;
 			cooldown = 0.f;
+			AudioManager::PlaySound("GunReload");
+		}
+		else if (mag == 0 && cooldown <= 0 && activeReload <= 0) {
+			AudioManager::PlaySound("GunEmpty");
+			cooldown = fireRate;
 		}
 	}
 
