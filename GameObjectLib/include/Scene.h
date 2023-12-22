@@ -49,10 +49,13 @@ public:
 	void ShowFadeIn(sf::RenderWindow* _window);
 	void ShowFadeOut(sf::RenderWindow* _window);
 
+	void UpdateButtonsLanguage();
+
 	void ApplyDepth();
 
 protected:
 	std::string name = "DefaultScene";
+	std::string language;
 	std::vector<GameObject*> gameObjects;
 	std::vector<GameObject*> backgrounds;
 	bool isActive = true;

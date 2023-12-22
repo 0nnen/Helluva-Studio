@@ -1,0 +1,14 @@
+{
+    "play" : "Play",
+    "playBoss" : "Play Boss",
+    "settings" : "Settings",
+    "quit" : "Quit",
+    "continue" : "Continue",
+    "mainMenu" : "Main Menu",
+    "back" : "Back",
+    "sliderFps" : "Slider Fps",
+    "sliderVolume" : "Slider Volume",
+    "frenchButton" : "French",
+    "englishButton" : "English"
+
+}

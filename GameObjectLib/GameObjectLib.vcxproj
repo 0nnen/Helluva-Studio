@@ -67,6 +67,9 @@
     <ClInclude Include="include\Components\Inputs\InputCharacter.h" />
     <ClInclude Include="include\Components\Shapes\Rectangle.h" />
     <ClInclude Include="include\Components\Entity\Enemy\ProtectionBall.h" />
+    <ClInclude Include="include\Managers\LanguageManager.h" />
+    <ClInclude Include="include\Components\ComponentsGame\LavaArea.h" />
+    <ClInclude Include="include\Components\Lantern.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="include\Scenes\SceneLoginSignup.h" />
     <ClInclude Include="include\Managers\TimeManager.h" />
@@ -82,8 +85,14 @@
     <ClInclude Include="include\Scenes\ScenesGame\SceneGameBossRoom.h" />
     <ClInclude Include="include\TileMap\TileMap.h" />
     <ClInclude Include="include\Components\SquareCollider.h" />
+    <ClInclude Include="include\Scenes\ScenesGame\SceneGameSpawn.h" />
+    <ClInclude Include="include\Components\UIElements\Text.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\Lantern.cpp" />
+    <ClCompile Include="src\Managers\LanguageManager.cpp" />
+    <ClCompile Include="src\Scenes\ScenesGame\SceneGameSpawn.cpp" />
+    <ClCompile Include="src\Components\ComponentsGame\LavaArea.cpp" />
     <ClCompile Include="src\Components\ComponentsGame\ExplosionCircle.cpp" />
     <ClCompile Include="src\Components\Shapes\Circle.cpp" />
     <ClCompile Include="src\Components\ComponentsGame\FireBullet.cpp" />
@@ -144,6 +153,7 @@
     <ClCompile Include="src\Components\ComponentsGame\Weapon.cpp" />
     <ClCompile Include="src\Components\ComponentsGame\Sword.cpp" />
     <ClCompile Include="src\TileMap\TileMap.cpp" />
+    <ClCompile Include="src\Components\UIElements\Text.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="include\Maths\Vector2.inl" />

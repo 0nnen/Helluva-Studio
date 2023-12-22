@@ -12,8 +12,10 @@ public:
 	//Get an font by its key
 	static sf::Font* GetFont(const std::string& _key);
 
+
 private:
 	static std::map<std::string, sf::Font*> fonts;
+
 };
 
 

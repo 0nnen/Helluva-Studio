@@ -18,6 +18,13 @@ void ProtectionBall::Update(const float& _delta)
 	SetPower(_delta);
 }
 
+
+void ProtectionBall::CreateLava()
+{
+	area = BuilderEntityGameObject::CreateRectangleSpriteGameObject("Lava",position.x, 1100.f, 1.f, 0.5f, AssetManager::GetAsset("lavaArea"));
+}
+
+
 void ProtectionBall::CreateBouleFeu()
 {
 	circle = BuilderEntityGameObject::CreateSphereFeuGameObject("FireCircle", 500, 1000, 100);
@@ -36,50 +43,66 @@ void ProtectionBall::CollisionFireBall()
 }
 
 
+
 void ProtectionBall::SetHealth()
 {
-	switch (spawn)
+	if (spawn <= 5)
 	{
-	case 0:
+		// astral
 		SetHealthPoint(175.f);
 		SetMaxHealthPoint(175.f);
-		break;
-	case 1:
 
+	}
+	else if (spawn >= 6 && spawn <= 30)
+	{
+		//feu
+	}
+	else if (spawn >= 31 && spawn <= 40)
+	{
+		//spirituel
 		SetHealthPoint(50.f);
 		SetMaxHealthPoint(50.f);
-		break;
-	case 2:
-		SetHealthPoint(50.f);
-		SetMaxHealthPoint(50.f);
-		break;
-	case 3:
+	}
+	else if (spawn >= 41 && spawn <= 55)
+	{
+		//eau t�n�breuse
 		SetHealthPoint(250.f);
 		SetMaxHealthPoint(250.f);
-		break;
-	case 4:
-		break;
-	case 5:
+	}
+	else if (spawn >= 56 && spawn <= 70)
+	{
+		//lave
 		SetHealthPoint(100.f);
 		SetMaxHealthPoint(100.f);
-		break;
-	case 6:
-		break;
-	default:
-		break;
+	}
+	else if (spawn >= 71 && spawn <= 75)
+	{
+		//verte
+		SetHealthPoint(100.f);
+		SetMaxHealthPoint(100.f);
+	}
+	else if (spawn >= 86 && spawn <= 90)
+	{
+		//abysse
+	}
+	else  if (spawn >= 91 && spawn <= 100)
+	{
+		//eau
 	}
 }
 
 void ProtectionBall::SetPower(const float& _delta)
 {
-	switch (spawn)
+	if (spawn <= 5)
 	{
-	case 1:
-		positionFireCircle.x = GetOwner()->GetPosition().x;
-		positionFireCircle.y = GetOwner()->GetPosition().y;
 
-	case 2: 
+	}
+	else if (spawn >= 6 && spawn <= 30)
+	{
 
+	}
+	else if (spawn >= 31 && spawn <= 40)
+	{
 		if (tp >= 5)
 		{
 			randX = rand() % 1300 + 500;
@@ -88,35 +111,69 @@ void ProtectionBall::SetPower(const float& _delta)
 			tp = 0;
 		}
 		tp += _delta;
-		break;
-	default:
-		break;
+	}
+	else if (spawn >= 41 && spawn <= 55)
+	{
+		
+	}
+	else if (spawn >= 56 && spawn <= 70)
+	{
+		position.x = GetOwner()->GetPosition().x;
+		position.y = 100.f;
+	}
+	else if (spawn >= 71 && spawn <= 75)
+	{
+
+	}
+	else if (spawn >= 86 && spawn <= 90)
+	{
+
+	}
+	else if (spawn >= 91 && spawn <= 100)
+	{
+
 	}
 }
 
 void ProtectionBall::Die()
 {
 	Entity::Die();
-	switch (spawn)
+
+	if (spawn <= 5)
+	{
+		hades->GetComponent<Hades>()->SetInvicible(false);
+		hades->GetComponent<Hades>()->TakeDamage(50);
+		hades->GetComponent<Hades>()->SetInvicible(true);
+	}
+	if (spawn >= 6 && spawn <= 30)
 	{
 
-	case 0:
-
-		hades->GetComponent<Hades>()->SetIncible(false);
-		hades->GetComponent<Hades>()->TakeDamage(50);
-		hades->GetComponent<Hades>()->SetIncible(true);
-		break;
-
-	case 1:
-		CreateBouleFeu();
-		circle->SetPosition(Maths::Vector2f(positionFireCircle.x, positionFireCircle.y));
-		break;
-
-	case 5:
-		player->GetComponent<Character>()->TakeHealt(10);
-		break;
-	case 6:
-		break;
 	}
+	if (spawn >= 31 && spawn <= 40)
+	{
+		
+	}
+	if (spawn >= 41 && spawn <= 55)
+	{
+
+	}
+	if (spawn >= 56 && spawn <= 70)
+	{
+		CreateLava();
+	}
+	if (spawn >= 71 && spawn <= 75)
+	{
+		player->GetComponent<Character>()->TakeHealt(10);
+	}
+	if (spawn >= 86 && spawn <= 90)
+	{
+
+	}
+	if (spawn >= 91 && spawn <= 100)
+	{
+
+	}
+
+
 	hades->GetComponent<Hades>()->RemoveBall(GetOwner());
 }

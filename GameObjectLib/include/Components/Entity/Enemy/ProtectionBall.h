@@ -15,6 +15,9 @@ public:
 	//void DieFireCirlce() override;
 	void Update(const float& _delta);
 
+	void CreateLava();
+	void SetSpawn(int _spawn) { spawn = _spawn; }
+
 	int GetSpawn() { return spawn; }
 	void SetHealth();
 	void SetPower(const float& _delta);
@@ -25,6 +28,10 @@ public:
 private:
 	GameObject* hades = nullptr;
 	GameObject* player = nullptr;
+
+	GameObject* area = nullptr;
+	Maths::Vector2f position;
+
 
 	GameObject* circle;
 	Maths::Vector2f positionFireCircle;

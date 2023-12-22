@@ -1,3 +1,4 @@
-FIX : Fix des collisions
+FIX : Button et background
 
-- Merci tutur
+- Fix de l'état des buttons lorsqu'on clique dessus
+- Background recentré

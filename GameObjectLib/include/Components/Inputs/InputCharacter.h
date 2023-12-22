@@ -27,6 +27,9 @@ public:
 	~InputCharacter();
 
 private:
+	float timeSinceLastFootstep = 0.0f;
+	int currentFootstepSound = 1;
+
 	Command* KeyZ_;
 
 	Command* KeyD_;

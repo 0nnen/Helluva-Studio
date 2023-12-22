@@ -39,7 +39,6 @@ public:
 	}
 
 	std::vector<GameObject*> GetProtectionBalls() { return balls; }
-	void SetIncible(bool _invincible) { isInvicible = _invincible; }
 
 private:
 	State state = Idle;

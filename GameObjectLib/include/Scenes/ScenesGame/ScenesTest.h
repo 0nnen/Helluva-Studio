@@ -1,15 +1,6 @@
 #pragma once
 
 #include "Scenes/SceneGameAbstract.h"
-#include "Managers/AssetManager.h"
-#include "Managers/WindowManager.h"
-#include "Managers/SceneManager.h"
-
-#include "BuildersGameObject/BuilderEntityGameObject.h"
-#include "BuildersGameObject/BuilderShapeGameObject.h"
-
-#include "Components/RigidBody2D.h"
-#include "TileMap/TileMap.h"
 
 class ScenesTest : public SceneGameAbstract 
 {
@@ -20,8 +11,8 @@ public:
 	void Awake() override;
 	void Preload() override;
 
-	void CreatePlatform();
 	void CreateEnemy();
+
 	void Collinding();
 	void CollindingEntity(GameObject* _entity);
 	void CollisionRengePosition(const float& _delta, GameObject* _entity);

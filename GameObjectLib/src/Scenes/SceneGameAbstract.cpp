@@ -33,11 +33,14 @@ void SceneGameAbstract::Create()
 {
 	Scene::Create();
 	//Background Pause
+	const float& widthScreen = WindowManager::GetWindowWidth();
+	const float& heightScreen = WindowManager::GetWindowHeight();
 	backgroundPause = BuilderGameObject::CreateBackgroundGameObject("BackgroundPause", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, Maths::Vector2f(WindowManager::GetWindowWidth(), WindowManager::GetWindowHeight()), 1.f, 1.f, LayerType::HUD, sf::Color(0, 0, 0, static_cast <sf::Uint8>(170)));
 	//Pause Buttons
-	pausePlayButton = BuilderGameObject::CreateButtonGameObject("Continue", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 4.0, 25);
-	pauseMenuPrincipalButton = BuilderGameObject::CreateButtonGameObject("Menu Principal", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2.5, 15);
-	pauseQuitButton = BuilderGameObject::CreateButtonGameObject("Quit", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 1.8,  40);
+	
+	pausePlayButton = BuilderGameObject::CreateButtonGameObject("continue", widthScreen / 2, heightScreen / 3, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 40);
+	pauseMenuPrincipalButton = BuilderGameObject::CreateButtonGameObject("mainMenu", widthScreen / 2, heightScreen / 2, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 25);
+	pauseQuitButton = BuilderGameObject::CreateButtonGameObject("quit", widthScreen / 2, heightScreen / 1.5, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 40);
 	this->Pause(false);
 }
 
@@ -63,6 +66,21 @@ void SceneGameAbstract::Preload()
 	AssetManager::AddAsset("shootArm", "Assets/Graphics/Characters/Zephyr/Idle_Shoot/Character_Idle_Shoot_ARM_48x48.png");
 	AssetManager::AddAsset("shootBody", "Assets/Graphics/Characters/Zephyr/Idle_Shoot/Character_Idle_Shoot_BODY_48x48.png");
 	AssetManager::AddAsset("bullet", "Assets/Graphics/Characters/Zephyr/bullet.png");
+	AssetManager::AddAsset("ButtonsMenu", "Assets/Graphics/UI/Buttons/buttonsMenu.png");
+
+	AudioManager::AddSound("GunShot", "Assets/Audio/SFX/Character/gun_shot.ogg");
+	AudioManager::AddSound("GunEmpty", "Assets/Audio/SFX/Character/gun_empty.ogg");
+	AudioManager::AddSound("GunReload", "Assets/Audio/SFX/Character/gun_reload.ogg");
+
+	AudioManager::AddSound("Character_Footstep1", "Assets/Audio/SFX/Character/Movements/footstep1.ogg");
+	AudioManager::AddSound("Character_Footstep2", "Assets/Audio/SFX/Character/Movements/footstep2.ogg");
+	AudioManager::AddSound("Character_Footstep3", "Assets/Audio/SFX/Character/Movements/footstep3.ogg");
+	AudioManager::AddSound("Character_Footstep4", "Assets/Audio/SFX/Character/Movements/footstep4.ogg");
+	AudioManager::AddSound("Character_Footstep5", "Assets/Audio/SFX/Character/Movements/footstep5.ogg");
+	AudioManager::AddSound("Character_Footstep6", "Assets/Audio/SFX/Character/Movements/footstep6.ogg");
+	AudioManager::AddSound("Character_Footstep7", "Assets/Audio/SFX/Character/Movements/footstep7.ogg");
+	AudioManager::AddSound("Character_Jump", "Assets/Audio/SFX/Character/Movements/jump.ogg");
+	AudioManager::AddSound("Character_JumpImpact", "Assets/Audio/SFX/Character/Movements/jump_impact.ogg");
 }
 
 
@@ -74,7 +92,6 @@ void SceneGameAbstract::Delete()
 void SceneGameAbstract::Pause()
 {
 	isPause = !isPause;
-
 	this->pausePlayButton->SetActiveAndVisible(isPause);
 	this->pauseMenuPrincipalButton->SetActiveAndVisible(isPause);
 	this->pauseQuitButton->SetActiveAndVisible(isPause);
@@ -84,7 +101,6 @@ void SceneGameAbstract::Pause()
 void SceneGameAbstract::Pause(const bool& _state)
 {
 	isPause = _state;
-
 	this->pausePlayButton->SetActiveAndVisible(_state);
 	this->pauseMenuPrincipalButton->SetActiveAndVisible(_state);
 	this->pauseQuitButton->SetActiveAndVisible(_state);
@@ -114,12 +130,15 @@ void SceneGameAbstract::Update(const float& _delta)
 	}
 	else
 	{
+		AudioManager::PauseMusic();
 		if (pausePlayButton->GetComponent<Button>()->IsClicked())
 		{
 			this->Pause(false);
+			AudioManager::ResumeMusic();
 		}
 		else if (pauseMenuPrincipalButton->GetComponent<Button>()->IsClicked()) 
 		{
+			AudioManager::Stop();
 			this->Pause(true);
 			SceneManager::RunScene("SceneMainMenu");
 		}

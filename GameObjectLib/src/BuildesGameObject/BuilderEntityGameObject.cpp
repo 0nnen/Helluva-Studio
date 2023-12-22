@@ -15,10 +15,12 @@
 #include "Components/Entity/Enemy/EnemyA.h"
 #include "Components/Entity/Enemy/Hades.h"
 #include "Components/Entity/Enemy/ProtectionBall.h"
+#include "Components/ComponentsGame/LavaArea.h"
 
 #include <Components/Shapes/Rectangle.h>
 #include <Components/Shapes/Triangle.h>
 #include "Components/Transform.h"
+#include "Components/Lantern.h"
 
 #include <Components/Shapes/Circle.h>
 #include <Components/ComponentsGame/ExplosionCircle.h>
@@ -298,6 +300,36 @@ GameObject* BuilderEntityGameObject::CreatePlateformGameObject(const std::string
 	return gameObject;
 }
 
+GameObject* BuilderEntityGameObject::CreateRectangleSpriteGameObject(const std::string& _name, const float& _positionX, const float& _positionY, const float& _scalex, const float& _scaley, sf::Texture* _texture)
+{
+	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
+	gameObject->SetScale(Maths::Vector2f(_scalex, _scaley));
+	gameObject->SetDepth(0.9f);
+	gameObject->SetPosition(Maths::Vector2f(_positionX, _positionY));
+	
+
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(false);
+	rigidBody2D->SetSize(200.f, 50.f);
+
+	Sprite* spriteBody = gameObject->CreateComponent<Sprite>();
+	spriteBody->SetName("lavaSprite");
+	spriteBody->SetTexture(_texture);
+
+	//spriteBody->SetRecTextureWithFrame(0, 0, 6, 1);
+
+	LavaArea* lava = gameObject->CreateComponent<LavaArea>();
+
+
+
+	SquareCollider* squareCollider = gameObject->CreateComponent<SquareCollider>();
+	squareCollider->SetName("lava");
+	squareCollider->SetWidthCollider(200.f * _scalex);
+	squareCollider->SetHeightCollider(50.f * _scaley);
+
+	return gameObject;
+}
+
 
 GameObject* BuilderEntityGameObject::CreateEnemyAGameObject(const std::string& _name, float _x, float _y, float scalex, float scaley, sf::Texture* _texture)
 {
@@ -448,6 +480,47 @@ GameObject* BuilderEntityGameObject::CreateHadesGameObject(const std::string& _n
 	return gameObject;
 }
 
+GameObject* BuilderEntityGameObject::CreateHadesSpawnGameObject(const std::string& _name, float _x, float _y, float scalex, float scaley, sf::Texture* _texture)
+{
+	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
+	gameObject->SetPosition(Maths::Vector2f(_x, _y));
+	gameObject->SetScale(Maths::Vector2f(scalex, scaley));
+	gameObject->SetDepth(0.9f);
+
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(false);
+
+	Hades* enemy = gameObject->CreateComponent<Hades>();
+	enemy->SetInvicible(false);
+
+	Sprite* spriteBody = gameObject->CreateComponent<Sprite>();
+	spriteBody->SetName("bodyEnemyA");
+	spriteBody->SetTexture(_texture);
+
+	Animation* idle = gameObject->CreateComponent<Animation>();
+	idle->SetLoop(-1);
+	idle->SetName("idle");
+	idle->SetFrame(6);
+	idle->SetAnimationTime(1);
+	idle->SetSpriteSheet(AssetManager::GetAsset("idleHades"));
+
+	Animation* roar = gameObject->CreateComponent<Animation>();
+	roar->SetLoop(1);
+	roar->SetName("roar");
+	roar->SetFrame(6);
+	roar->SetAnimationTime(2);
+	roar->SetSpriteSheet(AssetManager::GetAsset("roarHades"));
+
+	idle->Play();
+
+	enemy->AddAnimation("idle", idle);
+	enemy->AddAnimation("roar", roar);
+
+	spriteBody->SetRecTextureWithFrame(0, 0, 6, 1);
+
+	return gameObject;
+}
+
 GameObject* BuilderEntityGameObject::CreateProtectionBallGameObject(const std::string& _name, float _x, float _y, float scalex, float scaley, sf::Texture* _texture, const int& _number, GameObject* _hades)
 
   {
@@ -496,6 +569,7 @@ GameObject* BuilderEntityGameObject::CreateProtectionBallGameObject(const std::s
 	ProtectionBall* protectionBall = gameObject->CreateComponent<ProtectionBall>();
 	protectionBall->SetHades(_hades);
 	protectionBall->SetHealth();
+	protectionBall->SetSpawn(_number);
 
 	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
 	rigidBody2D->SetIsGravity(false);
@@ -504,7 +578,22 @@ GameObject* BuilderEntityGameObject::CreateProtectionBallGameObject(const std::s
 	Sprite* spriteBody = gameObject->CreateComponent<Sprite>();
 	spriteBody->SetName("spriteProtectionBall");
 	spriteBody->SetTexture(_texture);
-	spriteBody->SetRecTextureWithFrame(_number % 4, _number % 2, 4, 2);
+	// astral
+	if(_number <= 5) spriteBody->SetRecTextureWithFrame(0, 0, 4, 2);
+	// feu
+	else if(_number >= 6 && _number <= 30) spriteBody->SetRecTextureWithFrame(1, 0, 4, 2); 
+	//spirituel
+	else if(_number >= 31 && _number <= 40) spriteBody->SetRecTextureWithFrame(2, 0, 4, 2);
+	//eau ténébreuse
+	else if(_number >= 41 && _number <= 55) spriteBody->SetRecTextureWithFrame(3, 1, 4, 2);
+	//lave
+	else if(_number >= 56 && _number <= 70) spriteBody->SetRecTextureWithFrame(0, 1, 4, 2);
+	//verte
+	else if(_number >= 71 && _number <= 75) spriteBody->SetRecTextureWithFrame(0, 3, 4, 2);
+	//abysse
+	else if(_number >= 86 && _number <= 90) spriteBody->SetRecTextureWithFrame(3, 0, 4, 2);
+	//eau
+	else if(_number >= 91 &&  _number <= 100) spriteBody->SetRecTextureWithFrame(2, 1, 4, 2);
 
 
 	SquareCollider* squareCollider = gameObject->CreateComponent<SquareCollider>();
@@ -614,3 +703,23 @@ GameObject* BuilderEntityGameObject::CreateFireBallEnemy(const std::string& _nam
 	return gameObject;
 };
 
+
+GameObject* BuilderEntityGameObject::CreateLanternGameObject(const std::string& _name, sf::Texture* _textureLantern, const float& _scalex, const float& _scaley, const Maths::Vector2f& _position)
+{
+	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
+	gameObject->SetPosition(_position);
+	gameObject->SetScale(Maths::Vector2f(_scalex, _scaley));
+	gameObject->SetDepth(0.7f);
+
+	Sprite* sprite = gameObject->CreateComponent<Sprite>();
+	sprite->SetName("lantern");
+	sprite->SetTexture(_textureLantern);
+
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetSize(sprite->GetBounds().x, sprite->GetBounds().y);
+	rigidBody2D->SetIsGravity(false);
+
+	Lantern* lantern = gameObject->CreateComponent<Lantern>();
+
+	return gameObject;
+}

@@ -30,6 +30,9 @@ private:
 	float activeReload = 0.f;
 	sf::Texture* texture;
 	std::vector<GameObject*> bullets;
+
+	float timeSinceEmpty = 0.0f;
+	float reloadSoundDelay = 1.5f;
 };
 
 
