@@ -1,4 +1,4 @@
-FIX : Button et background
+FIX : Merge Quentin
 
-- Fix de l'état des buttons lorsqu'on clique dessus
-- Background recentré
+- Fix des derniers bugs
+- Ajout collision sol et bullet

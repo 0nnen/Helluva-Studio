@@ -45,7 +45,6 @@ private:
 	GameObject* plateform = nullptr;
 	GameObject* bulletEnemy = nullptr;
 	GameObject* door = nullptr;
-	std::vector<SquareCollider*> squareColliders;
 	static bool flip;
 };
 

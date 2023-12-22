@@ -1,5 +1,6 @@
 #include "Components/Entity/Enemy/EnemyA.h"
 #include "Managers/SceneManager.h"
+#include "Managers/AssetManager.h"
 #include "Scenes/ScenesGame/ScenesTest.h"
 #include "BuildersGameObject/BuilderEntityGameObject.h"
 #include "Components/RigidBody2D.h"

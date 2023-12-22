@@ -37,7 +37,7 @@ void ScenesTest::Delete()
 void ScenesTest::Preload()
 {
 	SceneGameAbstract::Preload();
-	AssetManager::AddAsset("BackgroundSceneGame1", "Assets/Graphics/Backgrounds/SceneGame/backgroundSky.jpg"); 
+	AssetManager::AddAsset("BackgroundSceneGame1", "Assets/Graphics/Backgrounds/SceneGame/backgroundSky.jpg");
 	AssetManager::AddAsset("idleEnemyA", "Assets/Enemy/Hell-Beast-Files/PNG/with-stroke/hell-beast-idle.png");
 	AssetManager::AddAsset("shootEnemyA", "Assets/Enemy/Hell-Beast-Files/PNG/with-stroke/hell-beast-breath.png");
 	AssetManager::AddAsset("deadEnemyA", "Assets/Enemy/Hell-Beast-Files/PNG/with-stroke/hell-beast-burn.png");
@@ -52,9 +52,9 @@ void ScenesTest::Create()
 
 	tileMap = BuilderEntityGameObject::CreateMapGameObject("OverWorld", "Assets/Graphics/Maps/WorldMap/WorldMap.json", "Assets/Graphics/Maps/WorldMap/worldMapBackground.png", 89);
 	CreateEnemy();
-	CreatePlayer(500,1400);
+	CreatePlayer(500, 1400);
 	CameraManager::SetZoom(1.75f);
-	
+
 }
 
 void ScenesTest::CreateEnemy()
@@ -70,6 +70,7 @@ void ScenesTest::CreateEnemy()
 
 void ScenesTest::Collinding()
 {
+
 	if (player && tileMap)
 	{
 
@@ -135,6 +136,24 @@ void ScenesTest::Collinding()
 			const float difference = width - distanceX;
 			player->SetPosition(player->GetPosition() + Maths::Vector2f(difference, 0));
 			rigidBody2DPlayer->SetVelocity(Maths::Vector2f(0, rigidBody2DPlayer->GetVelocity().y));
+		}
+		Gun* gun = player->GetComponent<WeaponsContainer>()->GetArme()->GetComponent<Gun>();
+		if (gun) {
+			std::vector<GameObject*> bullets = gun->GetBullets();
+			SquareCollider* squareColliderBullet = nullptr;
+			for (size_t i = 0; i < bullets.size(); i++)
+			{
+				squareColliderBullet = bullets[i]->GetComponent<SquareCollider>();
+				if (tileMap->GetComponent<TileMap>()->CheckCollisionAbove(*squareColliderBullet)
+					|| tileMap->GetComponent<TileMap>()->CheckCollisionBelow(*squareColliderBullet)
+					|| tileMap->GetComponent<TileMap>()->CheckCollisionLeft(*squareColliderBullet)
+					|| tileMap->GetComponent<TileMap>()->CheckCollisionRight(*squareColliderBullet)
+					)
+				{
+					gun->RemoveBullet(bullets[i]);
+					RemoveGameObject(bullets[i]);
+				}
+			}
 		}
 	}
 }
@@ -213,12 +232,12 @@ void ScenesTest::CollindingEntity(GameObject* _entity)
 void ScenesTest::CollisionRengePosition(const float& _delta, GameObject* _entity) {
 	Entity* entity = _entity->GetComponent<Entity>();
 	RigidBody2D* rigidBody2D = _entity->GetComponent<RigidBody2D>();
-	squareColliders = _entity->GetComponentsByType<SquareCollider>();
+	std::vector<SquareCollider*> squareColliders = _entity->GetComponentsByType<SquareCollider>();
 	SquareCollider* squareCollider = nullptr;
 	for (size_t i = 0; i < squareColliders.size(); i++)
 	{
 		if (squareColliders[i]->GetName() == std::string("Renge"))
-		{ 
+		{
 			squareCollider = squareColliders[i];
 			break;
 		}
@@ -245,7 +264,7 @@ void ScenesTest::CollisionRengePosition(const float& _delta, GameObject* _entity
 
 void ScenesTest::CollisionBulletPlayer(GameObject* _entity)
 {
-	squareColliders = _entity->GetComponentsByType<SquareCollider>();
+	std::vector<SquareCollider*> squareColliders = _entity->GetComponentsByType<SquareCollider>();
 	SquareCollider* squareCollider = nullptr;
 	for (size_t i = 0; i < squareColliders.size(); i++)
 	{
@@ -278,7 +297,7 @@ void ScenesTest::CollisionRengeAttack(const float& _delta, GameObject* _entity)
 {
 	Entity* entity = _entity->GetComponent<Entity>();
 	RigidBody2D* rigidBody2D = _entity->GetComponent<RigidBody2D>();
-	squareColliders = _entity->GetComponentsByType<SquareCollider>();
+	std::vector<SquareCollider*> squareColliders = _entity->GetComponentsByType<SquareCollider>();
 	SquareCollider* squareCollider = nullptr;
 	for (size_t i = 0; i < squareColliders.size(); i++)
 	{
@@ -290,7 +309,7 @@ void ScenesTest::CollisionRengeAttack(const float& _delta, GameObject* _entity)
 	}
 	if (player && squareCollider)
 	{
-		
+
 		if (SquareCollider::IsColliding(*(player->GetComponent<SquareCollider>()), *(squareCollider)))
 		{
 			rigidBody2D->SetVelocity(Maths::Vector2f(0.f, rigidBody2D->GetVelocity().y));
@@ -325,7 +344,7 @@ void ScenesTest::Physics(const float& _delta)
 	for (size_t i = 0; i < enemys.size(); i++)
 	{
 		GameObject* enemy = enemys[i];
-		if(enemy) 
+		if (enemy)
 		{
 			this->CollindingEntity(enemy);
 			this->CollisionBulletPlayer(enemy);
@@ -334,7 +353,7 @@ void ScenesTest::Physics(const float& _delta)
 			this->CollisionRengeAttack(_delta, enemy);
 			this->DeadEnemy(enemy);
 		}
-		
+
 	}
 
 }
