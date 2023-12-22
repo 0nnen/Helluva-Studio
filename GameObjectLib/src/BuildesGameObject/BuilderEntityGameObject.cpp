@@ -326,11 +326,23 @@ GameObject* BuilderEntityGameObject::CreateEnemyAGameObject(const std::string& _
 	squareCollider->SetHeightCollider((spriteBody->GetBounds().y) * scaley);
 
 	SquareCollider* squareColliderGround = gameObject->CreateComponent<SquareCollider>();
-	squareColliderGround->SetName("groundEneNmy");
+	squareColliderGround->SetName("groundEnemy");
 	squareColliderGround->SetWidthCollider((spriteBody->GetBounds().x - 30.f) * scalex);
 	squareColliderGround->SetHeightCollider(2);
 	squareColliderGround->SetPerfectPosition(Maths::Vector2f(0, squareCollider->GetBottomCollider() + 1.f));
 	squareColliderGround->SetActiveCollider(false);
+
+	SquareCollider* squareColliderPosition = gameObject->CreateComponent<SquareCollider>();
+	squareColliderPosition->SetName("Renge");
+	squareColliderPosition->SetWidthCollider((spriteBody->GetBounds().x + 300.f) * scalex);
+	squareColliderPosition->SetHeightCollider(2);
+	squareColliderPosition->SetActiveCollider(false);
+
+	SquareCollider* squareColliderAttack = gameObject->CreateComponent<SquareCollider>();
+	squareColliderAttack->SetName("RengeAttack");
+	squareColliderAttack->SetWidthCollider((spriteBody->GetBounds().x + 200.f) * scalex);
+	squareColliderAttack->SetHeightCollider(2);
+	squareColliderAttack->SetActiveCollider(false);
 
 
 	Animation* idle = gameObject->CreateComponent<Animation>();
@@ -342,26 +354,33 @@ GameObject* BuilderEntityGameObject::CreateEnemyAGameObject(const std::string& _
 
 	Animation* shoot = gameObject->CreateComponent<Animation>();
 	shoot->SetLoop(1);
-	shoot->SetName("idle");
+	shoot->SetName("shoot");
 	shoot->SetFrame(4);
 	shoot->SetAnimationTime(1);
 	shoot->SetSpriteSheet(AssetManager::GetAsset("shootEnemyA"));
+
+	Animation* dead = gameObject->CreateComponent<Animation>();
+	dead->SetLoop(1);
+	dead->SetName("dead");
+	dead->SetFrame(6);
+	dead->SetAnimationTime(1);
+	dead->SetSpriteSheet(AssetManager::GetAsset("deadEnemyA"));
 
 	idle->Play();
 
 	enemy->AddAnimation("idle", idle);
 	enemy->AddAnimation("shoot", shoot);
+	enemy->AddAnimation("dead", dead);
 
 
 
-	/*HealthPointBar* healthPointBar = gameObject->CreateComponent<HealthPointBar>();
+	HealthPointBar* healthPointBar = gameObject->CreateComponent<HealthPointBar>();
 	healthPointBar->SetHealthPoint(enemy->GetHealthPoint());
 	healthPointBar->SetMaxHealthPoint(enemy->GetMaxHealthPoint());
 	healthPointBar->SetAboveSprite(25);
 	healthPointBar->SetSize(25, 2);
 	healthPointBar->SetScale(2.f, 2.f);
-	healthPointBar->SetHealthPointBar();*/
-	//enemies.push_back(gameObject);
+	healthPointBar->SetHealthPointBar();
 
 	return gameObject;
 }
@@ -569,6 +588,7 @@ GameObject* BuilderEntityGameObject::CreateFireBallEnemy(const std::string& _nam
 	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
 	rigidBody2D->SetIsGravity(false);
 	rigidBody2D->SetKillImperfection(Maths::Vector2f(22., 22.f));
+	rigidBody2D->AddForces(_position * bullet->GetSpeed());
 
 	Sprite* spriteBody = gameObject->CreateComponent<Sprite>();
 	spriteBody->SetName("idleFireBall");

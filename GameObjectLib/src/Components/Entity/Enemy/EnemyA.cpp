@@ -4,19 +4,13 @@
 #include "BuildersGameObject/BuilderEntityGameObject.h"
 #include "Components/RigidBody2D.h"
 
-float EnemyA::cooldown;
-float EnemyA::fireRate;
-float EnemyA::speed;
-bool EnemyA::bulletShoot;
-GameObject* EnemyA::bulletEnemy;
-
 EnemyA::EnemyA() : Entity()
 {
 	bulletShoot = true;
 	directionEnemy = false;
 	direction = Direction::Right;
 	cooldown = 0.f;
-	fireRate = 150.f;
+	fireRate = 5.f;
 	SetSpeed(10.f);
 }
 
@@ -47,9 +41,9 @@ void EnemyA::CreateBullet(float _x, float _y)
 };
 
 
-void EnemyA::Attack()
+void EnemyA::Attack(const float& _delta)
 {
-	Entity::Attack();
+	Entity::Attack(_delta);
 	GameObject* enemy = GetOwner();
 	if (cooldown <= 0)
 	{
@@ -61,20 +55,14 @@ void EnemyA::Attack()
 		}
 		if (!ScenesTest::GetFlip())
 		{
-			CreateBullet(-1.f, 0.f);
+			CreateBullet(0.25f, 0.f);
 		}
 		if (ScenesTest::GetFlip())
 		{
-			CreateBullet(1.f, 0.f);
+			CreateBullet(-0.25f, 0.f);
 		}
 		
 	}
-	cooldown++;
+	cooldown -= _delta;
 	bulletShoot = false;
-}
-
-void EnemyA::Mouve(const float& _delta, float _speed)
-{
-	GameObject* enemy = SceneManager::GetActiveGameScene()->GetEnemy();
-	enemy->GetComponent<RigidBody2D>()->AddForces(Maths::Vector2f::Left * _delta * _speed);
 }

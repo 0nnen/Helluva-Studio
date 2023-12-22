@@ -37,7 +37,7 @@ public:
 
 	void SetDirection(Direction _newDirection);
 
-	virtual void Attack();
+	virtual void Attack(const float& _delta);
 	void TakeDamage(const int& damage);
 	void TakeHealt(const int& _healt) { healthPoint += _healt; }
 	virtual void Die();

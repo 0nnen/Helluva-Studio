@@ -34,7 +34,7 @@ void Entity::TakeDamage(const int& _damage)
 
 }
 
-void Entity::Attack(){}
+void Entity::Attack( const float& _delta){}
 
 //void Entity::TakeDamageFireCircle(const int& _damage)
 //{

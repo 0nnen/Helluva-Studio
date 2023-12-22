@@ -37,7 +37,7 @@ void Engine::Init() const
 	//SceneManager::AddScene("SceneGameUnderground", new SceneGameUnderground(std::string("SceneGameUnderground")));
 	SceneManager::AddScene("SceneGameAbstract", new SceneGameAbstract(std::string("SceneGameAbstract")));
 	SceneManager::AddScene("ScenesTest", new ScenesTest(std::string("ScenesTest")));
-	SceneManager::AddScene("SceneGameWorld", new SceneGameWorld(std::string("SceneGameWorld")));
+	//SceneManager::AddScene("SceneGameWorld", new SceneGameWorld(std::string("SceneGameWorld")));
 	SceneManager::AddScene("SceneOpening", new SceneOpening(std::string("SceneOpening")));
 	SceneManager::AddScene("SceneGameBossRoom", new SceneGameBossRoom(std::string("SceneGameBossRoom")));
 }

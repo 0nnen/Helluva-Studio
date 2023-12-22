@@ -7,22 +7,38 @@ FireBullet::FireBullet()
 {
 	directionFireBullet = false;
 	direction = Direction::Right;
+	player = SceneManager::GetActiveGameScene()->GetPlayer();
 }
 
 void FireBullet::Update(const float& _delta)
 {
 	Component::Update(_delta);
-	if (ScenesTest::GetFlip())
+	if (!ScenesTest::GetFlip())
 	{
 		SetDirection(Left);
 		directionFireBullet = true;
 	}
-	if (!ScenesTest::GetFlip())
+	if (ScenesTest::GetFlip())
 	{
 		SetDirection(Right);
 		directionFireBullet = false;
 
 	}
+
+	cooldown += _delta;
+	if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(GetOwner()->GetComponent<RigidBody2D>())))
+	{
+		player->GetComponent<Character>()->TakeDamage(20);
+		SceneManager::GetActiveGameScene()->RemoveGameObject(GetOwner());
+		std::cout << player->GetComponent<Character>()->GetHealthPoint();
+
+	}
+	if (cooldown >= 2.0f)
+	{
+		SceneManager::GetActiveGameScene()->RemoveGameObject(GetOwner());
+	}
+
+
 };
 
 void FireBullet::AddAnimation(const std::string& _name, Animation* animation)
