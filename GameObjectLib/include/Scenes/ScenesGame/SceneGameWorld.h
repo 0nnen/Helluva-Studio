@@ -14,21 +14,21 @@
 class SceneGameWorld : public SceneGameAbstract
 {
 public:
-	SceneGameWorld(const std::string& _newName);
+	/*SceneGameWorld(const std::string& _newName);*/
 
-	void Preload() override;
+	/*void Preload() override;
 	void Create() override;
-	void Delete() override;
+	void Delete() override;*/
 
-	void CreatePlatformCollision();
-	void CreateEnemy();
-	void CreateRengeEnemy();
-	void Collision(GameObject* _entity);
-	void CollisionRengePosition(const float& _delta);
-	void CollisionRengeShoot(const float& _delta);
+	//void CreatePlatformCollision();
+	/*void CreateEnemy();
+	void CreateRengeEnemy();*/
+	//void Collision(GameObject* _entity);
+	/*void CollisionRengePosition(const float& _delta);
+	void CollisionRengeShoot(const float& _delta);*/
 
-	void Render(sf::RenderWindow* _window) override;
-	void Update(const float& _delta) override;
+	/*void Render(sf::RenderWindow* _window) override;
+	void Update(const float& _delta) override;*/
 
 	static bool GetFlip() { return flip; };
 private:

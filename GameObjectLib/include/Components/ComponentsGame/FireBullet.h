@@ -28,5 +28,7 @@ private:
 	Animation* actualAnimation = nullptr;
 	bool directionFireBullet;
 	Direction direction;
+	GameObject* player = nullptr;
+	float cooldown;
 };
 
