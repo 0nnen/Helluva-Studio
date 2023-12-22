@@ -23,6 +23,7 @@ private:
 	GameObject* hades = nullptr;
 	GameObject* textDialogue = nullptr;
 	GameObject* plateform = nullptr;
+	GameObject* skipButton = nullptr;
 	float timeBetweenDialogues = 3.f;
 	float currentTime = 0.f;
 	unsigned int step = 0;

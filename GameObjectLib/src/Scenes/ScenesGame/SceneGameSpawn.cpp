@@ -7,6 +7,7 @@
 #include "Components/Inputs/InputCharacter.h"
 #include "Components/RigidBody2D.h"
 #include "Components/UIElements/Text.h"
+#include "Components/UIElements/Button.h"
 #include "Components/Entity/Enemy/Hades.h"
 #include "Components/Entity/Character.h"
 #include "BuildersGameObject/BuilderEntityGameObject.h"
@@ -35,6 +36,9 @@ void SceneGameSpawn::Create()
 	startText = false;
 	AudioManager::PlayMusic("MusicAmbiant_HOM");
 	SceneGameAbstract::Create();
+	skipButton = BuilderGameObject::CreateButtonGameObject("skip", WindowManager::GetFloatWindowWidth() / 1.1f, WindowManager::GetFloatWindowHeight() / 10, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 40);
+	skipButton->SetVisible(false);
+	
 	GameObject* backgroundBossRoom = BuilderGameObject::CreateBackgroundGameObject("BossRoom", WindowManager::GetFloatWindowWidth() / 2, WindowManager::GetFloatWindowHeight() / 2, 1, 1, AssetManager::GetAsset("BackgroundBoss"));
 	plateform = BuilderEntityGameObject::CreateRectangleSpriteGameObject("Spawn", "spawnPlateform", 500, 600, 0.5f, 0.5f, AssetManager::GetAsset("spawnPlateform"));
 	CreatePlayer(500.f, -500.f);
@@ -85,6 +89,7 @@ void SceneGameSpawn::Update(const float& _delta)
 				rigidBody2DPlayer->SetIsGravity(false);
 				textDialogue->SetActiveAndVisible(true);
 				startText = true;
+				skipButton->SetVisible(true);
 				const float distanceY = std::abs(squareColliderPlayer->GetCenterY() - squareColliderPlateforme->GetCenterY());
 				const float height = squareColliderPlayer->GetHeightCollider() / 2 + squareColliderPlateforme->GetHeightCollider() / 2;
 				const float difference = height - distanceY;
@@ -109,10 +114,16 @@ void SceneGameSpawn::Update(const float& _delta)
 			if (isPause)
 			{
 				textDialogue->SetVisible(false);
+				skipButton->SetVisible(false);
 			}
 			else
 			{
 				textDialogue->SetVisible(true);
+				skipButton->SetVisible(true);
+				if (skipButton->GetComponent<Button>()->IsClicked() && skipButton->GetVisible())
+				{
+					textDialogue->SetActive(false);
+				}
 			}
 		}
 	}

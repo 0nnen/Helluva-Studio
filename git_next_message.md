@@ -1,3 +1,3 @@
-NEW: Fin de la vertical slice
+NEW : Ajout d'un skip
 
-- Au lit maintenant
+- Ajout d'un skip pour les dialogues du spawn
