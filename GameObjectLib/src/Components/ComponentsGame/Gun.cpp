@@ -15,13 +15,22 @@ Gun::Gun() {
 	maxAmo = 10;
 	reload = 2.f;
 	activeReload = 0.f;
+
 }
 
 void Gun::Update(const float& _delta) {
 	Weapon::Update(_delta);
+	timeSinceEmpty = 0.0f;
 
 	if (activeReload > 0.f) {
 		activeReload -= _delta;
+		timeSinceEmpty += _delta;
+		if (mag <= 0) {
+			if (timeSinceEmpty >= reloadSoundDelay) {
+				AudioManager::PlaySound("GunReload");
+				timeSinceEmpty = 0.0f;
+			}
+		}
 	}
 	if (activeReload <= 0 && mag <= 0) {
 		mag = maxAmo;
@@ -78,7 +87,6 @@ void Gun::Attack() {
 			underCooldown = true;
 			activeReload = reload;
 			cooldown = 0.f;
-			AudioManager::PlaySound("GunReload");
 		}
 		else if (mag == 0 && cooldown <= 0 && activeReload <= 0) {
 			AudioManager::PlaySound("GunEmpty");
