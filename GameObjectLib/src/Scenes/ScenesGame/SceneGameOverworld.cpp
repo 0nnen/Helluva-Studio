@@ -1,4 +1,4 @@
-#include "Scenes/ScenesGame/ScenesTest.h"
+#include "Scenes/ScenesGame/SceneGameOverworld.h"
 #include "Components/Entity/Character.h"
 #include "BuilderGameObject.h"
 #include "Managers/CameraManager.h"
@@ -6,7 +6,7 @@
 #include "Components/ComponentsGame/WeaponsContainer.h"
 #include "Components/ComponentsGame/Gun.h"
 #include "Components/ComponentsGame/Bullet.h"
-bool ScenesTest::flip;
+bool SceneGameOverworld::flip;
 
 #include "Managers/AssetManager.h"
 #include "Managers/WindowManager.h"
@@ -19,22 +19,22 @@ bool ScenesTest::flip;
 #include "TileMap/TileMap.h"
 
 
-ScenesTest::ScenesTest(const std::string& _newName) : SceneGameAbstract(_newName) {
+SceneGameOverworld::SceneGameOverworld(const std::string& _newName) : SceneGameAbstract(_newName) {
 }
 
-ScenesTest::~ScenesTest() {}
+SceneGameOverworld::~SceneGameOverworld() {}
 
-void ScenesTest::Awake()
+void SceneGameOverworld::Awake()
 {
 	SceneGameAbstract::Awake();
 }
 
-void ScenesTest::Delete()
+void SceneGameOverworld::Delete()
 {
 	SceneGameAbstract::Delete();
 }
 
-void ScenesTest::Preload()
+void SceneGameOverworld::Preload()
 {
 	SceneGameAbstract::Preload();
 	AssetManager::AddAsset("BackgroundSceneGame1", "Assets/Graphics/Backgrounds/SceneGame/backgroundSky.jpg");
@@ -44,7 +44,7 @@ void ScenesTest::Preload()
 	AssetManager::AddAsset("FireBallEnemy", "Assets/Enemy/Hell-Beast-Files/PNG/fire-ball.png");
 }
 
-void ScenesTest::Create()
+void SceneGameOverworld::Create()
 {
 	CameraManager::DefaultZoom();
 	SceneGameAbstract::Create();
@@ -57,7 +57,7 @@ void ScenesTest::Create()
 
 }
 
-void ScenesTest::CreateEnemy()
+void SceneGameOverworld::CreateEnemy()
 {
 	enemys.push_back(BuilderEntityGameObject::CreateEnemyAGameObject("Enemy1", 1600.f, 1400.f, 1.5f, 1.5f, AssetManager::GetAsset("idleEnemyA")));
 	enemys.push_back(BuilderEntityGameObject::CreateEnemyAGameObject("Enemy2", 1600.f, 800.f, 1.5f, 1.5f, AssetManager::GetAsset("idleEnemyA")));
@@ -68,7 +68,7 @@ void ScenesTest::CreateEnemy()
 
 
 
-void ScenesTest::Collinding()
+void SceneGameOverworld::Collinding()
 {
 
 	if (player && tileMap)
@@ -158,7 +158,7 @@ void ScenesTest::Collinding()
 	}
 }
 
-void ScenesTest::CollindingEntity(GameObject* _entity)
+void SceneGameOverworld::CollindingEntity(GameObject* _entity)
 {
 	if (_entity && tileMap)
 	{
@@ -229,7 +229,7 @@ void ScenesTest::CollindingEntity(GameObject* _entity)
 	}
 }
 
-void ScenesTest::CollisionRengePosition(const float& _delta, GameObject* _entity) {
+void SceneGameOverworld::CollisionRengePosition(const float& _delta, GameObject* _entity) {
 	Entity* entity = _entity->GetComponent<Entity>();
 	RigidBody2D* rigidBody2D = _entity->GetComponent<RigidBody2D>();
 	std::vector<SquareCollider*> squareColliders = _entity->GetComponentsByType<SquareCollider>();
@@ -262,7 +262,7 @@ void ScenesTest::CollisionRengePosition(const float& _delta, GameObject* _entity
 	}
 }
 
-void ScenesTest::CollisionBulletPlayer(GameObject* _entity)
+void SceneGameOverworld::CollisionBulletPlayer(GameObject* _entity)
 {
 	std::vector<SquareCollider*> squareColliders = _entity->GetComponentsByType<SquareCollider>();
 	SquareCollider* squareCollider = nullptr;
@@ -293,7 +293,7 @@ void ScenesTest::CollisionBulletPlayer(GameObject* _entity)
 	}
 };
 
-void ScenesTest::CollisionRengeAttack(const float& _delta, GameObject* _entity)
+void SceneGameOverworld::CollisionRengeAttack(const float& _delta, GameObject* _entity)
 {
 	Entity* entity = _entity->GetComponent<Entity>();
 	RigidBody2D* rigidBody2D = _entity->GetComponent<RigidBody2D>();
@@ -326,7 +326,7 @@ void ScenesTest::CollisionRengeAttack(const float& _delta, GameObject* _entity)
 };
 
 
-void ScenesTest::DeadEnemy(GameObject* _entity)
+void SceneGameOverworld::DeadEnemy(GameObject* _entity)
 {
 	Entity* entity = _entity->GetComponent<Entity>();
 	if (entity->GetHealthPoint() <= 0)
@@ -335,7 +335,7 @@ void ScenesTest::DeadEnemy(GameObject* _entity)
 	}
 }
 
-void ScenesTest::Physics(const float& _delta)
+void SceneGameOverworld::Physics(const float& _delta)
 {
 	SceneGameAbstract::Physics(_delta);
 
@@ -358,7 +358,7 @@ void ScenesTest::Physics(const float& _delta)
 
 }
 
-void ScenesTest::Update(const float& _delta)
+void SceneGameOverworld::Update(const float& _delta)
 {
 	SceneGameAbstract::Update(_delta);
 	if (!isPause)
@@ -392,7 +392,7 @@ void ScenesTest::Update(const float& _delta)
 
 }
 
-void ScenesTest::Render(sf::RenderWindow* _window)
+void SceneGameOverworld::Render(sf::RenderWindow* _window)
 {
 	SceneGameAbstract::Render(_window);
 }

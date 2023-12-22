@@ -15,15 +15,6 @@ public:
 	Command* JumpInput();
 	Command* ShootInput();
 	Command* ChangeWeaponInput();
-
-	//Command* PauseInput();
-	//void MoveRight(sf::Time _delta);
-	//void MoveRightBullet();
-	//void GamePauseMenu();
-	//void MoveLeft(sf::Time _delta);
-	//void Jump(sf::Time _delta);
-	//float GetSpeed() { return speed; }
-	//float AddSpeed(float _speed);
 	~InputCharacter();
 
 private:
@@ -34,9 +25,6 @@ private:
 
 	Command* KeyD_;
 	Command* KeyQ_;
-	//Command* KeySpace_;
-	//GameObject* player;
-	//Command* KeyEscape_;
 	Command* LeftMouse_;
 	Command* Num1_;
 	Command* Num2_;

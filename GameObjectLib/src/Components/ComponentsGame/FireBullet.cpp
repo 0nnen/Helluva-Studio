@@ -1,11 +1,10 @@
 #include "Components/ComponentsGame/FireBullet.h"
-#include "Scenes/ScenesGame/SceneGameWorld.h"
-#include "Scenes/ScenesGame/ScenesTest.h"
+#include "Scenes/ScenesGame/SceneGameOverworld.h"
 #include "BuildersGameObject/BuilderEntityGameObject.h"
-
+#include "Managers/SceneManager.h"
+#include "Components/SquareCollider.h"
 FireBullet::FireBullet()
 {
-	directionFireBullet = false;
 	direction = Direction::Right;
 	player = SceneManager::GetActiveGameScene()->GetPlayer();
 }
@@ -13,27 +12,25 @@ FireBullet::FireBullet()
 void FireBullet::Update(const float& _delta)
 {
 	Component::Update(_delta);
-	if (!ScenesTest::GetFlip())
+	if (!SceneGameOverworld::GetFlip())
 	{
 		SetDirection(Left);
-		directionFireBullet = true;
 	}
-	if (ScenesTest::GetFlip())
+	if (SceneGameOverworld::GetFlip())
 	{
 		SetDirection(Right);
-		directionFireBullet = false;
 
 	}
 
 	cooldown += _delta;
-	if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(GetOwner()->GetComponent<RigidBody2D>())))
+	if (SquareCollider::IsColliding(*(player->GetComponent<SquareCollider>()), *(GetOwner()->GetComponent<SquareCollider>())))
 	{
 		player->GetComponent<Character>()->TakeDamage(20);
 		SceneManager::GetActiveGameScene()->RemoveGameObject(GetOwner());
 		std::cout << player->GetComponent<Character>()->GetHealthPoint();
 
 	}
-	if (cooldown >= 2.0f)
+	if (cooldown >= 5.0f)
 	{
 		SceneManager::GetActiveGameScene()->RemoveGameObject(GetOwner());
 	}

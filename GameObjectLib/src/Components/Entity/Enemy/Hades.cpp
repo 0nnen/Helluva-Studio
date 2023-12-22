@@ -5,23 +5,22 @@
 #include <Components/Entity/Character.h>
 #include <Managers/AudioManager.h>
 
-Hades::Hades() : Entity(1000, 200, 500.f, 40.f, 10000.f)
+Hades::Hades() : Entity(5000, 200, 500.f, 40.f, 10000.f)
 {
 	attackFire = BuilderEntityGameObject::CreateRangeHadesCollisionGameObject("CollisionRangeHades", -200, 1000, 1.5f, 2.5f);
 	damageZone = BuilderEntityGameObject::CreateRangeHadesCollisionGameObject("DamageZone", -200, 1000, 2.0f, 7.5f);
 	float nightmareX = (randomAttackCheval == 0) ? 2200 : 0;
-	nightmare = BuilderEntityGameObject::CreateChevalGameObject("Nightmare", nightmareX, 1000, 2.5f, 2.5f, AssetManager::GetAsset("NightmareGalloping"));
+	nightmare = BuilderEntityGameObject::CreateChevalGameObject("Nightmare", nightmareX, 900, 2.5f, 2.5f, AssetManager::GetAsset("NightmareGalloping"));
 	countAllerRetour = 1;
-	countAllerRetour2 = 3;
+	countAllerRetour2 = 2;
 	countAllerRetour3 = 3;
 	hitHorse = true;
 
 	player = SceneManager::GetActiveGameScene()->GetPlayer();
 }
-Hades::Hades(const int& _hp, const int& _damage, const float& _speed, const float& _attackSpeed, const float& _range) : Entity(_hp, _damage, _speed, _attackSpeed, _range)
-{
 
-}
+Hades::Hades(const int& _hp, const int& _damage, const float& _speed, const float& _attackSpeed, const float& _range) : Entity(_hp, _damage, _speed, _attackSpeed, _range) {}
+
 
 void Hades::SetProtection(const float& _delta)
 {
@@ -55,8 +54,8 @@ void Hades::SetProtection(const float& _delta)
 		randX = rand() % 1300 + 500;
 		randY = rand() % 400 + 200;
 		balls.push_back(BuilderEntityGameObject::CreateProtectionBallGameObject("Protection2", randX, randY, 0.5f, 0.5f, AssetManager::GetAsset("protectionBallsHades"), randomNumber, GetOwner(), randomNumber));
-		
-		
+
+
 		randomNumber = rand() % 100;
 		randX = rand() % 1300 + 500;
 		randY = rand() % 400 + 200;
@@ -94,7 +93,7 @@ void Hades::AttackFire(const float& _delta)
 	attackFire->GetComponent<RigidBody2D>()->SetWidthCollider(positionHades.x);
 
 	// si y'a collision avec le boss et que le player est dans la range du boss alors il va attacker/toucher le player
-	if (player, attackFire) {
+	if (player && attackFire) {
 
 		if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(attackFire->GetComponent<RigidBody2D>())))
 		{
@@ -104,8 +103,8 @@ void Hades::AttackFire(const float& _delta)
 				cooldownAttackFeu -= _delta;
 				if (cooldownAttackFeu <= 0.0f)
 				{
-					player->GetComponent<Character>()->TakeDamage(1);
-					cooldownAttackFeu = 1.0f;
+					player->GetComponent<Character>()->TakeDamage(10);
+					cooldownAttackFeu = 2.0f;
 				}
 			}
 		}
@@ -136,14 +135,14 @@ void Hades::DamageZoneHades(const float& _delta)
 	damageZone->GetComponent<RigidBody2D>()->SetWidthCollider(positionHades.x);
 
 	// si y'a collision avec le boss et que le player est dans la range du boss alors il va attacker/toucher le player
-	if (player, damageZone) {
+	if (player && damageZone) {
 
 		if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(damageZone->GetComponent<RigidBody2D>())))
 		{
 			cooldownDamageZone -= _delta;
 			if (cooldownDamageZone <= 0.0f)
 			{
-				player->GetComponent<Character>()->TakeDamage(1);
+				player->GetComponent<Character>()->TakeDamage(0.5 * _delta);
 				cooldownDamageZone = 2.0f;
 			}
 		}
@@ -162,9 +161,9 @@ void Hades::AttackHorse(int _randomAttackCheval, const float& _delta)
 			if (nightmare->GetPosition().x <= 2200)
 			{
 				nightmare->SetPosition(Maths::Vector2f(nightmare->GetPosition().x + (speed * _delta), nightmare->GetPosition().y));
-				
-				nightmare->SetScale(Maths::Vector2f(- 1 * std::abs(nightmare->GetScale().GetX()), nightmare->GetScale().GetY()));
-				
+
+				nightmare->SetScale(Maths::Vector2f(-1 * std::abs(nightmare->GetScale().GetX()), nightmare->GetScale().GetY()));
+
 				if (nightmare->GetPosition().x >= 2200)
 				{
 					nightmareArrive = true;
@@ -187,7 +186,7 @@ void Hades::AttackHorse(int _randomAttackCheval, const float& _delta)
 		}
 	}
 
-	if (player, nightmare) {
+	if (player && nightmare) {
 		if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(nightmare->GetComponent<RigidBody2D>())))
 		{
 			cooldownAttackHorse -= _delta;
@@ -204,11 +203,11 @@ void Hades::AttackHorse(int _randomAttackCheval, const float& _delta)
 			}
 			if (nightmare->GetPosition().GetX() > positionPlayer.GetX())
 			{
-				player->GetComponent<RigidBody2D>()->AddForces(Maths::Vector2f(nightmare->GetPosition().x / nightmare->GetPosition().x - 15.0f, nightmare->GetPosition().y / nightmare->GetPosition().y - 80.0f));
+				player->GetComponent<RigidBody2D>()->AddForces(Maths::Vector2f(20, nightmare->GetPosition().y / nightmare->GetPosition().y - 10.0f));
 			}
 			else
 			{
-				player->GetComponent<RigidBody2D>()->AddForces(Maths::Vector2f(nightmare->GetPosition().x / nightmare->GetPosition().x + 20.0f, nightmare->GetPosition().y / nightmare->GetPosition().y - 60.0f));
+				player->GetComponent<RigidBody2D>()->AddForces(Maths::Vector2f(-20, nightmare->GetPosition().y / nightmare->GetPosition().y - 10.0f));
 			}
 		}
 	}
@@ -344,7 +343,7 @@ void Hades::Update(const float& _delta)
 	}
 
 	SetDirection();
-	
+
 	if (state == Hades::State::Idle)
 	{
 		if (!GetAnimation("idle")->GetIsPlaying()) {

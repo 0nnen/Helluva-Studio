@@ -15,6 +15,7 @@ public:
 
 	static GameObject* CreatePlateformGameObject(const std::string& _name, const float& _positionX, const float& _positionY, const float& scalex, const float& scaley);
 	static GameObject* CreateRectangleSpriteGameObject(const std::string& _name, const float& _positionX, const float& _positionY, const float& scalex, const float& scaley, sf::Texture* _texture);
+	static GameObject* CreateRectangleSpriteGameObject(const std::string& _name, const std::string& _nameSprite, const float& _positionX, const float& _positionY, const float& scalex, const float& scaley, sf::Texture* _texture);
 	static GameObject* CreateEnemyAGameObject(const std::string& name, float _x, float _y, float scalex, float scaley, sf::Texture* _texture);
 
 	static GameObject* CreateHadesGameObject(const std::string& name, float _x, float _y, float scalex, float scaley, sf::Texture* _texture);

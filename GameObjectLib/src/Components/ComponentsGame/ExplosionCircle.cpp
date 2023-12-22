@@ -17,7 +17,7 @@ void ExplosionCircle::SetGameObject(GameObject* _circle)
 void ExplosionCircle::Update(const float& _delta)
 {
 	cooldownExplosion -= _delta;
-	if (player, GetGameObject()) {
+	if (player && circle) {
 		if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(circle->GetComponent<RigidBody2D>())))
 		{
 			if (cooldownExplosion >= 0.0f && !alreadyHit)

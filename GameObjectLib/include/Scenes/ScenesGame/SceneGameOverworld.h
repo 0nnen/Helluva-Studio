@@ -2,11 +2,11 @@
 
 #include "Scenes/SceneGameAbstract.h"
 
-class ScenesTest : public SceneGameAbstract 
+class SceneGameOverworld : public SceneGameAbstract 
 {
 public:
-	ScenesTest(const std::string& _newName);
-	~ScenesTest();
+	SceneGameOverworld(const std::string& _newName);
+	~SceneGameOverworld();
 
 	void Awake() override;
 	void Preload() override;

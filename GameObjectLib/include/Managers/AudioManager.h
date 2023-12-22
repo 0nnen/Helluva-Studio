@@ -21,6 +21,9 @@ public:
 	static void AddMusic(const std::string& _key, const std::string& _fileName);
 	static void AddSound(const std::string& _key, const std::string& _fileName);
 
+	static void DeleteMusic(const std::string& _key);
+	static void DeleteSound(const std::string& _key);
+
 	static void PauseMusic();
 
 	static void ResumeMusic();

@@ -14,7 +14,7 @@
 Entity::Entity() : healthPoint(100), maxHealthPoint(100), damage(10), attackSpeed(1.0f), maxSpeed(300.f), range(1), speed(300.f) {}
 Entity::Entity(const int& _hp, const int& _damage, const float& _speed, const float& _attackSpeed, const float& _range) : healthPoint(_hp), maxHealthPoint(_hp), damage(_damage), speed(_speed), maxSpeed(_speed + 100.f), attackSpeed(_attackSpeed), range(_range) {}
 
-void Entity::TakeDamage(const int& _damage)
+void Entity::TakeDamage(const float& _damage)
 {
 	if (!isInvicible) {
 	
@@ -36,26 +36,6 @@ void Entity::TakeDamage(const int& _damage)
 
 void Entity::Attack( const float& _delta){}
 
-//void Entity::TakeDamageFireCircle(const int& _damage)
-//{
-//	if (!isInvicible) {
-//
-//		if (healthPoint > _damage)
-//		{
-//			healthPoint -= _damage;
-//		}
-//		else {
-//			healthPoint = 0;
-//		}
-//		std::cout << "Healthpoint : " << healthPoint << std::endl;
-//
-//		if (healthPoint <= 0)
-//		{
-//			this->DieFireCirlce();
-//		}
-//	}
-//
-//}
 
 void Entity::Die()
 {
@@ -65,13 +45,6 @@ void Entity::Die()
 	SceneManager::GetActiveGameScene()->RemoveGameObject(GetOwner());
 }
 
-//void Entity::DieFireCirlce()
-//{
-//	healthPoint = 0;
-//	GetOwner()->SetActiveAndVisible(false);
-//	//AudioManager::PlaySound("dead");
-//	SceneManager::GetActiveGameScene()->RemoveGameObject(GetOwner());
-//}
 
 void Entity::Update(const float& _delta)
 {

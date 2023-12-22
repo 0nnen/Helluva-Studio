@@ -22,6 +22,8 @@ void SceneMainMenu::Preload()
 	AssetManager::AddAsset("ButtonsMenu", "Assets/Graphics/UI/Buttons/buttonsMenu.png");
 	AssetManager::AddAsset("ButtonGrey", "Assets/Graphics/UI/Buttons/buttonGrey.png");
 
+	AudioManager::AddMusic("MusicAmbiant_HOM", "Assets/Audio/Musics/MusicAmbiant_Hommage.ogg");
+
 	AudioManager::AddSound("ConfirmSelection", "Assets/Audio/SFX/confirm_selection.ogg");
 	AudioManager::AddSound("CancelSelection", "Assets/Audio/SFX/cancel_selection.ogg");
 	AudioManager::AddSound("CursorSelection", "Assets/Audio/SFX/cursor_selection.ogg");
@@ -40,12 +42,22 @@ void SceneMainMenu::Create()
 	this->ActiveOption(false);
 	this->ActiveMenu(true);
 	isFadeIn = true;
-	fadeInTimeDefault = 2.0f;
+	fadeInTimeDefault = 5.0f;
 }
 
 void SceneMainMenu::Delete()
 {
+	Scene::Delete();
 	AudioManager::StopMusic();
+	AssetManager::DeleteAsset("BackgroundMainMenu");
+	AssetManager::DeleteAsset("ButtonsMenu");
+	AssetManager::DeleteAsset("ButtonGrey");
+	AudioManager::DeleteMusic("MusicAmbiant_HOM");
+
+	AudioManager::DeleteSound("ConfirmSelection");
+	AudioManager::DeleteSound("CancelSelection");
+	AudioManager::DeleteSound("CursorSelection");
+	AudioManager::DeleteSound("ErrorSelection");
 	Scene::Delete();
 }
 
@@ -57,47 +69,49 @@ void SceneMainMenu::Render(sf::RenderWindow* _window)
 
 void SceneMainMenu::CreateSceneButtonsMenu()
 {
+	//Size Window
 	float widthScreen = WindowManager::GetFloatWindowWidth();
 	float heightScreen = WindowManager::GetFloatWindowHeight();
-	playButton = BuilderGameObject::CreateButtonGameObject("play", widthScreen / 2, heightScreen / 2.1, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 40);
-	worldButton = BuilderGameObject::CreateButtonGameObject("playBoss", widthScreen / 2, heightScreen / 1.6, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"),30);
-	optionsButton = BuilderGameObject::CreateButtonGameObject("settings", widthScreen / 2, heightScreen / 1.3, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"),40);
-	quitButton = BuilderGameObject::CreateButtonGameObject("quit", widthScreen / 2, heightScreen / 1.1, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"),40);
 
-	//successButton = BuilderGameObject::CreateButtonGameObject("Success", widthScreen / 1.2, heightScreen / 10, 18);
-	//rankButton = BuilderGameObject::CreateButtonGameObject("Rank", widthScreen / 1.3, heightScreen / 10, 18);
-	//creditsButton = BuilderGameObject::CreateButtonGameObject("Credits", widthScreen / 1.1, heightScreen / 10, 18);
-	
+	////Main menu buttons
+	//playButton = BuilderGameObject::CreateButtonGameObject("play", widthScreen / 2, heightScreen / 2.1, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 40);
+	playButton = BuilderGameObject::CreateButtonGameObject("play", widthScreen / 2, heightScreen / 2.1f, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"),40);
+	//worldButton = BuilderGameObject::CreateButtonGameObject("playBoss", widthScreen / 2, heightScreen / 1.6, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"),30);
+	optionsButton = BuilderGameObject::CreateButtonGameObject("settings", widthScreen / 2, heightScreen / 1.6f, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"),40);
+	quitButton = BuilderGameObject::CreateButtonGameObject("quit", widthScreen / 2, heightScreen / 1.275f, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"),40);
+
+	//Menu Options Buttons
 	backButton = BuilderGameObject::CreateButtonGameObject("back", widthScreen / 10, heightScreen / 10, 0.5f, 0.5f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 40);
 	englishButton = BuilderGameObject::CreateButtonGameObject("englishButton", widthScreen / 2.4, heightScreen / 1.2, 0.5f, 0.5f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 40);
 	frenchButton = BuilderGameObject::CreateButtonGameObject("frenchButton", widthScreen / 1.7, heightScreen / 1.2, 0.5f, 0.5f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 40);
 	sliderFPS = BuilderGameObject::CreateSliderGameObject("slider Fps", widthScreen / 2, heightScreen / 2, 1200, 40, 50, 50, 20, WindowManager::GetFps(), WindowManager::GetMinFps(), WindowManager::GetMaxFps());
 	sliderVolume = BuilderGameObject::CreateSliderGameObject("slider Volume", widthScreen / 2, heightScreen / 1.5, 1200, 40, 50, 50, 20, AudioManager::GetVolume(), AudioManager::GetMaxVolume());
-	//signupLoginButton = CreateButtonGameObject("Signup Login", widthScreen / 1.2, heightScreen / 1.2, 30)
+
 	CameraManager::SetCenter(widthScreen / 2, heightScreen / 2);
 }
 
 void SceneMainMenu::Update(const float& _delta)
 {
 	Scene::Update(_delta);
+	//RunScene
 	if (isFadeIn)
 	{
 		playButton->SetActive(false);
-		worldButton->SetActive(false);
+		//worldButton->SetActive(false);
 		optionsButton->SetActive(false);
 		quitButton->SetActive(false);
 		if (FadeIn(_delta))
 		{
 			isFadeIn = false;
 			playButton->SetActive(true);
-			worldButton->SetActive(true);
+			//worldButton->SetActive(true);
 			optionsButton->SetActive(true);
 			quitButton->SetActive(true);
 		}
 	} 
 	else
 	{
-		if (playButton->GetComponent<Button>()->IsClicked() || isFadeOut)
+		if ((playButton->GetComponent<Button>()->IsClicked() || isFadeOut) && playButton->GetActive())
 		{
 			isFadeOut = true;
 			if (FadeOut(_delta))
@@ -107,29 +121,29 @@ void SceneMainMenu::Update(const float& _delta)
 			}
 
 		}
-		else if (worldButton->GetComponent<Button>()->IsClicked())
+	/*	else if (worldButton->GetComponent<Button>()->IsClicked())
 		{
 			AudioManager::PlaySound("ConfirmSelection");
 			SceneManager::RunScene("SceneGameBossRoom");
-		}
-		else if (optionsButton->GetComponent<Button>()->IsClicked())
+		}*/
+		else if (optionsButton->GetComponent<Button>()->IsClicked() && optionsButton->GetActive())
 		{
 			AudioManager::PlaySound("ConfirmSelection");
 			this->ActiveMenu(false);
 			this->ActiveOption(true);
 		}
-		else if (quitButton->GetComponent<Button>()->IsClicked())
+		else if (quitButton->GetComponent<Button>()->IsClicked() && quitButton->GetActive())
 		{
 			Engine::GetInstance()->Quit();
 		}
-		else if (backButton->GetComponent<Button>()->IsClicked())
+		else if (backButton->GetComponent<Button>()->IsClicked() && backButton->GetActive())
 		{
 			AudioManager::PlaySound("CancelSelection");
 			optionsButton->GetComponent<Button>()->SetState(Button::StateButton::Normal);
 			this->ActiveOption(false);
 			this->ActiveMenu(true);
 		}
-		else if (englishButton->GetComponent<Button>()->IsClicked())
+		else if (englishButton->GetComponent<Button>()->IsClicked() && englishButton->GetActive())
 		{
 			language = "English";
 			LanguageManager* manager = LanguageManager::GetInstance();
@@ -138,7 +152,7 @@ void SceneMainMenu::Update(const float& _delta)
 			frenchButton->GetComponent<Button>()->SetState(Button::Normal);
 
 		}
-		else if (frenchButton->GetComponent<Button>()->IsClicked())
+		else if (frenchButton->GetComponent<Button>()->IsClicked() && frenchButton->GetActive())
 		{
 			language = "Francais";
 			LanguageManager* manager = LanguageManager::GetInstance();
@@ -146,23 +160,8 @@ void SceneMainMenu::Update(const float& _delta)
 			manager->GetButton();
 			englishButton->GetComponent<Button>()->SetState(Button::Normal);
 		}
-	/*	else if (successButton->GetComponent<Button>()->IsClicked())
-		{
-			AudioManager::PlaySound("ErrorSelection");
-			SceneManager::RunScene("SceneSuccessMenu");
-		}
-		else if (rankButton->GetComponent<Button>()->IsClicked())
-		{
-			AudioManager::PlaySound("ErrorSelection");
-			SceneManager::RunScene("SceneRankMenu");
-		}
-		else if (creditsButton->GetComponent<Button>()->IsClicked())
-		{
-			AudioManager::PlaySound("ErrorSelection");
-			SceneManager::RunScene("SceneCreditsMenu");
-		}*/
 		if (option) {
-			if (sliderFPS) {
+			if (sliderFPS && sliderFPS->GetActive()) {
 				Slider* fpsSlider = sliderFPS->GetComponent<Slider>();
 				float currentFPS = fpsSlider->GetDataInt();
 				float previousFPS = fpsSlider->GetPreviousData();
@@ -172,7 +171,7 @@ void SceneMainMenu::Update(const float& _delta)
 				}
 			}
 
-			if (sliderVolume) {
+			if (sliderVolume && sliderVolume->GetActive()) {
 				Slider* volumeSlider = sliderVolume->GetComponent<Slider>();
 				float currentVolume = volumeSlider->GetDataInt();
 				float previousVolume = volumeSlider->GetPreviousData();
@@ -182,10 +181,6 @@ void SceneMainMenu::Update(const float& _delta)
 				}
 			}
 		}
-		/*else if (signupLoginButton->GetComponent<Button>()->IsClicked() && signupLoginButton->GetActive())
-		{
-			SceneManager::RunScene("SceneLoginSignup");
-		}*/
 	}
 	
 }
@@ -193,13 +188,9 @@ void SceneMainMenu::Update(const float& _delta)
 void SceneMainMenu::ActiveMenu(const bool& _state)
 {
 	this->playButton->SetActiveAndVisible(_state);
-	this->worldButton->SetActiveAndVisible(_state);
+	//this->worldButton->SetActiveAndVisible(_state);
 	this->optionsButton->SetActiveAndVisible(_state);
 	this->quitButton->SetActiveAndVisible(_state);
-	//this->creditsButton->SetActiveAndVisible(_state);
-	//this->rankButton->SetActiveAndVisible(_state);
-	//this->successButton->SetActiveAndVisible(_state);
-	//this->signupLoginButton->SetActiveAndVisible(_state);
 }
 
 void SceneMainMenu::ActiveOption(const bool& _state)

@@ -28,6 +28,20 @@ public:
 	void AllerRetourHorse(bool _nightmareArrive, const float& _delta);
 	void DamageZoneHades(const float& _delta);
 
+	void Die() override
+	{
+		Entity::Die();
+		protection->SetActiveAndVisible(false);
+		attackFire->SetActiveAndVisible(false);
+		nightmare->SetActiveAndVisible(false);
+		damageZone->SetActiveAndVisible(false);
+		for (GameObject* ball : balls)
+		{
+			ball->SetActiveAndVisible(false);
+		}
+		GetOwner()->SetActiveAndVisible(true);
+	}
+
 	void Update(const float& _delta) override;
 
 	void RemoveBall(GameObject* _objectToRemove) {
@@ -45,16 +59,16 @@ private:
 	Step step = Step1;
 	GameObject* protection = nullptr;
 	GameObject* nightmare = nullptr;
-	GameObject* attackFire;
-	GameObject* damageZone;
+	GameObject* attackFire = nullptr;
+	GameObject* damageZone = nullptr;
 	GameObject* player = nullptr;;
 	std::vector<GameObject*> balls;
 	float timeSpawnBalls = 10.f;
 	float actualTime = 10.f;
 
 	float cooldown = 10.0f;
-	float randX;
-	float randY;
+	float randX = 0.f;
+	float randY = 0.f;
 	float cooldownAttackFeu = 1.0f;
 	float cooldownDamageZone = 2.0f;
 	float cooldownAttackHorse = 0.15f;
@@ -67,7 +81,7 @@ private:
 	int countAllerRetour = 0;
 	int countAllerRetour2 = 0;
 	int countAllerRetour3 = 0;
-	int randomNumber;
+	int randomNumber = 0;
 	bool nightmareArrive;
 	bool hitHorse;
 

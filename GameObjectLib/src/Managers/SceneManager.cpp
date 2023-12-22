@@ -10,6 +10,7 @@ bool isPaused = false;
 
 void SceneManager::StopScene()
 {
+	activeScene->Delete();
 	activeScene = nullptr;
 }
 
@@ -19,7 +20,6 @@ void SceneManager::RunScene(std::string _key)
 	{
 		if (activeScene)
 		{
-			activeScene->Delete();
 			StopScene();
 		}
 		activeScene = scenes.at(_key);

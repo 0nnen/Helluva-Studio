@@ -14,6 +14,11 @@ Text::Text()
 	SettingText(title, "", 28, styleBold, sf::Color::White);
 }
 
+Text::~Text()
+{
+	finalTexts.clear();
+}
+
 void Text::SettingText(sf::Text& _text, const std::string& _string, const unsigned int& _fontSize, const sf::Uint32& _style, const sf::Color& _color)
 {
 	_text.setString(_string);
@@ -149,10 +154,10 @@ void Text::Update(const float& _delta)
 	{
 		if (currentTime >= pauseDuration)
 		{
+			
 			GetOwner()->SetActiveAndVisible(false);
+			std::cout << GetActive();
 		}
 	}
 	currentTime += _delta;
 }
-
-Text::~Text() {}

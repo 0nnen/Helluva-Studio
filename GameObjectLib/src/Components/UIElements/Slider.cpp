@@ -124,10 +124,6 @@ void Slider::Update(const float& _delta)
 			this->SetData(((maxData - minData) * percent / 100) + minData);
 			this->SetCursorText(fontSize);
 		}
-
-		if (data != previousData) {
-			AudioManager::PlaySound("CursorSelection");
-		}
 		cursor.setPosition(cursorX , cursor.getPosition().y);
 		cursorText.setPosition(cursorX , cursor.getPosition().y);
 	}

@@ -34,10 +34,10 @@ public:
 	inline int GetHeight() { return height; }
 private:
 	Sprite* sprite = nullptr;
-	std::string spriteName = "spriteName";
 	sf::Texture* spriteSheet = nullptr;
-	int width, height;
 
+	std::string spriteName = "spriteName";
+	int width, height;
 	unsigned int totalFrame = 0;
 	unsigned int actualFrame = 0;
 	int totalLoop = 1;

@@ -1,7 +1,7 @@
 #include "Components/Entity/Enemy/EnemyA.h"
 #include "Managers/SceneManager.h"
 #include "Managers/AssetManager.h"
-#include "Scenes/ScenesGame/ScenesTest.h"
+#include "Scenes/ScenesGame/SceneGameOverworld.h"
 #include "BuildersGameObject/BuilderEntityGameObject.h"
 #include "Components/RigidBody2D.h"
 
@@ -19,13 +19,13 @@ void EnemyA::Update(const float& _delta)
 {
 	Entity::Update(_delta);
 
-	if (!ScenesTest::GetFlip())
+	if (!SceneGameOverworld::GetFlip())
 	{
 
 		SetDirection(Left);
 		directionEnemy = true;
 	}
-	if (ScenesTest::GetFlip())
+	if (SceneGameOverworld::GetFlip())
 	{
 
 		SetDirection(Right);
@@ -54,11 +54,11 @@ void EnemyA::Attack(const float& _delta)
 		{
 			this->GetAndSetAnimation("shoot")->Play();
 		}
-		if (!ScenesTest::GetFlip())
+		if (!SceneGameOverworld::GetFlip())
 		{
 			CreateBullet(0.25f, 0.f);
 		}
-		if (ScenesTest::GetFlip())
+		if (SceneGameOverworld::GetFlip())
 		{
 			CreateBullet(-0.25f, 0.f);
 		}

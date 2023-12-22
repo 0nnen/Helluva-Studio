@@ -14,10 +14,11 @@ public:
 
 	void Update(const float& _delta) override;
 	void Render(sf::RenderWindow* _window) override;
+
 private:
-	GameObject* player;
-	GameObject* circle;
+	GameObject* player = nullptr;
+	GameObject* circle = nullptr;
 	float cooldownExplosion = 2.0f;
-	bool alreadyHit;
+	bool alreadyHit = false;
 };
 

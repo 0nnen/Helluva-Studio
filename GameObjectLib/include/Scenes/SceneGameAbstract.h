@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics.hpp>
+#include "Components/UIElements/ATH.h"
 
 class SceneGameAbstract : public Scene
 {

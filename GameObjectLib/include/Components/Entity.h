@@ -10,9 +10,9 @@ public:
 
 	enum Direction { Left, Right };
 
-	inline int GetHealthPoint() const { return healthPoint; }
-	inline int GetMaxHealthPoint() const { return maxHealthPoint; }
-	inline int GetDamage() const { return damage; }
+	inline float GetHealthPoint() const { return healthPoint; }
+	inline float GetMaxHealthPoint() const { return maxHealthPoint; }
+	inline float GetDamage() const { return damage; }
 	inline float GetSpeed() const { return speed; }
 	inline float GetMaxSpeed() const { return maxSpeed; }
 	inline float GetAttackSpeed() const { return attackSpeed; }
@@ -28,9 +28,6 @@ public:
 
 	inline int GetCurrPathPoint() { return currPathPoint; }
 
-	inline void SetLane(const int& newLane) { lane = newLane; }
-	inline int GetLane() { return lane; }
-
 	inline void IncrementCount() { count++; }
 	inline void ResetCount() { count = 0; }
 	inline int GetCount() { return count; }
@@ -38,8 +35,10 @@ public:
 	void SetDirection(Direction _newDirection);
 
 	virtual void Attack(const float& _delta);
-	void TakeDamage(const int& damage);
-	void TakeHealt(const int& _healt) { healthPoint += _healt; }
+
+	void TakeDamage(const float& damage);
+	void TakeHealt(const float& _healt) { healthPoint += _healt; }
+
 	virtual void Die();
 	void Update(const float& _delta) override;
 
@@ -63,10 +62,9 @@ protected:
 	int currPathPoint = 0;
 	int count = 0;
 
-	int healthPoint;
-	int maxHealthPoint;
-	int damage;
-	int lane;
+	float healthPoint;
+	float maxHealthPoint;
+	float damage;
 	float speed;
 	float maxSpeed;
 	float attackSpeed;

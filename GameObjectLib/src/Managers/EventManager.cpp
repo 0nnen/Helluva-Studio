@@ -2,6 +2,7 @@
 #include "Managers/WindowManager.h"
 #include "Managers/CameraManager.h"
 #include "Managers/SceneManager.h"
+#include "Scenes/SceneGameAbstract.h"
 #include "Engine.h"
 #include <iostream>
 
@@ -11,6 +12,7 @@ void EventManager::Update(const float& _delta)
 {
 	sf::RenderWindow* window = WindowManager::GetWindow();
 	Engine* engine = Engine::GetInstance();
+	SceneGameAbstract* sceneGame = SceneManager::GetActiveGameScene();
 	while (window->pollEvent(EventManager::event))
 	{
 		if (event.type == sf::Event::Closed) engine->Quit();
@@ -18,11 +20,11 @@ void EventManager::Update(const float& _delta)
 		{
 			if (event.key.code == sf::Keyboard::LAlt) if (event.key.code == sf::Keyboard::F4) engine->Quit();
 
-			if (SceneManager::GetActiveGameScene())
+			if (sceneGame)
 			{
 				if (event.key.code == sf::Keyboard::Escape)
 				{
-					SceneManager::GetActiveGameScene()->Pause();
+					sceneGame->Pause();
 				}
 				
 			}
@@ -31,11 +33,11 @@ void EventManager::Update(const float& _delta)
 		{
 			if (event.key.code == sf::Keyboard::Escape) engine->Quit();
 		}
-		if (SceneManager::GetActiveGameScene())
+		if (sceneGame)
 		{
 			if (event.type == sf::Event::LostFocus)
 			{
-				SceneManager::GetActiveGameScene()->Pause(true);
+				sceneGame->Pause(true);
 			}
 		}
 	}

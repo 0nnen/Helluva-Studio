@@ -25,7 +25,6 @@
     <ClInclude Include="include\Components\Entity\Enemy\Hades.h" />
     <ClInclude Include="include\Components\UIElements\ATH.h" />
     <ClInclude Include="include\Components\Entity\Enemy\EnemyA.h" />
-    <ClInclude Include="include\Components\Entity\EnemyAbstract.h" />
     <ClInclude Include="include\Components\ComponentsGame\WeaponsContainer.h" />
     <ClInclude Include="include\BuildersGameObject\BuilderShapeGameObject.h" />
     <ClInclude Include="include\Components\Animation.h" />
@@ -56,11 +55,8 @@
     <ClInclude Include="include\Scene.h" />
     <ClInclude Include="include\Maths\Vector2.h" />
     <ClInclude Include="include\Managers\SceneManager.h" />
-    <ClInclude Include="include\Scenes\ScenesGame\SceneGameWorld.h" />
     <ClInclude Include="include\Scenes\SceneMainMenu.h" />
     <ClInclude Include="include\Scenes\SceneGameAbstract.h" />
-    <ClInclude Include="include\Scenes\SceneSuccessMenu.h" />
-    <ClInclude Include="include\Scenes\SceneRankMenu.h" />
     <ClInclude Include="include\Scenes\SceneCreditsMenu.h" />
     <ClInclude Include="include\Components\Ressource.h" />
     <ClInclude Include="include\Managers\WindowManager.h" />
@@ -71,14 +67,12 @@
     <ClInclude Include="include\Components\ComponentsGame\LavaArea.h" />
     <ClInclude Include="include\Components\Lantern.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="include\Scenes\SceneLoginSignup.h" />
     <ClInclude Include="include\Managers\TimeManager.h" />
     <ClInclude Include="include\Scenes\SceneOpening.h" />
-    <ClInclude Include="include\Scenes\ScenesGame\SceneGameUnderground.h" />
     <ClInclude Include="include\Components\RigidBody2D.h" />
     <ClInclude Include="include\Components\Transform.h" />
     <ClInclude Include="include\Components\Shapes\Triangle.h" />
-    <ClInclude Include="include\Scenes\ScenesGame\ScenesTest.h" />
+    <ClInclude Include="include\Scenes\ScenesGame\SceneGameOverworld.h" />
     <ClInclude Include="include\Scenes\ScenesGame\Rectangle.h" />
     <ClInclude Include="include\Components\ComponentsGame\Weapon.h" />
     <ClInclude Include="include\Components\ComponentsGame\Sword.h" />
@@ -101,11 +95,10 @@
     <ClCompile Include="src\Components\Entity\Enemy\Hades.cpp" />
     <ClCompile Include="src\Components\UIElements\ATH.cpp" />
     <ClCompile Include="src\Components\Entity\Enemy\EnemyA.cpp" />
-    <ClCompile Include="src\Components\Entity\EnemyAbstract.cpp" />
     <ClCompile Include="src\Scenes\ScenesGame\SceneGameBossRoom.cpp" />
     <ClCompile Include="src\Components\ComponentsGame\WeaponsContainer.cpp" />
     <ClCompile Include="src\Components\Shapes\Rectangle.cpp" />
-    <ClCompile Include="src\Scenes\ScenesGame\ScenesTest.cpp" />
+    <ClCompile Include="src\Scenes\ScenesGame\SceneGameOverworld.cpp" />
     <ClCompile Include="src\BuildesGameObject\BuilderShapeGameObject.cpp" />
     <ClCompile Include="src\Components\Animation.cpp" />
     <ClCompile Include="src\Commands\CommandCharacter.cpp" />
@@ -115,8 +108,6 @@
     <ClCompile Include="src\BuildesGameObject\BuilderEntityGameObject.cpp" />
     <ClCompile Include="src\Components\RigidBody2D.cpp" />
     <ClCompile Include="src\Components\ComponentsGame\Bullet.cpp" />
-    <ClCompile Include="src\Scenes\ScenesGame\SceneGameUnderground.cpp" />
-    <ClCompile Include="src\Scenes\ScenesGame\SceneGameWorld.cpp" />
     <ClCompile Include="src\Scenes\SceneOpening.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\BuilderGameObject.cpp" />
@@ -126,7 +117,6 @@
     <ClCompile Include="src\Components\UIElements\Button.cpp" />
     <ClCompile Include="src\Components\UIElements\Input.cpp" />
     <ClCompile Include="src\Components\UIElements\Slider.cpp" />
-    <ClCompile Include="src\Scenes\SceneLoginSignup.cpp" />
     <ClCompile Include="src\Managers\HUDManager.cpp" />
     <ClCompile Include="src\Managers\EventManager.cpp" />
     <ClCompile Include="src\Managers\CameraManager.cpp" />
@@ -143,8 +133,6 @@
     <ClCompile Include="src\Managers\SceneManager.cpp" />
     <ClCompile Include="src\Scenes\SceneMainMenu.cpp" />
     <ClCompile Include="src\Scenes\SceneGameAbstract.cpp" />
-    <ClCompile Include="src\Scenes\SceneSuccessMenu.cpp" />
-    <ClCompile Include="src\Scenes\SceneRankMenu.cpp" />
     <ClCompile Include="src\Scenes\SceneCreditsMenu.cpp" />
     <ClCompile Include="src\Managers\WindowManager.cpp" />
     <ClCompile Include="src\Managers\TimeManager.cpp" />

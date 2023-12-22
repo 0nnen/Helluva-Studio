@@ -28,12 +28,10 @@ public:
 private:
 	GameObject* hades = nullptr;
 	GameObject* player = nullptr;
-
 	GameObject* area = nullptr;
+	GameObject* circle = nullptr;
+
 	Maths::Vector2f position;
-
-
-	GameObject* circle;
 	Maths::Vector2f positionFireCircle;
 	bool activeCollision = false;
 

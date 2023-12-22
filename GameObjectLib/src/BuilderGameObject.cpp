@@ -259,8 +259,8 @@ GameObject* BuilderGameObject::CreateTextDialogueGameObject(const std::string& _
 	Text* text = gameObject->CreateComponent<Text>();
 	text->SetTitle(_name, _fontSize + 12, styleBold, sf::Color::White);
 	text->SetText(_firstText, _fontSize, _style, _color);
-	text->SetPositionTitle(Maths::Vector2f(_x - _width / 2 + 10, _y - _height / 2));
-	text->SetPositionText(Maths::Vector2f(_x - _width / 2 + 10, _y));
+	text->SetPositionTitle(Maths::Vector2f(_x - _width / 2.f + 10.f, _y - _height / 2.f + 20.f));
+	text->SetPositionText(Maths::Vector2f(_x - _width / 2.f + 10.f, _y));
 
 	return gameObject;
 }

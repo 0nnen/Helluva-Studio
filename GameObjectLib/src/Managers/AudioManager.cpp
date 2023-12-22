@@ -3,7 +3,7 @@
 #include <list>
 #include <memory>
 
-float AudioManager::volume = 50.f;
+float AudioManager::volume = 100.f;
 float AudioManager::maxVolume = 100.f;
 sf::Music* AudioManager::music = nullptr;
 sf::Sound* AudioManager::sound = nullptr;
@@ -60,6 +60,7 @@ void AudioManager::PlaySound(const std::string& _key) {
 	if (bufferIter != AudioManager::soundBuffers.end()) {
 		std::unique_ptr<sf::Sound> sound(new sf::Sound());
 		sound->setBuffer(*bufferIter->second);
+		sound->setVolume(AudioManager::volume);
 		sound->play();
 
 		activeSounds.push_back(std::move(sound));
@@ -111,6 +112,34 @@ void AudioManager::AddSound(const std::string& _key, const std::string& _fileNam
 			std::cout << "Sound file not found: " << _fileName << std::endl;
 			delete buffer;
 		}
+	}
+}
+
+void AudioManager::DeleteMusic(const std::string& _key)
+{
+	auto musicIterator = AudioManager::musics.find(_key);
+	if (musicIterator != AudioManager::musics.end())
+	{
+		if (musicIterator->second == AudioManager::music) AudioManager::music = nullptr;
+
+		delete musicIterator->second;
+		AudioManager::musics.erase(musicIterator);
+	}
+}
+
+void AudioManager::DeleteSound(const std::string& _key)
+{
+	auto soundIteratorBuffer = AudioManager::soundBuffers.find(_key);
+	auto soundIterator = AudioManager::sounds.find(_key);
+	if (soundIteratorBuffer != AudioManager::soundBuffers.end())
+	{
+		delete soundIteratorBuffer->second;
+		AudioManager::soundBuffers.erase(soundIteratorBuffer);
+	}
+	if (soundIterator != AudioManager::sounds.end())
+	{
+		delete soundIterator->second;
+		AudioManager::sounds.erase(soundIterator);
 	}
 }
 

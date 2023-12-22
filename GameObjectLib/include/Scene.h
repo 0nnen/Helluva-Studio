@@ -33,23 +33,21 @@ public:
 
 
 	inline bool GetIsActive() const { return isActive; }
-	void SetIsActive(const bool& _state) { isActive = _state; }
+	inline void SetIsActive(const bool& _state) { isActive = _state; }
 	inline std::string GetName() const { return name; }
 
-	float GetFadeInTime() const { return fadeInTimeDefault; }
-	float GetFadeInTimeActual() const { return fadeInTimeActual; }
-	void SetFadeInTime(const float& _fadeInTime) { fadeInTimeDefault = _fadeInTime; }
+	inline float GetFadeInTime() const { return fadeInTimeDefault; }
+	inline float GetFadeInTimeActual() const { return fadeInTimeActual; }
+	inline void SetFadeInTime(const float& _fadeInTime) { fadeInTimeDefault = _fadeInTime; }
 	bool FadeIn(const float& _delta);
 
-	float GetFadeOutTime() const { return fadeOutTimeDefault; }
-	float GetFadeOutTimeActual() const { return fadeOutTimeActual; }
-	void SetFadeOutTime(const float& _fadeOutTime) { fadeOutTimeDefault = _fadeOutTime; }
+	inline float GetFadeOutTime() const { return fadeOutTimeDefault; }
+	inline float GetFadeOutTimeActual() const { return fadeOutTimeActual; }
+	inline void SetFadeOutTime(const float& _fadeOutTime) { fadeOutTimeDefault = _fadeOutTime; }
 	bool FadeOut(const float& _delta);
 
 	void ShowFadeIn(sf::RenderWindow* _window);
 	void ShowFadeOut(sf::RenderWindow* _window);
-
-	void UpdateButtonsLanguage();
 
 	void ApplyDepth();
 
@@ -61,8 +59,8 @@ protected:
 	bool isActive = true;
 
 
-	float fadeInTimeDefault = 1.f;
-	float fadeOutTimeDefault = 1.f;
+	float fadeInTimeDefault = 3.f;
+	float fadeOutTimeDefault = 3.f;
 	float fadeInTimeActual= 0.f;
 	float fadeOutTimeActual = 0.f;
 	bool isFadeIn = false;

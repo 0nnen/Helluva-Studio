@@ -4,13 +4,18 @@
 #include "Managers/SceneManager.h"
 #include <Components/RigidBody2D.h>
 
-ProtectionBall::ProtectionBall() : Entity() 
+ProtectionBall::ProtectionBall() : Entity()
 {
 	player = SceneManager::GetActiveGameScene()->GetPlayer();
 	hades = SceneManager::GetActiveGameScene()->GetHades();
 }
-  
-ProtectionBall::ProtectionBall(const int& _hp, const int& _damage, const float& _speed, const float& _attackSpeed, const float& _range) : Entity(_hp, _damage, _speed, _attackSpeed, _range) {}
+
+ProtectionBall::ProtectionBall(const int& _hp, const int& _damage, const float& _speed, const float& _attackSpeed, const float& _range) : Entity(_hp, _damage, _speed, _attackSpeed, _range)
+{
+	player = SceneManager::GetActiveGameScene()->GetPlayer();
+	hades = SceneManager::GetActiveGameScene()->GetHades();
+}
+
 
 void ProtectionBall::Update(const float& _delta)
 {
@@ -21,7 +26,7 @@ void ProtectionBall::Update(const float& _delta)
 
 void ProtectionBall::CreateLava()
 {
-	area = BuilderEntityGameObject::CreateRectangleSpriteGameObject("Lava",position.x, 1100.f, 1.f, 0.5f, AssetManager::GetAsset("lavaArea"));
+	area = BuilderEntityGameObject::CreateRectangleSpriteGameObject("Lava", position.x, 1100.f, 1.f, 0.5f, AssetManager::GetAsset("lavaArea"));
 }
 
 
@@ -32,12 +37,11 @@ void ProtectionBall::CreateBouleFeu()
 
 void ProtectionBall::CollisionFireBall()
 {
-	if (player, circle) {
+	if (player && circle) {
 		std::cout << "debug\n";
 		if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(circle->GetComponent<RigidBody2D>())))
 		{
-			// enelver des PV au joueur;
-			std::cout << "Cirlce en collision\n";
+			player->GetComponent<Character>()->TakeDamage(100);
 		}
 	}
 }
@@ -114,7 +118,7 @@ void ProtectionBall::SetPower(const float& _delta)
 	}
 	else if (spawn >= 41 && spawn <= 55)
 	{
-		
+
 	}
 	else if (spawn >= 56 && spawn <= 70)
 	{
@@ -151,7 +155,7 @@ void ProtectionBall::Die()
 	}
 	if (spawn >= 31 && spawn <= 40)
 	{
-		
+
 	}
 	if (spawn >= 41 && spawn <= 55)
 	{

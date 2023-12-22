@@ -1,6 +1,7 @@
 #include "Scene.h"
 #include "Managers/WindowManager.h"
 #include "Managers/CameraManager.h"
+#include "Managers/AudioManager.h"
 #include "Managers/LanguageManager.h"
 #include "BuilderGameObject.h"
 
@@ -11,13 +12,13 @@ Scene::Scene(const std::string& _name)
 }
 
 //Initialize the scene
-void Scene::Preload() 
+void Scene::Preload()
 {
-	
+
 }
 
 //Create Object from the scene
-void Scene::Create() 
+void Scene::Create()
 {
 	language = LanguageManager::GetInstance()->GetLanguage();
 	CameraManager::DefaultZoom();
@@ -39,11 +40,11 @@ GameObject* Scene::CreateGameObject(const std::string& _name)
 	return gameObject;
 }
 
-void Scene::AddGameObject( GameObject* _gameObject)
+void Scene::AddGameObject(GameObject* _gameObject)
 {
 	gameObjects.push_back(_gameObject);
 	this->ApplyDepth();
-	
+
 }
 
 //Get GameObject
@@ -74,7 +75,7 @@ void Scene::Delete()
 {
 	for (GameObject* const& gameObject : this->gameObjects)
 	{
-		delete gameObject;
+		if (gameObject) delete gameObject;
 	}
 	gameObjects.clear();
 }
@@ -100,9 +101,12 @@ void Scene::Update(const float& _delta)
 
 void Scene::Physics(const float& _delta)
 {
-	for (GameObject* const& gameObject : gameObjects)
+	if (isActive)
 	{
-		gameObject->Physics(_delta);
+		for (GameObject* const& gameObject : gameObjects)
+		{
+			gameObject->Physics(_delta);
+		}
 	}
 }
 

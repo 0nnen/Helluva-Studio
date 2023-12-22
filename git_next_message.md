@@ -1,4 +1,3 @@
-FIX : Merge Quentin
+NEW: Fin de la vertical slice
 
-- Fix des derniers bugs
-- Ajout collision sol et bullet
+- Au lit maintenant

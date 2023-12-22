@@ -10,12 +10,10 @@
 #include "Managers/CameraManager.h"
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Scenes/ScenesGame/SceneGameUnderground.h"
-#include "Scenes/ScenesGame/SceneGameWorld.h"
 #include "Scenes/ScenesGame/SceneGameBossRoom.h"
 #include "Scenes/ScenesGame/SceneGameSpawn.h"
 #include "Scenes/SceneGameAbstract.h"
-#include "Scenes/ScenesGame/ScenesTest.h"
+#include "Scenes/ScenesGame/SceneGameOverworld.h"
 #include "Scenes/SceneOpening.h"
 Engine* Engine::instance = nullptr;
 
@@ -33,17 +31,18 @@ void Engine::Init() const
 	TimeManager::Init();
 	FontManager::AddFont("Roboto", "Assets/Fonts/Roboto-Medium.ttf");
 	FontManager::AddFont("PixelNES", "Assets/Fonts/PixelNES.otf");
+
 	CameraManager::Init(WindowManager::GetWindow());
+
 	LanguageManager* languageManager = LanguageManager::GetInstance();
 	languageManager->RecoverLanguages("Assets/Texts/LanguagesList.txt");
 	languageManager->SetLanguage("English");
 	languageManager->GetButton();
+
 	HUDManager::Init(WindowManager::GetWindow());
+
 	SceneManager::AddScene("SceneMainMenu", new SceneMainMenu(std::string("MainMenu")));
-	//SceneManager::AddScene("SceneGameUnderground", new SceneGameUnderground(std::string("SceneGameUnderground")));
-	SceneManager::AddScene("SceneGameAbstract", new SceneGameAbstract(std::string("SceneGameAbstract")));
-	SceneManager::AddScene("ScenesTest", new ScenesTest(std::string("ScenesTest")));
-	//SceneManager::AddScene("SceneGameWorld", new SceneGameWorld(std::string("SceneGameWorld")));
+	SceneManager::AddScene("SceneGameOverworld", new SceneGameOverworld(std::string("SceneGameOverworld")));
 	SceneManager::AddScene("SceneOpening", new SceneOpening(std::string("SceneOpening")));
 	SceneManager::AddScene("SceneGameBossRoom", new SceneGameBossRoom(std::string("SceneGameBossRoom")));
 	SceneManager::AddScene("SceneGameSpawn", new SceneGameSpawn(std::string("SceneGameSpawn")));
@@ -51,7 +50,6 @@ void Engine::Init() const
 
 void Engine::Run() const
 {
-	//SceneManager::RunScene("SceneOpening");
 	SceneManager::RunScene("SceneOpening");
 	while (!shouldQuit)
 	{

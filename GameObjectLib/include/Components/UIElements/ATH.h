@@ -5,16 +5,24 @@
 #include "Scene.h"
 #include "Components/Entity/Character.h"
 
-class ATH : public Component 
+class ATH : public Component
 {
 public:
-    ATH(Character* character, int maxHealth);
-    void Update(float deltaTime);
-    void Render(sf::RenderWindow& window);
+
+    ATH();
+    void Update(const float& _delta) override;
+    void Render(sf::RenderWindow* window) override;
+    void SetCharacter(Character* _character);
 
 private:
-    Character* character;
+    Character* character = nullptr;
+
+    sf::Texture weaponTexture;
+    sf::Sprite weaponSprite;
     sf::RectangleShape healthBar;
+    sf::RectangleShape healthBarBackground;
+    sf::RectangleShape weaponFrame;
+
     float maxHealthBarWidth;
     int maxHealth;
 };
